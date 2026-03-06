@@ -252,10 +252,10 @@ export const translations = {
     howtoapply: "Application Process",
     apply: "Apply now",
     hero: {
-      tagline: "A Voice That Heals, A Song That Restores", // 0305 수정
+      tagline: "A Voice That Heals, A Song That Restores", // 0305 수정 0306 이미지 대체
       descPart1:
         "K-POP took over the world. Trot set the trend.",
-      descPart2: "Now—it’s ",
+      descPart2: "\nNow—it’s ",
       descPart3: "’s turn.",
       descPart4:
         "The CCM audition program <Healing Voice>\nis looking for the next voice to inspire hearts!",
