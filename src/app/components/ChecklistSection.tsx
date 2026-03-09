@@ -5,25 +5,25 @@ export function ChecklistSection() {
   const { t } = useLanguage();
 
   // 프리텐다드 베리어블 폰트 스타일
-  const pretendardStyle = { 
+  const pretendardStyle = {
     fontFamily: '"Pretendard Variable", sans-serif',
     letterSpacing: '0px'
   };
 
   return (
-    <section 
-      id="checklist" 
+    <section
+      id="checklist"
       className="w-full py-[100px] px-6"
       // 요청하신 그라디언트 배경 (화면 전체 노출)
-      style={{ 
-        background: 'linear-gradient(180deg, #F5FDFF 0%, #D2F6FF 100%)' 
+      style={{
+        background: 'linear-gradient(180deg, #F5FDFF 0%, #D2F6FF 100%)'
       }}
     >
       {/* 흰색 박스가 들어갈 컨테이너: 기존 사이즈인 max-w-5xl 유지 */}
       <div className="max-w-5xl mx-auto">
-        
+
         {/* 메인 흰색 박스: 기존의 적절한 크기 유지 */}
-        <div 
+        <div
           className="bg-white rounded-[32px] border border-sky-200/50 p-8 md:p-12 shadow-xl shadow-blue-900/5 relative overflow-hidden"
           style={pretendardStyle}
         >
@@ -33,10 +33,10 @@ export function ChecklistSection() {
           </div>
 
           <div className="relative z-10 flex flex-col gap-10">
-            
+
             {/* Header: 빨간색 포인트와 안내 문구 */}
             <div className="flex flex-col gap-6">
-              <h2 className="font-bold text-[#FF3B30] flex items-center gap-3 text-[26px] md:text-[30px] break-keep">
+              <h2 className="font-bold text-[#FF3B30] flex items-start gap-3 text-[26px] md:text-[30px] break-keep">
                 <AlertTriangle className="w-9 h-9" strokeWidth={2.5} />
                 {t('checklist.title')}
               </h2>
@@ -55,7 +55,7 @@ export function ChecklistSection() {
 
             {/* 내부 카드 그리드 (2열) */}
             <div className="grid md:grid-cols-2 gap-6">
-              
+
               {/* Card 1: 메일 제목 */}
               <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-7 flex flex-col gap-6">
                 <div className="flex items-center gap-3">

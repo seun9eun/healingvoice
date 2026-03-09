@@ -42,7 +42,7 @@ export function Hero() {
               {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
               <div className="flex justify-center">
                 <img
-                  src={img_tag}
+                  src={lang === "en" ? "https://i.imgur.com/Mvwg170.png" : img_tag}
                   alt={t("hero.tagline")}
                   className="w-full max-w-[170px] md:max-w-[230px] h-auto object-contain"
                 />
@@ -51,7 +51,7 @@ export function Hero() {
               {/* 로고 슬롯 2 - 태그라인 이미지 */}
               <div className="flex justify-center w-full">
                 <img
-                  src={image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
+                  src={lang === "en" ? "https://i.imgur.com/8NPYy8S.png" : image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
                   alt={t("hero.tagline")}
                   className="w-full max-w-[340px] md:max-w-[460px] h-auto object-contain"
                 />
@@ -63,7 +63,7 @@ export function Hero() {
               <img
                 src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
                 alt="힐링보이스"
-                className="w-full max-w-[340px] md:max-w-[460px] h-auto object-contain drop-shadow-sm"
+                className="w-full max-w-[272px] md:max-w-[368px] h-auto object-contain drop-shadow-sm"
               />
             </div>
           </div>
