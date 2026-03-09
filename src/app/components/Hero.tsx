@@ -44,7 +44,7 @@ export function Hero() {
                 <img
                   src={lang === "en" ? "https://i.imgur.com/Mvwg170.png" : img_tag}
                   alt={t("hero.tagline")}
-                  className="w-full max-w-[170px] md:max-w-[230px] h-auto object-contain"
+                  className={`w-full ${lang === "en" ? "max-w-[272px] md:max-w-[368px]" : "max-w-[170px] md:max-w-[230px]"} h-auto object-contain`}
                 />
               </div>
 
