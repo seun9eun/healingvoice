@@ -6,7 +6,8 @@ const CgnlogoImage = "https://i.imgur.com/N6ZvM5s.png";
 const FondantLogoImage = "https://i.imgur.com/yZuLvLq.png";
 const logoImage_bl = "https://i.imgur.com/NdVOBXQ.png";
 const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
-const logoImageEn = "https://i.imgur.com/czHtSNl.png"; // 영문 로고 
+const logoImageEn_w = "https://i.imgur.com/qVJ5hKL.png"; // 영문 화이트 로고 
+const logoImageEn = "https://i.imgur.com/czHtSNl.png"; // 영문 컬러 로고 
 
 export function Footer() {
   const { t, lang } = useLanguage();
@@ -16,7 +17,7 @@ export function Footer() {
         <div className="space-y-4">
           <h3 className="mb-2">
                   <img 
-                    src={lang === "en" ? logoImageEn : logoImage_w} 
+                    src={lang === "en" ? logoImageEn_w : logoImage_w} 
                     alt="HEALING VOICE" 
                     className="h-6 md:h-7 w-auto object-contain" 
                   />
