@@ -181,7 +181,7 @@ export function StepsSection() {
   ];
 
   return (
-    <section id="steps" className="py-24 relative"
+    <section id="steps" className="py-24 relative scroll-mt-20"
       style={{ background: 'linear-gradient(180deg, #F5FDFF 0%, #D2F6FF 100%)' }}
     >
       <div className="container mx-auto px-4">

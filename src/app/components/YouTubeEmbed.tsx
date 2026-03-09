@@ -4,14 +4,14 @@ import { useLanguage } from "../context/LanguageContext";
 const VIDEO_DATA = {
   ko: [
     {
-      id: "SoOr5xxGpjk",
-      title: "참가자 모집 (한국어)",
-      label: "모집 영상",
+      id: "5YqA0qryPPs",
+      title: "티저 영상",
+      label: "티저",
     },
     {
       id: "SoOr5xxGpjk",
-      title: "티저 영상1 (한국어)",
-      label: "티저",
+      title: "참가자 모집",
+      label: "모집",
     },
     /*{ id: 'SoOr5xxGpjk', title: '티저 영상2 (한국어)', label: '티저' },
     { id: 'SoOr5xxGpjk', title: '티저 영상3 (한국어)', label: '티저' },
@@ -124,9 +124,9 @@ export const YouTubeEmbed = ({
       </div>
 
       {/* 썸네일 섹션 */}
-      <div className="relative"> 
+      <div className="relative">
         {/* 좌측 화살표 */}
-        <button 
+        <button
           onClick={() => scroll('left')}
           // top-[40%]에서 [36%]로 올려 썸네일 이미지 중앙에 맞춤
           // -left-4에서 -left-6으로 옮겨 이미지와 겹치지 않게 여유 공간 확보
@@ -136,9 +136,9 @@ export const YouTubeEmbed = ({
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
         </button>
-      
+
         {/* 썸네일 리스트 (기존 코드 유지) */}
-        <div 
+        <div
           ref={scrollRef}
           onScroll={handleScroll}
           className="flex gap-4 overflow-x-auto pb-6 snap-x scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
@@ -147,14 +147,12 @@ export const YouTubeEmbed = ({
             <button
               key={`${video.id}-${index}`}
               onClick={() => setActiveIndex(index)}
-              className={`flex-shrink-0 w-40 md:w-48 snap-start transition-all duration-300 ${
-                activeIndex === index ? 'scale-100 opacity-100' : 'scale-95 opacity-30 hover:opacity-100'
-              }`}
+              className={`flex-shrink-0 w-40 md:w-48 snap-start transition-all duration-300 ${activeIndex === index ? 'scale-100 opacity-100' : 'scale-95 opacity-30 hover:opacity-100'
+                }`}
             >
-              <div className={`relative aspect-video rounded-2xl overflow-hidden mb-3 border-2 transition-all ${
-                activeIndex === index ? 'border-[#44a9ff] shadow-xl ring-2 ring-[#44a9ff]/20' : 'border-transparent'
-              }`}>
-                <img 
+              <div className={`relative aspect-video rounded-2xl overflow-hidden mb-3 border-2 transition-all ${activeIndex === index ? 'border-[#44a9ff] shadow-xl ring-2 ring-[#44a9ff]/20' : 'border-transparent'
+                }`}>
+                <img
                   src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
                   alt={video.title}
                   className="w-full h-full object-cover"
@@ -171,9 +169,9 @@ export const YouTubeEmbed = ({
             </button>
           ))}
         </div>
-      
+
         {/* 우측 화살표 */}
-        <button 
+        <button
           onClick={() => scroll('right')}
           className="absolute -right-20 top-[36%] -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-xl hover:scale-110 text-[#44a9ff] transition-all hidden md:flex items-center justify-center border border-gray-50"
         >
@@ -193,12 +191,12 @@ export const YouTubeEmbed = ({
               // 로직: 스크롤이 가능한 상태면 scrollProgress를 쓰고,
               // 스크롤이 안 되는 상태(영상이 적을 때)면 activeIndex를 비율로 계산함
               scrollRef.current &&
-              scrollRef.current.scrollWidth >
+                scrollRef.current.scrollWidth >
                 scrollRef.current.clientWidth
                 ? (scrollProgress / 100) *
-                  (150 - 150 / currentVideos.length)
+                (150 - 150 / currentVideos.length)
                 : activeIndex * (150 / currentVideos.length)
-            }px)`,
+              }px)`,
           }}
         />
       </div>

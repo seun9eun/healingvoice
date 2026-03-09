@@ -67,7 +67,7 @@ export function Header() {
 
           {/* 지원하기 버튼 */}
           <button
-            onClick={() => scrollToSection("#apply-email")}
+            onClick={() => scrollToSection("#steps")}
             className="bg-[#44a9ff] hover:bg-[#2f94f0] text-white font-bold px-7 py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[16px]"
           >
             {t("apply")}
@@ -113,7 +113,7 @@ export function Header() {
               </button>
 
               <button
-                onClick={() => scrollToSection("#apply-email")}
+                onClick={() => scrollToSection("#steps")}
                 className="bg-[#44a9ff] hover:bg-[#2f94f0] text-white font-bold py-3 rounded-full text-center w-full transition-colors text-lg"
               >
                 {t("apply")}
