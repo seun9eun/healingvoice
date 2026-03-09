@@ -56,7 +56,7 @@ export function StepsSection() {
           {/* HWP 한글파일 */}
           {lang === 'ko' && (
             <a
-              href="https://drive.google.com/uc?export=download&id=1Pc37Yhxniexhj52AtOWsWkR3vyO59mUT"
+              href="https://drive.google.com/uc?export=download&id=1nLkDq9uSwJCyDJFihEFCP5YKB5EI6lmg"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
@@ -71,7 +71,7 @@ export function StepsSection() {
           {/* DOCX 워드파일 */}
           {lang === 'ko' && (
             <a
-              href="https://drive.google.com/uc?export=download&id=1C9dRbAhKIAHVTcSkh2HjmHF36GakoNsk"
+              href="https://drive.google.com/uc?export=download&id=1L_536GYEvEf4Nw543_bxrEu24pIMLg4d"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
@@ -86,7 +86,7 @@ export function StepsSection() {
           {/* 영문 지원서 다운로드 */}
           {lang === 'en' && (
             <a
-              href="https://drive.google.com/uc?export=download&id=1416cE9fLMMIyHbPfvZdSrRVRFuBiJyG8"
+              href="https://drive.google.com/uc?export=download&id=1LGSsjH-bF83PK27XnfsDZAkcqVfek1D2"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
