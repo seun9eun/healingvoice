@@ -68,11 +68,11 @@ export function ChecklistSection() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#44a9ff] text-[15px] font-bold">
+                  <p className="text-[#44a9ff] text-[14px] md:text-[15px] font-bold break-words leading-tight">
                     {t('checklist.subject.format')}
                   </p>
                   <div className="bg-white border border-[#44a9ff]/10 rounded-xl p-4">
-                    <p className="text-gray-600 text-[14px] font-medium leading-[20px]">
+                    <p className="text-gray-600 text-[13px] md:text-[14px] font-medium leading-[18px] md:leading-[20px] break-words">
                       {t('checklist.subject.example')}
                     </p>
                   </div>
@@ -91,13 +91,13 @@ export function ChecklistSection() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#155dfc] text-[15px] font-bold">
+                  <p className="text-[#155dfc] text-[14px] md:text-[15px] font-bold break-words leading-tight">
                     {t('checklist.filename.format')}
                   </p>
                   <div className="space-y-2">
                     {[1, 2, 3].map((num) => (
                       <div key={num} className="bg-white border border-[#155dfc]/5 rounded-xl p-3.5">
-                        <p className="text-gray-600 text-[14px] font-medium leading-[20px]">
+                        <p className="text-gray-600 text-[13px] md:text-[14px] font-medium leading-[18px] md:leading-[20px] break-words">
                           {t(`checklist.filename.file${num}`)}
                         </p>
                       </div>

@@ -16,16 +16,18 @@ export function Footer() {
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-4">
           <h3 className="mb-2">
-                  <img 
-                    src={lang === "en" ? logoImageEn_w : logoImage_w} 
-                    alt="HEALING VOICE" 
-                    className="h-6 md:h-7 w-auto object-contain" 
-                  />
+            <img
+              src={lang === "en" ? logoImageEn_w : logoImage_w}
+              alt="HEALING VOICE"
+              className="h-6 md:h-7 w-auto object-contain"
+            />
           </h3>
-          <p className="flex items-center gap-2 text-[#e2e2e2]">
-            <Phone className="w-5 h-5 text-sky-400" />
-            {t('footer.phone')}{" "}
-            <span className="text-sm">{t('footer.phoneHours')}</span>
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[#e2e2e2] text-sm md:text-base">
+            <span className="flex items-center gap-2">
+              <Phone className="w-4 h-4 md:w-5 md:h-5 text-sky-400" />
+              {t('footer.phone')}
+            </span>
+            <span className="text-[12px] md:text-sm opacity-80">{t('footer.phoneHours')}</span>
           </p>
           {lang === "ko" ? (
             <a
