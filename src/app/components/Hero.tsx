@@ -34,42 +34,45 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-4 md:gap-8"
+          className="flex flex-col items-center gap-8 md:gap-10"
         >
-          <div className="max-w-screen-lg mx-auto flex flex-col items-center gap-2">
-            {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
-            <div className="flex justify-center w-50">
-              <img
-                src={img_tag}
-                alt={t("hero.tagline")}
-                className="w-full max-w-[120px] md:max-w-[160px] h-auto object-contain"
-              />
+          {/* 로고 및 태그라인 그룹 */}
+          <div className="flex flex-col items-center gap-3 md:gap-4">
+            <div className="flex flex-col items-center gap-1 md:gap-1.5">
+              {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
+              <div className="flex justify-center">
+                <img
+                  src={img_tag}
+                  alt={t("hero.tagline")}
+                  className="w-full max-w-[100px] md:max-w-[130px] h-auto object-contain"
+                />
+              </div>
+
+              {/* 로고 슬롯 2 - 태그라인 이미지 */}
+              <div className="flex justify-center w-full">
+                <img
+                  src={image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
+                  alt={t("hero.tagline")}
+                  className="w-full max-w-[320px] md:max-w-[480px] h-auto object-contain"
+                />
+              </div>
             </div>
 
-            {/* 로고 슬롯 2 - 태그라인 이미지 */}
-            <div className="flex justify-center w-full">
+            {/* 힐링보이스 로고 */}
+            <div className="flex justify-center w-full px-4 md:px-0">
               <img
-                src={image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
-                alt={t("hero.tagline")}
-                className="w-full max-w-[280px] md:max-w-[340px] h-auto object-contain"
+                src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
+                alt="힐링보이스"
+                className="w-full max-w-[360px] md:max-w-[440px] h-auto object-contain drop-shadow-sm"
               />
             </div>
-          </div>
-
-          {/* 힐링보이스 로고 */}
-          <div className="flex justify-center w-full px-4 md:px-0">
-            <img
-              src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
-              alt="힐링보이스"
-              className="w-full max-w-[320px] md:max-w-[460px] h-auto object-contain drop-shadow-sm"
-            />
           </div>
 
           {/* 설명 텍스트 컨테이너: max-w를 조금 더 넉넉하게 잡거나 없애서 한 줄 확보 */}
           <div className="text-[#101828] max-w-4xl mx-auto space-y-1.5 md:space-y-2 text-center px-2 md:px-0 mt-2 md:mt-0">
 
             {/* 첫 번째 줄 */}
-            <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[36px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
+            <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
               <span>"{t("hero.descPart1")}</span>
               <span>{t("hero.descPart2")}</span>
               <span className="font-black text-[#0084d1]">CCM</span>
@@ -77,7 +80,7 @@ export function Hero() {
             </p>
 
             {/* 두 번째 줄 */}
-            <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[36px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
+            <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
               {t("hero.descPart4")}
             </p>
 
