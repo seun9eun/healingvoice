@@ -8,6 +8,7 @@ import { useLanguage } from "../context/LanguageContext";
 const logoImage = "https://i.imgur.com/NdVOBXQ.png";
 // 힐링보이스 흰색 로고 - 모바일 메뉴(다크) 배경에 사용
 const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
+const logoImageEn = "https://i.imgur.com/czHtSNl.png";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -41,7 +42,7 @@ export function Header() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2"
         >
-          <img src={logoImage} alt="힐링보이스" className="h-16 w-auto object-contain" />
+          <img src={lang === "en" ? logoImageEn : logoImage} alt="힐링보이스" className="h-16 w-auto object-contain" />
         </Link>
 
         {/* 데스크탑 네비 */}

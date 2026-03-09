@@ -1,4 +1,4 @@
-import { Phone, ExternalLink } from "lucide-react";
+import { Phone, ExternalLink, Mail } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
 // 이미지 경로 변수
@@ -9,14 +9,14 @@ const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
 const logoImageEn = "https://i.imgur.com/czHtSNl.png"; // 영문 로고 
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   return (
     <footer className="bg-[#101828] text-gray-400 py-12 border-t border-white/10">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8 items-center">
         <div className="space-y-4">
           <h3 className="mb-2">
                   <img 
-                    src={logoImage_w} 
+                    src={lang === "en" ? logoImageEn : logoImage_w} 
                     alt="HEALING VOICE" 
                     className="h-6 md:h-7 w-auto object-contain" 
                   />
@@ -26,15 +26,22 @@ export function Footer() {
             {t('footer.phone')}{" "}
             <span className="text-sm">{t('footer.phoneHours')}</span>
           </p>
-          <a
-            href="https://pf.kakao.com/_wrKzX/chat"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-sky-400 transition-colors text-[#e2e2e2]"
-          >
-            <ExternalLink className="w-5 h-5 text-sky-400" />
-            {t('footer.kakao')}
-          </a>
+          {lang === "ko" ? (
+            <a
+              href="https://pf.kakao.com/_wrKzX/chat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 hover:text-sky-400 transition-colors text-[#e2e2e2]"
+            >
+              <ExternalLink className="w-5 h-5 text-sky-400" />
+              {t('footer.kakao')}
+            </a>
+          ) : (
+            <div className="flex items-center gap-2 text-[#e2e2e2]">
+              <Mail className="w-5 h-5 text-sky-400" />
+              {t('footer.email')}
+            </div>
+          )}
         </div>
 
         <div className="md:text-right">

@@ -22,12 +22,12 @@ const VIDEO_DATA = {
   en: [
     {
       id: "EN_RECRUIT_ID",
-      title: "Recruitment (English)",
+      title: "Recruitment",
       label: "Recruitment",
     },
     {
       id: "EN_TEASER_ID",
-      title: "Teaser (English)",
+      title: "Teaser",
       label: "Teaser",
     },
   ],

@@ -276,7 +276,7 @@ export const translations = {
         desc: "Please download and complete the application form below.",
         hwp: "HWP (Korean)",
         docx: "DOCX (Word)",
-        eng: "Application Form (Eng)",
+        eng: "Application Form",
       },
       step2: {
         title: "Video Submission",
@@ -350,7 +350,7 @@ export const translations = {
           desc: "Support for CCM single production and distribution",
         },
         item2: {
-          title: "Concert",
+          title: "Concerts",
           desc: "Opportunities for domestic and international tour concerts",
         },
         item3: {
@@ -463,9 +463,9 @@ export const translations = {
       ],
     },
     footer: {
-      phone: "02) 3275-9333",
+      phone: "+82 2-3275-9333",
       phoneHours: "(Weekdays 09:00~18:00 KST)",
-      kakao: "Kakaotalk Channel: 'CGN 힐링보이스'",
+      email: "cgnhealingvoice@daum.net",
     },
   },
 };
