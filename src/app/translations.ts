@@ -60,7 +60,7 @@ export const translations = {
         copyBtn: "메일 주소 복사",
       },
       toast: {
-        success: "메일 주소가 클립보드에 복사되었습니다.",
+        success: "메일 주소가 복사되었습니다.",
         error: "복사에 실패했습니다. 직접 입력해주세요.",
       },
     },

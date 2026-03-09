@@ -42,7 +42,7 @@ export function Header() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2"
         >
-          <img src={lang === "en" ? logoImageEn : logoImage} alt="힐링보이스" className="h-16 w-auto object-contain" />
+          <img src={lang === "en" ? logoImageEn : logoImage} alt="힐링보이스" className="h-[51px] w-auto object-contain" />
         </Link>
 
         {/* 데스크탑 네비 */}
@@ -110,7 +110,7 @@ export function Header() {
                 className="text-left text-[#101828] hover:text-[#44a9ff] font-bold py-2 flex items-center gap-2 text-base transition-colors"
               >
                 <Globe className="w-5 h-5" />
-                <span>{lang === "ko" ? "Switch to English" : "한국어로 전환"}</span>
+                <span>{lang === "ko" ? "English" : "한국어"}</span>
               </button>
 
               <button
