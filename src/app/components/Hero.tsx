@@ -88,7 +88,7 @@ export function Hero() {
 
           {/* 모집 기간 뱃지 (노랑-연두) */}
           <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px] mt-2 md:mt-0">
-            <p className="font-semibold text-[#101828] text-[15px] md:text-[18px] text-center break-words break-keep whitespace-pre-wrap">
+            <p className="font-medium text-[#101828] text-[15px] md:text-[18px] text-center break-words break-keep whitespace-pre-wrap">
               {t("hero.period")}
             </p>
           </div>
