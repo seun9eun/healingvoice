@@ -57,18 +57,18 @@ export function ChecklistSection() {
             <div className="grid md:grid-cols-2 gap-6">
 
               {/* Card 1: 메일 제목 */}
-              <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-7 flex flex-col gap-6">
+              <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-5 md:p-7 flex flex-col gap-6">
                 <div className="flex items-center gap-3">
                   <div className="bg-[#00a6f4] p-2 rounded-xl">
                     <Mail className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-[19px] font-bold text-gray-900">
+                  <h3 className="text-[17px] md:text-[19px] font-bold text-gray-900">
                     {t('checklist.subject.title')}
                   </h3>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#44a9ff] text-[14px] md:text-[15px] font-bold break-words leading-tight">
+                  <p className="text-[#44a9ff] text-[13px] md:text-[15px] font-bold break-all leading-tight">
                     {t('checklist.subject.format')}
                   </p>
                   <div className="bg-white border border-[#44a9ff]/10 rounded-xl p-4">
@@ -80,24 +80,24 @@ export function ChecklistSection() {
               </div>
 
               {/* Card 2: 파일명 예시 */}
-              <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-7 flex flex-col gap-6">
+              <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-5 md:p-7 flex flex-col gap-6">
                 <div className="flex items-center gap-3">
                   <div className="bg-[#155dfc] p-2 rounded-xl">
                     <FileText className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-[19px] font-bold text-gray-900">
+                  <h3 className="text-[17px] md:text-[19px] font-bold text-gray-900">
                     {t('checklist.filename.title')}
                   </h3>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#155dfc] text-[14px] md:text-[15px] font-bold break-words leading-tight">
+                  <p className="text-[#155dfc] text-[13px] md:text-[15px] font-bold break-all leading-tight">
                     {t('checklist.filename.format')}
                   </p>
                   <div className="space-y-2">
                     {[1, 2, 3].map((num) => (
                       <div key={num} className="bg-white border border-[#155dfc]/5 rounded-xl p-3.5">
-                        <p className="text-gray-600 text-[13px] md:text-[14px] font-medium leading-[18px] md:leading-[20px] break-words">
+                        <p className="text-gray-600 text-[11px] md:text-[14px] font-medium leading-[16px] md:leading-[20px] break-all">
                           {t(`checklist.filename.file${num}`)}
                         </p>
                       </div>
