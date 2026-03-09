@@ -254,7 +254,7 @@ export const translations = {
     hero: {
       tagline: "A Voice That Heals, A Song That Restores", // 0305 수정 0306 이미지 대체
       descPart1:
-        "K-POP took over the world. Trot set the trend.",
+        "K-POP took over the world. K-culture set the trend.",
       descPart2: "\nNow—it’s ",
       descPart3: "’s turn.",
       descPart4:
