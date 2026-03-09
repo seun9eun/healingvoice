@@ -310,7 +310,7 @@ export const translations = {
         copyBtn: "Copy Email Address",
       },
       toast: {
-        success: "Email address copied to clipboard.",
+        success: "Email address copied.",
         error: "Copy failed. Please enter it manually.",
       },
     },

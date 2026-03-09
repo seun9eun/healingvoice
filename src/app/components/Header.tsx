@@ -42,7 +42,7 @@ export function Header() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2"
         >
-          <img src={lang === "en" ? logoImageEn : logoImage} alt="힐링보이스" className="h-[51px] w-auto object-contain" />
+          <img src={lang === "en" ? logoImageEn : logoImage} alt="힐링보이스" className="h-[38px] w-auto object-contain" />
         </Link>
 
         {/* 데스크탑 네비 */}
