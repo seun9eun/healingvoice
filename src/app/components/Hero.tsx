@@ -38,7 +38,7 @@ export function Hero() {
         >
           {/* 로고 및 태그라인 그룹 */}
           <div className="flex flex-col items-center gap-3 md:gap-4">
-            <div className="flex flex-col items-center gap-1 md:gap-1.5">
+            <div className="flex flex-col items-center gap-6 md:gap-8">
               {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
               <div className="flex justify-center">
                 <img
