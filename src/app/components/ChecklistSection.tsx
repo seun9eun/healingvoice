@@ -72,7 +72,7 @@ export function ChecklistSection() {
                     {t('checklist.subject.format')}
                   </p>
                   <div className="bg-white border border-[#44a9ff]/10 rounded-xl p-4">
-                    <p className="text-gray-600 text-[13px] md:text-[14px] font-medium leading-[18px] md:leading-[20px] break-words">
+                    <p className="text-gray-600 text-[12px] md:text-[14px] font-medium leading-[16px] md:leading-[20px] break-all">
                       {t('checklist.subject.example')}
                     </p>
                   </div>
