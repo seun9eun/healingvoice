@@ -21,14 +21,14 @@ const VIDEO_DATA = {
   ],
   en: [
     {
-      id: "EN_RECRUIT_ID",
-      title: "Recruitment",
-      label: "Recruitment",
-    },
-    {
       id: "pBMPu9lvUOE",
       title: "Teaser",
       label: "Teaser",
+    },
+    {
+      id: "EN_RECRUIT_ID",
+      title: "Recruitment",
+      label: "Recruitment",
     },
   ],
 };
