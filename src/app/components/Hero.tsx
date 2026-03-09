@@ -72,7 +72,7 @@ export function Hero() {
           <div className="text-[#101828] max-w-4xl mx-auto space-y-1.5 md:space-y-2 text-center px-2 md:px-0 mt-2 md:mt-0">
 
             {/* 첫 번째 줄 */}
-            <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
+            <p className={`text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line ${lang === "en" ? "md:whitespace-pre-line" : "md:whitespace-nowrap"}`}>
               <span>"{t("hero.descPart1")}</span>
               <span>{t("hero.descPart2")}</span>
               <span className="font-black text-[#0084d1]">K-CCM</span>
@@ -80,7 +80,7 @@ export function Hero() {
             </p>
 
             {/* 두 번째 줄 */}
-            <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
+            <p className={`text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line ${lang === "en" ? "md:whitespace-pre-line" : "md:whitespace-nowrap"}`}>
               {t("hero.descPart4")}
             </p>
 
