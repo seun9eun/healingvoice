@@ -44,7 +44,7 @@ export function Hero() {
                 <img
                   src={img_tag}
                   alt={t("hero.tagline")}
-                  className="w-full max-w-[100px] md:max-w-[130px] h-auto object-contain"
+                  className="w-full max-w-[170px] md:max-w-[230px] h-auto object-contain"
                 />
               </div>
 
@@ -53,7 +53,7 @@ export function Hero() {
                 <img
                   src={image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
                   alt={t("hero.tagline")}
-                  className="w-full max-w-[320px] md:max-w-[480px] h-auto object-contain"
+                  className="w-full max-w-[340px] md:max-w-[460px] h-auto object-contain"
                 />
               </div>
             </div>
@@ -63,7 +63,7 @@ export function Hero() {
               <img
                 src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
                 alt="힐링보이스"
-                className="w-full max-w-[360px] md:max-w-[440px] h-auto object-contain drop-shadow-sm"
+                className="w-full max-w-[340px] md:max-w-[460px] h-auto object-contain drop-shadow-sm"
               />
             </div>
           </div>
@@ -75,7 +75,7 @@ export function Hero() {
             <p className="text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line md:whitespace-nowrap">
               <span>"{t("hero.descPart1")}</span>
               <span>{t("hero.descPart2")}</span>
-              <span className="font-black text-[#0084d1]">CCM</span>
+              <span className="font-black text-[#0084d1]">K-CCM</span>
               <span>{t("hero.descPart3")}"</span>
             </p>
 
