@@ -8,7 +8,7 @@ export const translations = {
     //hero
     hero: {
       tagline: "세상을 치유하고,\n 영혼을 울리는 목소리",
-      descPart1: "K-POP의 열기, 트로트 열풍, ",
+      descPart1: "K-POP의 열기, K-컬쳐, ",
       descPart2: "이제는 ",
       descPart3: "입니다.",
       descPart4:
