@@ -10,9 +10,22 @@ const logoImage = "https://i.imgur.com/NdVOBXQ.png";
 const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
 const logoImageEn = "https://i.imgur.com/czHtSNl.png";
 
+function LanguageSwitcher({ className = "" }: { className?: string }) {
+  const { lang, toggleLang } = useLanguage();
+  return (
+    <button
+      onClick={toggleLang}
+      className={`flex items-center gap-1 font-bold text-[#101828] hover:text-[#44a9ff] transition-colors border-2 border-[#e8e8e8] hover:border-[#44a9ff] rounded-full px-3 py-1.5 md:py-2 text-xs md:text-sm whitespace-nowrap ${className}`}
+    >
+      <Globe className="w-3.5 h-3.5 md:w-4 md:h-4" />
+      <span>{lang === "ko" ? "EN" : "KO"}</span>
+    </button>
+  );
+}
+
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t, lang, toggleLang } = useLanguage();
+  const { t, lang } = useLanguage();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -58,13 +71,7 @@ export function Header() {
           ))}
 
           {/* 언어 토글 버튼 */}
-          <button
-            onClick={toggleLang}
-            className="flex items-center gap-1 font-bold text-[#101828] hover:text-[#44a9ff] transition-colors border-2 border-[#e8e8e8] hover:border-[#44a9ff] rounded-full px-3 py-2 text-sm"
-          >
-            <Globe className="w-4 h-4" />
-            <span>{lang === "ko" ? "EN" : "KO"}</span>
-          </button>
+          <LanguageSwitcher />
 
           {/* 지원하기 버튼 */}
           <button
@@ -75,14 +82,18 @@ export function Header() {
           </button>
         </nav>
 
-        {/* 모바일 메뉴 버튼 */}
-        <button
-          onClick={toggleMenu}
-          className="md:hidden text-[#101828] hover:text-[#44a9ff] transition-colors"
-          aria-label="메뉴 열기"
-        >
-          {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        {/* 모바일 네비 영역 (언어버튼 + 햄버거) */}
+        <div className="flex md:hidden items-center gap-3">
+          <LanguageSwitcher />
+
+          <button
+            onClick={toggleMenu}
+            className="text-[#101828] hover:text-[#44a9ff] transition-colors p-1"
+            aria-label="메뉴 열기"
+          >
+            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* 모바일 드롭다운 메뉴 */}
@@ -104,14 +115,6 @@ export function Header() {
                   {t(item.key as any)}
                 </button>
               ))}
-
-              <button
-                onClick={toggleLang}
-                className="text-left text-[#101828] hover:text-[#44a9ff] font-bold py-2 flex items-center gap-2 text-base transition-colors"
-              >
-                <Globe className="w-5 h-5" />
-                <span>{lang === "ko" ? "English" : "한국어"}</span>
-              </button>
 
               <button
                 onClick={() => scrollToSection("#steps")}
