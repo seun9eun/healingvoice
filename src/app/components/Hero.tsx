@@ -68,23 +68,6 @@ export function Hero() {
             </div>
           </div>
 
-          {/* 설명 텍스트 컨테이너: max-w를 조금 더 넉넉하게 잡거나 없애서 한 줄 확보 */}
-          <div className="text-[#101828] max-w-4xl mx-auto space-y-1.5 md:space-y-2 text-center px-2 md:px-0 mt-2 md:mt-0">
-
-            {/* 첫 번째 줄 */}
-            <p className={`text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line ${lang === "en" ? "md:whitespace-pre-line" : "md:whitespace-nowrap"}`}>
-              <span>"{t("hero.descPart1")}</span>
-              <span>{t("hero.descPart2")}</span>
-              <span className="font-black text-[#0084d1]">K-CCM</span>
-              <span>{t("hero.descPart3")}"</span>
-            </p>
-
-            {/* 두 번째 줄 */}
-            <p className={`text-[18px] md:text-[28px] font-semibold leading-snug md:leading-[28px] tracking-normal break-keep whitespace-pre-line ${lang === "en" ? "md:whitespace-pre-line" : "md:whitespace-nowrap"}`}>
-              {t("hero.descPart4")}
-            </p>
-
-          </div>
 
           {/* 모집 기간 뱃지 (노랑-연두) */}
           <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px] mt-2 md:mt-0">

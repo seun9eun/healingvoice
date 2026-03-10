@@ -4,6 +4,7 @@ import { StepsSection } from "../components/StepsSection";
 import { ChecklistSection } from "../components/ChecklistSection";
 import { SongListSection } from "../components/SongListSection";
 import { YouTubeEmbed } from "../components/YouTubeEmbed";
+import { TaglineSection } from "../components/TaglineSection";
 import { useLanguage } from "../context/LanguageContext";
 
 export function LandingPage() {
@@ -12,7 +13,8 @@ export function LandingPage() {
   return (
     <>
       <Hero />
-{/* 3. 가져온 lang 값을 YouTubeEmbed의 prop으로 넘겨줍니다. */}
+      <TaglineSection />
+      {/* 3. 가져온 lang 값을 YouTubeEmbed의 prop으로 넘겨줍니다. */}
       <YouTubeEmbed lang={lang} />
       <InfoSection />
       <StepsSection />
