@@ -13,7 +13,11 @@ export default {
           dark: '#101828',
           light: '#FEFFF6',
         }
-      }
+      },
+      fontFamily: {
+        sans: ["Pretendard Variable", "Pretendard", "system-ui", "sans-serif"],
+        mono: ["Pretendard Variable", "Pretendard", "monospace"],
+      },
     },
   },
   plugins: [],

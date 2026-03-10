@@ -36,7 +36,7 @@ export function SongListSection() {
                 key={song.no}
                 className="break-keep flex items-center p-5 hover:bg-sky-50/60 transition-colors group"
               >
-                <div className="w-16 text-center font-mono text-xl text-gray-300 font-bold group-hover:text-sky-500 transition-colors">
+                <div className="w-16 text-center font-sans text-xl text-gray-300 font-bold group-hover:text-sky-500 transition-colors">
                   {String(song.no).padStart(2, '0')}
                 </div>
                 <div className="flex-1">
