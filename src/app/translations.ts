@@ -82,7 +82,7 @@ export const translations = {
       awards: {
         subtitle: "Awards",
         title: "시상 내역",
-        desc: "최종 우승자와 최종 TOP 7을 위해\n 마련된 다양한 특전을 소개합니다.\n지금 도전하세요!",
+        desc: "최종 우승자와 TOP7을 위한 다양한 특전\n지금 도전하세요!",
         grandPrize: {
           badge: "Grand Prize",
           title: "최종 우승자(1인)",
@@ -333,7 +333,7 @@ export const translations = {
       awards: {
         subtitle: "Awards",
         title: "Awards & Benefits",
-        desc: "Introducing the exclusive benefits for our Winner and the Top 7—Apply now!",
+        desc: "Exclusive benefits for the Winner and TOP 7\nApply now!",
         grandPrize: {
           badge: "Grand Prize",
           title: "Final Winner (1 Person)",
