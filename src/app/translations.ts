@@ -18,8 +18,8 @@ export const translations = {
     },
     gallery: {
       subtitle: "Official Video",
-      title: "공식 영상",
-      desc: "힐링보이스의 티저와 모집 영상을 확인해보세요.",
+      title: "Preview",
+      desc: "힐링보이스의 공식 영상을 만나보세요",
     },
     steps: {
       subtitle: "How to Apply",
@@ -260,8 +260,8 @@ export const translations = {
     },
     gallery: {
       subtitle: "Official Video",
-      title: "Teaser & Casting Video",
-      desc: "Watch our official teaser and recruitment videos.\nIt's time for your voice to resonate with the world.",
+      title: "Preview",
+      desc: "Meet the official videos of Healing Voice",
     },
     steps: {
       subtitle: "How to Apply",
