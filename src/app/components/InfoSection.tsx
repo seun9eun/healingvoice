@@ -1,4 +1,4 @@
-import { 
+import {
   Users, UserCheck, HeartHandshake, Mic,
   Trophy, Disc, Globe, Video
 } from "lucide-react";
@@ -23,17 +23,17 @@ export function InfoSection() {
   return (
     // 상위 section에서 padding과 container 제한을 없애고 100% 너비로 설정합니다.
     <section id="info" className="w-full relative overflow-hidden bg-transparent">
-      
+
       {/* =========================================
           1. Eligibility Section (배경 꽉 차게)
       ========================================= */}
-      <div 
-        className="w-full min-h-[710px] py-[120px] px-6" 
+      <div
+        className="w-full min-h-[710px] py-[120px] px-6"
         style={{ background: 'linear-gradient(180deg, #E4F3FF 0%, #BADFFF 100%)' }}
       >
         {/* 콘텐츠 중앙 정렬 및 최대 너비 제한 (2042 - 269*2 = 1504px) */}
         <div className="max-w-[1504px] mx-auto w-full">
-          
+
           {/* Header */}
           <div className="text-center mb-16">
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px] block mb-3">
@@ -46,26 +46,26 @@ export function InfoSection() {
               {t('info.eligibility.desc')}
             </p>
           </div>
-      
-          {/* Grid: 1504px 안에서 4등분 됨 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+          {/* Grid: 1504px 안에서 2*2 그리드로 변경됨 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {eligibilityItems.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white/70 backdrop-blur-md border border-white rounded-[32px] flex flex-col items-center text-center h-full shadow-sm hover:shadow-md transition-all px-[40px] pt-[56px] pb-[30px] bg-[#ffffff]"
+                className="bg-white/70 backdrop-blur-md border border-white rounded-[32px] flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 h-full shadow-sm hover:shadow-md transition-all px-[30px] md:px-[60px] py-[40px] md:py-[56px] bg-[#ffffff]"
               >
                 {/* 아이콘 */}
-                <div className="flex-shrink-0 bg-[#E4F3FF] p-5 rounded-3xl mb-8">
+                <div className="flex-shrink-0 bg-[#E4F3FF] p-5 rounded-3xl">
                   <item.icon className="w-10 h-10 text-[#00BCFF]" />
                 </div>
-          
+
                 {/* 텍스트 */}
-                <div className="flex flex-col items-center">
-                  <h4 className="font-bold text-gray-900 mb-4 leading-snug break-keep text-[22px]">
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                  <h4 className="font-bold text-gray-900 mb-2 leading-snug break-keep text-[20px] md:text-[22px]">
                     {item.title}
                   </h4>
                   {item.desc && (
-                    <p className="text-[#7D7D7D] text-[14px] font-medium leading-[20px] tracking-normal text-center break-keep">
+                    <p className="text-[#101828] text-[13px] md:text-[14px] font-medium leading-[20px] tracking-normal break-keep opacity-80">
                       {item.desc}
                     </p>
                   )}
@@ -73,7 +73,7 @@ export function InfoSection() {
               </div>
             ))}
           </div>
-      
+
         </div>
       </div>
 
@@ -83,7 +83,7 @@ export function InfoSection() {
       {/* 기존에 최상위에 있던 container 클래스를 Awards 전용으로 옮겼습니다. */}
       <div className="container mx-auto px-4 pt-24 mb-32">
         <div id="awards" className="scroll-mt-24">
-          
+
           {/* Header */}
           <div className="text-center mb-16">
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
@@ -99,41 +99,41 @@ export function InfoSection() {
 
           {/* Awards Layout */}
           <div className="flex flex-col items-center gap-6 max-w-5xl mx-auto">
-             
-             {/* Grand Prize */}
-             <div
-                className="relative bg-[#0084d1] border border-sky-400 p-10 rounded-2xl flex flex-col items-center text-center shadow-[0_25px_50px_-12px_rgba(2,74,112,0.5)] w-full max-w-sm overflow-hidden transform hover:scale-105 transition-transform duration-300"
-              >
-                  <div className="absolute top-0 right-0 bg-white text-[#0084d1] text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase">
-                    {t('info.awards.grandPrize.badge')}
-                  </div>
-                  <div className="bg-white/20 p-5 rounded-full mb-6">
-                    <Trophy className="w-10 h-10 text-white" />
-                  </div>
-                  <h4 className="text-xl font-bold text-white mb-2">{t('info.awards.grandPrize.title')}</h4>
-                  <p className="text-sky-100 font-medium">{t('info.awards.grandPrize.benefit')}</p>
-             </div>
 
-             {/* Divider */}
-             <div className="w-full flex items-center gap-4 py-8">
-                <div className="h-px bg-gray-300/60 flex-grow"></div>
-             </div>
+            {/* Grand Prize */}
+            <div
+              className="relative bg-[#0084d1] border border-sky-400 p-10 rounded-2xl flex flex-col items-center text-center shadow-[0_25px_50px_-12px_rgba(2,74,112,0.5)] w-full max-w-sm overflow-hidden transform hover:scale-105 transition-transform duration-300"
+            >
+              <div className="absolute top-0 right-0 bg-white text-[#0084d1] text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase">
+                {t('info.awards.grandPrize.badge')}
+              </div>
+              <div className="bg-white/20 p-5 rounded-full mb-6">
+                <Trophy className="w-10 h-10 text-white" />
+              </div>
+              <h4 className="text-xl font-bold text-white mb-2">{t('info.awards.grandPrize.title')}</h4>
+              <p className="text-sky-100 font-medium">{t('info.awards.grandPrize.benefit')}</p>
+            </div>
 
-             {/* Other Awards */}
-             <div className="grid md:grid-cols-3 gap-6 w-full">
-                {awardItems.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white/100 backdrop-blur-sm border border-white/70 p-8 rounded-2xl flex flex-col items-center text-center hover:border-sky-400/50 transition-colors transform hover:-translate-y-1 duration-300 shadow-sm bg-[#ffffff]"
-                  >
-                    <div className="bg-sky-100/60 p-4 rounded-full mb-4">
-                      <item.icon className="w-8 h-8 text-sky-500" />
-                    </div>
-                    <h4 className="font-bold text-gray-900 mb-2 text-[20px]">{item.title}</h4>
-                    <p className="text-gray-600 text-sm">{item.desc}</p>
+            {/* Divider */}
+            <div className="w-full flex items-center gap-4 py-8">
+              <div className="h-px bg-gray-300/60 flex-grow"></div>
+            </div>
+
+            {/* Other Awards */}
+            <div className="grid md:grid-cols-3 gap-6 w-full">
+              {awardItems.map((item, idx) => (
+                <div
+                  key={idx}
+                  className="bg-white/100 backdrop-blur-sm border border-white/70 p-8 rounded-2xl flex flex-col items-center text-center hover:border-sky-400/50 transition-colors transform hover:-translate-y-1 duration-300 shadow-sm bg-[#ffffff]"
+                >
+                  <div className="bg-sky-100/60 p-4 rounded-full mb-4">
+                    <item.icon className="w-8 h-8 text-sky-500" />
                   </div>
-                ))}
-             </div>
+                  <h4 className="font-bold text-gray-900 mb-2 text-[20px]">{item.title}</h4>
+                  <p className="text-gray-600 text-sm">{item.desc}</p>
+                </div>
+              ))}
+            </div>
 
           </div>
         </div>
