@@ -129,8 +129,6 @@ export const translations = {
       desc1: "아래 리스트(곡명/첫 소절) 중 1곡을\n선택하여 ",
       descBold: "무반주",
       desc2: "로 불러주세요.",
-      searchPlaceholder: "곡명 또는 아티스트 검색",
-      noResult: "검색 결과가 없습니다.",
       showAll: "전체 리스트 보기",
       collapse: "접기",
       list: [
@@ -387,8 +385,6 @@ export const translations = {
       desc1: "Select 1 song from the list below and perform ",
       descBold: "a cappella",
       desc2: ".",
-      searchPlaceholder: "Search by title or artist",
-      noResult: "No results found.",
       showAll: "View Full List",
       collapse: "Collapse",
       list: [
