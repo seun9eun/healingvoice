@@ -63,7 +63,7 @@ export function Hero() {
               <img
                 src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
                 alt="힐링보이스"
-                className="w-full max-w-[272px] md:max-w-[368px] h-auto object-contain drop-shadow-sm"
+                className="w-full max-w-[320px] md:max-w-[580px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
               />
             </div>
           </div>
