@@ -6,6 +6,9 @@ import {
   Copy,
   CheckCircle2,
   XCircle,
+  User,
+  Accessibility,
+  Smile,
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -120,10 +123,17 @@ export function StepsSection() {
       desc: t('steps.step3.desc'),
       icon: Camera,
       content: (
-        <div className="mt-4 flex gap-2 h-32">
-          {[t('steps.step3.photo1'), t('steps.step3.photo2'), t('steps.step3.photo3')].map((label, index) => (
-            <div key={index} className="flex-1 bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500 text-xs">{label}</span>
+        <div className="mt-4 flex gap-2 h-40">
+          {[
+            { label: t('steps.step3.photo1'), icon: User },
+            { label: t('steps.step3.photo2'), icon: Accessibility },
+            { label: t('steps.step3.photo3'), icon: Smile }
+          ].map((item, index) => (
+            <div key={index} className="flex-1 bg-sky-50/50 border border-sky-200/40 rounded-lg flex flex-col items-center justify-center p-2">
+              <div className="flex-1 flex items-center justify-center">
+                <item.icon className="w-8 h-8 text-sky-400/80" />
+              </div>
+              <span className="text-[13px] font-bold text-gray-700 mt-1">{item.label}</span>
             </div>
           ))}
         </div>
