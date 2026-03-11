@@ -106,9 +106,9 @@ export const translations = {
     checklist: {
       title: "메일 발송 전 체크사항",
       item1: "1. 필수 첨부: 지원서 / 영상(지정곡·자유곡) / 사진",
-      item2_1: "2. 양식 준수: ",
-      item2_bold: "메일 제목, 파일명 양식 확인",
-      item2_2: "",
+      item2_1: " 양식 준수: ",
+      item2_bold: "메일 제목, 파일명 양식",
+      item2_2: " 확인",
       subject: {
         title: "메일 제목 양식",
         format: "[힐링보이스 지원]이름+출생년도 끝 2자리+(휴대폰 끝 4자리)",

@@ -39,9 +39,17 @@ export function ChecklistSection() {
                 <p className="text-[19px] md:text-[21px] break-keep">
                   {t('checklist.item1')}
                 </p>
-                <p className="text-[19px] md:text-[21px] text-[#FF3B30] font-bold break-keep">
-                  {t('checklist.item2_1')}{t('checklist.item2_bold')}{t('checklist.item2_2')}
-                </p>
+                <div className="text-[19px] md:text-[21px] break-keep">
+                  {lang === 'ko' ? (
+                    <p className="text-gray-800 font-medium">
+                      2.<span className="text-[#FF3B30] font-bold">{t('checklist.item2_1')}{t('checklist.item2_bold')}</span>{t('checklist.item2_2')}
+                    </p>
+                  ) : (
+                    <p className="text-[#FF3B30] font-bold">
+                      {t('checklist.item2_1')}{t('checklist.item2_bold')}{t('checklist.item2_2')}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 
