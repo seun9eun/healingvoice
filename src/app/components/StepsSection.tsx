@@ -198,7 +198,7 @@ export function StepsSection() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 relative max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 gap-y-28 md:gap-y-12 relative max-w-7xl mx-auto">
           {/* Connector Line (Desktop) */}
           <div className="hidden lg:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/20 z-0" />
 
@@ -208,7 +208,7 @@ export function StepsSection() {
               className="relative z-10 flex flex-col items-center"
             >
               {/* STEP Marker */}
-              <div className="relative mb-12">
+              <div className="relative mb-6">
                 <div className="w-24 h-24 rounded-full bg-slate-900 border-4 border-[#00a6f4] flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.3)] z-10 relative">
                   <step.icon className="w-10 h-10 text-white" />
                 </div>
