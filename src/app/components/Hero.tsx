@@ -34,11 +34,11 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-8 md:gap-10"
+          className="flex flex-col items-center gap-10 md:gap-14"
         >
           {/* 로고 및 태그라인 그룹 */}
-          <div className="flex flex-col items-center gap-3 md:gap-4">
-            <div className="flex flex-col items-center gap-6 md:gap-8">
+          <div className="flex flex-col items-center gap-4 md:gap-6">
+            <div className="flex flex-col items-center gap-8 md:gap-10">
               {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
               <div className="flex justify-center">
                 <img
@@ -70,14 +70,14 @@ export function Hero() {
 
 
           {/* 모집 기간 뱃지 (노랑-연두) */}
-          <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px] mt-2 md:mt-0">
+          <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px]">
             <p className="font-medium text-[#101828] text-[15px] md:text-[18px] text-center break-words break-keep whitespace-pre-wrap">
               {t("hero.period")}
             </p>
           </div>
 
           {/* CTA 버튼 */}
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center w-full max-w-lg mt-2 md:mt-0 px-2 md:px-0 auto-rows-fr">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full max-w-lg px-2 md:px-0 auto-rows-fr">
             <button
               onClick={() =>
                 document
