@@ -20,7 +20,7 @@ export function ChecklistSection() {
       }}
     >
       {/* 흰색 박스가 들어갈 컨테이너: 기존 사이즈인 max-w-5xl 유지 */}
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-7xl mx-auto">
 
         {/* 메인 흰색 박스: 기존의 적절한 크기 유지 */}
         <div
@@ -40,11 +40,11 @@ export function ChecklistSection() {
                 {t('checklist.title')}
               </h2>
 
-              <div className="space-y-2 text-gray-800 font-medium">
-                <p className="text-[16px] md:text-[17px]">
+              <div className="space-y-4 text-gray-800 font-medium leading-relaxed">
+                <p className="text-[19px] md:text-[21px]">
                   {t('checklist.item1')}
                 </p>
-                <p className="text-[16px] md:text-[17px]">
+                <p className="text-[19px] md:text-[21px]">
                   {t('checklist.item2_1')}
                   <span className="text-[#FF3B30] font-bold">{t('checklist.item2_bold')}</span>
                   {t('checklist.item2_2')}

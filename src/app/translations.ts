@@ -104,7 +104,7 @@ export const translations = {
       },
     },
     checklist: {
-      title: "메일 발송 전 필수 확인 사항",
+      title: "메일 발송 전 체크사항",
       item1: "1. 첨부 파일 누락 여부를 확인해 주세요.",
       item2_1: "2. ",
       item2_bold: "메일 제목, 파일명을 지정된 양식",
@@ -353,7 +353,7 @@ export const translations = {
       },
     },
     checklist: {
-      title: "Mandatory Checklist Before Sending Your Email",
+      title: "Checklist before sending email",
       item1: "Check for missing attachments.",
       item2_1: "Ensure clear and consistent ",
       item2_bold: "email subjects and filenames",
