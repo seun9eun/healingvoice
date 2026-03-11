@@ -48,7 +48,7 @@ export const translations = {
       },
       step3: {
         title: "사진 준비",
-        desc: "6개월 내 촬영한\n 개인 사진 3장을 준비해 주세요.",
+        desc: "6개월 내 촬영한 개인 사진\n 3장을 준비해 주세요.",
         photo1: "상반신",
         photo2: "전신",
         photo3: "자유",
