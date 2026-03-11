@@ -170,7 +170,7 @@ export function StepsSection() {
           </div>
           <button
             onClick={handleCopyEmail}
-            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[20px] px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
+            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             <Copy className="w-4 h-4 text-white" />
             <span>
