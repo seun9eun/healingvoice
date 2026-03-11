@@ -146,8 +146,8 @@ export function StepsSection() {
       icon: Copy,
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
-          <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg">
-            <span className="text-[18px] font-bold text-gray-700 font-sans">
+          <div className="w-full text-center px-2 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg overflow-hidden">
+            <span className="text-[15px] md:text-[16px] font-bold text-gray-700 font-sans break-all">
               cgnhealingvoice@daum.net
             </span>
           </div>
