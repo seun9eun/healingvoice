@@ -8,7 +8,7 @@ import {
   XCircle,
   User,
   PersonStanding,
-  Smile,
+  Sparkles,
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -67,7 +67,9 @@ export function StepsSection() {
               <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.hwp')}
               </span>
-              <Download className="w-4 h-4 text-gray-400 group-hover:text-sky-500" />
+              <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
+                <Download className="w-4 h-4 text-white" />
+              </div>
             </a>
           )}
 
@@ -82,7 +84,9 @@ export function StepsSection() {
               <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.docx')}
               </span>
-              <Download className="w-4 h-4 text-gray-400 group-hover:text-sky-500" />
+              <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
+                <Download className="w-4 h-4 text-white" />
+              </div>
             </a>
           )}
 
@@ -97,7 +101,9 @@ export function StepsSection() {
               <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.eng')}
               </span>
-              <Download className="w-4 h-4 text-gray-400 group-hover:text-sky-500" />
+              <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
+                <Download className="w-4 h-4 text-white" />
+              </div>
             </a>
           )}
         </div>
@@ -127,7 +133,7 @@ export function StepsSection() {
           {[
             { label: t('steps.step3.photo1'), icon: User },
             { label: t('steps.step3.photo2'), icon: PersonStanding },
-            { label: t('steps.step3.photo3'), icon: Smile }
+            { label: t('steps.step3.photo3'), icon: Sparkles }
           ].map((item, index) => (
             <div key={index} className="flex-1 flex flex-col items-center">
               <div className="w-full h-28 bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center mb-2">
@@ -230,15 +236,12 @@ export function StepsSection() {
             <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #bae6fd, transparent)' }} />
 
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-10 relative z-10">
-              {lang === 'ko' ? "영상 촬영시 주의사항" : "Video Recording Precautions"}
+              {lang === 'ko' ? "촬영 시 가이드" : "Video Recording Guide"}
             </h3>
 
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {/* 촬영 가이드 그룹 */}
               <div>
-                <p className="text-[13px] font-black uppercase tracking-widest text-sky-500 mb-4">
-                  {lang === 'ko' ? '촬영 가이드' : 'Guidelines'}
-                </p>
                 <ul className="space-y-3">
                   {['check1', 'check2', 'check3', 'check4', 'check5'].map((key) => (
                     <li key={key} className="flex items-start gap-3 text-[17px] text-gray-700 break-keep">
@@ -251,9 +254,6 @@ export function StepsSection() {
 
               {/* 금지사항 그룹 */}
               <div>
-                <p className="text-[13px] font-black uppercase tracking-widest text-red-400 mb-4">
-                  {lang === 'ko' ? '금지사항' : 'Prohibited'}
-                </p>
                 <ul className="space-y-3">
                   {['check6', 'check7'].map((key) => (
                     <li key={key} className="flex items-start gap-3 text-[17px] text-red-500 font-bold break-keep">
