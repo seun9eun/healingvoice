@@ -219,29 +219,29 @@ export function StepsSection() {
           ))}
         </div>
 
-        {/* 영상 촬영시 주의사항 (Bottom Card) - Distinct dark design */}
+        {/* 영상 촬영시 주의사항 (Bottom Card) */}
         <div className="mt-12 max-w-7xl mx-auto w-full">
           <div
-            className="rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-lg border border-slate-700/50 relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #0f1f3d 0%, #1a3158 60%, #0d2340 100%)' }}
+            className="rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-sm border border-sky-100 relative overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #ffffff 0%, #f0fbff 100%)' }}
           >
-            {/* Decorative background element */}
-            <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #00a6f4, transparent)' }} />
-            <div className="absolute -left-12 -bottom-12 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #00a6f4, transparent)' }} />
+            {/* Decorative element */}
+            <div className="absolute -right-12 -top-12 w-56 h-56 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, #7dd3fc, transparent)' }} />
+            <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #bae6fd, transparent)' }} />
 
-            <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-10 relative z-10">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-10 relative z-10">
               {lang === 'ko' ? "영상 촬영시 주의사항" : "Video Recording Precautions"}
             </h3>
 
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {/* 주의사항 그룹 */}
+              {/* 촬영 가이드 그룹 */}
               <div>
-                <p className="text-[13px] font-black uppercase tracking-widest text-sky-400 mb-4">
+                <p className="text-[13px] font-black uppercase tracking-widest text-sky-500 mb-4">
                   {lang === 'ko' ? '촬영 가이드' : 'Guidelines'}
                 </p>
                 <ul className="space-y-3">
                   {['check1', 'check2', 'check3', 'check4', 'check5'].map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[17px] text-white/90 break-keep">
+                    <li key={key} className="flex items-start gap-3 text-[17px] text-gray-700 break-keep">
                       <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
                       <span>{t(`steps.step2.${key}`)}</span>
                     </li>
@@ -256,7 +256,7 @@ export function StepsSection() {
                 </p>
                 <ul className="space-y-3">
                   {['check6', 'check7'].map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[17px] text-red-300 font-bold break-keep">
+                    <li key={key} className="flex items-start gap-3 text-[17px] text-red-500 font-bold break-keep">
                       <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
                       <span>{t(`steps.step2.${key}`)}</span>
                     </li>
@@ -266,6 +266,7 @@ export function StepsSection() {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
