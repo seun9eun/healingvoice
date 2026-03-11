@@ -2,7 +2,7 @@ import { AlertTriangle, Mail, FileText } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
 export function ChecklistSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // 프리텐다드 베리어블 폰트 스타일
   const pretendardStyle = {
