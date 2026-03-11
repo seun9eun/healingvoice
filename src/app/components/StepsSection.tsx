@@ -116,7 +116,7 @@ export function StepsSection() {
       icon: Video,
       content: (
         <div className="space-y-4 mt-2">
-          <div className="break-keep space-y-3 bg-sky-50/60 border border-sky-200/40 p-4 md:p-6 rounded-xl text-left">
+          <div className="break-keep space-y-3 bg-sky-50/60 border border-sky-200/40 p-4 md:pl-6 md:pr-2 md:py-6 rounded-xl text-left">
             {/* guide1: 두 번째 줄 넘버링에 맞춰 들여쓰기 */}
             <div className="break-keep text-[20px] font-bold text-gray-700 leading-snug">
               <span>{t('steps.step2.guide1').split('\n')[0]}</span>
@@ -198,7 +198,7 @@ export function StepsSection() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10 gap-y-24 md:gap-y-16 relative max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10 xl:gap-6 gap-y-24 md:gap-y-16 relative max-w-7xl mx-auto">
           {/* Connector Line (Desktop) */}
           <div className="hidden xl:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/20 z-0" />
 
