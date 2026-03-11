@@ -60,11 +60,11 @@ export function ChecklistSection() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#44a9ff] text-[16px] md:text-[18px] font-bold break-all leading-tight">
+                  <p className="text-[#44a9ff] text-[18px] md:text-[21px] font-bold break-all leading-tight">
                     {t('checklist.subject.format')}
                   </p>
                   <div className="bg-white border border-[#44a9ff]/10 rounded-xl p-4">
-                    <p className="text-gray-600 text-[15px] md:text-[16px] font-medium leading-[20px] md:leading-[24px] break-all">
+                    <p className="text-gray-600 text-[18px] md:text-[21px] font-medium leading-[26px] md:leading-[30px] break-all">
                       {t('checklist.subject.example')}
                     </p>
                   </div>
@@ -83,13 +83,13 @@ export function ChecklistSection() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#155dfc] text-[16px] md:text-[18px] font-bold break-all leading-tight">
+                  <p className="text-[#155dfc] text-[18px] md:text-[21px] font-bold break-all leading-tight">
                     {t('checklist.filename.format')}
                   </p>
                   <div className="space-y-2">
                     {[1, 2, 3].map((num) => (
                       <div key={num} className="bg-white border border-[#155dfc]/5 rounded-xl p-3.5">
-                        <p className="text-gray-600 text-[15px] md:text-[16px] font-medium leading-[20px] md:leading-[24px] break-all">
+                        <p className="text-gray-600 text-[18px] md:text-[21px] font-medium leading-[26px] md:leading-[30px] break-all">
                           {t(`checklist.filename.file${num}`)}
                         </p>
                       </div>
