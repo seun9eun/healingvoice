@@ -188,7 +188,7 @@ export function StepsSection() {
     >
       <div className="container mx-auto px-4">
         {/* Header */}
-        <div className="text-center mb-24">
+        <div className="text-center mb-32">
           <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
             {t('steps.subtitle')}
           </span>
@@ -198,7 +198,7 @@ export function StepsSection() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 relative max-w-7xl mx-auto">
           {/* Connector Line (Desktop) */}
           <div className="hidden lg:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/20 z-0" />
 
@@ -208,12 +208,12 @@ export function StepsSection() {
               className="relative z-10 flex flex-col items-center"
             >
               {/* STEP Marker */}
-              <div className="relative mb-8">
+              <div className="relative mb-12">
                 <div className="w-24 h-24 rounded-full bg-slate-900 border-4 border-[#00a6f4] flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.3)] z-10 relative">
                   <step.icon className="w-10 h-10 text-white" />
                 </div>
                 {/* STEP Badge (Rounded Rect) */}
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#00a6f4] text-white font-black rounded-[8px] flex items-center justify-center text-[13px] border-2 border-white z-20 shadow-sm whitespace-nowrap min-w-[80px]">
+                <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#00a6f4] text-white font-black rounded-[8px] flex items-center justify-center text-[13px] border-2 border-white z-20 shadow-sm whitespace-nowrap min-w-[80px]">
                   STEP {step.step}
                 </div>
               </div>
