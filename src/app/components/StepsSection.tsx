@@ -269,3 +269,4 @@ export function StepsSection() {
       </div>
     </section>
   );
+}
