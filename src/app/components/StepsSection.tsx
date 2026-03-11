@@ -117,8 +117,19 @@ export function StepsSection() {
       content: (
         <div className="space-y-4 mt-2">
           <div className="break-keep text-[18px] space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
-            <p className="break-keep whitespace-pre-line text-gray-700 font-bold">{t('steps.step2.guide1')}</p>
-            <p className="break-keep whitespace-pre-line font-bold text-gray-700">{t('steps.step2.guide2')}</p>
+            {/* guide1: 두 번째 줄 넘버링에 맞춰 들여쓰기 */}
+            <div className="break-keep text-[18px] font-bold text-gray-700">
+              <span>{t('steps.step2.guide1').split('\n')[0]}</span>
+              {t('steps.step2.guide1').includes('\n') && (
+                <div className="pl-4">{t('steps.step2.guide1').split('\n').slice(1).join('')}</div>
+              )}
+            </div>
+            <div className="break-keep text-[18px] font-bold text-gray-700">
+              <span>{t('steps.step2.guide2').split('\n')[0]}</span>
+              {t('steps.step2.guide2').includes('\n') && (
+                <div className="pl-4">{t('steps.step2.guide2').split('\n').slice(1).join('')}</div>
+              )}
+            </div>
           </div>
         </div>
       ),
@@ -210,7 +221,7 @@ export function StepsSection() {
               {/* Card */}
               <div
                 id={step.step === 4 ? "apply-email" : undefined}
-                className={`w-full flex-1 bg-white/100 backdrop-blur-sm border border-white/70 rounded-[24px] md:rounded-[32px] p-6 hover:border-sky-400/60 transition-colors flex flex-col text-center shadow-sm ${step.step === 4 ? "scroll-mt-60 md:scroll-mt-102" : ""}`}>
+                className={`w-full flex-1 bg-white/100 backdrop-blur-sm border border-white/70 rounded-[24px] md:rounded-[32px] p-6 md:p-8 hover:border-sky-400/60 transition-colors flex flex-col text-center shadow-sm ${step.step === 4 ? "scroll-mt-60 md:scroll-mt-102" : ""}`}>
                 <h3 className="text-[26px] font-bold text-gray-900 mb-2">
                   {step.title}
                 </h3>
