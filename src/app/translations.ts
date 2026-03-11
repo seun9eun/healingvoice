@@ -35,9 +35,9 @@ export const translations = {
         title: "영상 촬영",
         desc: "지원 시 제출할 영상은\n 핸드폰으로 촬영해 주세요.",
         guide1:
-          "① 지정곡 : 지정곡 20곡 중 1곡을 선택해 무반주로 불러주세요.",
+          "① Select 1 from 20 Required Songs (A cappella)",
         guide2:
-          "② 자유곡 : 원하시는 곡 1곡을 자유롭게 선택해 불러주세요.",
+          "② 1 Self-Selected Song (MR or accompaniment allowed)",
         check1: "촬영: 핸드폰 기본 카메라로 촬영",
         check2: "사운드: 소음 없는 장소, 목소리가 선명하게 들리도록 촬영",
         check3: "앵글: 상반신이 정면으로 보이는 구도",
