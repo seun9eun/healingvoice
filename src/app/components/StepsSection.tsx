@@ -107,37 +107,10 @@ export function StepsSection() {
       icon: Video,
       content: (
         <div className="space-y-4 mt-2">
-           <div className="break-keep text-sm space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
-             <p className="break-keep text-sky-600 font-bold">{t('steps.step2.guide1')}</p>
-             <p className="break-keep font-bold whitespace-pre-line text-[#0084d1]">{t('steps.step2.guide2')}</p>
-           </div>
-           
-           <ul className="text-xs text-gray-600 space-y-2 text-left">
-            <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                <span>{t('steps.step2.check1')}</span>
-            </li>
-            <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                <span>{t('steps.step2.check2')}</span>
-            </li>
-            <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                <span>{t('steps.step2.check3')}</span>
-            </li>
-            <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
-                <span>{t('steps.step2.check4')}</span>
-            </li> 
-            <li className="flex items-start gap-2 text-red-500 font-bold break-keep">
-                <XCircle className="w-4 h-4 text-red-500 shrink-0" />
-                <span>{t('steps.step2.check5')}</span>
-            </li>
-            <li className="flex items-start gap-2 text-red-500 font-bold break-keep">
-                <XCircle className="w-4 h-4 text-red-500 shrink-0" />
-                <span>{t('steps.step2.check6')}</span>
-            </li> 
-           </ul>
+          <div className="break-keep text-sm space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
+            <p className="break-keep text-sky-600 font-bold">{t('steps.step2.guide1')}</p>
+            <p className="break-keep font-bold whitespace-pre-line text-[#0084d1]">{t('steps.step2.guide2')}</p>
+          </div>
         </div>
       ),
     },
@@ -149,9 +122,9 @@ export function StepsSection() {
       content: (
         <div className="mt-4 flex gap-2 h-32">
           {[t('steps.step3.photo1'), t('steps.step3.photo2'), t('steps.step3.photo3')].map((label, index) => (
-             <div key={index} className="flex-1 bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center">
-               <span className="text-gray-500 text-xs">{label}</span>
-             </div>
+            <div key={index} className="flex-1 bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center">
+              <span className="text-gray-500 text-xs">{label}</span>
+            </div>
           ))}
         </div>
       ),
@@ -162,16 +135,18 @@ export function StepsSection() {
       desc: t('steps.step4.desc'),
       icon: Copy,
       content: (
-        <div className="flex flex-col gap-[12px] items-center justify-center w-full mt-0">
-          <p className="text-center font-normal whitespace-pre-wrap text-gray-800 text-[16px]">
-            cgnhealingvoice@daum.net
-          </p>
+        <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
+          <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg">
+            <span className="text-sm font-bold text-gray-700 font-sans">
+              cgnhealingvoice@daum.net
+            </span>
+          </div>
           <button
             onClick={handleCopyEmail}
-            className="bg-[#0084d1] h-[30px] w-[200px] rounded-[5px] shadow-[0px_5px_7.5px_0px_rgba(2,74,112,0.2),0px_2px_3px_0px_rgba(2,74,112,0.2)] flex items-center justify-center gap-[7px] hover:bg-[#0073b7] transition-colors cursor-pointer"
+            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-sm px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
-            <Copy className="w-[10px] h-[10px] text-white" />
-            <span className="font-bold text-white leading-[12px] text-[15px]">
+            <Copy className="w-4 h-4 text-white" />
+            <span>
               {t('steps.step4.copyBtn')}
             </span>
           </button>
@@ -196,30 +171,30 @@ export function StepsSection() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative max-w-7xl mx-auto">
           {/* Connector Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/40 z-0" />
+          <div className="hidden lg:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/20 z-0" />
 
-          {steps.map((step, idx) => (
+          {steps.map((step) => (
             <div
               key={step.step}
               className="relative z-10 flex flex-col items-center"
             >
-              {/* Icon Circle */}
+              {/* STEP Marker */}
               <div className="relative mb-8">
-                <div className="w-24 h-24 rounded-full bg-slate-800 border-4 border-[#00a6f4] flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.3)] z-10 relative">
+                <div className="w-24 h-24 rounded-full bg-slate-900 border-4 border-[#00a6f4] flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.3)] z-10 relative">
                   <step.icon className="w-10 h-10 text-white" />
                 </div>
-                {/* Number Badge */}
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-[#00a6f4] text-black font-bold rounded-full flex items-center justify-center text-sm border-2 border-white z-20">
-                    {step.step}
+                {/* STEP Badge (Rounded Rect) */}
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-[#00a6f4] text-white font-black rounded-[8px] flex items-center justify-center text-[12px] border-2 border-white z-20 shadow-sm">
+                  STEP {step.step}
                 </div>
               </div>
 
               {/* Card */}
-              <div 
+              <div
                 id={step.step === 4 ? "apply-email" : undefined}
-                className={`w-full flex-1 bg-white/100 backdrop-blur-sm border border-white/70 rounded-2xl p-6 hover:border-sky-400/60 transition-colors flex flex-col text-center shadow-sm ${step.step === 4 ? "scroll-mt-60 md:scroll-mt-102" : ""}`}>
+                className={`w-full flex-1 bg-white/100 backdrop-blur-sm border border-white/70 rounded-[24px] md:rounded-[32px] p-6 hover:border-sky-400/60 transition-colors flex flex-col text-center shadow-sm ${step.step === 4 ? "scroll-mt-60 md:scroll-mt-102" : ""}`}>
                 <h3 className="text-xl font-bold text-gray-900 mb-2">
                   {step.title}
                 </h3>
@@ -232,6 +207,42 @@ export function StepsSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* 영상 촬영시 주의사항 (Bottom Card) */}
+        <div className="mt-12 max-w-7xl mx-auto w-full">
+          <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-sm border border-white/70">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-8">
+              {lang === 'ko' ? "영상 촬영시 주의사항" : "Video Recording Precautions"}
+            </h3>
+
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-8 max-w-5xl mx-auto">
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
+                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check1')}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
+                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check2')}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
+                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check3')}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
+                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check4')}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
+                <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check5')}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
+                <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check6')}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
