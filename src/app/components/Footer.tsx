@@ -4,7 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 // 이미지 경로 변수
 const CgnlogoImage = "https://i.imgur.com/N6ZvM5s.png";
 const FondantLogoImage = "https://i.imgur.com/yZuLvLq.png";
-const FondantLogoImageEn = "https://i.imgur.com/e6RBqvk.png"; // 영문 퐁당 로고 
+const FondantLogoImageEn = "https://i.imgur.com/yZuLvLq.png"; // 영문 화이트 로고 
 const logoImage_bl = "https://i.imgur.com/NdVOBXQ.png";
 const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
 const logoImageEn_w = "https://i.imgur.com/qVJ5hKL.png"; // 영문 화이트 로고 
