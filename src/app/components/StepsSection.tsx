@@ -192,7 +192,7 @@ export function StepsSection() {
           <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
             {t('steps.subtitle')}
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mt-4">
+          <h2 className="text-[28px] md:text-[48px] font-nanumSquareNeo font-extrabold text-[#101828] leading-none mt-4">
             {t('steps.title')}
           </h2>
         </div>

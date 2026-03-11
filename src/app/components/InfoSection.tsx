@@ -39,7 +39,7 @@ export function InfoSection() {
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px] block mb-3">
               {t('info.eligibility.subtitle')}
             </span>
-            <h2 className="text-4xl md:text-[48px] font-bold text-gray-900 leading-tight">
+            <h2 className="text-[28px] md:text-[48px] font-nanumSquareNeo font-extrabold text-[#101828] leading-none">
               {t('info.eligibility.title')}
             </h2>
             <p className="text-[#7D7D7D] max-w-2xl mx-auto mt-6 md:text-[22px] font-semibold leading-relaxed break-keep whitespace-pre-line">
@@ -89,7 +89,7 @@ export function InfoSection() {
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
               {t('info.awards.subtitle')}
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mt-4">
+            <h2 className="text-[28px] md:text-[48px] font-nanumSquareNeo font-extrabold text-[#101828] leading-none mt-4">
               {t('info.awards.title')}
             </h2>
             <p className="text-[#7D7D7D] max-w-2xl mx-auto mt-4 whitespace-pre-line tracking-[-0.03em] md:text-[22px] font-semibold">

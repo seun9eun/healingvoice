@@ -18,7 +18,7 @@ export function SongListSection() {
           <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
             {t('songs.subtitle')}
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mt-4">
+          <h2 className="text-[28px] md:text-[48px] font-nanumSquareNeo font-extrabold text-[#101828] leading-none mt-4">
             {t('songs.title')}
           </h2>
           <p className="text-[#7D7D7D] mt-4 whitespace-pre-line tracking-[-0.03em] md:text-[22px] font-semibold">
