@@ -12,9 +12,9 @@ export const translations = {
       descPart2: "이제는 ",
       descPart3: "입니다.",
       descPart4: "CCM 오디션 프로그램 힐링보이스에 도전하세요!",
-      period: "모집 기간: 2026년 3월 15일 ~ 4월 30일",
+      period: "모집 기간 : 2026.3.15 ~ 4.30",
       downloadBtn: "지원서 다운로드",
-      infoBtn: "지원 요건 확인",
+      infoBtn: "지원 요건",
     },
     gallery: {
       subtitle: "Official Video",
@@ -256,7 +256,7 @@ export const translations = {
       descPart4: "Challenge yourself at the CCM audition program <Healing Voice>!",
       period: "Application: March 15 - April 30, 2026",
       downloadBtn: "Download Form",
-      infoBtn: "Check Eligibility",
+      infoBtn: "Eligibility",
     },
     gallery: {
       subtitle: "Official Video",
