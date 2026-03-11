@@ -147,7 +147,7 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           <div className="w-full text-center px-2 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg overflow-hidden">
-            <span className="text-[15px] md:text-[16px] font-bold text-gray-700 font-sans break-all">
+            <span className="text-[15px] md:text-[16px] font-bold text-gray-700 font-sans break-words">
               cgnhealingvoice@daum.net
             </span>
           </div>
@@ -219,46 +219,53 @@ export function StepsSection() {
           ))}
         </div>
 
-        {/* 영상 촬영시 주의사항 (Bottom Card) */}
+        {/* 영상 촬영시 주의사항 (Bottom Card) - Distinct dark design */}
         <div className="mt-12 max-w-7xl mx-auto w-full">
-          <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-sm border border-white/70">
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-8">
+          <div
+            className="rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-lg border border-slate-700/50 relative overflow-hidden"
+            style={{ background: 'linear-gradient(135deg, #0f1f3d 0%, #1a3158 60%, #0d2340 100%)' }}
+          >
+            {/* Decorative background element */}
+            <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #00a6f4, transparent)' }} />
+            <div className="absolute -left-12 -bottom-12 w-48 h-48 rounded-full opacity-10" style={{ background: 'radial-gradient(circle, #00a6f4, transparent)' }} />
+
+            <h3 className="text-xl md:text-2xl font-bold text-white text-center mb-10 relative z-10">
               {lang === 'ko' ? "영상 촬영시 주의사항" : "Video Recording Precautions"}
             </h3>
 
-            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 gap-x-8 max-w-5xl mx-auto">
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
-                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check1')}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
-                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check2')}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
-                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check3')}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
-                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check4')}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
-                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check5')}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
-                <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check6')}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
-                <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
-                <span>{t('steps.step2.check7')}</span>
-              </li>
-            </ul>
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {/* 주의사항 그룹 */}
+              <div>
+                <p className="text-[13px] font-black uppercase tracking-widest text-sky-400 mb-4">
+                  {lang === 'ko' ? '촬영 가이드' : 'Guidelines'}
+                </p>
+                <ul className="space-y-3">
+                  {['check1', 'check2', 'check3', 'check4', 'check5'].map((key) => (
+                    <li key={key} className="flex items-start gap-3 text-[17px] text-white/90 break-keep">
+                      <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                      <span>{t(`steps.step2.${key}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* 금지사항 그룹 */}
+              <div>
+                <p className="text-[13px] font-black uppercase tracking-widest text-red-400 mb-4">
+                  {lang === 'ko' ? '금지사항' : 'Prohibited'}
+                </p>
+                <ul className="space-y-3">
+                  {['check6', 'check7'].map((key) => (
+                    <li key={key} className="flex items-start gap-3 text-[17px] text-red-300 font-bold break-keep">
+                      <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                      <span>{t(`steps.step2.${key}`)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
   );
-}
