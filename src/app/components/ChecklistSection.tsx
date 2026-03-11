@@ -27,11 +27,6 @@ export function ChecklistSection() {
           className="bg-white rounded-[32px] border border-sky-200/50 p-8 md:p-12 shadow-xl shadow-blue-900/5 relative overflow-hidden"
           style={pretendardStyle}
         >
-          {/* 배경 워터마크 아이콘 */}
-          <div className="absolute top-1/2 right-[-5%] -translate-y-1/2 opacity-[0.03] pointer-events-none transform rotate-12">
-            <AlertTriangle className="w-80 h-80 text-sky-500" />
-          </div>
-
           <div className="relative z-10 flex flex-col gap-10">
 
             {/* Header: 빨간색 포인트와 안내 문구 */}
@@ -41,13 +36,11 @@ export function ChecklistSection() {
               </h2>
 
               <div className="space-y-4 text-gray-800 font-medium leading-relaxed">
-                <p className="text-[19px] md:text-[21px]">
+                <p className="text-[19px] md:text-[21px] break-keep">
                   {t('checklist.item1')}
                 </p>
-                <p className="text-[19px] md:text-[21px]">
-                  {t('checklist.item2_1')}
-                  <span className="text-[#FF3B30] font-bold">{t('checklist.item2_bold')}</span>
-                  {t('checklist.item2_2')}
+                <p className="text-[19px] md:text-[21px] text-[#FF3B30] font-bold break-keep">
+                  {t('checklist.item2_1')}{t('checklist.item2_bold')}{t('checklist.item2_2')}
                 </p>
               </div>
             </div>
@@ -61,17 +54,17 @@ export function ChecklistSection() {
                   <div className="bg-[#00a6f4] p-2 rounded-xl">
                     <Mail className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-[17px] md:text-[19px] font-bold text-gray-900">
+                  <h3 className="text-[20px] md:text-[22px] font-bold text-gray-900">
                     {t('checklist.subject.title')}
                   </h3>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#44a9ff] text-[13px] md:text-[15px] font-bold break-all leading-tight">
+                  <p className="text-[#44a9ff] text-[16px] md:text-[18px] font-bold break-all leading-tight">
                     {t('checklist.subject.format')}
                   </p>
                   <div className="bg-white border border-[#44a9ff]/10 rounded-xl p-4">
-                    <p className="text-gray-600 text-[12px] md:text-[14px] font-medium leading-[16px] md:leading-[20px] break-all">
+                    <p className="text-gray-600 text-[15px] md:text-[16px] font-medium leading-[20px] md:leading-[24px] break-all">
                       {t('checklist.subject.example')}
                     </p>
                   </div>
@@ -84,19 +77,19 @@ export function ChecklistSection() {
                   <div className="bg-[#155dfc] p-2 rounded-xl">
                     <FileText className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-[17px] md:text-[19px] font-bold text-gray-900">
+                  <h3 className="text-[20px] md:text-[22px] font-bold text-gray-900">
                     {t('checklist.filename.title')}
                   </h3>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#155dfc] text-[13px] md:text-[15px] font-bold break-all leading-tight">
+                  <p className="text-[#155dfc] text-[16px] md:text-[18px] font-bold break-all leading-tight">
                     {t('checklist.filename.format')}
                   </p>
                   <div className="space-y-2">
                     {[1, 2, 3].map((num) => (
                       <div key={num} className="bg-white border border-[#155dfc]/5 rounded-xl p-3.5">
-                        <p className="text-gray-600 text-[11px] md:text-[14px] font-medium leading-[16px] md:leading-[20px] break-all">
+                        <p className="text-gray-600 text-[15px] md:text-[16px] font-medium leading-[20px] md:leading-[24px] break-all">
                           {t(`checklist.filename.file${num}`)}
                         </p>
                       </div>
