@@ -116,18 +116,18 @@ export function StepsSection() {
       icon: Video,
       content: (
         <div className="space-y-4 mt-2">
-          <div className="break-keep text-[18px] space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
+          <div className="break-keep space-y-3 bg-sky-50/60 border border-sky-200/40 p-4 md:p-6 rounded-xl text-left">
             {/* guide1: 두 번째 줄 넘버링에 맞춰 들여쓰기 */}
-            <div className="break-keep text-[20px] font-bold text-gray-700">
+            <div className="break-keep text-[20px] font-bold text-gray-700 leading-snug">
               <span>{t('steps.step2.guide1').split('\n')[0]}</span>
               {t('steps.step2.guide1').includes('\n') && (
-                <div className="pl-4">{t('steps.step2.guide1').split('\n').slice(1).join('')}</div>
+                <div className="pl-4 font-bold">{t('steps.step2.guide1').split('\n').slice(1).join('')}</div>
               )}
             </div>
-            <div className="break-keep text-[20px] font-bold text-gray-700">
+            <div className="break-keep text-[20px] font-bold text-gray-700 leading-snug">
               <span>{t('steps.step2.guide2').split('\n')[0]}</span>
               {t('steps.step2.guide2').includes('\n') && (
-                <div className="pl-4">{t('steps.step2.guide2').split('\n').slice(1).join('')}</div>
+                <div className="pl-4 font-bold">{t('steps.step2.guide2').split('\n').slice(1).join('')}</div>
               )}
             </div>
           </div>
@@ -140,17 +140,17 @@ export function StepsSection() {
       desc: t('steps.step3.desc'),
       icon: Camera,
       content: (
-        <div className="mt-2 flex gap-2 h-40">
+        <div className="mt-2 flex gap-3 h-44">
           {[
             { label: t('steps.step3.photo1'), icon: User },
             { label: t('steps.step3.photo2'), icon: PersonStanding },
             { label: t('steps.step3.photo3'), icon: Sparkles }
           ].map((item, index) => (
             <div key={index} className="flex-1 flex flex-col items-center">
-              <div className="w-full h-[116px] bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center mb-2">
-                <item.icon className="w-8 h-8 text-sky-400/80" />
+              <div className="w-full h-[124px] bg-sky-50/50 border border-sky-200/40 rounded-xl flex items-center justify-center mb-2">
+                <item.icon className="w-10 h-10 text-sky-400/80" />
               </div>
-              <span className="text-[19px] font-bold text-gray-700">{item.label}</span>
+              <span className="text-[19px] font-bold text-gray-700 text-center whitespace-nowrap">{item.label}</span>
             </div>
           ))}
         </div>
@@ -163,8 +163,8 @@ export function StepsSection() {
       icon: Copy,
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
-          <div className="w-full text-center px-1 md:px-2 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg overflow-hidden">
-            <span className="text-[18px] md:text-[15px] font-bold text-gray-700 font-sans break-words">
+          <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-xl overflow-hidden">
+            <span className="text-[18px] md:text-[21px] font-bold text-gray-700 font-sans break-all">
               cgnhealingvoice@daum.net
             </span>
           </div>
@@ -198,9 +198,9 @@ export function StepsSection() {
         </div>
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 gap-y-28 md:gap-y-12 relative max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 md:gap-10 gap-y-24 md:gap-y-16 relative max-w-7xl mx-auto">
           {/* Connector Line (Desktop) */}
-          <div className="hidden lg:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/20 z-0" />
+          <div className="hidden xl:block absolute top-[48px] left-0 right-0 h-0.5 bg-sky-300/20 z-0" />
 
           {steps.map((step) => (
             <div
