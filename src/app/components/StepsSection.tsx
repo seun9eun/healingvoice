@@ -64,7 +64,7 @@ export function StepsSection() {
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
             >
-              <span className="text-sm font-bold text-gray-700 group-hover:text-sky-600">
+              <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.hwp')}
               </span>
               <Download className="w-4 h-4 text-gray-400 group-hover:text-sky-500" />
@@ -79,7 +79,7 @@ export function StepsSection() {
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
             >
-              <span className="text-sm font-bold text-gray-700 group-hover:text-sky-600">
+              <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.docx')}
               </span>
               <Download className="w-4 h-4 text-gray-400 group-hover:text-sky-500" />
@@ -94,7 +94,7 @@ export function StepsSection() {
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
             >
-              <span className="text-sm font-bold text-gray-700 group-hover:text-sky-600">
+              <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.eng')}
               </span>
               <Download className="w-4 h-4 text-gray-400 group-hover:text-sky-500" />
@@ -110,7 +110,7 @@ export function StepsSection() {
       icon: Video,
       content: (
         <div className="space-y-4 mt-2">
-          <div className="break-keep text-sm space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
+          <div className="break-keep text-[18px] space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
             <p className="break-keep text-sky-600 font-bold">{t('steps.step2.guide1')}</p>
             <p className="break-keep font-bold whitespace-pre-line text-[#0084d1]">{t('steps.step2.guide2')}</p>
           </div>
@@ -133,7 +133,7 @@ export function StepsSection() {
               <div className="w-full h-28 bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center mb-2">
                 <item.icon className="w-8 h-8 text-sky-400/80" />
               </div>
-              <span className="text-[13px] font-bold text-gray-700">{item.label}</span>
+              <span className="text-[17px] font-bold text-gray-700">{item.label}</span>
             </div>
           ))}
         </div>
@@ -147,13 +147,13 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg">
-            <span className="text-sm font-bold text-gray-700 font-sans">
+            <span className="text-[18px] font-bold text-gray-700 font-sans">
               cgnhealingvoice@daum.net
             </span>
           </div>
           <button
             onClick={handleCopyEmail}
-            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-sm px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
+            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             <Copy className="w-4 h-4 text-white" />
             <span>
@@ -205,10 +205,10 @@ export function StepsSection() {
               <div
                 id={step.step === 4 ? "apply-email" : undefined}
                 className={`w-full flex-1 bg-white/100 backdrop-blur-sm border border-white/70 rounded-[24px] md:rounded-[32px] p-6 hover:border-sky-400/60 transition-colors flex flex-col text-center shadow-sm ${step.step === 4 ? "scroll-mt-60 md:scroll-mt-102" : ""}`}>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-[26px] font-bold text-gray-900 mb-2">
                   {step.title}
                 </h3>
-                <p className="whitespace-pre-line text-gray-600 mb-6 min-h-[40px] flex items-center justify-center break-keep text-[16px]">
+                <p className="whitespace-pre-line text-gray-600 mb-6 min-h-[40px] flex items-center justify-center break-keep text-[21px]">
                   {step.desc}
                 </p>
                 <div className="pt-4 border-t border-gray-200/60 w-full text-left">
