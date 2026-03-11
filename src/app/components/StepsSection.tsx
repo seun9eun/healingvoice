@@ -164,7 +164,7 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-xl overflow-hidden">
-            <span className="text-[18px] md:text-[21px] font-bold text-gray-700 font-sans break-all">
+            <span className="text-[18px] md:text-[15px] font-bold text-gray-700 font-sans break-all">
               cgnhealingvoice@daum.net
             </span>
           </div>
