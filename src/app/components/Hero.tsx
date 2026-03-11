@@ -34,46 +34,48 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-10 md:gap-14"
+          className="flex flex-col items-center gap-10 md:gap-12"
         >
-          {/* 로고 및 태그라인 그룹 */}
-          <div className="flex flex-col items-center gap-4 md:gap-6">
-            <div className="flex flex-col items-center gap-8 md:gap-10">
-              {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
-              <div className="flex justify-center">
-                <img
-                  src={lang === "en" ? "https://i.imgur.com/Mvwg170.png" : img_tag}
-                  alt={t("hero.tagline")}
-                  className={`w-full ${lang === "en" ? "max-w-[272px] md:max-w-[368px]" : "max-w-[170px] md:max-w-[230px]"} h-auto object-contain`}
-                />
+          {/* 로고 및 모집 기간 그룹 (더 밀착) */}
+          <div className="flex flex-col items-center gap-6 md:gap-10">
+            {/* 로고 및 태그라인 그룹 */}
+            <div className="flex flex-col items-center gap-4 md:gap-6">
+              <div className="flex flex-col items-center gap-8 md:gap-10">
+                {/* 로고 슬롯 1 - 상단 이미지퐁당 5주년*/}
+                <div className="flex justify-center">
+                  <img
+                    src={lang === "en" ? "https://i.imgur.com/Mvwg170.png" : img_tag}
+                    alt={t("hero.tagline")}
+                    className={`w-full ${lang === "en" ? "max-w-[300px] md:max-w-[400px]" : "max-w-[190px] md:max-w-[260px]"} h-auto object-contain`}
+                  />
+                </div>
+
+                {/* 로고 슬롯 2 - 태그라인 이미지 */}
+                <div className="flex justify-center w-full">
+                  <img
+                    src={lang === "en" ? "https://i.imgur.com/8NPYy8S.png" : image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
+                    alt={t("hero.tagline")}
+                    className="w-full max-w-[370px] md:max-w-[500px] h-auto object-contain"
+                  />
+                </div>
               </div>
 
-              {/* 로고 슬롯 2 - 태그라인 이미지 */}
-              <div className="flex justify-center w-full">
+              {/* 힐링보이스 로고 */}
+              <div className="flex justify-center w-full px-4 md:px-0">
                 <img
-                  src={lang === "en" ? "https://i.imgur.com/8NPYy8S.png" : image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
-                  alt={t("hero.tagline")}
-                  className="w-full max-w-[340px] md:max-w-[460px] h-auto object-contain"
+                  src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
+                  alt="힐링보이스"
+                  className="w-full max-w-[350px] md:max-w-[640px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
                 />
               </div>
             </div>
 
-            {/* 힐링보이스 로고 */}
-            <div className="flex justify-center w-full px-4 md:px-0">
-              <img
-                src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
-                alt="힐링보이스"
-                className="w-full max-w-[320px] md:max-w-[580px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
-              />
+            {/* 모집 기간 뱃지 (노랑-연두) - 로고 그룹에 더 가깝게 배치 */}
+            <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px]">
+              <p className="font-medium text-[#101828] text-[15px] md:text-[18px] text-center break-words break-keep whitespace-pre-wrap">
+                {t("hero.period")}
+              </p>
             </div>
-          </div>
-
-
-          {/* 모집 기간 뱃지 (노랑-연두) */}
-          <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px]">
-            <p className="font-medium text-[#101828] text-[15px] md:text-[18px] text-center break-words break-keep whitespace-pre-wrap">
-              {t("hero.period")}
-            </p>
           </div>
 
           {/* CTA 버튼 */}
