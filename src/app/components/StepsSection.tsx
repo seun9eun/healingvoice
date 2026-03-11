@@ -117,8 +117,8 @@ export function StepsSection() {
       content: (
         <div className="space-y-4 mt-2">
           <div className="break-keep text-[18px] space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
-            <p className="break-keep text-gray-700 font-bold">{t('steps.step2.guide1')}</p>
-            <p className="break-keep font-bold whitespace-pre-line text-gray-700">{t('steps.step2.guide2')}</p>
+            <p className="break-keep whitespace-pre-line text-gray-700 font-bold">{t('steps.step2.guide1')}</p>
+            <p className="break-keep whitespace-pre-line font-bold text-gray-700">{t('steps.step2.guide2')}</p>
           </div>
         </div>
       ),
