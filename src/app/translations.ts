@@ -35,9 +35,9 @@ export const translations = {
         title: "영상 촬영",
         desc: "지원 시 제출할 영상은\n 핸드폰으로 촬영해 주세요.",
         guide1:
-          "① Select 1 from 20 Required Songs (A cappella)",
+          "① 지정곡 20곡 중 택1(무반주 가창)",
         guide2:
-          "② 1 Self-Selected Song (MR or accompaniment allowed)",
+          "② 자유곡 1곡(MR또는 반주 가능)",
         check1: "촬영: 핸드폰 기본 카메라로 촬영",
         check2: "사운드: 소음 없는 장소, 목소리가 선명하게 들리도록 촬영",
         check3: "앵글: 상반신이 정면으로 보이는 구도",
@@ -277,9 +277,9 @@ export const translations = {
         title: "Video Submission",
         desc: "Record your audition videos using your mobile phone.",
         guide1:
-          "① Required Song: Select one from the 20 required songs and perform a cappella\n (no accompaniment).",
+          "① Select 1 from 20 Required Songs (A cappella)",
         guide2:
-          "② Self-Selected Song: Choose one song of your choice. (MR or instrumental accompaniment is allowed/Please ensure your voice is clearly audible in the recording.).\n※ Important: Please ensure your voice is clearly audible in the recording.",
+          "② 1 Self-Selected Song (MR or accompaniment allowed)",
         guide2_sub:
           "※ Important: Please ensure your voice is clearly audible in the recording.",
         check1: "Camera: Record using the default smartphone camera app",
