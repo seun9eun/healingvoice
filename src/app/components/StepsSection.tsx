@@ -111,8 +111,8 @@ export function StepsSection() {
       content: (
         <div className="space-y-4 mt-2">
           <div className="break-keep text-[18px] space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
-            <p className="break-keep text-sky-600 font-bold">{t('steps.step2.guide1')}</p>
-            <p className="break-keep font-bold whitespace-pre-line text-[#0084d1]">{t('steps.step2.guide2')}</p>
+            <p className="break-keep text-gray-700 font-bold">{t('steps.step2.guide1')}</p>
+            <p className="break-keep font-bold whitespace-pre-line text-gray-700">{t('steps.step2.guide2')}</p>
           </div>
         </div>
       ),
@@ -250,6 +250,10 @@ export function StepsSection() {
               <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
                 <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                 <span>{t('steps.step2.check6')}</span>
+              </li>
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
+                <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                <span>{t('steps.step2.check7')}</span>
               </li>
             </ul>
           </div>

@@ -37,14 +37,14 @@ export const translations = {
         guide1:
           "① 지정곡 : 지정곡 20곡 중 1곡을 선택해 무반주로 불러주세요.",
         guide2:
-          "② 자유곡 : 원하시는 곡 1곡을 자유롭게 선택해 불러주세요.\n(MR 또는 반주 가능 / 목소리가 선명하게 들리도록 주의)",
-        check1: "소음 없는 장소에서 촬영",
-        check2: "상반신이 보이게 세로형으로 촬영",
-        check3: "각 곡의 노래 시간은 1분 이상으로 촬영",
-        check4: "화질은 FHD(1080p) 이상을 권장",
-        check5:
-          "음향 보정 및 영상 편집 금지\n (무보정 원본 제출)",
-        check6: "어플 사용 금지\n (핸드폰 기본 카메라로 촬영)",
+          "② 자유곡 : 원하시는 곡 1곡을 자유롭게 선택해 불러주세요.",
+        check1: "촬영: 핸드폰 기본 카메라로 촬영",
+        check2: "사운드: 소음 없는 장소, 목소리가 선명하게 들리도록 촬영",
+        check3: "앵글: 상반신이 정면으로 보이는 구도",
+        check4: "분량: 곡당 최소 1분 이상 가창",
+        check5: "화질: FHD(1080p) 이상 권장",
+        check6: "음향 보정 및 영상 편집 금지 (무보정 원본 제출)",
+        check7: "카메라 보정 어플 사용 금지",
       },
       step3: {
         title: "사진 준비",
@@ -282,15 +282,13 @@ export const translations = {
           "② Self-Selected Song: Choose one song of your choice. (MR or instrumental accompaniment is allowed/Please ensure your voice is clearly audible in the recording.).\n※ Important: Please ensure your voice is clearly audible in the recording.",
         guide2_sub:
           "※ Important: Please ensure your voice is clearly audible in the recording.",
-        check1: "Setting: Quiet location, no background noise.",
-        check2:
-          "Framing: Vertical orientation, upper body visible.",
-        check3: "Duration: At least 1 minute per song.",
-        check4: "Quality: FHD (1080p) or higher recommended.",
-        check5:
-          "No Editing: Original, unedited footage only (No audio/video filters).",
-        check6:
-          "Camera: Default smartphone camera only (No third-party apps).",
+        check1: "Camera: Record using the default smartphone camera app",
+        check2: "Audio: Quiet location, ensure voice is clearly audible",
+        check3: "Angle: Front-facing view with upper body visible",
+        check4: "Duration: At least 1 minute per song",
+        check5: "Quality: FHD(1080p) or higher recommended",
+        check6: "No Modification: Original, unedited footage only (no audio/video filters)",
+        check7: "No Apps: Do not use third-party camera or filter apps",
       },
       step3: {
         title: "Photo Preparation",
