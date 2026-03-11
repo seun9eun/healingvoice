@@ -64,7 +64,7 @@ export function StepsSection() {
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
             >
-              <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
+              <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.hwp')}
               </span>
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
@@ -81,7 +81,7 @@ export function StepsSection() {
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
             >
-              <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
+              <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.docx')}
               </span>
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
@@ -98,7 +98,7 @@ export function StepsSection() {
               rel="noopener noreferrer"
               className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
             >
-              <span className="text-[18px] font-bold text-gray-700 group-hover:text-sky-600">
+              <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.eng')}
               </span>
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
@@ -118,13 +118,13 @@ export function StepsSection() {
         <div className="space-y-4 mt-2">
           <div className="break-keep text-[18px] space-y-1 bg-sky-50/60 border border-sky-200/40 p-3 rounded-lg text-left">
             {/* guide1: 두 번째 줄 넘버링에 맞춰 들여쓰기 */}
-            <div className="break-keep text-[18px] font-bold text-gray-700">
+            <div className="break-keep text-[20px] font-bold text-gray-700">
               <span>{t('steps.step2.guide1').split('\n')[0]}</span>
               {t('steps.step2.guide1').includes('\n') && (
                 <div className="pl-4">{t('steps.step2.guide1').split('\n').slice(1).join('')}</div>
               )}
             </div>
-            <div className="break-keep text-[18px] font-bold text-gray-700">
+            <div className="break-keep text-[20px] font-bold text-gray-700">
               <span>{t('steps.step2.guide2').split('\n')[0]}</span>
               {t('steps.step2.guide2').includes('\n') && (
                 <div className="pl-4">{t('steps.step2.guide2').split('\n').slice(1).join('')}</div>
@@ -147,10 +147,10 @@ export function StepsSection() {
             { label: t('steps.step3.photo3'), icon: Sparkles }
           ].map((item, index) => (
             <div key={index} className="flex-1 flex flex-col items-center">
-              <div className="w-full h-28 bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center mb-2">
+              <div className="w-full h-[116px] bg-sky-50/50 border border-sky-200/40 rounded-lg flex items-center justify-center mb-2">
                 <item.icon className="w-8 h-8 text-sky-400/80" />
               </div>
-              <span className="text-[17px] font-bold text-gray-700">{item.label}</span>
+              <span className="text-[19px] font-bold text-gray-700">{item.label}</span>
             </div>
           ))}
         </div>
@@ -164,13 +164,13 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           <div className="w-full text-center px-2 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg overflow-hidden">
-            <span className="text-[15px] md:text-[16px] font-bold text-gray-700 font-sans break-words">
+            <span className="text-[17px] md:text-[18px] font-bold text-gray-700 font-sans break-words">
               cgnhealingvoice@daum.net
             </span>
           </div>
           <button
             onClick={handleCopyEmail}
-            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
+            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[20px] px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             <Copy className="w-4 h-4 text-white" />
             <span>
@@ -246,17 +246,22 @@ export function StepsSection() {
               <Camera className="w-72 h-72 text-sky-400" />
             </div>
 
-            <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-10 relative z-10">
-              {lang === 'ko' ? "촬영 시 가이드" : "Video Recording Guide"}
-            </h3>
+            <div className="flex items-center gap-3 mb-10 relative z-10 px-0 md:px-12">
+              <div className="w-8 h-8 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0">
+                <Camera className="w-4 h-4 text-white" />
+              </div>
+              <h3 className="text-[26px] font-bold text-gray-900">
+                {lang === 'ko' ? "촬영 시 가이드" : "Video Recording Guide"}
+              </h3>
+            </div>
 
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
               {/* 촬영 가이드 그룹 */}
               <div>
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {['check1', 'check2', 'check3', 'check4', 'check5'].map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[17px] text-gray-700 break-keep">
-                      <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0 mt-0.5" />
+                    <li key={key} className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
+                      <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                       <span>{t(`steps.step2.${key}`)}</span>
                     </li>
                   ))}
@@ -265,10 +270,10 @@ export function StepsSection() {
 
               {/* 금지사항 그룹 */}
               <div>
-                <ul className="space-y-3">
+                <ul className="space-y-4">
                   {['check6', 'check7'].map((key) => (
-                    <li key={key} className="flex items-start gap-3 text-[17px] text-red-500 font-bold break-keep">
-                      <XCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                    <li key={key} className="flex items-start gap-4 text-[21px] text-red-500 font-bold break-keep">
+                      <XCircle className="w-6 h-6 text-red-400 shrink-0 mt-1" />
                       <span>{t(`steps.step2.${key}`)}</span>
                     </li>
                   ))}
