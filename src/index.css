@@ -7,6 +7,6 @@
 body {
   margin: 0;
   font-family: "Pretendard Variable", Pretendard, sans-serif;
-  background-color: #FEFBEB;
+  background: linear-gradient(356deg, var(--Color-Blue-200, rgba(229, 250, 255, 0.30)) 14.03%, rgba(167, 253, 203, 0.30) 32.53%, rgba(191, 252, 190, 0.30) 46.4%, rgba(210, 253, 165, 0.30) 61.18%, rgba(229, 255, 140, 0.30) 73.87%), var(--color-white-solid, #FFF);
   color: #101828;
 }
