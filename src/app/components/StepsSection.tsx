@@ -243,8 +243,8 @@ export function StepsSection() {
                 <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                 <span>{t('steps.step2.check4')}</span>
               </li>
-              <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
-                <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+              <li className="flex items-start gap-3 text-sm md:text-[15px] text-gray-700">
+                <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                 <span>{t('steps.step2.check5')}</span>
               </li>
               <li className="flex items-start gap-3 text-sm md:text-[15px] text-red-500 font-bold break-keep">
