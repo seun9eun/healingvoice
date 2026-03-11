@@ -46,7 +46,7 @@ export function Hero() {
                   <img
                     src={lang === "en" ? "https://i.imgur.com/Mvwg170.png" : img_tag}
                     alt={t("hero.tagline")}
-                    className={`w-full ${lang === "en" ? "max-w-[300px] md:max-w-[400px]" : "max-w-[190px] md:max-w-[260px]"} h-auto object-contain`}
+                    className={`w-full ${lang === "en" ? "max-w-[360px] md:max-w-[480px]" : "max-w-[230px] md:max-w-[310px]"} h-auto object-contain`}
                   />
                 </div>
 
@@ -55,7 +55,7 @@ export function Hero() {
                   <img
                     src={lang === "en" ? "https://i.imgur.com/8NPYy8S.png" : image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0}
                     alt={t("hero.tagline")}
-                    className="w-full max-w-[370px] md:max-w-[500px] h-auto object-contain"
+                    className="w-full max-w-[440px] md:max-w-[600px] h-auto object-contain"
                   />
                 </div>
               </div>
@@ -65,7 +65,7 @@ export function Hero() {
                 <img
                   src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
                   alt="힐링보이스"
-                  className="w-full max-w-[350px] md:max-w-[640px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
+                  className="w-full max-w-[420px] md:max-w-[770px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
                 />
               </div>
             </div>
