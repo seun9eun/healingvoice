@@ -140,7 +140,7 @@ export function StepsSection() {
       desc: t('steps.step3.desc'),
       icon: Camera,
       content: (
-        <div className="mt-4 flex gap-2 h-40">
+        <div className="mt-2 flex gap-2 h-40">
           {[
             { label: t('steps.step3.photo1'), icon: User },
             { label: t('steps.step3.photo2'), icon: PersonStanding },
@@ -247,9 +247,7 @@ export function StepsSection() {
             </div>
 
             <div className="flex items-center gap-3 mb-10 relative z-10 px-0 md:px-12">
-              <div className="w-8 h-8 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0">
-                <Camera className="w-4 h-4 text-white" />
-              </div>
+              <Camera className="w-9 h-9 text-[#00a6f4] shrink-0" />
               <h3 className="text-[26px] font-bold text-gray-900">
                 {lang === 'ko' ? "촬영 시 가이드" : "Video Recording Guide"}
               </h3>

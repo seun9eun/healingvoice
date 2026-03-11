@@ -36,8 +36,7 @@ export function ChecklistSection() {
 
             {/* Header: 빨간색 포인트와 안내 문구 */}
             <div className="flex flex-col gap-6">
-              <h2 className="font-bold text-[#FF3B30] flex items-start gap-3 text-[26px] md:text-[30px] break-keep">
-                <AlertTriangle className="w-9 h-9" strokeWidth={2.5} />
+              <h2 className="font-bold text-[#FF3B30] flex items-start text-[26px] md:text-[30px] break-keep">
                 {t('checklist.title')}
               </h2>
 
