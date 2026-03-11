@@ -228,12 +228,12 @@ export function StepsSection() {
         {/* 영상 촬영시 주의사항 (Bottom Card) */}
         <div className="mt-12 max-w-7xl mx-auto w-full">
           <div
-            className="rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-sm border border-sky-100 relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, #ffffff 0%, #f0fbff 100%)' }}
+            className="bg-white rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-sm border border-sky-100 relative overflow-hidden"
           >
-            {/* Decorative element */}
-            <div className="absolute -right-12 -top-12 w-56 h-56 rounded-full opacity-20" style={{ background: 'radial-gradient(circle, #7dd3fc, transparent)' }} />
-            <div className="absolute -left-10 -bottom-10 w-40 h-40 rounded-full opacity-15" style={{ background: 'radial-gradient(circle, #bae6fd, transparent)' }} />
+            {/* Faint camera watermark (like ChecklistSection pattern) */}
+            <div className="absolute top-1/2 right-[-4%] -translate-y-1/2 opacity-[0.04] pointer-events-none">
+              <Camera className="w-72 h-72 text-sky-400" />
+            </div>
 
             <h3 className="text-xl md:text-2xl font-bold text-gray-900 text-center mb-10 relative z-10">
               {lang === 'ko' ? "촬영 시 가이드" : "Video Recording Guide"}
