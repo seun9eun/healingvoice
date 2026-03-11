@@ -17,6 +17,7 @@ export default {
       fontFamily: {
         sans: ["Pretendard Variable", "Pretendard", "system-ui", "sans-serif"],
         mono: ["Pretendard Variable", "Pretendard", "monospace"],
+        nanumSquareNeo: ["NanumSquare Neo", "sans-serif"],
       },
     },
   },
