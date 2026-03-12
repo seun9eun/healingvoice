@@ -28,21 +28,21 @@ export function InfoSection() {
           1. Eligibility Section (배경 꽉 차게)
       ========================================= */}
       <div
-        className="w-full min-h-[710px] py-[120px] px-6"
+        className="w-full min-h-[710px] py-[120px] px-6 xl:px-[208px] flex flex-col items-start self-stretch"
         style={{ background: 'linear-gradient(180deg, #E4F3FF 0%, #BADFFF 100%)' }}
       >
-        {/* 콘텐츠 중앙 정렬 및 최대 너비 제한 (2042 - 269*2 = 1504px) */}
-        <div className="max-w-[1504px] mx-auto w-full">
+        {/* 콘텐츠 영역: 세로 배치, 왼쪽 정렬, 간격 62px 적용 */}
+        <div className="w-full flex flex-col items-start gap-[62px]">
 
-          {/* Header */}
-          <div className="text-center mb-16">
+          {/* Header: 왼쪽 정렬로 변경 */}
+          <div className="text-left">
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px] block mb-3">
               {t('info.eligibility.subtitle')}
             </span>
             <h2 className="text-[28px] md:text-[48px] font-nanumSquareNeo font-extrabold text-[#101828] leading-none">
               {t('info.eligibility.title')}
             </h2>
-            <p className="text-[#7D7D7D] max-w-2xl mx-auto mt-6 md:text-[22px] font-semibold leading-relaxed break-keep whitespace-pre-line">
+            <p className="text-[#7D7D7D] max-w-2xl mt-6 md:text-[22px] font-semibold leading-relaxed break-keep whitespace-pre-line">
               {t('info.eligibility.desc')}
             </p>
           </div>
