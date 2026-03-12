@@ -47,8 +47,8 @@ export function InfoSection() {
             </p>
           </div>
 
-          {/* Grid: 1504px 안에서 2*2 그리드로 변경됨 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
+          {/* Grid: 1504px 안에서 2*2 그리드, 간격 30px 및 상단 정렬 적용 */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] items-start max-w-7xl mx-auto self-stretch">
             {eligibilityItems.map((item, idx) => {
               const isTypeOne = idx === 0 || idx === 3; // 1번, 4번 (0-indexed)
               const gradient = isTypeOne
