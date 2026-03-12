@@ -130,16 +130,12 @@ export function InfoSection() {
             {awardItems.map((item, idx) => (
               <div
                 key={idx}
-                className="relative flex flex-col flex-1 rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] backdrop-blur-[6px] overflow-hidden group transition-all duration-300 hover:-translate-y-2"
+                className="flex flex-col flex-1 rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] backdrop-blur-[6px] transition-all duration-300 hover:-translate-y-2"
                 style={{
-                  // 피그마에서 가져온 높이 값이 있다면 여기에 minHeight: '320px' 식으로 추가하세요
-                  minHeight: '340px',
+                  minHeight: '380px', // 정사각형 느낌을 주기 위한 최소 높이 설정
                   background: 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), linear-gradient(137deg, #B5F8FF 4.05%, #C7FFD1 98.24%), rgba(255, 255, 255, 0.70)',
-                  padding: '40px 32px 32px 32px', // 상 우 하 좌 (하단 패딩 추가)
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between', // 상단 텍스트와 하단 아이콘 사이 공간 확보
-                  alignItems: 'flex-start'
+                  padding: '40px 32px 32px 32px',
+                  justifyContent: 'space-between' // 상단 텍스트와 하단 아이콘 분리
                 }}
               >
 
@@ -151,8 +147,14 @@ export function InfoSection() {
 
                 {/* 아이콘 영역 (하단 우측 정렬) */}
                 <div
-                  className="w-full flex justify-end items-end mt-[48px]" // 피그마의 gap: 48px 반영
-                  style={{ alignSelf: 'stretch' }}
+                  className="flex justify-center items-center self-end"
+                  style={{
+                    width: '120px',
+                    height: '120px',
+                    padding: '24px',
+                    aspectRatio: '1/1',
+                    marginTop: '48px' // 텍스트와의 간격 (Figma Gap)
+                  }}
                 >
                   <img
                     src={item.icon}
