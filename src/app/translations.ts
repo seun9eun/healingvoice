@@ -33,7 +33,7 @@ export const translations = {
       },
       step2: {
         title: "영상 촬영",
-        desc: "지원 시 제출할 영상은\n 핸드폰으로 촬영해 주세요.",
+        desc: "지정곡과 자유곡을\n 핸드폰으로 촬영해 주세요.",
         guide1:
           "① 지정곡 20곡 중 택1\n  (무반주 가창)",
         guide2:
