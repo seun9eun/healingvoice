@@ -108,7 +108,7 @@ export function InfoSection() {
               background: 'linear-gradient(0deg, #44A9FF 0%, #44A9FF 100%), linear-gradient(98deg, #F5FF96 2.73%, #FCFFE4 97.35%), rgba(255, 255, 255, 0.70)'
             }}
           >
-            <div className="z-10 bg-white text-[#44A9FF] text-[14px] md:text-[16px] font-bold px-4 py-2 rounded-full mb-4 shadow-sm">
+            <div className="z-10 bg-white text-[#44A9FF] text-[14px] md:text-[16px] font-bold px-4 py-2 rounded-8 mb-4 shadow-sm">
               {t('info.awards.grandPrize.title')} {/* Example: 최종 우승자 1인 */}
             </div>
             <h3 className="z-10 text-white font-extrabold text-[32px] md:text-[48px] leading-tight tracking-tight">
@@ -130,23 +130,34 @@ export function InfoSection() {
             {awardItems.map((item, idx) => (
               <div
                 key={idx}
-                className="relative flex flex-col items-start flex-1 pt-[40px] px-[32px] pb-[80px] rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] backdrop-blur-[6px] overflow-visible group"
+                className="relative flex flex-col flex-1 rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] backdrop-blur-[6px] overflow-hidden group transition-all duration-300 hover:-translate-y-2"
                 style={{
-                  background: 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), linear-gradient(137deg, #B5F8FF 4.05%, #C7FFD1 98.24%), rgba(255, 255, 255, 0.70)'
+                  // 피그마에서 가져온 높이 값이 있다면 여기에 minHeight: '320px' 식으로 추가하세요
+                  minHeight: '340px',
+                  background: 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), linear-gradient(137deg, #B5F8FF 4.05%, #C7FFD1 98.24%), rgba(255, 255, 255, 0.70)',
+                  padding: '40px 32px 32px 32px', // 상 우 하 좌 (하단 패딩 추가)
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between', // 상단 텍스트와 하단 아이콘 사이 공간 확보
+                  alignItems: 'flex-start'
                 }}
               >
 
+                {/* 텍스트 영역 (상단) */}
                 <div className="z-10">
-                  <h4 className="font-extrabold text-gray-900 mb-2 text-[20px]">{item.title}</h4>
-                  <p className="text-gray-600 text-[14px] leading-relaxed break-keep font-medium">{item.desc}</p>
+                  <h4 className="font-extrabold text-gray-900 mb-2 text-[22px] tracking-tight">{item.title}</h4>
+                  <p className="text-gray-600 text-[15px] leading-relaxed break-keep font-medium opacity-80">{item.desc}</p>
                 </div>
 
-                {/* Small Icons (Image implementation) */}
-                <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 transition-transform duration-300 group-hover:-translate-y-1">
+                {/* 아이콘 영역 (하단 우측 정렬) */}
+                <div
+                  className="w-full flex justify-end items-end mt-[48px]" // 피그마의 gap: 48px 반영
+                  style={{ alignSelf: 'stretch' }}
+                >
                   <img
                     src={item.icon}
                     alt={item.title}
-                    className="w-16 h-16 md:w-[72px] md:h-[72px] object-contain"
+                    className="w-20 h-20 md:w-[84px] md:h-[84px] object-contain transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
               </div>
