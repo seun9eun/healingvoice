@@ -1,5 +1,4 @@
 import {
-  Users, UserCheck, HeartHandshake, Mic,
   Trophy, Disc, Globe, Video
 } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
@@ -21,20 +20,15 @@ export function InfoSection() {
   ];
 
   return (
-    // 상위 section에서 padding과 container 제한을 없애고 100% 너비로 설정합니다.
     <section id="info" className="w-full relative overflow-hidden bg-transparent">
 
-      {/* =========================================
-          1. Eligibility Section (배경 꽉 차게)
-      ========================================= */}
+      {/* 1. Eligibility Section */}
       <div
         className="w-full min-h-[710px] py-[120px] px-6 xl:px-[208px] flex flex-col items-start self-stretch"
         style={{ background: 'linear-gradient(180deg, #E4F3FF 0%, #BADFFF 100%)' }}
       >
-        {/* 콘텐츠 영역: 세로 배치, 왼쪽 정렬, 간격 62px 적용 */}
         <div className="w-full flex flex-col items-start gap-[62px]">
-
-          {/* Header: 중앙 정렬 컨테이너 적용 */}
+          {/* Header */}
           <div className="flex flex-col items-center gap-[12px] self-stretch text-center">
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
               {t('info.eligibility.subtitle')}
@@ -47,12 +41,11 @@ export function InfoSection() {
             </p>
           </div>
 
-          {/* 카드들을 감싸는 컨테이너: flex-col, items-center, gap-24 적용 */}
+          {/* Cards Grid */}
           <div className="flex flex-col items-center gap-[24px] self-stretch w-full">
-            {/* Grid: 2*2 레이아웃 유지, 가로 간격 30px 적용 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[30px] gap-y-[24px] items-start max-w-7xl mx-auto w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[30px] gap-y-[24px] items-stretch max-w-7xl mx-auto w-full">
               {eligibilityItems.map((item, idx) => {
-                const isTypeOne = idx === 0 || idx === 3; // 1번, 4번 (0-indexed)
+                const isTypeOne = idx === 0 || idx === 3;
                 const gradient = isTypeOne
                   ? 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), rgba(255, 255, 255, 0.70)'
                   : 'linear-gradient(99deg, #A4FFC7 2.06%, #F2FFF7 96.87%), rgba(255, 255, 255, 0.70)';
@@ -60,42 +53,40 @@ export function InfoSection() {
                 return (
                   <div
                     key={idx}
-                    className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-8 h-full shadow-sm hover:shadow-md transition-all px-16 py-12"
+                    className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-4 shadow-sm hover:shadow-md transition-all px-8 md:px-12 py-10"
                     style={{ background: gradient }}
                   >
-                    {/* 텍스트 영역: 중앙 정렬 및 가득 차게 설정 */}
-                    <div className="flex flex-col justify-center flex-1 self-stretch text-left">
-                      <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-3 leading-[1.2] tracking-[-1.6px] break-keep text-[24px] md:text-[32px] whitespace-pre-line">
+                    {/* 텍스트 영역: min-w-0으로 유연하게 조절 */}
+                    <div className="flex flex-col justify-center flex-1 min-w-0 text-left">
+                      <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-2 leading-[1.2] tracking-[-1.2px] break-keep text-[22px] md:text-[30px]">
                         {item.title}
                       </h4>
                       {item.desc && (
-                        <p className="text-[#101828] text-[15px] md:text-[17px] font-medium leading-relaxed tracking-tight break-keep opacity-80">
+                        <p className="text-[#101828] text-[15px] md:text-[16px] font-medium leading-relaxed opacity-70 break-keep">
                           {item.desc}
                         </p>
                       )}
                     </div>
 
-                    {/* 아이콘 영역: 너비를 200px에서 120px~140px 정도로 축소 */}
-                    <div className="flex-shrink-0 w-[120px] h-[120px] md:w-[140px] md:h-[140px] flex justify-center items-center">
-                      <img src={item.icon} alt="" className="w-full h-full object-contain" />
+                    {/* 아이콘 영역: 너비를 적절히 제한하여 글자 공간 확보 */}
+                    <div className="flex-shrink-0 w-[100px] h-[100px] md:w-[140px] md:h-[140px] flex justify-center items-center">
+                      <img
+                        src={item.icon}
+                        alt=""
+                        className={`w-full h-full object-contain ${idx === 2 ? 'p-4 md:p-5' : 'p-1'}`}
+                      />
                     </div>
                   </div>
-                );
+                ); // map return 끝
               })}
             </div>
           </div>
-
         </div>
       </div>
 
-      {/* =========================================
-          2. Awards Section (다시 중앙으로 모이게)
-      ========================================= */}
-      {/* 기존에 최상위에 있던 container 클래스를 Awards 전용으로 옮겼습니다. */}
+      {/* 2. Awards Section */}
       <div className="container mx-auto px-4 pt-24 mb-32">
         <div id="awards" className="scroll-mt-24">
-
-          {/* Header */}
           <div className="text-center mb-16">
             <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
               {t('info.awards.subtitle')}
@@ -108,12 +99,9 @@ export function InfoSection() {
             </p>
           </div>
 
-          {/* Awards Layout: Single 4-column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl mx-auto px-4">
-            {/* Grand Prize Card (Blue) */}
-            <div
-              className="relative bg-[#0084d1] border border-sky-400 p-8 rounded-[32px] flex flex-col items-center text-center shadow-[0_25px_50px_-12px_rgba(2,74,112,0.5)] w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 min-h-[320px] justify-center"
-            >
+            {/* Grand Prize Card */}
+            <div className="relative bg-[#0084d1] border border-sky-400 p-8 rounded-[32px] flex flex-col items-center text-center shadow-[0_25px_50px_-12px_rgba(2,74,112,0.5)] w-full overflow-hidden transform hover:scale-105 transition-transform duration-300 min-h-[320px] justify-center">
               <div className="absolute top-0 right-0 bg-white text-[#0084d1] text-[10px] font-bold px-3 py-1 rounded-bl-lg uppercase">
                 {t('info.awards.grandPrize.badge')}
               </div>
@@ -124,11 +112,11 @@ export function InfoSection() {
               <p className="text-sky-100 font-medium">{t('info.awards.grandPrize.benefit')}</p>
             </div>
 
-            {/* Top 7 Benefit Cards (White) */}
+            {/* Top 7 Benefit Cards */}
             {awardItems.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-white/100 backdrop-blur-sm border border-white/70 p-8 rounded-[32px] flex flex-col items-center text-center hover:border-sky-400/50 transition-colors transform hover:-translate-y-1 duration-300 shadow-sm bg-[#ffffff] min-h-[320px] justify-center"
+                className="bg-white border border-white/70 p-8 rounded-[32px] flex flex-col items-center text-center hover:border-sky-400/50 transition-colors transform hover:-translate-y-1 duration-300 shadow-sm min-h-[320px] justify-center"
               >
                 <div className="bg-sky-100/60 p-5 rounded-full mb-6">
                   <item.icon className="w-10 h-10 text-sky-500" />
@@ -140,7 +128,6 @@ export function InfoSection() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }
