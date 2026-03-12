@@ -66,9 +66,9 @@ export function InfoSection() {
                     <item.icon className="w-10 h-10 text-sky-500" />
                   </div>
 
-                  {/* 텍스트 */}
-                  <div className="flex flex-col items-start text-left">
-                    <h4 className="font-nanumSquareNeo font-extrabold text-gray-900 mb-3 leading-snug break-keep text-[22px] md:text-[24px]">
+                  {/* 텍스트 영역: 중앙 정렬 및 가득 차게 설정 */}
+                  <div className="flex flex-col justify-center flex-1 self-stretch text-left">
+                    <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-3 leading-[1.2] tracking-[-1.6px] break-keep text-[24px] md:text-[32px]">
                       {item.title}
                     </h4>
                     {item.desc && (
