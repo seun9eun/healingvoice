@@ -1,6 +1,3 @@
-import {
-  Trophy, Disc, Globe, Video
-} from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
 export function InfoSection() {
@@ -13,10 +10,14 @@ export function InfoSection() {
     { icon: "https://i.imgur.com/quRXU3v.png", title: t('info.eligibility.item4.title'), desc: t('info.eligibility.item4.desc') },
   ];
 
+  // The first image is assigned to the Grand Prize separately below.
+  const grandPrizeIcon = "https://i.imgur.com/MIxVFwH.png";
+
+  // The remaining 3 images are assigned to the small cards.
   const awardItems = [
-    { icon: Disc, title: t('info.awards.item1.title'), desc: t('info.awards.item1.desc') },
-    { icon: Globe, title: t('info.awards.item2.title'), desc: t('info.awards.item2.desc') },
-    { icon: Video, title: t('info.awards.item3.title'), desc: t('info.awards.item3.desc') },
+    { icon: "https://i.imgur.com/nrHZKUb.png", title: t('info.awards.item1.title'), desc: t('info.awards.item1.desc') },
+    { icon: "https://i.imgur.com/OwvapbK.png", title: t('info.awards.item2.title'), desc: t('info.awards.item2.desc') },
+    { icon: "https://i.imgur.com/Ewenhqg.png", title: t('info.awards.item3.title'), desc: t('info.awards.item3.desc') },
   ];
 
   return (
