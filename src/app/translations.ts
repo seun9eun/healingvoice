@@ -30,6 +30,11 @@ export const translations = {
         hwp: "HWP 한글파일",
         docx: "DOCX 워드파일",
         eng: "영문 지원서 (English Form)",
+        downloadFilename: {
+          hwp: "힐링보이스 참가지원서.hwp",
+          docx: "힐링보이스 참가지원서.docx",
+          eng: "Healing Voice Application Form.docx",
+        },
       },
       step2: {
         title: "영상 촬영",
@@ -272,6 +277,11 @@ export const translations = {
         hwp: "HWP (Korean)",
         docx: "DOCX (Word)",
         eng: "Application Form",
+        downloadFilename: {
+          hwp: "힐링보이스 참가지원서.hwp",
+          docx: "힐링보이스 참가지원서.docx",
+          eng: "Healing Voice Application Form.docx",
+        },
       },
       step2: {
         title: "Video Submission",

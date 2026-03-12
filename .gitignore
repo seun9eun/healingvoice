@@ -1,1 +1,10 @@
-node_modules
+node_modules/
+.vscode/
+dist/
+build/
+*.log
+*.tmp
+*.zip
+*.7z
+*.rar
+*.tar

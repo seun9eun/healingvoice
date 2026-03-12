@@ -17,6 +17,26 @@ import { toast } from "sonner";
 export function StepsSection() {
   const { t, lang } = useLanguage(); // 번역 버튼 가동
 
+  /** 프로젝트 내 파일을 지정한 파일명(한글 포함)으로 다운로드. 맥/ Safari에서도 한글 자모 깨짐 방지 */
+  const handleFileDownload = async (filePath: string, downloadFilename: string) => {
+    try {
+      const res = await fetch(filePath);
+      if (!res.ok) throw new Error("Download failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = downloadFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download error", err);
+      toast.error(t("steps.toast.error"));
+    }
+  };
+
   const handleCopyEmail = async () => {
     const email = "cgnhealingvoice@daum.net";
     try {
@@ -56,13 +76,15 @@ export function StepsSection() {
       icon: FileText,
       content: (
         <div className="flex flex-col gap-3 w-full mt-2">
-          {/* HWP 한글파일 */}
+          {/* HWP 한글파일 - 프로젝트 내 파일, 파일명 그대로 저장 (맥/Safari 한글 자모 대응) */}
           {lang === 'ko' && (
-            <a
-              href="https://drive.google.com/uc?export=download&id=1nLkDq9uSwJCyDJFihEFCP5YKB5EI6lmg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                const name = t('steps.step1.downloadFilename.hwp');
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+              }}
+              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
               <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.hwp')}
@@ -70,16 +92,18 @@ export function StepsSection() {
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
                 <Download className="w-4 h-4 text-white" />
               </div>
-            </a>
+            </button>
           )}
 
           {/* DOCX 워드파일 */}
           {lang === 'ko' && (
-            <a
-              href="https://drive.google.com/uc?export=download&id=1L_536GYEvEf4Nw543_bxrEu24pIMLg4d"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                const name = t('steps.step1.downloadFilename.docx');
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+              }}
+              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
               <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.docx')}
@@ -87,16 +111,18 @@ export function StepsSection() {
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
                 <Download className="w-4 h-4 text-white" />
               </div>
-            </a>
+            </button>
           )}
 
           {/* 영문 지원서 다운로드 */}
           {lang === 'en' && (
-            <a
-              href="https://drive.google.com/uc?export=download&id=1LGSsjH-bF83PK27XnfsDZAkcqVfek1D2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                const name = t('steps.step1.downloadFilename.eng');
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+              }}
+              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
               <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.eng')}
@@ -104,7 +130,7 @@ export function StepsSection() {
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
                 <Download className="w-4 h-4 text-white" />
               </div>
-            </a>
+            </button>
           )}
         </div>
       ),
