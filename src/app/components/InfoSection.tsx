@@ -57,11 +57,11 @@ export function InfoSection() {
                   >
                     {/* 텍스트 영역: whitespace-pre-line 복구! */}
                     <div className="flex flex-col justify-center flex-1 min-w-0 text-left">
-                      <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-2 leading-[1.2] tracking-[-1.2px] text-[22px] md:text-[30px] whitespace-pre-line">
+                      <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-2 leading-[1.2] tracking-[-1.2px] text-[22px] md:text-[30px] whitespace-pre-line break-keep">
                         {item.title}
                       </h4>
                       {item.desc && (
-                        <p className="text-[#101828] text-[15px] md:text-[16px] font-medium leading-relaxed opacity-70 whitespace-pre-line">
+                        <p className="text-[#101828] text-[15px] md:text-[16px] font-medium leading-relaxed opacity-70 whitespace-pre-line break-keep">
                           {item.desc}
                         </p>
                       )}
