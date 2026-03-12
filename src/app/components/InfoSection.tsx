@@ -8,7 +8,7 @@ export function InfoSection() {
   const { t } = useLanguage();
 
   const eligibilityItems = [
-    { icon: "https://i.imgur.com/quRXU3v.png", title: t('info.eligibility.item1.title'), desc: t('info.eligibility.item1.desc') },
+    { icon: "https://i.imgur.com/TMv5uek.png", title: t('info.eligibility.item1.title'), desc: t('info.eligibility.item1.desc') },
     { icon: "https://i.imgur.com/rYtD5h5.png", title: t('info.eligibility.item2.title'), desc: t('info.eligibility.item2.desc') },
     { icon: "https://i.imgur.com/XT0kTYg.png", title: t('info.eligibility.item3.title'), desc: t('info.eligibility.item3.desc') },
     { icon: "https://i.imgur.com/quRXU3v.png", title: t('info.eligibility.item4.title'), desc: t('info.eligibility.item4.desc') },
@@ -75,9 +75,9 @@ export function InfoSection() {
                       )}
                     </div>
 
-                    {/* 아이콘 (이미지) - 200px 컨테이너 가이드 반영 */}
-                    <div className="flex-shrink-0 w-[200px] h-[200px] p-[33.333px] flex flex-col justify-center items-center">
-                      <img src={item.icon} alt="" className="w-full h-full object-contain" />
+                    {/* 아이콘 (이미지) - 크기 통일: 200px 컨테이너, 아이콘 표시 영역 133px로 고정 */}
+                    <div className="flex-shrink-0 w-[200px] h-[200px] flex flex-col justify-center items-center">
+                      <img src={item.icon} alt="" className="w-[133px] h-[133px] object-contain" />
                     </div>
                   </div>
                 );
