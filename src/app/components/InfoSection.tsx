@@ -48,30 +48,38 @@ export function InfoSection() {
           </div>
 
           {/* Grid: 1504px 안에서 2*2 그리드로 변경됨 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
-            {eligibilityItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="bg-white/70 backdrop-blur-md border border-white rounded-[32px] flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8 h-full shadow-sm hover:shadow-md transition-all px-[30px] md:px-[60px] py-[40px] md:py-[56px] bg-[#ffffff]"
-              >
-                {/* 아이콘 */}
-                <div className="flex-shrink-0 bg-[#E4F3FF] p-5 rounded-3xl">
-                  <item.icon className="w-10 h-10 text-[#00BCFF]" />
-                </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
+            {eligibilityItems.map((item, idx) => {
+              const isTypeOne = idx === 0 || idx === 3; // 1번, 4번 (0-indexed)
+              const gradient = isTypeOne
+                ? 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), rgba(255, 255, 255, 0.70)'
+                : 'linear-gradient(99deg, #A4FFC7 2.06%, #F2FFF7 96.87%), rgba(255, 255, 255, 0.70)';
 
-                {/* 텍스트 */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <h4 className="font-bold text-gray-900 mb-2 leading-snug break-keep text-[20px] md:text-[22px]">
-                    {item.title}
-                  </h4>
-                  {item.desc && (
-                    <p className="text-[#101828] text-[13px] md:text-[14px] font-medium leading-[20px] tracking-normal break-keep opacity-80">
-                      {item.desc}
-                    </p>
-                  )}
+              return (
+                <div
+                  key={idx}
+                  className="rounded-[48px] border-2 border-white flex flex-col items-start gap-8 h-full shadow-sm hover:shadow-md transition-all px-10 md:px-16 py-12"
+                  style={{ background: gradient }}
+                >
+                  {/* 아이콘 */}
+                  <div className="flex-shrink-0 bg-white/40 p-5 rounded-3xl">
+                    <item.icon className="w-10 h-10 text-sky-500" />
+                  </div>
+
+                  {/* 텍스트 */}
+                  <div className="flex flex-col items-start text-left">
+                    <h4 className="font-nanumSquareNeo font-extrabold text-gray-900 mb-3 leading-snug break-keep text-[22px] md:text-[24px]">
+                      {item.title}
+                    </h4>
+                    {item.desc && (
+                      <p className="text-[#101828] text-[15px] md:text-[17px] font-medium leading-relaxed tracking-tight break-keep opacity-80">
+                        {item.desc}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
