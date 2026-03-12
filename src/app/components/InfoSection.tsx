@@ -47,39 +47,42 @@ export function InfoSection() {
             </p>
           </div>
 
-          {/* Grid: 1504px 안에서 2*2 그리드, 간격 30px 및 상단 정렬 적용 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] items-start max-w-7xl mx-auto self-stretch">
-            {eligibilityItems.map((item, idx) => {
-              const isTypeOne = idx === 0 || idx === 3; // 1번, 4번 (0-indexed)
-              const gradient = isTypeOne
-                ? 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), rgba(255, 255, 255, 0.70)'
-                : 'linear-gradient(99deg, #A4FFC7 2.06%, #F2FFF7 96.87%), rgba(255, 255, 255, 0.70)';
+          {/* 카드들을 감싸는 컨테이너: flex-col, items-center, gap-24 적용 */}
+          <div className="flex flex-col items-center gap-[24px] self-stretch w-full">
+            {/* Grid: 2*2 레이아웃 유지, 가로 간격 30px 적용 */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[30px] gap-y-[24px] items-start max-w-7xl mx-auto w-full">
+              {eligibilityItems.map((item, idx) => {
+                const isTypeOne = idx === 0 || idx === 3; // 1번, 4번 (0-indexed)
+                const gradient = isTypeOne
+                  ? 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), rgba(255, 255, 255, 0.70)'
+                  : 'linear-gradient(99deg, #A4FFC7 2.06%, #F2FFF7 96.87%), rgba(255, 255, 255, 0.70)';
 
-              return (
-                <div
-                  key={idx}
-                  className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-8 h-full shadow-sm hover:shadow-md transition-all px-16 py-12"
-                  style={{ background: gradient }}
-                >
-                  {/* 텍스트 영역: 중앙 정렬 및 가득 차게 설정 */}
-                  <div className="flex flex-col justify-center flex-1 self-stretch text-left">
-                    <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-3 leading-[1.2] tracking-[-1.6px] break-keep text-[24px] md:text-[32px] whitespace-pre-line">
-                      {item.title}
-                    </h4>
-                    {item.desc && (
-                      <p className="text-[#101828] text-[15px] md:text-[17px] font-medium leading-relaxed tracking-tight break-keep opacity-80">
-                        {item.desc}
-                      </p>
-                    )}
-                  </div>
+                return (
+                  <div
+                    key={idx}
+                    className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-8 h-full shadow-sm hover:shadow-md transition-all px-16 py-12"
+                    style={{ background: gradient }}
+                  >
+                    {/* 텍스트 영역: 중앙 정렬 및 가득 차게 설정 */}
+                    <div className="flex flex-col justify-center flex-1 self-stretch text-left">
+                      <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-3 leading-[1.2] tracking-[-1.6px] break-keep text-[24px] md:text-[32px] whitespace-pre-line">
+                        {item.title}
+                      </h4>
+                      {item.desc && (
+                        <p className="text-[#101828] text-[15px] md:text-[17px] font-medium leading-relaxed tracking-tight break-keep opacity-80">
+                          {item.desc}
+                        </p>
+                      )}
+                    </div>
 
-                  {/* 아이콘 (이미지) - 200px 컨테이너 가이드 반영 */}
-                  <div className="flex-shrink-0 w-[200px] h-[200px] p-[33.333px] flex flex-col justify-center items-center">
-                    <img src={item.icon} alt="" className="w-full h-full object-contain" />
+                    {/* 아이콘 (이미지) - 200px 컨테이너 가이드 반영 */}
+                    <div className="flex-shrink-0 w-[200px] h-[200px] p-[33.333px] flex flex-col justify-center items-center">
+                      <img src={item.icon} alt="" className="w-full h-full object-contain" />
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
         </div>
