@@ -58,7 +58,7 @@ export function InfoSection() {
               return (
                 <div
                   key={idx}
-                  className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-8 h-full shadow-sm hover:shadow-md transition-all px-10 md:px-16 py-12"
+                  className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-8 h-full shadow-sm hover:shadow-md transition-all px-16 py-12"
                   style={{ background: gradient }}
                 >
                   {/* 텍스트 영역: 중앙 정렬 및 가득 차게 설정 */}
@@ -73,8 +73,8 @@ export function InfoSection() {
                     )}
                   </div>
 
-                  {/* 아이콘 (이미지) */}
-                  <div className="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
+                  {/* 아이콘 (이미지) - 200px 컨테이너 가이드 반영 */}
+                  <div className="flex-shrink-0 w-[200px] h-[200px] p-[33.333px] flex flex-col justify-center items-center">
                     <img src={item.icon} alt="" className="w-full h-full object-contain" />
                   </div>
                 </div>
