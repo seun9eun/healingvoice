@@ -18,7 +18,7 @@ export const translations = {
     },
     gallery: {
       subtitle: "Official Video",
-      title: "Preview",
+      title: "공식 영상",
       desc: "힐링보이스의 공식 영상을 만나보세요",
     },
     steps: {
