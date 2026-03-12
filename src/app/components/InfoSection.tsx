@@ -34,15 +34,15 @@ export function InfoSection() {
         {/* 콘텐츠 영역: 세로 배치, 왼쪽 정렬, 간격 62px 적용 */}
         <div className="w-full flex flex-col items-start gap-[62px]">
 
-          {/* Header: 왼쪽 정렬로 변경 */}
-          <div className="text-left">
-            <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px] block mb-3">
+          {/* Header: 중앙 정렬 컨테이너 적용 */}
+          <div className="flex flex-col items-center gap-[12px] self-stretch text-center">
+            <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[16px]">
               {t('info.eligibility.subtitle')}
             </span>
             <h2 className="text-[28px] md:text-[48px] font-nanumSquareNeo font-extrabold text-[#101828] leading-none">
               {t('info.eligibility.title')}
             </h2>
-            <p className="text-[#7D7D7D] max-w-2xl mt-6 md:text-[22px] font-semibold leading-relaxed break-keep whitespace-pre-line">
+            <p className="text-[#7D7D7D] max-w-2xl mt-3 md:text-[22px] font-semibold leading-relaxed break-keep whitespace-pre-line">
               {t('info.eligibility.desc')}
             </p>
           </div>
