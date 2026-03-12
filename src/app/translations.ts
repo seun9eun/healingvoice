@@ -69,15 +69,15 @@ export const translations = {
         title: "지원 요건",
         desc: "CCM을 사랑하는 기독교인 누구나 지원 가능!\n세상을 향한 당신의 목소리를 들려주세요.",
         item1: {
-          title: "대중 가수, CCM 가수, 찬양 사역자",
+          title: "대중 가수/CCM 가수/\n찬양 사역자",
           desc: "",
         },
-        item2: { title: "CCM을 사랑하는 사람", desc: "" },
+        item2: { title: "CCM을\n 사랑하는 사람", desc: "" },
         item3: {
           title: "나이 / 성별 / 국적 / 경력\n 제한 없음",
           desc: "(단, 미성년자는 보호자 동의 필요)",
         },
-        item4: { title: "개인(솔로)만 지원 가능", desc: "" },
+        item4: { title: "개인(솔로)만\n 지원 가능", desc: "" },
       },
       awards: {
         subtitle: "Awards",
