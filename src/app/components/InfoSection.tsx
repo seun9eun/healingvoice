@@ -75,9 +75,9 @@ export function InfoSection() {
                       )}
                     </div>
 
-                    {/* 아이콘 (이미지) - 크기 통일: 200px 컨테이너, 아이콘 표시 영역 133px로 고정 */}
-                    <div className="flex-shrink-0 w-[200px] h-[200px] flex flex-col justify-center items-center">
-                      <img src={item.icon} alt="" className="w-[133px] h-[133px] object-contain" />
+                    {/* 아이콘 영역: 너비를 200px에서 120px~140px 정도로 축소 */}
+                    <div className="flex-shrink-0 w-[120px] h-[120px] md:w-[140px] md:h-[140px] flex justify-center items-center">
+                      <img src={item.icon} alt="" className="w-full h-full object-contain" />
                     </div>
                   </div>
                 );
