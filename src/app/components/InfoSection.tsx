@@ -135,12 +135,6 @@ export function InfoSection() {
                   background: 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), linear-gradient(137deg, #B5F8FF 4.05%, #C7FFD1 98.24%), rgba(255, 255, 255, 0.70)'
                 }}
               >
-                {/* Floating '린' Badge */}
-                {idx === 0 && (
-                  <div className="absolute -top-3 left-8 bg-[#FF5C4D] text-white text-[12px] font-bold w-7 h-7 flex items-center justify-center rounded-full shadow-md z-20 border-[2px] border-white">
-                    린
-                  </div>
-                )}
 
                 <div className="z-10">
                   <h4 className="font-extrabold text-gray-900 mb-2 text-[20px]">{item.title}</h4>
