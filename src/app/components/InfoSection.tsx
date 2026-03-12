@@ -8,10 +8,10 @@ export function InfoSection() {
   const { t } = useLanguage();
 
   const eligibilityItems = [
-    { icon: Users, title: t('info.eligibility.item1.title'), desc: t('info.eligibility.item1.desc') },
-    { icon: UserCheck, title: t('info.eligibility.item2.title'), desc: t('info.eligibility.item2.desc') },
-    { icon: HeartHandshake, title: t('info.eligibility.item3.title'), desc: t('info.eligibility.item3.desc') },
-    { icon: Mic, title: t('info.eligibility.item4.title'), desc: t('info.eligibility.item4.desc') },
+    { icon: "https://i.imgur.com/quRXU3v.png", title: t('info.eligibility.item1.title'), desc: t('info.eligibility.item1.desc') },
+    { icon: "https://i.imgur.com/rYtD5h5.png", title: t('info.eligibility.item2.title'), desc: t('info.eligibility.item2.desc') },
+    { icon: "https://i.imgur.com/XT0kTYg.png", title: t('info.eligibility.item3.title'), desc: t('info.eligibility.item3.desc') },
+    { icon: "https://i.imgur.com/quRXU3v.png", title: t('info.eligibility.item4.title'), desc: t('info.eligibility.item4.desc') },
   ];
 
   const awardItems = [
@@ -58,17 +58,12 @@ export function InfoSection() {
               return (
                 <div
                   key={idx}
-                  className="rounded-[48px] border-2 border-white flex flex-col items-start gap-8 h-full shadow-sm hover:shadow-md transition-all px-10 md:px-16 py-12"
+                  className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-8 h-full shadow-sm hover:shadow-md transition-all px-10 md:px-16 py-12"
                   style={{ background: gradient }}
                 >
-                  {/* 아이콘 */}
-                  <div className="flex-shrink-0 bg-white/40 p-5 rounded-3xl">
-                    <item.icon className="w-10 h-10 text-sky-500" />
-                  </div>
-
                   {/* 텍스트 영역: 중앙 정렬 및 가득 차게 설정 */}
                   <div className="flex flex-col justify-center flex-1 self-stretch text-left">
-                    <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-3 leading-[1.2] tracking-[-1.6px] break-keep text-[24px] md:text-[32px]">
+                    <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-3 leading-[1.2] tracking-[-1.6px] break-keep text-[24px] md:text-[32px] whitespace-pre-line">
                       {item.title}
                     </h4>
                     {item.desc && (
@@ -76,6 +71,11 @@ export function InfoSection() {
                         {item.desc}
                       </p>
                     )}
+                  </div>
+
+                  {/* 아이콘 (이미지) */}
+                  <div className="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 flex items-center justify-center">
+                    <img src={item.icon} alt="" className="w-full h-full object-contain" />
                   </div>
                 </div>
               );
