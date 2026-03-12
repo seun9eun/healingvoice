@@ -115,9 +115,13 @@ export function InfoSection() {
               {t('info.awards.grandPrize.benefit')} {/* Example: 상금 3,000만원 */}
             </h3>
 
-            {/* Trophy Image Placeholder */}
+            {/* Grand Prize Trophy Image */}
             <div className="absolute right-[-20px] bottom-[-20px] md:right-[40px] md:bottom-[-10px] pointer-events-none">
-              <Trophy className="w-48 h-48 md:w-[240px] md:h-[240px] text-yellow-300 drop-shadow-md" fill="currentColor" />
+              <img
+                src={grandPrizeIcon}
+                alt="Grand Prize Trophy"
+                className="w-48 h-48 md:w-[240px] md:h-[240px] object-contain drop-shadow-md"
+              />
             </div>
           </div>
 
@@ -131,15 +135,25 @@ export function InfoSection() {
                   background: 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), linear-gradient(137deg, #B5F8FF 4.05%, #C7FFD1 98.24%), rgba(255, 255, 255, 0.70)'
                 }}
               >
+                {/* Floating '린' Badge */}
+                {idx === 0 && (
+                  <div className="absolute -top-3 left-8 bg-[#FF5C4D] text-white text-[12px] font-bold w-7 h-7 flex items-center justify-center rounded-full shadow-md z-20 border-[2px] border-white">
+                    린
+                  </div>
+                )}
 
                 <div className="z-10">
                   <h4 className="font-extrabold text-gray-900 mb-2 text-[20px]">{item.title}</h4>
                   <p className="text-gray-600 text-[14px] leading-relaxed break-keep font-medium">{item.desc}</p>
                 </div>
 
-                {/* Small Icons */}
+                {/* Small Icons (Image implementation) */}
                 <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 transition-transform duration-300 group-hover:-translate-y-1">
-                  <item.icon className="w-14 h-14 md:w-16 md:h-16 text-[#45D3C2]" />
+                  <img
+                    src={item.icon}
+                    alt={item.title}
+                    className="w-16 h-16 md:w-[72px] md:h-[72px] object-contain"
+                  />
                 </div>
               </div>
             ))}
