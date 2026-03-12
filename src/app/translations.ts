@@ -86,7 +86,7 @@ export const translations = {
         grandPrize: {
           badge: "Grand Prize",
           title: "최종 우승자(1인)",
-          benefit: "상금 3,000만 원",
+          benefit: "상금\n 3,000만 원",
         },
         top7Title: "최종 TOP 7 특전",
         item1: {

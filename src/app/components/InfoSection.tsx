@@ -101,65 +101,74 @@ export function InfoSection() {
         {/* Card Container */}
         <div className="flex flex-col items-center w-full max-w-[1024px] gap-[24px] px-4">
 
-          {/* Big Card */}
+          {/* Big Card (Grand Prize) */}
           <div
-            className="relative flex flex-col justify-center items-start w-full px-8 py-10 md:px-[80px] md:py-[56px] rounded-[48px] border-2 border-[#D3EBFF] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] overflow-hidden"
+            className="relative w-full rounded-[32px] md:rounded-[48px] border-2 border-[#D3EBFF] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] overflow-hidden"
             style={{
-              background: 'linear-gradient(0deg, #44A9FF 0%, #44A9FF 100%), linear-gradient(98deg, #F5FF96 2.73%, #FCFFE4 97.35%), rgba(255, 255, 255, 0.70)'
+              background: 'linear-gradient(0deg, #44A9FF 0%, #44A9FF 100%), linear-gradient(98deg, #F5FF96 2.73%, #FCFFE4 97.35%), rgba(255, 255, 255, 0.70)',
+              // 모바일에서는 패딩을 줄여서 공간 확보
+              padding: '40px 24px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
           >
-            <div className="z-10 bg-white text-[#44A9FF] text-[14px] md:text-[16px] font-bold px-4 py-2 rounded-8 mb-4 shadow-sm">
-              {t('info.awards.grandPrize.title')} {/* Example: 최종 우승자 1인 */}
-            </div>
-            <h3 className="z-10 text-white font-extrabold text-[32px] md:text-[48px] leading-tight tracking-tight">
-              {t('info.awards.grandPrize.benefit')} {/* Example: 상금 3,000만원 */}
-            </h3>
+            {/* 내부 860x200 컨테이너 영역 */}
+            <div
+              className="flex w-full max-w-[860px] items-start md:gap-[30px] gap-[10px]"
+              style={{ minHeight: '200px' }}
+            >
+              {/* 왼쪽: 텍스트 영역 (배지 + 상금) */}
+              <div className="flex flex-col items-start flex-1" style={{ paddingTop: '20px' }}>
+                {/* 배지 */}
+                <div className="bg-white px-[12px] py-[4px] rounded-[8px] mb-[20px] shadow-sm">
+                  <span className="text-[#44A9FF] text-[16px] font-bold">
+                    {t('info.awards.grandPrize.title')}
+                  </span>
+                </div>
+                {/* 상금 텍스트 */}
+                <h3 className="text-white font-extrabold text-[32px] md:text-[54px] leading-tight tracking-tight whitespace-pre-line">
+                  {t('info.awards.grandPrize.benefit')}
+                </h3>
+              </div>
 
-            {/* Grand Prize Trophy Image */}
-            <div className="absolute right-[-20px] bottom-[-20px] md:right-[40px] md:bottom-[-10px] pointer-events-none">
-              <img
-                src={grandPrizeIcon}
-                alt="Grand Prize Trophy"
-                className="w-48 h-48 md:w-[240px] md:h-[240px] object-contain drop-shadow-md"
-              />
+              {/* 오른쪽/하단: 트로피 이미지 영역 */}
+              <div className="flex-shrink-0 mt-4 md:mt-0">
+                <img
+                  src={grandPrizeIcon}
+                  alt="Grand Prize Trophy"
+                  // 모바일: 140px 너비 / 데스크톱: 187.215px 너비
+                  className="w-[80px] md:w-[187.215px] h-auto md:h-[200px] object-contain drop-shadow-xl"
+                />
+              </div>
             </div>
           </div>
 
           {/* Small Cards Wrapper */}
-          <div className="flex flex-col md:flex-row w-full gap-[24px]">
+          <div className="flex flex-col md:flex-row w-full gap-[24px] items-stretch">
             {awardItems.map((item, idx) => (
               <div
                 key={idx}
-                className="flex flex-col flex-1 rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] backdrop-blur-[6px] transition-all duration-300 hover:-translate-y-2"
+                className="flex flex-col flex-1 rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] backdrop-blur-[6px] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
                 style={{
-                  minHeight: '380px', // 정사각형 느낌을 주기 위한 최소 높이 설정
+                  minHeight: '260px', // 피그마에서 측정된 세로 값
                   background: 'linear-gradient(98deg, #B4FFF9 3.14%, #E9FFFD 96.88%), linear-gradient(137deg, #B5F8FF 4.05%, #C7FFD1 98.24%), rgba(255, 255, 255, 0.70)',
                   padding: '40px 32px 32px 32px',
-                  justifyContent: 'space-between' // 상단 텍스트와 하단 아이콘 분리
+                  justifyContent: 'space-between'
                 }}
               >
-
-                {/* 텍스트 영역 (상단) */}
-                <div className="z-10">
-                  <h4 className="font-extrabold text-gray-900 mb-2 text-[22px] tracking-tight">{item.title}</h4>
-                  <p className="text-gray-600 text-[15px] leading-relaxed break-keep font-medium opacity-80">{item.desc}</p>
+                {/* 텍스트 영역 */}
+                <div className="flex flex-col items-start text-left">
+                  <h4 className="font-extrabold text-[#101828] mb-2 text-[20px] md:text-[22px] tracking-tight">{item.title}</h4>
+                  <p className="text-gray-600 text-[14px] md:text-[15px] leading-relaxed font-medium opacity-80 break-keep">{item.desc}</p>
                 </div>
 
-                {/* 아이콘 영역 (하단 우측 정렬) */}
-                <div
-                  className="flex justify-center items-center self-end"
-                  style={{
-                    width: '120px',
-                    height: '120px',
-                    padding: '24px',
-                    aspectRatio: '1/1',
-                    marginTop: '48px' // 텍스트와의 간격 (Figma Gap)
-                  }}
-                >
+                {/* 아이콘 영역 (48x48 고정) */}
+                <div className="self-end mt-[48px]">
                   <img
                     src={item.icon}
                     alt={item.title}
-                    className="w-20 h-20 md:w-[84px] md:h-[84px] object-contain transition-transform duration-300 group-hover:scale-110"
+                    className="w-12 h-12 object-contain"
                   />
                 </div>
               </div>
