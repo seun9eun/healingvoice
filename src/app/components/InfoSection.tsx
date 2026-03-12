@@ -25,7 +25,6 @@ export function InfoSection() {
       {/* 1. Eligibility Section */}
       <div
         className="w-full min-h-[710px] py-[120px] px-6 xl:px-[208px] flex flex-col items-start self-stretch"
-        style={{ background: 'linear-gradient(180deg, #E4F3FF 0%, #BADFFF 100%)' }}
       >
         <div className="w-full flex flex-col items-start gap-[62px]">
           {/* Header */}
