@@ -55,13 +55,15 @@ export function InfoSection() {
                     className="rounded-[48px] border-2 border-white flex flex-row items-center justify-between gap-4 shadow-sm hover:shadow-md transition-all px-8 md:px-12 py-10"
                     style={{ background: gradient }}
                   >
-                    {/* 텍스트 영역: min-w-0으로 유연하게 조절 */}
+                    {/* 텍스트 영역: whitespace-pre-line 복구! */}
                     <div className="flex flex-col justify-center flex-1 min-w-0 text-left">
                       <h4 className="font-nanumSquareNeo font-extrabold text-[#101828] mb-2 leading-[1.2] tracking-[-1.2px] text-[22px] md:text-[30px] whitespace-pre-line">
                         {item.title}
                       </h4>
                       {item.desc && (
-                        <p className="text-[#101828] text-[15px] md:text-[16px] font-medium leading-relaxed opacity-70 whitespace-pre-line">{item.desc}</p>
+                        <p className="text-[#101828] text-[15px] md:text-[16px] font-medium leading-relaxed opacity-70 whitespace-pre-line">
+                          {item.desc}
+                        </p>
                       )}
                     </div>
 
@@ -70,7 +72,7 @@ export function InfoSection() {
                       <img
                         src={item.icon}
                         alt=""
-                        className={`w-full h-full object-contain ${idx === 2 ? 'p-4 md:p-5' : 'p-1'}`}
+                        className={`w-full h-full object-contain ${idx === 1 || idx === 2 ? 'p-4 md:p-5' : 'p-1'}`}
                       />
                     </div>
                   </div>

@@ -213,7 +213,15 @@ export function StepsSection() {
                   <step.icon className="w-10 h-10 text-white" />
                 </div>
                 {/* STEP Badge (Rounded Rect) */}
-                <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#00a6f4] text-white font-black rounded-[8px] flex items-center justify-center text-[13px] border-2 border-white z-20 shadow-sm whitespace-nowrap min-w-[80px]">
+                <div className="absolute -top-[52px] left-1/2 -translate-x-1/2 flex items-center justify-center whitespace-nowrap z-20 font-black text-white border-white border-2
+                  text-[16px]           
+                  px-5                  
+                  py-2                  
+                  min-w-[100px]         
+                  rounded-[8px]         
+                  bg-[#006199]          
+                  shadow-sm             
+                  ">
                   STEP {step.step}
                 </div>
               </div>
