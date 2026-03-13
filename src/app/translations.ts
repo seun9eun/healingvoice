@@ -30,11 +30,11 @@ export const translations = {
         hwp: "HWP 한글파일",
         docx: "DOCX 워드파일",
         eng: "영문 지원서 (English Form)",
-      },
-      downloadFilename: {
-        hwp: "참가지원서.hwp",
-        docx: "참가지원서.docx",
-        eng: "참가지원서_영문.docx",
+        downloadFilename: {
+          hwp: "힐링보이스_참가지원서.hwp",
+          docx: "힐링보이스_참가지원서.docx",
+          eng: "Healing_Voice_Application_Form.docx",
+        },
       },
 
       step2: {
@@ -278,12 +278,13 @@ export const translations = {
         hwp: "HWP (Korean)",
         docx: "DOCX (Word)",
         eng: "Application Form",
+        downloadFilename: {
+          hwp: "힐링보이스_참가지원서.hwp",
+          docx: "힐링보이스_참가지원서.docx",
+          eng: "Healing_Voice_Application_Form.docx",
+        },
       },
-      downloadFilename: {
-        hwp: "참가지원서.hwp",
-        docx: "참가지원서.docx",
-        eng: "참가지원서_영문.docx",
-      },
+
       step2: {
         title: "Video Submission",
         desc: "Record your audition videos using your mobile phone.",
