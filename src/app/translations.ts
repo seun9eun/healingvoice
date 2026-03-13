@@ -250,7 +250,7 @@ export const translations = {
   },
   en: {
     intro: "Intro",
-    eligibility: "Requirements",
+    eligibility: "Eligibility",
     awards: "Awards",
     howtoapply: "Application Process",
     apply: "Apply now",
@@ -321,12 +321,12 @@ export const translations = {
     },
     info: {
       eligibility: {
-        subtitle: "Eligibility",
-        title: "Requirements",
+        subtitle: "Audition Call",
+        title: "Eligibility",
         desc: "We welcome all Christians who loves CCM.\n Let your voice reach out to the world!",
         item1: {
           title:
-            "Mainstream singers, CCM artists,\n and praise ministry leaders",
+            "Mainstream singers, CCM artists,\n and Worship Leaders",
           desc: "",
         },
         item2: { title: "Anyone who loves CCM", desc: "" },
