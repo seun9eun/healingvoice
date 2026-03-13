@@ -115,7 +115,7 @@ export function ChecklistSection() {
                   <div className="space-y-2">
                     {[1, 2, 3].map((num) => (
                       <div key={num} className="bg-white border border-[#155dfc]/5 rounded-xl p-3.5">
-                        <p className="break-keep text-gray-600 text-[18px] md:text-[21px] font-medium leading-[26px] md:leading-[30px] break-all whitespace-pre-line">
+                        <p className="break-keep text-gray-600 text-[18px] md:text-[21px] font-medium leading-[26px] md:leading-[30px] break-all whitespace-pre-line overflow-hidden">
                           {t(`checklist.filename.file${num}`)}
                         </p>
                       </div>

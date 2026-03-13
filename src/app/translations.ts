@@ -8,7 +8,7 @@ export const translations = {
     //hero
     hero: {
       tagline: "세상을 치유하고,\n 영혼을 울리는 목소리",
-      descPart1: "K-POP, K-컬처, 이제는 ",
+      descPart1: "K-POP, K-컬처, \n이제는 ",
       descPart2: "이제는 ",
       descPart3: "입니다.",
       descPart4: "CCM 오디션 프로그램 힐링보이스에 도전하세요!",
@@ -266,7 +266,7 @@ export const translations = {
     },
     gallery: {
       subtitle: "Official Video",
-      title: "Preview",
+      title: "Official Video",
       desc: "Meet the official videos of Healing Voice",
     },
     steps: {
@@ -287,20 +287,20 @@ export const translations = {
 
       step2: {
         title: "Video Submission",
-        desc: "Record your audition videos using your mobile phone.",
+        desc: "Submit a total of two (2) video clips recorded using only a mobile phone",
         guide1:
           "① Select 1 from 20 Required Songs (A cappella)",
         guide2:
           "② 1 Self-Selected Song (MR or accompaniment allowed)",
         guide2_sub:
           "※ Important: Please ensure your voice is clearly audible in the recording.",
-        check1: "Camera: Record using the default smartphone camera app",
-        check2: "Audio: Quiet location, ensure voice is clearly audible",
-        check3: "Angle: Front-facing view with upper body visible",
-        check4: "Duration: At least 1 minute per song",
+        check1: "Camera: Use the default smartphone camera app only",
+        check2: "(No filters or beauty apps allowed)",
+        check3: "Angle: Vertical mode, Front-facing, upper body shot",
+        check4: "Duration: 1+ minute (must include 1st verse and chorus)",
         check5: "Quality: FHD(1080p) or higher recommended",
-        check6: "No Modification: Original, unedited footage only (no audio/video filters)",
-        check7: "No Apps: Do not use third-party camera or filter apps",
+        check6: "Audio: Quiet location, ensure voice is clearly audible",
+        check7: "(Original, unedited footage only-no audio/video filters)",
       },
       step3: {
         title: "Photo Preparation",
@@ -382,7 +382,7 @@ export const translations = {
         format:
           "Name + Birth Year (Last 4 digits of phone) _ File Name",
         file1: "ChansongKim95(1234)_Application.docx",
-        file2: "ChansongKim95(1234)_SongTitle.mp4",
+        file2: "ChansongKim95(1234)_RequiredSongTitle.mp4\nChansongKim95(1234)_Self-SelectedSongTitle.mp4",
         file3: "ChansongKim95(1234)_Photo1.jpg",
       },
     },

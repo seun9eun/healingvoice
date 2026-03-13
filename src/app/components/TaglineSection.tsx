@@ -14,7 +14,8 @@ export function TaglineSection() {
             <div className="container mx-auto px-4 text-center">
                 <div className="flex flex-col items-center gap-2 md:gap-4 font-nanumSquareNeo font-extrabold">
                     {/* 첫 번째 줄 */}
-                    <p className={`text-[28px] md:text-[48px] text-[#101828] tracking-tight break-keep leading-[1.4] ${lang === "ko" ? "md:whitespace-nowrap" : ""}`}>
+                    <p className={`text-[28px] md:text-[48px] text-[#101828] tracking-tight break-keep leading-[1.4] 
+                        ${lang === "ko" ? "whitespace-pre-line md:whitespace-nowrap" : "md:whitespace-nowrap"}`}>
                         {t("hero.descPart1")}
                         <span className="text-[#44a9ff]">K-CCM</span>
                         {t("hero.descPart3")}
