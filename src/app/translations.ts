@@ -101,7 +101,7 @@ export const translations = {
         },
         item2: {
           title: "콘서트",
-          desc: "국·내외 투어 콘서트 개최",
+          desc: "국내·외 투어 콘서트 개최",
         },
         item3: {
           title: "방송 출연",
