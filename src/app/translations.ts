@@ -243,7 +243,7 @@ export const translations = {
       ],
     },
     footer: {
-      phone: "02) 3275-9333",
+      phone: "02-3275-9333",
       phoneHours: "(평일 09:00~18:00)",
       kakao: "카카오톡 채널 'CGN 힐링보이스'",
     },
@@ -259,7 +259,7 @@ export const translations = {
       descPart1: "K-POP, K-Culture, and Now—",
       descPart2: "\nIt’s time for ",
       descPart3: ".",
-      descPart4: "Challenge yourself at the CCM audition program <Healing Voice>!",
+      descPart4: "Challenge yourself at the CCM audition program Healing Voice!",
       period: "Application: March 15 - April 30, 2026",
       downloadBtn: "Download Form",
       infoBtn: "Eligibility",
@@ -291,7 +291,7 @@ export const translations = {
         guide1:
           "① Select 1 from 20 Required Songs (A cappella)",
         guide2:
-          "② 1 Self-Selected Song (MR or accompaniment allowed)",
+          "② 1 Self-Selected Song (MR, Live Accompaniment, or Original Compositions allowed)",
         guide2_sub:
           "※ Important: Please ensure your voice is clearly audible in the recording.",
         check1: "Camera: Use the default smartphone camera app only",
@@ -300,7 +300,7 @@ export const translations = {
         check4: "Duration: 1+ minute (must include 1st verse and chorus)",
         check5: "Quality: FHD(1080p) or higher recommended",
         check6: "Audio: Quiet location, ensure voice is clearly audible",
-        check7: "(Original, unedited footage only-no audio/video filters)",
+        check7: "(No audio editing or retouching allowed; submit the original video only)",
       },
       step3: {
         title: "Photo Preparation",
@@ -332,7 +332,7 @@ export const translations = {
         item2: { title: "Anyone who loves CCM", desc: "" },
         item3: {
           title:
-            "No restrictions on age, gender, nationality, or experience",
+            "No restrictions\n on age, gender, nationality, or experience",
           desc: "(Minors must have parental or\n legal guardian consent.)",
         },
         item4: {
