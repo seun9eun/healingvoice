@@ -321,12 +321,12 @@ export const translations = {
     },
     info: {
       eligibility: {
-        subtitle: "Eligibility",
-        title: "Requirements",
+        subtitle: "Audition Call",
+        title: "Eligibility",
         desc: "We welcome all Christians who loves CCM.\n Let your voice reach out to the world!",
         item1: {
           title:
-            "Mainstream singers, CCM artists,\n and praise ministry leaders",
+            "Mainstream singers, CCM artists,\n and Worship Leaders",
           desc: "",
         },
         item2: { title: "Anyone who loves CCM", desc: "" },
@@ -365,7 +365,7 @@ export const translations = {
       },
     },
     checklist: {
-      title: "Checklist before sending email",
+      title: "Checklist before sending Email",
       item1: "Check for missing attachments.",
       item2_1: "Ensure clear and consistent ",
       item2_bold: "email subjects and filenames",
