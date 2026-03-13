@@ -5,6 +5,7 @@ import {
   User,
   PersonStanding,
   Sparkles,
+  Copy
 } from "lucide-react";
 
 // Renamed these to avoid confusion with React components
@@ -114,13 +115,13 @@ export function StepsSection() {
             <div className="break-keep text-[20px] font-bold text-gray-700 leading-snug">
               <span>{t('steps.step2.guide1').split('\n')[0]}</span>
               {t('steps.step2.guide1').includes('\n') && (
-                <div className="pl-4 font-bold">{t('steps.step2.guide1').split('\n').slice(1).join('')}</div>
+                <div className="font-bold text-[16px]">{t('steps.step2.guide1').split('\n').slice(1).join('')}</div>
               )}
             </div>
             <div className="break-keep text-[20px] font-bold text-gray-700 leading-snug">
               <span>{t('steps.step2.guide2').split('\n')[0]}</span>
               {t('steps.step2.guide2').includes('\n') && (
-                <div className="pl-4 font-bold">{t('steps.step2.guide2').split('\n').slice(1).join('')}</div>
+                <div className="font-bold text-[16px]">{t('steps.step2.guide2').split('\n').slice(1).join('')}</div>
               )}
             </div>
           </div>
@@ -157,7 +158,7 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-xl overflow-hidden">
-            <span className="text-[18px] md:text-[15px] font-bold text-gray-700 font-sans break-all">
+            <span className="text-[18px] md:text-[14.5px] font-bold text-gray-700 font-sans break-all">
               cgnhealingvoice@daum.net
             </span>
           </div>
@@ -166,7 +167,7 @@ export function StepsSection() {
             className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             {/* Using a Lucide component here is fine */}
-            <Download className="w-4 h-4 text-white rotate-[-90deg]" />
+            <Copy className="w-4 h-4 text-white" />
             <span>{t('steps.step4.copyBtn')}</span>
           </button>
         </div>
@@ -211,7 +212,7 @@ export function StepsSection() {
                 <h3 className="text-[26px] font-bold text-gray-900 mb-2">
                   {step.title}
                 </h3>
-                <p className="whitespace-pre-line text-gray-600 mb-6 min-h-[40px] flex items-center justify-center break-keep text-[21px]">
+                <p className="whitespace-pre-line text-gray-600 mb-6 min-h-[40px] flex items-center justify-center break-keep text-[20px]">
                   {step.desc}
                 </p>
                 <div className="pt-4 border-t border-gray-200/60 w-full text-left">

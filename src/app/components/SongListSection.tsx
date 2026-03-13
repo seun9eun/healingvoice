@@ -40,7 +40,7 @@ export function SongListSection() {
                   {String(song.no).padStart(2, '0')}
                 </div>
                 <div className="flex-1">
-                  <h4 className="text-gray-900 font-bold mb-1 text-[16px] md:text-[20px]">{song.title}</h4>
+                  <h4 className="text-gray-900 font-bold mb-1 text-[20px] md:text-[24px]">{song.title}</h4>
                   <p className="text-gray-500 text-sm">{song.artist}</p>
                 </div>
                 <div className="hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity">
