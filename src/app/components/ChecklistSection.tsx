@@ -43,7 +43,7 @@ export function ChecklistSection() {
                 </div>
 
                 {/* 타이틀 스타일 (36px, font-800, Blue-500) */}
-                <h2 className="text-[#44A9FF] font-nanumSquareNeo text-[36px] font-extrabold leading-[45px] font-style-normal break-keep">
+                <h2 className="text-[#44A9FF] font-nanumSquareNeo text-[24px] font-extrabold leading-[28.5px] font-style-normal break-keep">
                   {t('checklist.title')}
                 </h2>
 
@@ -78,7 +78,7 @@ export function ChecklistSection() {
                     <img src={MailImg} alt="Mail" className="w-full h-full object-contain" />
                   </div>
                   {/* 타이틀 스타일 */}
-                  <h3 className="text-[#101828] font-nanumSquareNeo text-[24px] font-bold leading-[28.5px] font-style-normal">
+                  <h3 className="text-[#101828] font-nanumSquareNeo text-[20px] font-bold leading-[28.5px] font-style-normal">
                     {t('checklist.subject.title')}
                   </h3>
                 </div>
@@ -103,7 +103,7 @@ export function ChecklistSection() {
                     <img src={FileTextImg} alt="Mail" className="w-full h-full object-contain" />
                   </div>
                   {/* 타이틀 스타일 */}
-                  <h3 className="text-[#101828] break-keep font-nanumSquareNeo text-[24px] font-bold leading-[28.5px] font-style-normal">
+                  <h3 className="text-[#101828] break-keep font-nanumSquareNeo text-[20px] font-bold leading-[28.5px] font-style-normal">
                     {t('checklist.filename.title')}
                   </h3>
                 </div>
