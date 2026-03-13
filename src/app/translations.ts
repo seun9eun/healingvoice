@@ -31,6 +31,12 @@ export const translations = {
         docx: "DOCX 워드파일",
         eng: "영문 지원서 (English Form)",
       },
+      downloadFilename: {
+        hwp: "참가지원서.hwp",
+        docx: "참가지원서.docx",
+        eng: "참가지원서_영문.docx",
+      },
+
       step2: {
         title: "영상 촬영",
         desc: "지정곡과 자유곡을\n 핸드폰으로 촬영해 주세요.",
@@ -272,6 +278,11 @@ export const translations = {
         hwp: "HWP (Korean)",
         docx: "DOCX (Word)",
         eng: "Application Form",
+      },
+      downloadFilename: {
+        hwp: "참가지원서.hwp",
+        docx: "참가지원서.docx",
+        eng: "참가지원서_영문.docx",
       },
       step2: {
         title: "Video Submission",

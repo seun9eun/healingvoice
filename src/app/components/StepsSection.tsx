@@ -8,7 +8,7 @@ import {
   Copy
 } from "lucide-react";
 
-// Renamed these to avoid confusion with React components
+// 이미지 경로 설정
 const FileTextImg = "https://i.imgur.com/MofD37d.png";
 const VideoImg = "https://i.imgur.com/IqwIDFN.png";
 const CameraImg = "https://i.imgur.com/4r6aS6b.png";
@@ -20,6 +20,29 @@ import { toast } from "sonner";
 export function StepsSection() {
   const { t, lang } = useLanguage();
 
+  /** * 프로젝트 내 파일을 지정한 파일명(한글 포함)으로 다운로드. 
+   * 맥/ Safari에서도 한글 자모 깨짐 방지 
+   */
+  const handleFileDownload = async (filePath: string, downloadFilename: string) => {
+    try {
+      const res = await fetch(filePath);
+      if (!res.ok) throw new Error("Download failed");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = downloadFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download error", err);
+      toast.error(t("steps.toast.error"));
+    }
+  };
+
+  /** 이메일 주소 복사 로직 */
   const handleCopyEmail = async () => {
     const email = "cgnhealingvoice@daum.net";
     try {
@@ -56,12 +79,15 @@ export function StepsSection() {
       icon: FileTextImg,
       content: (
         <div className="flex flex-col gap-3 w-full mt-2">
+          {/* HWP 한글파일 - 프로젝트 내 파일, 파일명 그대로 저장 */}
           {lang === 'ko' && (
-            <a
-              href="https://drive.google.com/uc?export=download&id=1nLkDq9uSwJCyDJFihEFCP5YKB5EI6lmg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                const name = t('steps.step1.downloadFilename.hwp');
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+              }}
+              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
               <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.hwp')}
@@ -69,14 +95,18 @@ export function StepsSection() {
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
                 <Download className="w-4 h-4 text-white" />
               </div>
-            </a>
+            </button>
           )}
+
+          {/* DOCX 워드파일 */}
           {lang === 'ko' && (
-            <a
-              href="https://drive.google.com/uc?export=download&id=1L_536GYEvEf4Nw543_bxrEu24pIMLg4d"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                const name = t('steps.step1.downloadFilename.docx');
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+              }}
+              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
               <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.docx')}
@@ -84,14 +114,18 @@ export function StepsSection() {
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
                 <Download className="w-4 h-4 text-white" />
               </div>
-            </a>
+            </button>
           )}
+
+          {/* 영문 지원서 다운로드 */}
           {lang === 'en' && (
-            <a
-              href="https://drive.google.com/uc?export=download&id=1LGSsjH-bF83PK27XnfsDZAkcqVfek1D2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer"
+            <button
+              type="button"
+              onClick={() => {
+                const name = t('steps.step1.downloadFilename.eng');
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+              }}
+              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
               <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
                 {t('steps.step1.eng')}
@@ -99,7 +133,7 @@ export function StepsSection() {
               <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
                 <Download className="w-4 h-4 text-white" />
               </div>
-            </a>
+            </button>
           )}
         </div>
       ),
@@ -166,7 +200,6 @@ export function StepsSection() {
             onClick={handleCopyEmail}
             className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
-            {/* Using a Lucide component here is fine */}
             <Copy className="w-4 h-4 text-white" />
             <span>{t('steps.step4.copyBtn')}</span>
           </button>
@@ -176,9 +209,7 @@ export function StepsSection() {
   ];
 
   return (
-    <section id="steps" className="py-24 relative scroll-mt-20"
-      style={{ background: 'linear-gradient(180deg, #F5FDFF 0%, #D2F6FF 100%)' }}
-    >
+    <section id="steps" className="py-24 relative scroll-mt-20">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-32">
@@ -198,7 +229,6 @@ export function StepsSection() {
             <div key={step.step} className="relative z-10 flex flex-col items-center">
               <div className="relative mb-6">
                 <div className="w-24 h-24 rounded-full flex items-center justify-center relative overflow-hidden">
-                  {/* FIXED: Using img tag for the URL string */}
                   <img src={step.icon} alt={`Step ${step.step} icon`} className="w-24 h-24 object-contain" />
                 </div>
                 <div className="absolute -top-[52px] left-1/2 -translate-x-1/2 flex items-center justify-center whitespace-nowrap z-20 font-black text-white border-white border-2 text-[16px] px-5 py-2 min-w-[100px] rounded-[8px] bg-[#006199] shadow-sm">
@@ -223,16 +253,14 @@ export function StepsSection() {
           ))}
         </div>
 
-        {/* Bottom Card */}
+        {/* Recording Guide Bottom Card */}
         <div className="mt-12 max-w-7xl mx-auto w-full">
           <div className="bg-white rounded-[24px] md:rounded-[32px] p-8 md:p-12 shadow-sm border border-sky-100 relative overflow-hidden">
-            {/* FIXED: Faint camera watermark using img tag */}
             <div className="absolute top-1/2 right-[-4%] -translate-y-1/2 opacity-[0.04] pointer-events-none">
               <img src={CameraImg} className="w-72 h-72 object-contain" alt="" />
             </div>
 
             <div className="flex items-center gap-3 mb-10 relative z-10 px-0 md:px-12">
-              {/* FIXED: Header icon using img tag */}
               <img src={VideoImg} className="w-9 h-9 object-contain" alt="" />
               <h3 className="text-[26px] font-bold text-gray-900">
                 {lang === 'ko' ? "촬영 시 가이드" : "Video Recording Guide"}
@@ -240,9 +268,7 @@ export function StepsSection() {
             </div>
 
             <div className="relative z-10 max-w-5xl mx-auto">
-              {/* 상단 2x2 그리드 */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mb-6">
-                {/* 1행 1열: check1 + check2(Red) */}
                 <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                   <span>
@@ -250,27 +276,19 @@ export function StepsSection() {
                     <span className="text-red-500 font-bold">{t('steps.step2.check2')}</span>
                   </span>
                 </div>
-
-                {/* 1행 2열: check3 */}
                 <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                   <span>{t('steps.step2.check3')}</span>
                 </div>
-
-                {/* 2행 1열: check4 */}
                 <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                   <span>{t('steps.step2.check4')}</span>
                 </div>
-
-                {/* 2행 2열: check5 */}
                 <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                   <span>{t('steps.step2.check5')}</span>
                 </div>
               </div>
-
-              {/* 하단 1개 (전체 너비): check6 + check7(Red) */}
               <div>
                 <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />

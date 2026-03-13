@@ -20,7 +20,7 @@ export function ChecklistSection() {
       className="w-full py-[100px] px-6"
       // 요청하신 그라디언트 배경 (화면 전체 노출)
       style={{
-        background: 'linear-gradient(180deg, #F5FDFF 0%, #D2F6FF 100%)'
+        background: '#44A9FF',
       }}
     >
       {/* 흰색 박스가 들어갈 컨테이너: 기존 사이즈인 max-w-5xl 유지 */}
@@ -103,19 +103,19 @@ export function ChecklistSection() {
                     <img src={FileTextImg} alt="Mail" className="w-full h-full object-contain" />
                   </div>
                   {/* 타이틀 스타일 */}
-                  <h3 className="text-[#101828] font-nanumSquareNeo text-[24px] font-bold leading-[28.5px] font-style-normal">
+                  <h3 className="text-[#101828] break-keep font-nanumSquareNeo text-[24px] font-bold leading-[28.5px] font-style-normal">
                     {t('checklist.filename.title')}
                   </h3>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#44a9ff] text-[18px] md:text-[21px] font-bold break-all leading-tight">
+                  <p className="text-[#44a9ff] break-keep text-[18px] md:text-[21px] font-bold break-all leading-tight">
                     {t('checklist.filename.format')}
                   </p>
                   <div className="space-y-2">
                     {[1, 2, 3].map((num) => (
                       <div key={num} className="bg-white border border-[#155dfc]/5 rounded-xl p-3.5">
-                        <p className="text-gray-600 text-[18px] md:text-[21px] font-medium leading-[26px] md:leading-[30px] break-all whitespace-pre-line">
+                        <p className="break-keep text-gray-600 text-[18px] md:text-[21px] font-medium leading-[26px] md:leading-[30px] break-all whitespace-pre-line">
                           {t(`checklist.filename.file${num}`)}
                         </p>
                       </div>
