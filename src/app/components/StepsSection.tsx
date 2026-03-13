@@ -268,7 +268,7 @@ export function StepsSection() {
             </div>
 
             <div className="relative z-10 max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mb-6 font-bold">
                 <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                   <span>
@@ -290,7 +290,7 @@ export function StepsSection() {
                 </div>
               </div>
               <div>
-                <div className="flex items-start gap-3 text-[21px] text-gray-700 break-keep">
+                <div className="font-bold flex items-start gap-3 text-[21px] text-gray-700 break-keep">
                   <CheckCircle2 className="w-6 h-6 text-sky-400 shrink-0 mt-1" />
                   <span>
                     {t('steps.step2.check6')}{" "}
