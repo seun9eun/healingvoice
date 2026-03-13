@@ -1,5 +1,9 @@
-import { AlertTriangle, Mail, FileText } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+
+const PinImg = "https://i.imgur.com/csmHiOa.png";
+const MailImg = "https://i.imgur.com/TEg5ES8.png";
+const FileTextImg = "https://i.imgur.com/RsQxzRq.png";
+
 
 export function ChecklistSection() {
   const { t, lang } = useLanguage();
@@ -58,11 +62,13 @@ export function ChecklistSection() {
 
               {/* Card 1: 메일 제목 */}
               <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-5 md:p-7 flex flex-col gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-[#00a6f4] p-2 rounded-xl">
-                    <Mail className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-2 self-stretch">
+                  {/* 아이콘 스타일 */}
+                  <div className="flex w-12 h-12 shrink-0 justify-center items-center aspect-square">
+                    <img src={MailImg} alt="Mail" className="w-full h-full object-contain" />
                   </div>
-                  <h3 className="text-[20px] md:text-[22px] font-bold text-gray-900">
+                  {/* 타이틀 스타일 */}
+                  <h3 className="text-[#101828] font-nanumSquareNeo text-[24px] font-bold leading-[28.5px] font-style-normal">
                     {t('checklist.subject.title')}
                   </h3>
                 </div>
@@ -81,17 +87,19 @@ export function ChecklistSection() {
 
               {/* Card 2: 파일명 예시 */}
               <div className="bg-[#F8FDFF] border border-[#E0F2FE] rounded-2xl p-5 md:p-7 flex flex-col gap-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-[#155dfc] p-2 rounded-xl">
-                    <FileText className="w-5 h-5 text-white" />
+                <div className="flex items-center gap-2 self-stretch">
+                  {/* 아이콘 스타일 */}
+                  <div className="flex w-12 h-12 shrink-0 justify-center items-center aspect-square">
+                    <img src={FileTextImg} alt="Mail" className="w-full h-full object-contain" />
                   </div>
-                  <h3 className="text-[20px] md:text-[22px] font-bold text-gray-900">
+                  {/* 타이틀 스타일 */}
+                  <h3 className="text-[#101828] font-nanumSquareNeo text-[24px] font-bold leading-[28.5px] font-style-normal">
                     {t('checklist.filename.title')}
                   </h3>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  <p className="text-[#155dfc] text-[18px] md:text-[21px] font-bold break-all leading-tight">
+                  <p className="text-[#44a9ff] text-[18px] md:text-[21px] font-bold break-all leading-tight">
                     {t('checklist.filename.format')}
                   </p>
                   <div className="space-y-2">
