@@ -365,7 +365,7 @@ export const translations = {
       },
     },
     checklist: {
-      title: "Checklist before sending email",
+      title: "Email Submission Checklist",
       item1: "Check for missing attachments.",
       item2_1: "Ensure clear and consistent ",
       item2_bold: "email subjects and filenames",
