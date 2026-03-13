@@ -118,7 +118,7 @@ export function InfoSection() {
                   </span>
                 </div>
                 <h3
-                  className="font-normal leading-[120%] whitespace-pre-line md:whitespace-nowrap text-white"
+                  className="font-bold leading-[120%] whitespace-pre-line md:whitespace-nowrap text-white"
                   style={{
                     fontFamily: '"NanumSquare Neo OTF", sans-serif',
                     fontSize: '40px',

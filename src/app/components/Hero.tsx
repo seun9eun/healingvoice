@@ -2,11 +2,10 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 
-const image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0 = "https://i.imgur.com/yXB6sBo.png";
-const imgLogo = "https://i.imgur.com/NdVOBXQ.png";
-const imgTagline = "https://i.imgur.com/yXB6sBo.png";
-const imgBg = "https://i.imgur.com/36mR3vR.jpeg";
-const img_tag = "https://i.imgur.com/EdLebEx.png";
+const image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0 = "https://i.imgur.com/yXB6sBo.png";//태그라인
+const imgLogo = "https://i.imgur.com/NdVOBXQ.png"; //힐링보이스 파란색
+const imgBg = "https://i.imgur.com/36mR3vR.jpeg"; //배경
+const img_tag = "https://i.imgur.com/Mcg4fyA.png"; //퐁당 5주년 특별기획
 
 export function Hero() {
   const { t, lang } = useLanguage();
