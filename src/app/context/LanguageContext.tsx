@@ -1,6 +1,5 @@
-// LanguageContext.tsx
-
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { useLocation, useNavigate, useParams } from "react-router";
 import { translations } from "../translations";
 
 type Language = "ko" | "en";
@@ -14,19 +13,50 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Language>("ko");
+  const { lang: paramLang } = useParams<{ lang?: string }>();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const routeLang = (paramLang === "en" || paramLang === "ko") ? paramLang : undefined;
+
+  const [lang, setLang] = useState<Language>(routeLang || "ko");
+
+  useEffect(() => {
+    // URL에 언어 코드가 없거나 (예: /, /notice 등) 잘못된 경우
+    if (!routeLang) {
+      const browserLang = navigator.language.startsWith("ko") ? "ko" : "en";
+      
+      const currentPath = location.pathname;
+      const newPath = `/${browserLang}${currentPath === "/" ? "" : currentPath}`;
+      
+      navigate(newPath + location.search + location.hash, { replace: true });
+      setLang(browserLang);
+    } else {
+      setLang(routeLang as Language);
+    }
+  }, [routeLang, navigate, location.pathname, location.search, location.hash]);
 
   const toggleLang = () => {
-    setLang((prev) => (prev === "ko" ? "en" : "ko"));
+    const newLang = lang === "ko" ? "en" : "ko";
+    
+    // 현재 경로를 '/' 로 나눈 후, 첫 번째 세그먼트가 'ko'나 'en' 이면 새 언어로 교체합니다.
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    if (pathSegments[0] === 'ko' || pathSegments[0] === 'en') {
+      pathSegments[0] = newLang;
+    } else {
+      pathSegments.unshift(newLang);
+    }
+    
+    const newPath = `/${pathSegments.join('/')}${location.search}${location.hash}`;
+    navigate(newPath, { replace: true });
+    setLang(newLang);
   };
 
   const t = (path: string) => {
-    // 1. reduce로 객체 탐색
     const result = path.split('.').reduce((obj, key) => {
       return obj !== undefined && obj !== null ? obj[key] : undefined;
     }, translations[lang] as any);
 
-    // 2. || 대신 ?? 를 사용하여 빈 문자열("")도 정상적인 값으로 인식하게 처리
     return result ?? path;
   };
 
