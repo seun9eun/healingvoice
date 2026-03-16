@@ -171,7 +171,7 @@ export const translations = {
         },
         {
           no: 7,
-          title: "오직 예수 (오직 예수 예수 안에 능력 있네)",
+          title: "오직 예수 (예수 안에 능력 있네)",
           artist: "김명식",
         },
         {
