@@ -6,7 +6,7 @@ import { PreviewPage } from "./pages/PreviewPage";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/:lang?",
     Component: Layout,
     children: [
       {
