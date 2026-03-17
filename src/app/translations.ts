@@ -244,7 +244,7 @@ export const translations = {
     },
     footer: {
       phone: "02-3275-9333",
-      phoneHours: "(평일 09:00~18:00)",
+      phoneHours: "(평일 10:00~18:00)",
       kakao: "카카오톡 채널 'CGN 힐링보이스'",
     },
   },
@@ -467,7 +467,7 @@ export const translations = {
     },
     footer: {
       phone: "+82 2-3275-9333",
-      phoneHours: "(Weekdays 09:00~18:00 KST)",
+      phoneHours: "(Weekdays 10:00~18:00 KST)",
       email: "cgnhealingvoice@daum.net",
     },
   },
