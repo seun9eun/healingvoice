@@ -39,7 +39,7 @@ export function StepsSection() {
     const { isKakaotalk, isIphone } = checkInApp();
 
     if (isHwp && isKakaotalk && isIphone) {
-      alert("이 브라우저에서는 파일이 깨져 보일 수 있습니다.");
+      alert("원활한 다운로드를 위해 \nSafari, Chrome 브라우저 사용을 권장 드립니다.");
       toast.error(
         "오른쪽 하단의 공유하기 아이콘을 눌러 'Safari로 열기'를 선택해 주세요!",
         { duration: 5000 }
