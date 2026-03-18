@@ -1,3 +1,4 @@
 node_modules
 mcp_config.json
-test_node_modules/
+test_node_modules
+dist/
