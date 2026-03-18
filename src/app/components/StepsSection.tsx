@@ -17,13 +17,14 @@ const CopyImg = "https://i.imgur.com/wEEv6d3.png";
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
 
-/** iOS 인앱 브라우저 감지 (Safari, Chrome 제외) */
+/** iOS 인앱 브라우저 감지 (Safari, Chrome 제외 / 카카오톡 명시 포함) */
 const isIOSInApp = (() => {
   const ua = navigator.userAgent;
   const isIOS = /iPad|iPhone|iPod/.test(ua);
   const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
   const isIOSChrome = /CriOS/.test(ua);
-  return isIOS && !isSafari && !isIOSChrome;
+  const isKakao = /KAKAOTALK/i.test(ua);
+  return (isIOS && !isSafari && !isIOSChrome) || (isIOS && isKakao);
 })();
 
 export function StepsSection() {
