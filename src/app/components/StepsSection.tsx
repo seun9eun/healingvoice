@@ -20,26 +20,12 @@ import { toast } from "sonner";
 export function StepsSection() {
   const { t, lang } = useLanguage();
 
-  /** * 프로젝트 내 파일을 지정한 파일명(한글 포함)으로 다운로드. 
-   * 맥/ Safari에서도 한글 자모 깨짐 방지 
+  /** 파일 다운로드
+   * vercel.json의 Content-Disposition 헤더로 파일명(한글 포함) 처리
+   * 카카오톡 인앱 브라우저 포함 모든 환경에서 동작
    */
-  const handleFileDownload = async (filePath: string, downloadFilename: string) => {
-    try {
-      const res = await fetch(filePath);
-      if (!res.ok) throw new Error("Download failed");
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = downloadFilename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download error", err);
-      toast.error(t("steps.toast.error"));
-    }
+  const handleFileDownload = (filePath: string) => {
+    window.location.href = filePath;
   };
 
   /** 이메일 주소 복사 로직 */
@@ -85,7 +71,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.hwp');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
@@ -104,7 +90,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.docx');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
@@ -123,7 +109,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.eng');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
