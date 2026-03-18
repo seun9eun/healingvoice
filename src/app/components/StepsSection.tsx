@@ -17,15 +17,16 @@ const CopyImg = "https://i.imgur.com/wEEv6d3.png";
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
 
-/** iOS 인앱 브라우저 감지 (Safari, Chrome 제외 / 카카오톡 명시 포함) */
-const isIOSInApp = (() => {
+/** 인앱 브라우저 환경 감지 */
+const checkInApp = () => {
   const ua = navigator.userAgent;
-  const isIOS = /iPad|iPhone|iPod/.test(ua);
+  const isIphone = /iPhone/.test(ua);
+  const isKakaotalk = /KAKAOTALK/i.test(ua);
   const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
   const isIOSChrome = /CriOS/.test(ua);
-  const isKakao = /KAKAOTALK/i.test(ua);
-  return (isIOS && !isSafari && !isIOSChrome) || (isIOS && isKakao);
-})();
+  const isIOSInApp = (isIphone && !isSafari && !isIOSChrome) || (isIphone && isKakaotalk);
+  return { isKakaotalk, isIphone, isIOSInApp };
+};
 
 export function StepsSection() {
   const { t, lang } = useLanguage();
@@ -35,9 +36,12 @@ export function StepsSection() {
    * 카카오톡 인앱 브라우저 포함 모든 환경에서 동작
    */
   const handleFileDownload = (filePath: string, isHwp = false) => {
-    if (isHwp && isIOSInApp) {
+    const { isKakaotalk, isIphone } = checkInApp();
+
+    if (isHwp && isKakaotalk && isIphone) {
+      alert("이 브라우저에서는 파일이 깨져 보일 수 있습니다.");
       toast.error(
-        "이 브라우저에서는 파일이 깨져 보일 수 있습니다. 오른쪽 하단의 공유하기 아이콘을 눌러 'Safari로 열기'를 선택해 주세요!",
+        "오른쪽 하단의 공유하기 아이콘을 눌러 'Safari로 열기'를 선택해 주세요!",
         { duration: 5000 }
       );
       return;
