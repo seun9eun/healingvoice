@@ -17,29 +17,36 @@ const CopyImg = "https://i.imgur.com/wEEv6d3.png";
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
 
+/** 인앱 브라우저 환경 감지 */
+const checkInApp = () => {
+  const ua = navigator.userAgent;
+  const isIphone = /iPhone/.test(ua);
+  const isKakaotalk = /KAKAOTALK/i.test(ua);
+  const isSafari = /Safari/.test(ua) && !/CriOS/.test(ua);
+  const isIOSChrome = /CriOS/.test(ua);
+  const isIOSInApp = (isIphone && !isSafari && !isIOSChrome) || (isIphone && isKakaotalk);
+  return { isKakaotalk, isIphone, isIOSInApp };
+};
+
 export function StepsSection() {
   const { t, lang } = useLanguage();
 
-  /** * 프로젝트 내 파일을 지정한 파일명(한글 포함)으로 다운로드. 
-   * 맥/ Safari에서도 한글 자모 깨짐 방지 
+  /** 파일 다운로드
+   * vercel.json의 Content-Disposition 헤더로 파일명(한글 포함) 처리
+   * 카카오톡 인앱 브라우저 포함 모든 환경에서 동작
    */
-  const handleFileDownload = async (filePath: string, downloadFilename: string) => {
-    try {
-      const res = await fetch(filePath);
-      if (!res.ok) throw new Error("Download failed");
-      const blob = await res.blob();
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = downloadFilename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("Download error", err);
-      toast.error(t("steps.toast.error"));
+  const handleFileDownload = (filePath: string, isHwp = false) => {
+    const { isKakaotalk, isIphone } = checkInApp();
+
+    if (isHwp && isKakaotalk && isIphone) {
+      alert("원활한 다운로드를 위해 \nSafari, Chrome 브라우저 사용을 권장 드립니다.");
+      toast.error(
+        "오른쪽 하단의 공유하기 아이콘을 눌러 'Safari로 열기'를 선택해 주세요!",
+        { duration: 5000 }
+      );
+      return;
     }
+    window.location.href = filePath;
   };
 
   /** 이메일 주소 복사 로직 */
@@ -85,7 +92,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.hwp');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, true);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
@@ -104,7 +111,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.docx');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
@@ -123,7 +130,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.eng');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, name);
+                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
             >
