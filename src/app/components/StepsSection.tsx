@@ -19,6 +19,7 @@ import { toast } from "sonner";
 
 
 // GA 이벤트를 보내는 함수
+// 주석 추가
 const trackDownload = (fileName, fileType) => {
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'apply_form_download', {
