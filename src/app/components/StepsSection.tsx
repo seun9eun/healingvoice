@@ -17,6 +17,20 @@ const CopyImg = "https://i.imgur.com/wEEv6d3.png";
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
 
+
+// GA 이벤트를 보내는 함수
+// 주석 추가
+const trackDownload = (fileName, fileType) => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', 'apply_form_download', {
+      'file_name': fileName,
+      'file_extension': fileType,
+      'event_category': 'conversion'
+    });
+  }
+};
+
+
 /** 인앱 브라우저 환경 감지 */
 const checkInApp = () => {
   const ua = navigator.userAgent;
@@ -92,6 +106,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.hwp');
+                trackDownload(name, 'hwp');
                 handleFileDownload(`/downloads/${encodeURIComponent(name)}`, true);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
@@ -111,6 +126,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.docx');
+                trackDownload(name, 'docx');
                 handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
@@ -130,6 +146,7 @@ export function StepsSection() {
               type="button"
               onClick={() => {
                 const name = t('steps.step1.downloadFilename.eng');
+                trackDownload(name, 'docx');
                 handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
               }}
               className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
@@ -204,7 +221,15 @@ export function StepsSection() {
             </span>
           </div>
           <button
-            onClick={handleCopyEmail}
+            onClick={() => {
+              handleCopyEmail();
+              // GA4 이벤트 전송!
+              if (typeof window !== 'undefined' && (window as any).gtag) {
+                (window as any).gtag('event', 'copy_email_address', {
+                  'event_category': 'engagement'
+                });
+              }
+            }}
             className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
           >
             <Copy className="w-4 h-4 text-white" />
