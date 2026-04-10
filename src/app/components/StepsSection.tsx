@@ -116,7 +116,7 @@ export function StepsSection() {
         <div className="flex flex-col gap-3 w-full mt-2">
           {isClosed ? (
             <div className="flex items-center justify-center w-full px-4 py-4 bg-slate-50 border border-slate-200/60 rounded-lg">
-              <span className="text-[17px] font-bold text-gray-500">
+              <span className="text-[18px] md:text-[20px] font-bold text-gray-700">
                 {lang === 'ko' ? "지원 마감되었습니다" : "Application Closed"}
               </span>
             </div>
@@ -241,7 +241,7 @@ export function StepsSection() {
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           {isClosed ? (
             <div className="flex items-center justify-center w-full px-4 py-4 bg-slate-50 border border-slate-200/60 rounded-lg">
-              <span className="text-[17px] font-bold text-gray-500">
+              <span className="text-[18px] md:text-[20px] font-bold text-gray-700">
                 {lang === 'ko' ? "지원 마감되었습니다" : "Application Closed"}
               </span>
             </div>
