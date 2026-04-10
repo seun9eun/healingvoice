@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
-const DEFAULT_OPEN_TIME = "2026-03-15T08:30:00";
+const DEFAULT_OPEN_TIME = "2026-03-15T08:30:00+09:00";
 
 const VIDEO_DATA = {
   ko: [
