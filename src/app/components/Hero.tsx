@@ -85,7 +85,7 @@ export function Hero() {
                   .getElementById("steps")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="w-full sm:w-auto min-w-[200px] md:min-w-[230px] bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[15px] md:text-lg px-8 py-3.5 md:py-3.5 rounded-[24px] transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(14,165,233,0.4)] whitespace-nowrap"
+              className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(14,165,233,0.4)] whitespace-nowrap"
             >
               {t("hero.downloadBtn")}
             </button>
@@ -93,7 +93,7 @@ export function Hero() {
               href="https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto min-w-[200px] md:min-w-[230px] bg-[#6a71f0] hover:bg-[#5b63eb] text-white font-bold text-[15px] md:text-lg px-8 py-3.5 md:py-3.5 rounded-[24px] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(106,113,240,0.3)] whitespace-nowrap hover:scale-105 active:scale-95"
+              className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#6a71f0] hover:bg-[#5b63eb] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(106,113,240,0.3)] whitespace-nowrap hover:scale-105 active:scale-95"
             >
               {t("hero.infoBtn")}
               <ArrowUpRight className="w-5 h-5 text-[#00E5FF] shrink-0" />
