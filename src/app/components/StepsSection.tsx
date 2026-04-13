@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Download,
   CheckCircle2,
@@ -44,6 +45,19 @@ const checkInApp = () => {
 
 export function StepsSection() {
   const { t, lang } = useLanguage();
+
+  // 지원 마감 시간 설정 (2026-05-01 00:00 KST)
+  const DEADLINE = new Date("2026-05-01T00:00:00+09:00").getTime();
+  const [isClosed, setIsClosed] = useState(false);
+
+  useEffect(() => {
+    const checkDeadline = () => {
+      setIsClosed(Date.now() >= DEADLINE);
+    };
+    checkDeadline(); // 최초 1회 실행
+    const timer = setInterval(checkDeadline, 1000); // 1초마다 지속 체크
+    return () => clearInterval(timer);
+  }, []);
 
   /** 파일 다운로드
    * vercel.json의 Content-Disposition 헤더로 파일명(한글 포함) 처리
@@ -100,64 +114,74 @@ export function StepsSection() {
       icon: FileTextImg,
       content: (
         <div className="flex flex-col gap-3 w-full mt-2">
-          {/* HWP 한글파일 - 프로젝트 내 파일, 파일명 그대로 저장 */}
-          {lang === 'ko' && (
-            <button
-              type="button"
-              onClick={() => {
-                const name = t('steps.step1.downloadFilename.hwp');
-                trackDownload(name, 'hwp');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`, true);
-              }}
-              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
-            >
-              <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
-                {t('steps.step1.hwp')}
+          {isClosed ? (
+            <div className="flex items-center justify-center w-full px-4 py-4 bg-slate-50 border border-slate-200/60 rounded-lg">
+              <span className="text-[18px] md:text-[20px] font-bold text-gray-700">
+                {lang === 'ko' ? "지원 마감되었습니다" : "Application Closed"}
               </span>
-              <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
-                <Download className="w-4 h-4 text-white" />
-              </div>
-            </button>
-          )}
+            </div>
+          ) : (
+            <>
+              {/* HWP 한글파일 - 프로젝트 내 파일, 파일명 그대로 저장 */}
+              {lang === 'ko' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const name = t('steps.step1.downloadFilename.hwp');
+                    trackDownload(name, 'hwp');
+                    handleFileDownload(`/downloads/${encodeURIComponent(name)}`, true);
+                  }}
+                  className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
+                >
+                  <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
+                    {t('steps.step1.hwp')}
+                  </span>
+                  <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
+                    <Download className="w-4 h-4 text-white" />
+                  </div>
+                </button>
+              )}
 
-          {/* DOCX 워드파일 */}
-          {lang === 'ko' && (
-            <button
-              type="button"
-              onClick={() => {
-                const name = t('steps.step1.downloadFilename.docx');
-                trackDownload(name, 'docx');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
-              }}
-              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
-            >
-              <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
-                {t('steps.step1.docx')}
-              </span>
-              <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
-                <Download className="w-4 h-4 text-white" />
-              </div>
-            </button>
-          )}
+              {/* DOCX 워드파일 */}
+              {lang === 'ko' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const name = t('steps.step1.downloadFilename.docx');
+                    trackDownload(name, 'docx');
+                    handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
+                  }}
+                  className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
+                >
+                  <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
+                    {t('steps.step1.docx')}
+                  </span>
+                  <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
+                    <Download className="w-4 h-4 text-white" />
+                  </div>
+                </button>
+              )}
 
-          {/* 영문 지원서 다운로드 */}
-          {lang === 'en' && (
-            <button
-              type="button"
-              onClick={() => {
-                const name = t('steps.step1.downloadFilename.eng');
-                trackDownload(name, 'docx');
-                handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
-              }}
-              className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
-            >
-              <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
-                {t('steps.step1.eng')}
-              </span>
-              <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
-                <Download className="w-4 h-4 text-white" />
-              </div>
-            </button>
+              {/* 영문 지원서 다운로드 */}
+              {lang === 'en' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const name = t('steps.step1.downloadFilename.eng');
+                    trackDownload(name, 'docx');
+                    handleFileDownload(`/downloads/${encodeURIComponent(name)}`);
+                  }}
+                  className="flex items-center justify-between w-full px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-lg hover:bg-sky-100/70 hover:border-sky-400 transition-colors group cursor-pointer text-left"
+                >
+                  <span className="text-[20px] font-bold text-gray-700 group-hover:text-sky-600">
+                    {t('steps.step1.eng')}
+                  </span>
+                  <div className="w-7 h-7 rounded-full bg-[#00a6f4] flex items-center justify-center shrink-0 group-hover:bg-sky-600 transition-colors">
+                    <Download className="w-4 h-4 text-white" />
+                  </div>
+                </button>
+              )}
+            </>
           )}
         </div>
       ),
@@ -215,26 +239,36 @@ export function StepsSection() {
       icon: CopyImg,
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
-          <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-xl overflow-hidden">
-            <span className="text-[18px] md:text-[14.5px] font-bold text-gray-700 font-sans break-all">
-              cgnhealingvoice@daum.net
-            </span>
-          </div>
-          <button
-            onClick={() => {
-              handleCopyEmail();
-              // GA4 이벤트 전송!
-              if (typeof window !== 'undefined' && (window as any).gtag) {
-                (window as any).gtag('event', 'copy_email_address', {
-                  'event_category': 'engagement'
-                });
-              }
-            }}
-            className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
-          >
-            <Copy className="w-4 h-4 text-white" />
-            <span>{t('steps.step4.copyBtn')}</span>
-          </button>
+          {isClosed ? (
+            <div className="flex items-center justify-center w-full px-4 py-4 bg-slate-50 border border-slate-200/60 rounded-lg">
+              <span className="text-[18px] md:text-[20px] font-bold text-gray-700">
+                {lang === 'ko' ? "지원 마감되었습니다" : "Application Closed"}
+              </span>
+            </div>
+          ) : (
+            <>
+              <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-xl overflow-hidden">
+                <span className="text-[18px] md:text-[14.5px] font-bold text-gray-700 font-sans break-all">
+                  cgnhealingvoice@daum.net
+                </span>
+              </div>
+              <button
+                onClick={() => {
+                  handleCopyEmail();
+                  // GA4 이벤트 전송!
+                  if (typeof window !== 'undefined' && (window as any).gtag) {
+                    (window as any).gtag('event', 'copy_email_address', {
+                      'event_category': 'engagement'
+                    });
+                  }
+                }}
+                className="w-full bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[18px] px-4 py-2.5 rounded-lg transition-all flex items-center justify-center gap-2 shadow-sm"
+              >
+                <Copy className="w-4 h-4 text-white" />
+                <span>{t('steps.step4.copyBtn')}</span>
+              </button>
+            </>
+          )}
         </div>
       ),
     },
