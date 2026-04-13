@@ -3,13 +3,15 @@ import { useLanguage } from "../context/LanguageContext";
 
 const DEFAULT_OPEN_TIME = "2026-03-15T08:30:00+09:00";
 
-const VIDEO_DATA = {
+const VIDEO_DATA = {// 최신순 정렬 (0번이 최신)
   ko: [
-    { id: "SDEGM2T-TKo", title: "참가자 모집", label: "모집", openTime: DEFAULT_OPEN_TIME }, // 최신순 정렬 (0번이 최신)
+    { id: "p65TCfUqHDo", title: "2차 모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
+    { id: "SDEGM2T-TKo", title: "모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
     { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
   ],
   en: [
-    { id: "tukfPRXn044", title: "Recruitment", label: "Recruitment", openTime: DEFAULT_OPEN_TIME },
+    { id: "okEbs1xrVU8", title: "2nd Open Call", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
+    { id: "tukfPRXn044", title: "Open Call", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
     { id: "pBMPu9lvUOE", title: "Teaser", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
   ],
 };
@@ -140,22 +142,19 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className={`flex gap-4 overflow-x-auto pb-4 snap-x scroll-smooth no-scrollbar ${
-            currentVideos.length === 1 ? "justify-center" : ""
-          }`}
+          className={`flex gap-4 overflow-x-auto pb-4 snap-x scroll-smooth no-scrollbar ${currentVideos.length === 1 ? "justify-center" : ""
+            }`}
           style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
         >
           {currentVideos.map((video, index) => (
             <button
               key={`${video.id}-${index}`}
               onClick={() => handleVideoChange(index)}
-              className={`flex-shrink-0 w-40 md:w-48 snap-start transition-all duration-300 ${
-                activeIndex === index ? "opacity-100" : "opacity-60 hover:opacity-100"
-              }`}
+              className={`flex-shrink-0 w-40 md:w-48 snap-start transition-all duration-300 ${activeIndex === index ? "opacity-100" : "opacity-60 hover:opacity-100"
+                }`}
             >
-              <div className={`relative aspect-video rounded-2xl overflow-hidden mb-3 border-2 transition-all ${
-                activeIndex === index ? "border-[#44a9ff] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
-              }`}>
+              <div className={`relative aspect-video rounded-2xl overflow-hidden mb-3 border-2 transition-all ${activeIndex === index ? "border-[#44a9ff] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
+                }`}>
                 <img
                   src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
                   alt={video.title}
@@ -169,14 +168,12 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                 )}
               </div>
               <div className="text-left px-1">
-                <p className={`text-[10px] font-bold uppercase tracking-tighter mb-1 ${
-                  activeIndex === index ? "text-[#44a9ff]" : "text-gray-400"
-                }`}>
+                <p className={`text-[10px] font-bold uppercase tracking-tighter mb-1 ${activeIndex === index ? "text-[#44a9ff]" : "text-gray-400"
+                  }`}>
                   {video.label}
                 </p>
-                <p className={`text-[13px] font-bold truncate ${
-                  activeIndex === index ? "text-gray-900" : "text-gray-500"
-                }`}>
+                <p className={`text-[13px] font-bold truncate ${activeIndex === index ? "text-gray-900" : "text-gray-500"
+                  }`}>
                   {video.title}
                 </p>
               </div>
