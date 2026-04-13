@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -33,7 +33,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-10 md:gap-14"
+          className="flex flex-col items-center gap-10 md:gap-10"
         >
           {/* 로고 및 모집 기간 그룹 (더 밀착) */}
           <div className="flex flex-col items-center gap-4 md:gap-6">
@@ -64,7 +64,7 @@ export function Hero() {
                 <img
                   src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
                   alt="힐링보이스"
-                  className="w-full max-w-[420px] md:max-w-[770px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
+                  className="w-full max-w-[420px] md:max-w-[600px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
                 />
               </div>
             </div>
@@ -78,28 +78,26 @@ export function Hero() {
           </div>
 
           {/* CTA 버튼 */}
-          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full max-w-lg px-2 md:px-0 auto-rows-fr">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full px-4 md:px-0">
             <button
               onClick={() =>
                 document
                   .getElementById("steps")
                   ?.scrollIntoView({ behavior: "smooth" })
               }
-              className="flex-1 bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3 rounded-[24px] transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(14,165,233,0.4)] whitespace-nowrap h-full"
+              className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(14,165,233,0.4)] whitespace-nowrap"
             >
               {t("hero.downloadBtn")}
             </button>
-            <button
-              onClick={() =>
-                document
-                  .getElementById("info")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="flex-1 bg-white hover:bg-sky-50 text-[#44a9ff] font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3 rounded-[24px] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(14,135,190,0.2)] whitespace-nowrap h-full"
+            <a
+              href="https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#6a71f0] hover:bg-[#5b63eb] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(106,113,240,0.3)] whitespace-nowrap hover:scale-105 active:scale-95"
             >
               {t("hero.infoBtn")}
-              <ArrowRight className="w-5 h-5 text-[#44a9ff] shrink-0" />
-            </button>
+              <ArrowUpRight className="w-5 h-5 text-[#00E5FF] shrink-0" />
+            </a>
           </div>
         </motion.div>
       </div>
