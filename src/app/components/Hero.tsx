@@ -33,7 +33,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-10 md:gap-14"
+          className="flex flex-col items-center gap-10 md:gap-10"
         >
           {/* 로고 및 모집 기간 그룹 (더 밀착) */}
           <div className="flex flex-col items-center gap-4 md:gap-6">
@@ -64,7 +64,7 @@ export function Hero() {
                 <img
                   src={lang === "en" ? "https://i.imgur.com/czHtSNl.png" : imgLogo}
                   alt="힐링보이스"
-                  className="w-full max-w-[420px] md:max-w-[770px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
+                  className="w-full max-w-[420px] md:max-w-[600px] h-auto object-contain filter saturate-[1.2] brightness-[1.05] drop-shadow-md"
                 />
               </div>
             </div>
@@ -78,7 +78,7 @@ export function Hero() {
           </div>
 
           {/* CTA 버튼 */}
-          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full max-w-lg px-2 md:px-0 auto-rows-fr">
+          <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full max-w-[600px] px-2 md:px-0 auto-rows-fr">
             <button
               onClick={() =>
                 document
