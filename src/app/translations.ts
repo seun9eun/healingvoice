@@ -262,7 +262,7 @@ export const translations = {
       descPart4: "Challenge yourself at the CCM audition program Healing Voice!",
       period: "Application: March 15 - April 30, 2026",
       downloadBtn: "Download Form",
-      infoBtn: "Watch More Videos",
+      infoBtn: "Watch More",
     },
     gallery: {
       subtitle: "Official Video",
