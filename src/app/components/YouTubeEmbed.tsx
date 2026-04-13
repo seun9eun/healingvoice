@@ -1,70 +1,52 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
-const VIDEO_DATA = {
+const DEFAULT_OPEN_TIME = "2026-03-15T08:30:00+09:00";
+
+const VIDEO_DATA = {// 최신순 정렬 (0번이 최신)
   ko: [
-    { id: "SDEGM2T-TKo", title: "참가자 모집", label: "모집" }, // 최신순 정렬 (0번이 최신)
-    { id: "5YqA0qryPPs", title: "티저 영상", label: "티저" },
+    { id: "p65TCfUqHDo", title: "2차 모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
+    { id: "SDEGM2T-TKo", title: "모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
+    { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
   ],
   en: [
-    { id: "tukfPRXn044", title: "Recruitment", label: "Recruitment" },
-    { id: "pBMPu9lvUOE", title: "Teaser", label: "Teaser" },
+    { id: "okEbs1xrVU8", title: "2nd Open Call", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
+    { id: "tukfPRXn044", title: "Open Call", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
+    { id: "pBMPu9lvUOE", title: "Teaser", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
   ],
 };
 
-// 오픈 시간 설정 (현재 2026-03-16이므로 이미 지난 시간으로 인식됩니다)
-const OPEN_TIME = new Date("2026-03-15T08:30:00").getTime();
-
 export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
   const { t } = useLanguage();
-  const [activeIndex, setActiveIndex] = useState(0); // 항상 0번(최신)부터 시작
-  const [isOpened, setIsOpened] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [currentTime, setCurrentTime] = useState(Date.now());
   const [scrollProgress, setScrollProgress] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // 1. 시간 체크 및 자동 오픈 로직
+  // 1. 주기적인 현재 시간 갱신 (1초마다)
   useEffect(() => {
-    const checkTime = () => {
-      const now = Date.now();
-      const currentlyOpened = now >= OPEN_TIME;
-      setIsOpened(currentlyOpened);
-    };
-
-    checkTime();
-    const timer = setInterval(checkTime, 5000); // 5초마다 체크 (부담 감소)
+    const timer = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // 2. 언어 변경 시 최신 영상(0번)으로 초기화
-  useEffect(() => {
-    const checkTime = () => {
-      const now = Date.now();
-      const currentlyOpened = now >= OPEN_TIME;
-
-      setIsOpened((prev) => {
-        // "방금 막" 오픈 시간이 지났다면
-        if (prev === false && currentlyOpened === true) {
-          setActiveIndex(0); // 자동으로 최신 영상(0번) 선택
-        }
-        return currentlyOpened;
-      });
-    };
-
-    checkTime();
-    const timer = setInterval(checkTime, 1000);
-    return () => clearInterval(timer);
-  }, []);
-
-  // 기존 코드: 오픈 전에는 0번(최신)만 보여줌 (X)
-  // 변경 코드: 오픈 전에는 0번(최신 예정)을 제외한 나머지만 보여줌 (O)
+  // 2. 현재 시간에 맞춰 오픈 시간이 지난 영상만 필터링
   const allVideos = VIDEO_DATA[lang] || VIDEO_DATA.ko;
-  // isOpened가 true면 전체 다 보여주고, false면 가장 최신(0번)을 제외하고 보여줍니다.
-  const currentVideos = isOpened ? allVideos : allVideos.slice(1);
-  // 현재 선택된 영상도 인덱스에 따라 안전하게 선택
-  const currentVideo = currentVideos[activeIndex] || currentVideos[0];
+  const currentVideos = allVideos.filter(
+    (video) => currentTime >= new Date(video.openTime).getTime()
+  );
 
+  // 3. 새로운 영상이 공개되었을 때만 (영상의 갯수가 늘어났을 때) 최신 영상(0번)으로 자동 이동
+  const prevVideoCountRef = useRef(currentVideos.length);
+  useEffect(() => {
+    if (prevVideoCountRef.current > 0 && prevVideoCountRef.current < currentVideos.length) {
+      setActiveIndex(0);
+    }
+    prevVideoCountRef.current = currentVideos.length;
+  }, [currentVideos.length]);
 
-  // 3. 스크롤 및 인덱스 이동 제어
+  // 4. 스크롤 및 인덱스 이동 제어
   const scroll = (direction: "left" | "right") => {
     if (currentVideos.length <= 1) return;
 
@@ -98,7 +80,11 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
     }
   };
 
-  if (!currentVideo) return null;
+  // 노출 대상 영상이 하나도 없을 때는 렌더링하지 않음
+  if (currentVideos.length === 0) return null;
+
+  // 현재 선택된 영상 안전하게 가져오기
+  const currentVideo = currentVideos[activeIndex] || currentVideos[0];
 
   return (
     <div className="relative w-full max-w-4xl mx-auto my-16 px-4">
@@ -129,7 +115,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
 
       {/* 썸네일 섹션 */}
       <div className="relative group px-2">
-        {isOpened && currentVideos.length > 1 && (
+        {currentVideos.length > 1 && (
           <>
             {/* 좌측 화살표 */}
             <button
@@ -156,7 +142,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
         <div
           ref={scrollRef}
           onScroll={handleScroll}
-          className={`flex gap-4 overflow-x-auto pb-4 snap-x scroll-smooth no-scrollbar ${!isOpened || currentVideos.length === 1 ? "justify-center" : ""
+          className={`flex gap-4 overflow-x-auto pb-4 snap-x scroll-smooth no-scrollbar ${currentVideos.length === 1 ? "justify-center" : ""
             }`}
           style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
         >
@@ -174,8 +160,8 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                   alt={video.title}
                   className="w-full h-full object-cover"
                 />
-                {/* 최신 영상 뱃지 (0번 인덱스이면서 오픈 상태일 때) */}
-                {index === 0 && isOpened && (
+                {/* 0번째 항목은 최신 표시 배치 */}
+                {index === 0 && (
                   <div className="absolute top-2 left-2 bg-[#44a9ff] text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
                     NEW
                   </div>
@@ -197,7 +183,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
       </div>
 
       {/* 하단 스크롤 인디케이터 */}
-      {isOpened && currentVideos.length > 1 && (
+      {currentVideos.length > 1 && (
         <div className="mt-4 w-full max-w-[120px] mx-auto h-1 bg-gray-100 rounded-full overflow-hidden relative">
           <div
             className="h-full bg-[#44a9ff] transition-all duration-200 ease-out absolute top-0 left-0"
