@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -89,17 +89,15 @@ export function Hero() {
             >
               {t("hero.downloadBtn")}
             </button>
-            <button
-              onClick={() =>
-                document
-                  .getElementById("info")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="flex-1 bg-white hover:bg-sky-50 text-[#44a9ff] font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3 rounded-[24px] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(14,135,190,0.2)] whitespace-nowrap h-full"
+            <a
+              href="https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 bg-[#6a71f0] hover:bg-[#5b63eb] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3 rounded-[24px] transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(106,113,240,0.3)] whitespace-nowrap h-full hover:scale-105 active:scale-95"
             >
               {t("hero.infoBtn")}
-              <ArrowRight className="w-5 h-5 text-[#44a9ff] shrink-0" />
-            </button>
+              <ArrowUpRight className="w-5 h-5 text-[#00E5FF] shrink-0" />
+            </a>
           </div>
         </motion.div>
       </div>
