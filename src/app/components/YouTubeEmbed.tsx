@@ -6,11 +6,12 @@ const INITIAL_VIDEO_INDEX = {
   ko: 1,
   en: 0,
 };
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 const VIDEO_DATA = {// 최신순 정렬 (0번이 최신)
   ko: [
-    { id: "M0i6xhY5bBU", title: "[모집 홍보] 김재원 아나운서", label: "홍보", openTime: DEFAULT_OPEN_TIME },
-    { id: "p65TCfUqHDo", title: "2차 모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
+    { id: "M0i6xhY5bBU", title: "[모집 홍보] 김재원 아나운서", label: "홍보", openTime: "2026-04-15T00:00:00+09:00" },
+    { id: "p65TCfUqHDo", title: "2차 모집 티저", label: "티저", openTime: "2026-04-13T00:00:00+09:00" },
     { id: "SDEGM2T-TKo", title: "모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
     { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
   ],
@@ -46,11 +47,21 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
   // 3. 새로운 영상이 공개되었을 때만 (영상의 갯수가 늘어났을 때) 최신 영상(0번)으로 자동 이동
   const prevVideoCountRef = useRef(currentVideos.length);
   useEffect(() => {
+    // 이전에 영상이 하나라도 있었고, 지금 영상이 더 늘어난 경우에만 0번으로 이동 (자동 갱신)
     if (prevVideoCountRef.current > 0 && prevVideoCountRef.current < currentVideos.length) {
       setActiveIndex(0);
     }
     prevVideoCountRef.current = currentVideos.length;
   }, [currentVideos.length]);
+
+  // 4. 언어 변경 시 또는 초기 로딩 시 지정된 인덱스로 이동
+  useEffect(() => {
+    const initialIndex = INITIAL_VIDEO_INDEX[lang as keyof typeof INITIAL_VIDEO_INDEX] || 0;
+    if (currentVideos.length > initialIndex) {
+      handleVideoChange(initialIndex);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang]);
 
   // 4. 스크롤 및 인덱스 이동 제어
   const scroll = (direction: "left" | "right") => {
@@ -85,15 +96,6 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
       setScrollProgress(progress);
     }
   };
-
-  // 5. 초기 마운트 시 지정된 인덱스로 스크롤 이동
-  useEffect(() => {
-    const initialIndex = INITIAL_VIDEO_INDEX[lang as keyof typeof INITIAL_VIDEO_INDEX] || 0;
-    if (initialIndex > 0 && currentVideos.length > initialIndex) {
-      handleVideoChange(initialIndex);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // 노출 대상 영상이 하나도 없을 때는 렌더링하지 않음
   if (currentVideos.length === 0) return null;
@@ -175,12 +177,16 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                   alt={video.title}
                   className="w-full h-full object-cover"
                 />
-                {/* 0번째 항목은 최신 표시 배치 */}
-                {index === 0 && (
-                  <div className="absolute top-2 left-2 bg-[#44a9ff] text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
-                    NEW
-                  </div>
-                )}
+                {/* 오픈 일시가 일주일(7일) 이내인 경우 NEW 배지 표시 */}
+                {(() => {
+                  const openDateTime = new Date(video.openTime).getTime();
+                  const isNew = currentTime - openDateTime < SEVEN_DAYS_MS;
+                  return isNew && (
+                    <div className="absolute top-2 left-2 bg-[#44a9ff] text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
+                      NEW
+                    </div>
+                  );
+                })()}
               </div>
               <div className="text-left px-1">
                 <p className={`text-[10px] font-bold uppercase tracking-tighter mb-1 ${activeIndex === index ? "text-[#44a9ff]" : "text-gray-400"
