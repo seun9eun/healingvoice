@@ -47,7 +47,7 @@ export function StepsSection() {
   const { t, lang } = useLanguage();
 
   // 지원 마감 시간 설정 (2026-05-01 00:00 KST)
-  const DEADLINE = new Date("2026-05-01T00:00:00+09:00").getTime();
+  const DEADLINE = new Date("2026-04-01 00:00:00+09:00").getTime();
   const [isClosed, setIsClosed] = useState(false);
 
   useEffect(() => {

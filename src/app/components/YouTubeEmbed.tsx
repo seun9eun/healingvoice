@@ -5,6 +5,7 @@ const DEFAULT_OPEN_TIME = "2026-03-15T08:30:00+09:00";
 
 const VIDEO_DATA = {// 최신순 정렬 (0번이 최신)
   ko: [
+    { id: "M0i6xhY5bBU", title: "[모집 홍보] 김재원 아나운서", label: "홍보", openTime: DEFAULT_OPEN_TIME },
     { id: "p65TCfUqHDo", title: "2차 모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
     { id: "SDEGM2T-TKo", title: "모집 티저", label: "티저", openTime: DEFAULT_OPEN_TIME },
     { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
