@@ -102,6 +102,17 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
     return (activeIndex / (currentVideos.length - 1)) * 100;
   };
 
+  // 10. 기기별(PC/모바일) 반응형 감지
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile(); // 초기 실행
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   if (currentVideos.length === 0) return null;
   const currentVideo = currentVideos[activeIndex] || currentVideos[0];
 
@@ -192,14 +203,14 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                       }`}>
                       {video.label}
                     </p>
-                    <p className={`text-[13px] font-bold ${activeIndex === index ? "text-gray-900" : "text-gray-500"
+                    <p className={`text-[13px] font-bold ${isMobile ? "" : "truncate"} ${activeIndex === index ? "text-gray-900" : "text-gray-500"
                       }`}>
-                      {(() => {
+                      {isMobile ? (() => {
                         const limit = lang === "ko" ? 13 : 20;
                         return video.title.length > limit
                           ? video.title.slice(0, limit) + "..."
                           : video.title;
-                      })()}
+                      })() : video.title}
                     </p>
                   </div>
                 </button>
