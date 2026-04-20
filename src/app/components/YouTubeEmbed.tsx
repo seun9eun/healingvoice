@@ -214,9 +214,9 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                     </p>
                   </div>
                 </button>
-                {/* 세로 구분선: 모바일에서 더 가늘게(0.5px) 보이도록 조정 */}
+                {/* 세로 구분선: 텍스트 제외, 썸네일 이미지 영역의 중앙에 오도록 위치 상단으로 조정 */}
                 {showSeparator && (
-                  <div className="w-[0.5px] h-16 md:h-20 bg-gray-400 self-center mx-2 shrink-0 opacity-30" />
+                  <div className="w-[0.5px] h-16 md:h-20 bg-gray-400 self-start mt-3 md:mt-4 mx-2 shrink-0 opacity-30" />
                 )}
               </React.Fragment>
             );
