@@ -187,14 +187,9 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                       }`}>
                       {video.label}
                     </p>
-                    <p className={`text-[13px] font-bold ${isMobile ? "" : "truncate"} ${activeIndex === index ? "text-gray-900" : "text-gray-500"
+                    <p className={`text-[13px] font-bold truncate ${activeIndex === index ? "text-gray-900" : "text-gray-500"
                       }`}>
-                      {isMobile ? (() => {
-                        const limit = lang === "ko" ? 13 : 20;
-                        return video.title.length > limit
-                          ? video.title.slice(0, limit) + "..."
-                          : video.title;
-                      })() : video.title}
+                      {video.title}
                     </p>
                   </div>
                 </button>
