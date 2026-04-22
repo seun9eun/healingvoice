@@ -67,7 +67,7 @@ function P() {
 function Container() {
   return (
     <div className="bg-[#e9ed7f] content-stretch flex items-center justify-center px-[24px] py-[20px] relative rounded-[10px] shrink-0" data-name="Container">
-      <p className="font-['Pretendard_Variable:Medium',sans-serif] font-medium leading-[36px] relative shrink-0 text-[#101828] text-[24px] text-center whitespace-nowrap">모집 기간: 2026년 3월 15일 ~ 4월 30일</p>
+      <p className="font-['Pretendard_Variable:Medium',sans-serif] font-medium leading-[36px] relative shrink-0 text-[#101828] text-[24px] text-center whitespace-nowrap">모집 기간: 2026년 3월 15일 ~ 5월 10일</p>
     </div>
   );
 }
