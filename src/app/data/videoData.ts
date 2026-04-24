@@ -9,6 +9,7 @@ export const VIDEO_DATA = { // 최신순 정렬 (0번이 최신)
     { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
   ],
   en: [
+    { id: "hO3FKZak2G0", title: "Cho Hyelyun", label: "PR", openTime: "2026-04-24T12:00:00+09:00" },
     { id: "CjQMdFbPVH4", title: "Kim Jae-won", label: "PR", openTime: "2026-04-15T00:00:00+09:00" },
     { id: "okEbs1xrVU8", title: "2nd Open Call", label: "Teaser", openTime: "2026-04-13T00:00:00+09:00", isPinned: true },
     { id: "tukfPRXn044", title: "Open Call", label: "Teaser", openTime: DEFAULT_OPEN_TIME },
