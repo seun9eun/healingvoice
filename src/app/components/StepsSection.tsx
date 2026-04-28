@@ -17,13 +17,14 @@ const CopyImg = "https://i.imgur.com/wEEv6d3.png";
 
 import { useLanguage } from "../context/LanguageContext";
 import { toast } from "sonner";
+import { getDeadlineDate } from "../constants/deadline";
 
 
 // GA 이벤트를 보내는 함수
 // 주석 추가
-const trackDownload = (fileName, fileType) => {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'apply_form_download', {
+const trackDownload = (fileName: string, fileType: string) => {
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', 'apply_form_download', {
       'file_name': fileName,
       'file_extension': fileType,
       'event_category': 'conversion'
@@ -46,13 +47,13 @@ const checkInApp = () => {
 export function StepsSection() {
   const { t, lang } = useLanguage();
 
-  // 지원 마감 시간 설정 (2026-05-01 00:00 KST)
-  const DEADLINE = new Date("2026-05-11 00:00:00+09:00").getTime();
+  // 지원 마감 시간 설정 (중앙 상수 참조)
   const [isClosed, setIsClosed] = useState(false);
 
   useEffect(() => {
     const checkDeadline = () => {
-      setIsClosed(Date.now() >= DEADLINE);
+      const deadline = new Date(getDeadlineDate()).getTime();
+      setIsClosed(Date.now() >= deadline);
     };
     checkDeadline(); // 최초 1회 실행
     const timer = setInterval(checkDeadline, 1000); // 1초마다 지속 체크
@@ -115,11 +116,14 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 w-full mt-2">
           {isClosed ? (
-            <div className="flex items-center justify-center w-full px-4 py-4 bg-slate-50 border border-slate-200/60 rounded-lg">
+            <button
+              disabled
+              className="flex items-center justify-center w-full px-4 py-4 bg-[#D8D8D8] rounded-lg cursor-not-allowed"
+            >
               <span className="text-[18px] md:text-[20px] font-bold text-gray-700">
-                {lang === 'ko' ? "지원 마감되었습니다" : "Application Closed"}
+                {lang === 'ko' ? "접수 마감" : "Application Closed"}
               </span>
-            </div>
+            </button>
           ) : (
             <>
               {/* HWP 한글파일 - 프로젝트 내 파일, 파일명 그대로 저장 */}
@@ -240,11 +244,14 @@ export function StepsSection() {
       content: (
         <div className="flex flex-col gap-3 items-center justify-center w-full mt-2">
           {isClosed ? (
-            <div className="flex items-center justify-center w-full px-4 py-4 bg-slate-50 border border-slate-200/60 rounded-lg">
+            <button
+              disabled
+              className="flex items-center justify-center w-full px-4 py-4 bg-[#D8D8D8] rounded-lg cursor-not-allowed"
+            >
               <span className="text-[18px] md:text-[20px] font-bold text-gray-700">
-                {lang === 'ko' ? "지원 마감되었습니다" : "Application Closed"}
+                {lang === 'ko' ? "접수 마감" : "Application Closed"}
               </span>
-            </div>
+            </button>
           ) : (
             <>
               <div className="w-full text-center px-4 py-3 bg-sky-50/60 border border-sky-200/50 rounded-xl overflow-hidden">
