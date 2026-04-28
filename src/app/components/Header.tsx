@@ -3,6 +3,8 @@ import { Menu, X, Globe } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
+import { getDeadlineDate } from "../constants/deadline";
+import { useEffect } from "react";
 
 // 힐링보이스 컬러(파랑) 로고 - 흰 배경에 사용
 const logoImage = "https://i.imgur.com/NdVOBXQ.png";
@@ -26,6 +28,17 @@ function LanguageSwitcher({ className = "" }: { className?: string }) {
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t, lang } = useLanguage();
+  const [isClosed, setIsClosed] = useState(false);
+
+  useEffect(() => {
+    const checkDeadline = () => {
+      const deadline = new Date(getDeadlineDate()).getTime();
+      setIsClosed(Date.now() >= deadline);
+    };
+    checkDeadline();
+    const timer = setInterval(checkDeadline, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -73,12 +86,18 @@ export function Header() {
           {/* 언어 토글 버튼 */}
           <LanguageSwitcher />
 
-          {/* 지원하기 버튼 */}
+          {/* 지원하기 / 퐁당 바로가기 버튼 */}
           <button
-            onClick={() => scrollToSection("#steps")}
-            className="bg-[#44a9ff] hover:bg-[#2f94f0] text-white font-bold px-7 py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[16px]"
+            onClick={() => {
+              if (isClosed) {
+                window.open("https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095", "_blank");
+              } else {
+                scrollToSection("#steps");
+              }
+            }}
+            className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold px-7 py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[16px]`}
           >
-            {t("apply")}
+            {isClosed ? (lang === 'ko' ? "퐁당 바로가기" : "Go to Fondant") : t("apply")}
           </button>
         </nav>
 
@@ -117,10 +136,16 @@ export function Header() {
               ))}
 
               <button
-                onClick={() => scrollToSection("#steps")}
-                className="bg-[#44a9ff] hover:bg-[#2f94f0] text-white font-bold py-3 rounded-full text-center w-full transition-colors text-lg"
+                onClick={() => {
+                  if (isClosed) {
+                    window.open("https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095", "_blank");
+                  } else {
+                    scrollToSection("#steps");
+                  }
+                }}
+                className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold py-3 rounded-full text-center w-full transition-colors text-lg`}
               >
-                {t("apply")}
+                {isClosed ? (lang === 'ko' ? "퐁당 바로가기" : "Go to Fondant") : t("apply")}
               </button>
             </div>
           </motion.div>
