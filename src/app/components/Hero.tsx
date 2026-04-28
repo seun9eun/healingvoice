@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
+import { useState, useEffect } from "react";
+import { getDeadlineDate } from "../constants/deadline";
 
 const image_6adb3ad903c1e8b4f2a5025fc3714b804847f5b0 = "https://i.imgur.com/yXB6sBo.png";//태그라인
 const imgLogo = "https://i.imgur.com/NdVOBXQ.png"; //힐링보이스 파란색
@@ -9,6 +11,17 @@ const img_tag = "https://i.imgur.com/Mcg4fyA.png"; //퐁당 5주년 특별기획
 
 export function Hero() {
   const { t, lang } = useLanguage();
+  const [isClosed, setIsClosed] = useState(false);
+
+  useEffect(() => {
+    const checkDeadline = () => {
+      const deadline = new Date(getDeadlineDate()).getTime();
+      setIsClosed(Date.now() >= deadline);
+    };
+    checkDeadline();
+    const timer = setInterval(checkDeadline, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <section
@@ -70,32 +83,45 @@ export function Hero() {
             </div>
 
             {/* 모집 기간 뱃지 (노랑-연두) - 로고 그룹에 더 가깝게 배치 */}
-            <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[16px] md:px-[20px] py-[10px] md:py-[12px]">
-              <p className="font-bold text-[#101828] text-[18px] md:text-[22px] text-center break-words break-keep whitespace-pre-wrap">
-                {t("hero.period")}
-              </p>
+            <div className="bg-[#e9ed7f] rounded-[10px] shadow-sm px-[20px] md:px-[40px] py-[12px] md:py-[14px] flex flex-col items-center justify-center w-[90%] sm:w-auto">
+              {isClosed ? (
+                <>
+                  <p className="text-[#101828] text-[14px] md:text-[16px] font-medium mb-1">
+                    {lang === 'ko' ? "많은 관심 속에 모집이 마감되었습니다." : "Application has closed due to high interest."}
+                  </p>
+                  <p className="font-bold text-[#101828] text-[20px] md:text-[24px] text-center">
+                    {lang === 'ko' ? "모집 기간: 2026.3.15 ~ 5.10" : "Period: 2026.3.15 ~ 5.10"}
+                  </p>
+                </>
+              ) : (
+                <p className="font-bold text-[#101828] text-[18px] md:text-[22px] text-center break-words break-keep whitespace-pre-wrap">
+                  {t("hero.period")}
+                </p>
+              )}
             </div>
           </div>
 
           {/* CTA 버튼 */}
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center w-full px-4 md:px-0">
-            <button
-              onClick={() =>
-                document
-                  .getElementById("steps")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(14,165,233,0.4)] whitespace-nowrap"
-            >
-              {t("hero.downloadBtn")}
-            </button>
+            {!isClosed && (
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("steps")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#00a6f4] hover:bg-[#0095e0] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(14,165,233,0.4)] whitespace-nowrap"
+              >
+                {t("hero.downloadBtn")}
+              </button>
+            )}
             <a
               href="https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#6a71f0] hover:bg-[#5b63eb] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(106,113,240,0.3)] whitespace-nowrap hover:scale-105 active:scale-95"
+              className={`w-full sm:w-auto min-w-[180px] md:min-w-[200px] bg-[#6a71f0] hover:bg-[#5b63eb] text-white font-bold text-[15px] md:text-lg px-6 py-3.5 md:py-3.5 rounded-full transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(106,113,240,0.3)] whitespace-nowrap hover:scale-105 active:scale-95 ${isClosed ? "mx-auto" : ""}`}
             >
-              {t("hero.infoBtn")}
+              {lang === 'ko' ? "영상 더 보기" : "Watch More Videos"}
               <ArrowUpRight className="w-5 h-5 text-[#00E5FF] shrink-0" />
             </a>
           </div>
