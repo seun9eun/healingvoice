@@ -2,6 +2,7 @@ export const DEFAULT_OPEN_TIME = "2026-03-15T08:30:00+09:00";
 
 export const VIDEO_DATA = { // 최신순 정렬 (0번이 최신)
   ko: [
+    { id: "JbSIKGOeUQ8", title: "가수 김영우", label: "홍보", openTime: "2026-04-30T09:00:00+09:00" },
     { id: "f12qq_NCLbc", title: "가수 간미연", label: "홍보", openTime: "2026-04-28T09:00:00+09:00" },
     { id: "MHQnoiW7bWE", title: "찬양사역자 송정미", label: "홍보", openTime: "2026-04-25T09:00:00+09:00" },
     { id: "zHYonS2OtOE", title: "가수 에녹", label: "홍보", openTime: "2026-04-24T00:00:00+09:00" },
@@ -13,6 +14,7 @@ export const VIDEO_DATA = { // 최신순 정렬 (0번이 최신)
     { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
   ],
   en: [
+    { id: "tFcFqztRr_I", title: "Kim Youngwoo", label: "PR", openTime: "2026-04-30T09:00:00+09:00" },
     { id: "1b6C0Fkmo5I", title: "Kan Miyoun", label: "PR", openTime: "2026-04-28T09:00:00+09:00" },
     { id: "Qba898x6WH0", title: "Song Jung-Mee", label: "PR", openTime: "2026-04-25T09:00:00+09:00" },
     { id: "vdWpGL89NUY", title: "Enoch", label: "PR", openTime: "2026-04-24T00:00:00+09:00" },
