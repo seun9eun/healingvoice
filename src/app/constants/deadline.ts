@@ -77,4 +77,19 @@ if (typeof window !== 'undefined') {
     console.log("모든 설정이 실제 마감일(5/11)로 원복되었습니다.");
     return "테스트 모드가 종료되었습니다.";
   };
+
+  // 모바일 테스트를 위한 URL 숨김 파라미터 기능 (?testDeadline=true)
+  // 이 코드는 라이브 서버에 올라가도 안전합니다. (일반 유저는 저 주소를 입력할 일이 없음)
+  const searchParams = new URLSearchParams(window.location.search);
+  if (searchParams.get('testDeadline') === 'true') {
+    (window as any).testModeOn();
+    (window as any).setDeadline(-1); // 마감 시간을 1분 전으로 설정하여 즉시 마감 처리
+    
+    // UI 렌더링을 기다린 후 모달 호출
+    setTimeout(() => {
+      if ((window as any).openModal) {
+        (window as any).openModal();
+      }
+    }, 500);
+  }
 }
