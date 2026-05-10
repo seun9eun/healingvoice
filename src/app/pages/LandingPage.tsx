@@ -15,17 +15,17 @@ export function LandingPage() {
 
   // 지원 마감 시간 설정 (중앙 상수 참조)
   const [showDeadlineModal, setShowDeadlineModal] = useState(false);
-  const [hasBeenShown, setHasBeenShown] = useState(false);
+  const [hasBeenShownForLang, setHasBeenShownForLang] = useState("");
 
   useEffect(() => {
     const checkDeadline = () => {
       const DEADLINE = new Date(getDeadlineDate()).getTime();
       const isClosed = Date.now() >= DEADLINE;
       
-      // 마감되었고, 아직 팝업을 보여준 적이 없을 때만 띄움
-      if (isClosed && !hasBeenShown) {
+      // 마감되었고, 현재 언어에 대해 아직 팝업을 보여준 적이 없을 때만 띄움
+      if (isClosed && hasBeenShownForLang !== lang) {
         setShowDeadlineModal(true);
-        setHasBeenShown(true);
+        setHasBeenShownForLang(lang);
       }
     };
 
@@ -40,7 +40,7 @@ export function LandingPage() {
       clearInterval(timer);
       window.removeEventListener("open-deadline-modal", handleManualOpen);
     };
-  }, [hasBeenShown]); // hasBeenShown이 바뀔 때 useEffect가 상태를 인지하도록 추가
+  }, [lang, hasBeenShownForLang]); 
 
   return (
     <>
