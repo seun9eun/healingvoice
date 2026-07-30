@@ -2,6 +2,8 @@ import { useLanguage } from "../context/LanguageContext";
 
 export function TaglineSection() {
     const { t, lang } = useLanguage();
+    const descPart1 = t("hero.descPart1");
+    const [beforeGather, afterGather] = descPart1.split("함께");
 
     return (
         <section
@@ -18,7 +20,13 @@ export function TaglineSection() {
                         <span className="text-[#44a9ff] whitespace-nowrap">&lt;{lang === "ko" ? "힐링보이스" : "Healing Voice"}&gt;</span>
                     </p>
                     <p className="text-[22px] md:text-[48px] text-[#101828] tracking-tight break-keep leading-[1.4] whitespace-pre-line">
-                        {t("hero.descPart1")}
+                        {lang === "ko" && afterGather !== undefined ? (
+                            <>
+                                {beforeGather}함께<br className="md:hidden" />{afterGather}
+                            </>
+                        ) : (
+                            descPart1
+                        )}
                     </p>
                 </div>
             </div>
