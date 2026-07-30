@@ -15,8 +15,6 @@ const imgLogoEn = "/images/hero/healing%20voice%20logo_final_en_trimmed.png"; //
 export function Hero() {
   const { t, lang } = useLanguage();
   const [isClosed, setIsClosed] = useState(false);
-  // 카카오톡 인앱 브라우저는 자체 툴바 때문에 100vh 계산이 흔들려 하단 배치 그룹이 위로 밀려 보임 - 해당 웹뷰에서만 100dvh로 전환 (일반 모바일 브라우저는 기존 100vh 그대로 유지)
-  const [isKakaoWebview, setIsKakaoWebview] = useState(false);
 
   useEffect(() => {
     const checkDeadline = () => {
@@ -28,14 +26,13 @@ export function Hero() {
     return () => clearInterval(timer);
   }, []);
 
-  useEffect(() => {
-    setIsKakaoWebview(/kakaotalk/i.test(navigator.userAgent));
-  }, []);
-
   return (
     <section
       id="intro"
-      className={`relative ${isKakaoWebview ? "min-h-dvh" : "min-h-screen"} mt-16 md:min-h-0 md:aspect-[1920/1200] flex items-end justify-center md:items-center overflow-hidden`}
+      // 모바일도 PC와 동일하게 뷰포트 "높이"가 아닌 배경 이미지 비율(aspect-ratio)로 섹션 높이를 고정.
+      // vh/dvh/svh는 전부 브라우저 툴바 표시 상태에 영향을 받아 카카오 웹뷰 등에서 흔들리지만,
+      // aspect-ratio는 화면 폭에만 비례하므로 툴바 유무·스크롤과 무관하게 항상 안정적임.
+      className="relative aspect-[780/1552] mt-16 md:aspect-[1920/1200] flex items-end justify-center md:items-center overflow-hidden"
     >
       {/* 배경 그라디언트 */}
       <div className="absolute inset-0 bg-[#FEFBEB]" />
@@ -55,7 +52,7 @@ export function Hero() {
       </div>
 
       {/* 콘텐츠 */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-10 text-center pt-28 pb-32 md:absolute md:w-[45vw] md:max-w-none md:mx-0 md:px-[2.0833vw] md:pt-0 md:pb-0 md:left-1/2 md:-translate-x-1/2 md:top-[14.5833vw]">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-10 text-center pt-28 pb-14 md:absolute md:w-[45vw] md:max-w-none md:mx-0 md:px-[2.0833vw] md:pt-0 md:pb-0 md:left-1/2 md:-translate-x-1/2 md:top-[14.5833vw]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
