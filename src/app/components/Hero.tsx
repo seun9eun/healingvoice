@@ -52,7 +52,7 @@ export function Hero() {
       </div>
 
       {/* 콘텐츠 */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-10 text-center pt-28 pb-28 md:absolute md:w-[45vw] md:max-w-none md:mx-0 md:px-[2.0833vw] md:pt-0 md:pb-0 md:left-1/2 md:-translate-x-1/2 md:top-[14.5833vw]">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-10 text-center pt-28 pb-32 md:absolute md:w-[45vw] md:max-w-none md:mx-0 md:px-[2.0833vw] md:pt-0 md:pb-0 md:left-1/2 md:-translate-x-1/2 md:top-[14.5833vw]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
