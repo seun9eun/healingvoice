@@ -12,4 +12,8 @@ export default defineConfig({
     },
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
+  server: {
+    host: true,
+    allowedHosts: ['interstander-desktop', 'interstander-desktop.local'],
+  },
 })

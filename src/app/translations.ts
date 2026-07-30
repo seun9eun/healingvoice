@@ -8,10 +8,8 @@ export const translations = {
     //hero
     hero: {
       tagline: "세상을 치유하고,\n 영혼을 울리는 목소리",
-      descPart1: "K-POP, K-컬처, \n이제는 ",
-      descPart2: "이제는 ",
-      descPart3: "입니다.",
-      descPart4: "CCM 오디션 프로그램 힐링보이스에 도전하세요!",
+      taglineLine1: "세상을 치유하는 목소리 ",
+      descPart1: "글로벌 CCM 인재들과 함께 여러분 곁을 찾아갑니다.",
       period: "모집 기간 : 2026.3.15 ~ 5.10",
       downloadBtn: "지원서 다운로드",
       infoBtn: "영상 더 보기",
@@ -259,10 +257,8 @@ export const translations = {
     apply: "Apply now",
     hero: {
       tagline: "A Voice That Heals, A Song That Restores", // 0305 수정 0306 이미지 대체
-      descPart1: "K-POP, K-Culture, and Now—",
-      descPart2: "\nIt’s time for ",
-      descPart3: ".",
-      descPart4: "Challenge yourself at the CCM audition program Healing Voice!",
+      taglineLine1: "A Voice That Heals the World ", // 임시 번역 - 확인 필요
+      descPart1: "Coming to your side together with global CCM talent.", // 임시 번역 - 확인 필요
       period: "Application: March 15 - May 10, 2026",
       downloadBtn: "Download Form",
       infoBtn: "Watch More",
