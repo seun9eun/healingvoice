@@ -6,7 +6,7 @@ const CgnlogoImage = "https://i.imgur.com/N6ZvM5s.png";
 const FondantLogoImage = "https://i.imgur.com/yZuLvLq.png";
 const FondantLogoImageEn = "https://i.imgur.com/yZuLvLq.png"; // 영문 화이트 로고 
 const logoImage_bl = "https://i.imgur.com/NdVOBXQ.png";
-const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
+const logoImage_w = "/images/hero/healing%20voice%20logo_footer_ko.png";
 const logoImageEn_w = "https://i.imgur.com/qVJ5hKL.png"; // 영문 화이트 로고 
 const logoImageEn = "https://i.imgur.com/czHtSNl.png"; // 영문 컬러 로고 
 
@@ -20,7 +20,7 @@ export function Footer() {
             <img
               src={lang === "en" ? logoImageEn_w : logoImage_w}
               alt="HEALING VOICE"
-              className="h-6 md:h-7 w-auto object-contain"
+              className="h-8 md:h-10 w-auto object-contain"
             />
           </h3>
           <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[#e2e2e2] text-sm md:text-base">

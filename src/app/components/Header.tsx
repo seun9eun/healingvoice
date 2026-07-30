@@ -1,16 +1,13 @@
 import { Link } from "react-router";
-import { Menu, X, Globe } from "lucide-react";
+import { Globe } from "lucide-react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { useLanguage } from "../context/LanguageContext";
 import { getDeadlineDate } from "../constants/deadline";
 import { useEffect } from "react";
 
-// 힐링보이스 컬러(파랑) 로고 - 흰 배경에 사용
-const logoImage = "https://i.imgur.com/NdVOBXQ.png";
-// 힐링보이스 흰색 로고 - 모바일 메뉴(다크) 배경에 사용
-const logoImage_w = "https://i.imgur.com/CXq2kw9.png";
-const logoImageEn = "https://i.imgur.com/czHtSNl.png";
+// 힐링보이스 로고 - 헤더 전용 국문 파일 / 영문은 Hero 섹션과 동일 파일 사용
+const logoImageKo = "/images/hero/healing%20voice%20logo_final_ko_header.png";
+const logoImageEn = "/images/hero/healing%20voice%20logo_final_en_trimmed.png";
 
 function LanguageSwitcher({ className = "" }: { className?: string }) {
   const { lang, toggleLang } = useLanguage();
@@ -26,7 +23,6 @@ function LanguageSwitcher({ className = "" }: { className?: string }) {
 }
 
 export function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t, lang } = useLanguage();
   const [isClosed, setIsClosed] = useState(false);
 
@@ -40,23 +36,11 @@ export function Header() {
     return () => clearInterval(timer);
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-  const navItems = [
-    { key: "intro", href: "#intro" },
-    { key: "info.eligibility.title", href: "#info" },
-    { key: "awards", href: "#awards" },
-    { key: "steps.title", href: "#steps" },
-  ];
-
   const scrollToSection = (id: string) => {
-    setIsMenuOpen(false);
-    setTimeout(() => {
-      const element = document.querySelector(id);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 150);
+    const element = document.querySelector(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -68,21 +52,17 @@ export function Header() {
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="flex items-center gap-2"
         >
-          <img src={lang === "en" ? logoImageEn : logoImage} alt="힐링보이스" className="h-[38px] w-auto object-contain" />
+          <img
+            src={lang === "en" ? logoImageEn : logoImageKo}
+            alt="Healing Voice"
+            className="w-[134px] h-[40px] object-contain"
+            // 국문 로고 PNG는 상단에만 투명 여백이 있어(하단은 0) 그대로 두면 아래로 치우쳐 보임 - 시각적 중앙 정렬 보정
+            style={lang === "en" ? undefined : { transform: "translateY(-5.7px)" }}
+          />
         </Link>
 
-        {/* 데스크탑 네비 */}
-        <nav className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <button
-              key={item.key}
-              onClick={() => scrollToSection(item.href)}
-              className="font-bold text-[#101828] hover:text-[#44a9ff] transition-colors text-[18px] whitespace-nowrap"
-            >
-              {t(item.key as any)}
-            </button>
-          ))}
-
+        {/* 우측 영역: 언어 토글 + 퐁당 바로가기 (데스크탑/모바일 공통) */}
+        <div className="flex items-center gap-3 md:gap-8">
           {/* 언어 토글 버튼 */}
           <LanguageSwitcher />
 
@@ -95,62 +75,12 @@ export function Header() {
                 scrollToSection("#steps");
               }
             }}
-            className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold px-7 py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[16px]`}
+            className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold px-4 py-2 md:px-7 md:py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[14px] md:text-[16px]`}
           >
             {isClosed ? (lang === 'ko' ? "퐁당 바로가기" : "Go to Fondant") : t("apply")}
           </button>
-        </nav>
-
-        {/* 모바일 네비 영역 (언어버튼 + 햄버거) */}
-        <div className="flex md:hidden items-center gap-3">
-          <LanguageSwitcher />
-
-          <button
-            onClick={toggleMenu}
-            className="text-[#101828] hover:text-[#44a9ff] transition-colors p-1"
-            aria-label="메뉴 열기"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
         </div>
       </div>
-
-      {/* 모바일 드롭다운 메뉴 */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-b border-[#d2e8fb] overflow-hidden shadow-lg"
-          >
-            <div className="flex flex-col p-4 space-y-4">
-              {navItems.map((item) => (
-                <button
-                  key={item.key}
-                  onClick={() => scrollToSection(item.href)}
-                  className="text-left text-[#101828] hover:text-[#44a9ff] font-bold py-2 text-base transition-colors"
-                >
-                  {t(item.key as any)}
-                </button>
-              ))}
-
-              <button
-                onClick={() => {
-                  if (isClosed) {
-                    window.open("https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095", "_blank");
-                  } else {
-                    scrollToSection("#steps");
-                  }
-                }}
-                className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold py-3 rounded-full text-center w-full transition-colors text-lg`}
-              >
-                {isClosed ? (lang === 'ko' ? "퐁당 바로가기" : "Go to Fondant") : t("apply")}
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }
