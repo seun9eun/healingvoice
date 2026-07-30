@@ -15,6 +15,8 @@ const imgLogoEn = "/images/hero/healing%20voice%20logo_final_en_trimmed.png"; //
 export function Hero() {
   const { t, lang } = useLanguage();
   const [isClosed, setIsClosed] = useState(false);
+  // 카카오톡 인앱 브라우저는 자체 툴바 때문에 100vh 계산이 흔들려 하단 배치 그룹이 위로 밀려 보임 - 해당 웹뷰에서만 100dvh로 전환 (일반 모바일 브라우저는 기존 100vh 그대로 유지)
+  const [isKakaoWebview, setIsKakaoWebview] = useState(false);
 
   useEffect(() => {
     const checkDeadline = () => {
@@ -26,10 +28,14 @@ export function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    setIsKakaoWebview(/kakaotalk/i.test(navigator.userAgent));
+  }, []);
+
   return (
     <section
       id="intro"
-      className="relative min-h-screen mt-16 md:min-h-0 md:aspect-[1920/1200] flex items-end justify-center md:items-center overflow-hidden"
+      className={`relative ${isKakaoWebview ? "min-h-dvh" : "min-h-screen"} mt-16 md:min-h-0 md:aspect-[1920/1200] flex items-end justify-center md:items-center overflow-hidden`}
     >
       {/* 배경 그라디언트 */}
       <div className="absolute inset-0 bg-[#FEFBEB]" />
