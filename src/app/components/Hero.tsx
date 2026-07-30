@@ -29,7 +29,10 @@ export function Hero() {
   return (
     <section
       id="intro"
-      className="relative min-h-screen mt-16 md:min-h-0 md:aspect-[1920/1200] flex items-end justify-center md:items-center overflow-hidden"
+      // 모바일도 PC와 동일하게 뷰포트 "높이"가 아닌 배경 이미지 비율(aspect-ratio)로 섹션 높이를 고정.
+      // vh/dvh/svh는 전부 브라우저 툴바 표시 상태에 영향을 받아 카카오 웹뷰 등에서 흔들리지만,
+      // aspect-ratio는 화면 폭에만 비례하므로 툴바 유무·스크롤과 무관하게 항상 안정적임.
+      className="relative aspect-[780/1552] mt-16 md:aspect-[1920/1200] flex items-end justify-center md:items-center overflow-hidden"
     >
       {/* 배경 그라디언트 */}
       <div className="absolute inset-0 bg-[#FEFBEB]" />
