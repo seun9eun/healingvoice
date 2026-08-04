@@ -52,28 +52,28 @@ export function Hero() {
       </div>
 
       {/* 콘텐츠 */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-10 text-center pt-28 pb-32 md:absolute md:w-[45vw] md:max-w-none md:mx-0 md:px-[2.0833vw] md:pt-0 md:pb-0 md:left-1/2 md:-translate-x-1/2 md:top-[14.5833vw]">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-[10.2564vw] text-center pt-[28.7179vw] pb-[36.9231vw] md:absolute md:w-[45vw] md:max-w-none md:mx-0 md:px-[2.0833vw] md:pt-0 md:pb-0 md:left-1/2 md:-translate-x-1/2 md:top-[14.5833vw]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col items-center gap-10 md:gap-10"
+          className="flex flex-col items-center gap-[10.2564vw] md:gap-10"
         >
           {/* 로고 및 방송 예정 그룹 */}
-          <div className="flex flex-col items-center gap-6 md:gap-8">
+          <div className="flex flex-col items-center gap-[6.1538vw] md:gap-8">
             {/* 퐁당 5주년 특별 기획 태그 */}
             <div className="flex justify-center">
               {lang === "en" ? (
                 <img
                   src={img_tag_en}
                   alt={t("hero.tagline")}
-                  className="w-auto h-[25px] md:h-[1.7099vw] object-contain"
+                  className="w-auto h-[6.4103vw] md:h-[1.7099vw] object-contain"
                 />
               ) : (
                 <img
                   src={img_tag}
                   alt={t("hero.tagline")}
-                  className="w-auto h-[49px] md:h-[3.2292vw] object-contain"
+                  className="w-auto h-[12.5641vw] md:h-[3.2292vw] object-contain md:-translate-x-[10px]"
                 />
               )}
             </div>
@@ -84,7 +84,7 @@ export function Hero() {
                 <img
                   src={imgBadge}
                   alt="K-CCM 글로벌 오디션"
-                  className="w-auto h-[18px] md:h-[1.3542vw] object-contain relative z-10"
+                  className="w-auto h-[7.1795vw] md:h-[1.9773vw] object-contain relative z-10"
                 />
               ) : (
                 <span className="text-[#b7c6ff] font-bold text-[13px] md:text-[0.8333vw] tracking-wide px-4 md:px-[0.8333vw] py-1.5 md:py-[0.4167vw] whitespace-nowrap relative z-10">
@@ -97,7 +97,7 @@ export function Hero() {
               <img
                 src={lang === "en" ? imgLogoEn : imgLogoKo}
                 alt="Healing Voice"
-                className={`w-auto object-contain mx-auto ${lang === "en" ? "mt-2 md:mt-3 h-[87px] md:h-[6.6135vw]" : "-mt-2 md:-mt-3 h-[124px] md:h-[9.5568vw]"}`}
+                className={`w-auto object-contain mx-auto ${lang === "en" ? "mt-[2.0513vw] md:mt-3 h-[22.3077vw] md:h-[6.6135vw]" : "-mt-[2.0513vw] md:-mt-3 h-[31.7949vw] md:h-[9.5568vw]"}`}
               />
             </div>
 
@@ -105,12 +105,12 @@ export function Hero() {
             {lang === "ko" ? (
               <img
                 src={imgBroadcastBtn}
-                alt="26년 9월 첫 방송"
-                className="w-auto h-[52px] md:h-[3.6458vw] object-contain"
+                alt="9월 20일 첫 방송"
+                className="w-auto h-[13.3333vw] md:h-[3.6458vw] object-contain"
               />
             ) : (
-              <div className="bg-[#0b1330] border-2 border-[#6b7fd9] rounded-[10px] flex items-center justify-center px-5 py-3 md:px-[1.25vw] md:py-[0.8333vw] w-fit min-w-[160px] md:min-w-[20.3125vw] min-h-[52px] md:min-h-[3.5417vw]">
-                <p className="font-bold text-[15px] md:text-[1.1458vw] leading-tight md:leading-[1.875vw] text-[#b7c6ff] text-center whitespace-nowrap">
+              <div className="bg-[#0b1330] border-2 border-[#6b7fd9] rounded-[10px] flex items-center justify-center px-[5.1282vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] w-fit min-w-[41.0256vw] md:min-w-[20.3125vw] min-h-[13.3333vw] md:min-h-[3.5417vw]">
+                <p className="font-bold text-[3.8462vw] md:text-[1.1458vw] leading-tight md:leading-[1.875vw] text-[#b7c6ff] text-center whitespace-nowrap">
                   First Broadcast: Sep 20, 2026
                 </p>
               </div>
