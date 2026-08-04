@@ -84,7 +84,7 @@ export function Hero() {
                 <img
                   src={imgBadge}
                   alt="K-CCM 글로벌 오디션"
-                  className="w-auto h-[18px] md:h-[1.3542vw] object-contain relative z-10"
+                  className="w-auto h-[22.5px] md:h-[1.6928vw] object-contain relative z-10"
                 />
               ) : (
                 <span className="text-[#b7c6ff] font-bold text-[13px] md:text-[0.8333vw] tracking-wide px-4 md:px-[0.8333vw] py-1.5 md:py-[0.4167vw] whitespace-nowrap relative z-10">
