@@ -70,7 +70,7 @@ export function Header() {
           <button
             onClick={() => {
               if (isClosed) {
-                window.open("https://www.fondant.kr/event/000a0b29-52d8-dbdf-f6fb-d91118000095", "_blank");
+                window.open("https://www.fondant.kr", "_blank");
               } else {
                 scrollToSection("#steps");
               }
