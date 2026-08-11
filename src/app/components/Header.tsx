@@ -14,7 +14,7 @@ function LanguageSwitcher({ className = "" }: { className?: string }) {
   return (
     <button
       onClick={toggleLang}
-      className={`flex items-center gap-1 font-bold text-[#101828] hover:text-[#44a9ff] transition-colors border-2 border-[#e8e8e8] hover:border-[#44a9ff] rounded-full px-3 py-1.5 md:py-2 text-xs md:text-sm whitespace-nowrap ${className}`}
+      className={`flex items-center gap-1 font-bold text-[#101828] hover:text-[#44a9ff] transition-colors border-2 border-[#e8e8e8] hover:border-[#44a9ff] rounded-full px-3 max-[420px]:px-2 py-1.5 md:py-2 text-xs md:text-sm whitespace-nowrap ${className}`}
     >
       <Globe className="w-3.5 h-3.5 md:w-4 md:h-4" />
       <span>{lang === "ko" ? "EN" : "KO"}</span>
@@ -45,7 +45,7 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#d2e8fb]">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-4 max-[420px]:px-3 h-16 flex items-center justify-between">
         {/* 로고 */}
         <Link
           to="/"
@@ -56,14 +56,16 @@ export function Header() {
             src={lang === "en" ? logoImageEn : logoImageKo}
             alt="Healing Voice"
             // 영문 로고는 모바일 GNB에서만 25% 축소(w-[100.5px] h-[30px]), md 이상에서는 원래 크기로 복귀
-            className={`object-contain ${lang === "en" ? "w-[100.5px] h-[30px] md:w-[134px] md:h-[40px]" : "w-[134px] h-[40px]"}`}
+            // 국문 로고는 원본 캔버스 비율(2.44:1)이 박스(134:40)보다 좁아 object-contain이 좌측에 ~18px 여백을 만듦.
+            // 영문 로고는 원본 비율(4.88:1)이 박스보다 넓어 여백 없이 완전히 좌측에 붙으므로, 모바일에서 ml-[18px]로 시작 위치를 국문과 맞춤
+            className={`object-contain ${lang === "en" ? "w-[100.5px] h-[30px] ml-[18px] md:w-[134px] md:h-[40px] md:ml-0" : "w-[134px] h-[40px]"}`}
             // 국문 로고 PNG는 상단에만 투명 여백이 있어(하단은 0) 그대로 두면 아래로 치우쳐 보임 - 시각적 중앙 정렬 보정
             style={lang === "en" ? undefined : { transform: "translateY(-5.7px)" }}
           />
         </Link>
 
         {/* 우측 영역: 언어 토글 + 퐁당 바로가기 (데스크탑/모바일 공통) */}
-        <div className="flex items-center gap-3 md:gap-8">
+        <div className="flex items-center gap-3 max-[420px]:gap-1.5 md:gap-8">
           {/* 언어 토글 버튼 */}
           <LanguageSwitcher />
 
@@ -76,7 +78,7 @@ export function Header() {
                 scrollToSection("#steps");
               }
             }}
-            className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold px-4 py-2 md:px-7 md:py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[14px] md:text-[16px]`}
+            className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold px-4 max-[420px]:px-3 py-2 md:px-7 md:py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[14px] max-[420px]:text-[13px] md:text-[16px]`}
           >
             {isClosed ? (lang === 'ko' ? "퐁당 바로가기" : "Go to Fondant") : t("apply")}
           </button>
