@@ -55,7 +55,8 @@ export function Header() {
           <img
             src={lang === "en" ? logoImageEn : logoImageKo}
             alt="Healing Voice"
-            className="w-[134px] h-[40px] object-contain"
+            // 영문 로고는 모바일 GNB에서만 25% 축소(w-[100.5px] h-[30px]), md 이상에서는 원래 크기로 복귀
+            className={`object-contain ${lang === "en" ? "w-[100.5px] h-[30px] md:w-[134px] md:h-[40px]" : "w-[134px] h-[40px]"}`}
             // 국문 로고 PNG는 상단에만 투명 여백이 있어(하단은 0) 그대로 두면 아래로 치우쳐 보임 - 시각적 중앙 정렬 보정
             style={lang === "en" ? undefined : { transform: "translateY(-5.7px)" }}
           />
