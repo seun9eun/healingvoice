@@ -7,6 +7,8 @@ const imgBg = "/images/hero/healing%20voice%20logo_bg_ko_v1.jpg"; //배경(국/�
 const imgBgMobile = "/images/hero/healing%20voice%20logo_bg_mo_ko_v1.jpg"; //배경(국/영문 공통, 모바일)
 const img_tag = "/images/hero/%ED%90%81%EB%8B%B9%205%EC%A3%BC%EB%85%84%20%ED%8A%B9%EB%B3%84%20%EA%B8%B0%ED%9A%8D.png"; //퐁당 5주년 특별기획 (다크 배경용 라이트 버전)
 const img_tag_en = "/images/hero/fondant%205th%20Aniversary_en_v1.png"; //fondant 5th Anniversary (다크 배경용 라이트 버전, 영문)
+const imgSubtitleEn = "/images/hero/en/healingvoice_subTle_en.png"; //K-CCM 글로벌 오디션 자리의 서브타이틀(영문)
+const imgBroadcastBtnEn = "/images/hero/en/healingvoice_btn_en.png"; //첫 방송 안내 버튼(영문)
 const imgBadge = "/images/hero/K-ccm%20%EA%B8%80%EB%A1%9C%EB%B2%8C%20%EC%98%A4%EB%94%94%EC%85%98.png"; //K-CCM 글로벌 오디션 뱃지
 const imgBroadcastBtn = "/images/hero/%ED%9E%90%EB%A7%81%EB%B3%B4%EC%9D%B4%EC%8A%A4_%EB%B2%84%ED%8A%BC.png"; //26년 9월 첫 방송 버튼(국문 전용)
 const imgLogoKo = "/images/hero/healing%20voice%20logo_final_ko.png"; //힐링보이스 통합 로고(국문)
@@ -87,9 +89,11 @@ export function Hero() {
                   className="w-auto h-[7.1795vw] md:h-[1.9773vw] object-contain relative z-10"
                 />
               ) : (
-                <span className="text-[#b7c6ff] font-bold text-[13px] md:text-[0.8333vw] tracking-wide px-4 md:px-[0.8333vw] py-1.5 md:py-[0.4167vw] whitespace-nowrap relative z-10">
-                  K-CCM Global Audition
-                </span>
+                <img
+                  src={imgSubtitleEn}
+                  alt="K-CCM Global Audition"
+                  className="w-auto h-[4.3077vw] md:h-[1.1864vw] object-contain relative z-10"
+                />
               )}
 
               {/* 힐링보이스 로고 (태그라인 + 메인 로고 통합 이미지) - 원본 비율 그대로, 크롭 없이 표시 (언어별 원본 비율이 달라 높이 기준으로 계산) */}
@@ -109,11 +113,11 @@ export function Hero() {
                 className="w-auto h-[13.3333vw] md:h-[3.6458vw] object-contain"
               />
             ) : (
-              <div className="bg-[#0b1330] border-2 border-[#6b7fd9] rounded-[10px] flex items-center justify-center px-[5.1282vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] w-fit min-w-[41.0256vw] md:min-w-[20.3125vw] min-h-[13.3333vw] md:min-h-[3.5417vw]">
-                <p className="font-bold text-[3.8462vw] md:text-[1.1458vw] leading-tight md:leading-[1.875vw] text-[#b7c6ff] text-center whitespace-nowrap">
-                  First Broadcast: Sep 20, 2026
-                </p>
-              </div>
+              <img
+                src={imgBroadcastBtnEn}
+                alt="First Broadcast: Sep 20, 2026"
+                className="w-auto h-[13.3333vw] md:h-[3.6458vw] object-contain"
+              />
             )}
           </div>
 
