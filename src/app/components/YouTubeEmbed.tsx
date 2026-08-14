@@ -120,7 +120,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
         <iframe
           key={currentVideo.id}
           className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${currentVideo.id}?rel=0`}
+          src={`https://www.youtube.com/embed/${currentVideo.id}?rel=0${lang === "en" ? "&cc_load_policy=1&cc_lang_pref=en" : ""}`}
           title={currentVideo.title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
