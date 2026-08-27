@@ -1,8 +1,9 @@
-import { Phone, MessageCircle } from "lucide-react";
+import { Phone, ExternalLink, Mail } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
-// 기존 프로젝트에서 이미 쓰던 확정 에셋/링크 재사용 (Figma 답변엔 실제 URL 정보가 없었음)
-const logoImage_w = "/images/hero/healing%20voice%20logo_footer_ko.png";
+// Figma Footer 참고 스크린샷 확인 결과 로고는 Header와 동일한 그라디언트 로고였음(레이어명은 "HEALING VOICE"였지만 실제 이미지는 국문 로고)
+const logoImage_w = "/images/header/healingvoice_logo.png";
+// 영문 버전은 참고 스크린샷이 없어 기존 프로젝트에 있던 에셋 재사용 — 확인 필요
 const logoImageEn_w = "https://i.imgur.com/qVJ5hKL.png";
 const CgnlogoImage = "https://i.imgur.com/N6ZvM5s.png";
 const FondantLogoImage = "https://i.imgur.com/yZuLvLq.png";
@@ -38,12 +39,12 @@ export function Footer() {
               rel="noopener noreferrer"
               className="flex items-center gap-2 md:gap-[0.4167vw] text-[#E2E2E2] hover:text-sky-400 transition-colors"
             >
-              <MessageCircle className="w-4 h-4 md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
+              <ExternalLink className="w-4 h-4 md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
               <span className="text-sm md:text-[0.8333vw] leading-6">{t("footer.kakao")}</span>
             </a>
           ) : (
             <div className="flex items-center gap-2 md:gap-[0.4167vw] text-[#E2E2E2]">
-              <MessageCircle className="w-4 h-4 md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
+              <Mail className="w-4 h-4 md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
               <span className="text-sm md:text-[0.8333vw] leading-6">{t("footer.email")}</span>
             </div>
           )}

@@ -5,9 +5,13 @@ import { MC_DATA, MENTOR_DATA, CastMember } from "../data/castData";
 const bgSrc = "/images/cast/cast_bg.jpg";
 
 const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
+const nameGradient = "linear-gradient(180deg, #FFFFFF 0%, #C9D6FF 100%)";
 const roleGradient = "linear-gradient(180deg, #ECFBFA 0%, #7CF0E6 100%)";
 const cardBorder =
   "linear-gradient(180deg, #96F9FF 0%, #C9FEFF 16%, #92C8F2 60.5%, #889BF0 80.5%, #8384EF 93.8%, #E8E8FF 100%)";
+const cardBg = "linear-gradient(160deg, #323CA6 0%, #1B2266 60%, #141B5C 100%)";
+// Figma 카드는 좌상단이 사선으로 잘린 배지형 모양 — clip-path로 재현 (참고 스크린샷 기준)
+const cardClip = "polygon(13% 0, 100% 0, 100% 100%, 0 100%, 0 13%)";
 
 function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" }) {
   // Figma 디자인은 국문 설명 끝의 "OO 멘토" 부분만 별도 하이라이트 색으로 분리 표시함
@@ -15,24 +19,33 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
 
   return (
     <div
-      className="relative w-full max-w-[368px] md:w-[19.1667vw] aspect-[368/425] rounded-3xl md:rounded-[1.6667vw] p-1 md:p-[0.2083vw] shrink-0"
-      style={{ backgroundImage: cardBorder }}
+      className="relative w-full max-w-[368px] md:w-[19.1667vw] aspect-[368/425] p-1 md:p-[0.2083vw] shrink-0"
+      style={{ backgroundImage: cardBorder, clipPath: cardClip }}
     >
-      <div className="relative flex size-full flex-col items-center gap-3 md:gap-[0.625vw] overflow-hidden rounded-[calc(1.5rem-2px)] md:rounded-[1.4583vw] bg-[#7055D3] pt-6 md:pt-[1.6667vw]">
-        <div className="flex w-full flex-col items-center gap-1.5 md:gap-[0.3125vw] px-3 md:px-[0.4167vw]">
-          <p className="text-sm md:text-[1.0417vw] leading-[1.4] text-center font-medium text-white">
+      <div
+        className="relative flex size-full flex-col items-center gap-2 md:gap-[0.4167vw] overflow-hidden pt-5 md:pt-[1.25vw] px-3"
+        style={{ backgroundImage: cardBg, clipPath: cardClip }}
+      >
+        <p
+          className="text-xl md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-transparent bg-clip-text"
+          style={{ backgroundImage: nameGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+        >
+          {lang === "ko" ? member.nameKo : member.nameEn}
+        </p>
+        <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
+          <p className="text-xs md:text-[0.9375vw] leading-[1.4] text-center font-medium text-white">
             {lang === "ko" ? bodyKo : member.descEn}
           </p>
           <p
-            className="text-lg md:text-[1.25vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
+            className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
             style={{ backgroundImage: roleGradient }}
           >
             {lang === "ko" ? member.roleKo : member.roleEn}
           </p>
         </div>
-        <div className="relative w-full flex-1">
+        <div className="relative w-[80%] flex-1 mt-auto">
           {member.photo && (
-            <img src={member.photo} alt={member.nameKo} className="absolute inset-0 w-full h-full object-cover object-top" />
+            <img src={member.photo} alt={member.nameKo} className="absolute bottom-0 inset-x-0 w-full h-auto max-h-full object-contain object-bottom" />
           )}
         </div>
       </div>
@@ -58,7 +71,7 @@ export function Cast() {
 
       {/* 타이틀 */}
       <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full max-w-[1200px] text-center">
-        <span className="text-[#4D94FF] font-bold tracking-[1.6px] text-sm md:text-[0.8333vw]">
+        <span className="text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-sm md:text-[0.8333vw]">
           {t("cast.eyebrow")}
         </span>
         <h2

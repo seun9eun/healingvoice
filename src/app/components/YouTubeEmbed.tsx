@@ -96,7 +96,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
       <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[896px] md:max-w-[46.667vw]">
         {/* 헤더 영역 */}
         <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] text-center">
-          <span className="text-[#4D94FF] font-bold tracking-[1.6px] text-sm md:text-[0.8333vw]">
+          <span className="text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-sm md:text-[0.8333vw]">
             {t("gallery.subtitle")}
           </span>
           <h2
