@@ -5,6 +5,13 @@ export const translations = {
     awards: "시상 내역",
     howtoapply: "지원 방법",
     apply: "지원하기",
+    header: {
+      nav: {
+        about: "소개",
+        cast: "출연진",
+      },
+      cta: "퐁당 바로가기",
+    },
     //hero
     hero: {
       tagline: "세상을 치유하고,\n 영혼을 울리는 목소리",
@@ -13,11 +20,45 @@ export const translations = {
       period: "모집 기간 : 2026.3.15 ~ 5.10",
       downloadBtn: "지원서 다운로드",
       infoBtn: "영상 더 보기",
+      // 01_Hero 리뉴얼(2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
+      anniversaryTag: "5주년 특별 기획", // TODO: 영문 확정 문구 필요
+      broadcastInfo1: "오후 3시 퐁당 선공개", // TODO: 영문 확정 문구 필요
+      broadcastInfo2: "오후 5시 유튜브, TV", // TODO: 영문 확정 문구 필요
+      premiereFallback: "9월 20일 첫 방송", // 이미지 배지 대체 텍스트(alt)
+    },
+    // 02_Big Text (2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
+    bigText: {
+      heading: "퐁당 5주년 특별 기획 K-CCM 글로벌 오디션", // TODO: 영문 확정 문구 필요
+      line2: "세상을 치유하는 목소리", // TODO: 영문 확정 문구 필요
+      bodyPart1: "상처받고 지친 세상을 향해 ", // TODO: 영문 확정 문구 필요
+      bodyHighlight: "따뜻한 위로와 희망", // TODO: 영문 확정 문구 필요
+      bodyPart2: "을 전파할\n단 하나의 목소리를 전합니다.", // TODO: 영문 확정 문구 필요
     },
     gallery: {
       subtitle: "Official Video",
       title: "공식 영상",
       desc: "힐링보이스의 공식 영상을 만나보세요",
+    },
+    // 출연진(Cast) 섹션 (2026-08-27 Figma 답변)
+    cast: {
+      eyebrow: "Cast",
+      title: "출연진",
+      desc: "<힐링보이스>의 여정을 함께할 MC와 힐링멘토를 소개합니다",
+      mcLabel: "MC 장성규",
+      mentorsTitle: "힐링멘토 5인", // TODO: 영문 확정 문구 필요("힐링멘토"만 확정)
+    },
+    // 시상내역(Awards) 섹션 (2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
+    awardsSection: {
+      eyebrow: "Awards",
+      desc: "최종 우승자와 TOP7을 위한 다양한 특전", // TODO: 영문 확정 문구 필요
+      grandPrizeBadge: "최종 우승자 1인", // TODO: 영문 확정 문구 필요
+      grandPrizeAmount: "상금 3,000만원", // TODO: 영문 확정 문구 필요
+      item1Title: "음원 발매", // TODO: 영문 확정 문구 필요
+      item1Desc: "CCM 음원 발매 지원", // TODO: 영문 확정 문구 필요
+      item2Title: "콘서트", // TODO: 영문 확정 문구 필요
+      item2Desc: "국·내외 투어 콘서트 개최", // TODO: 영문 확정 문구 필요
+      item3Title: "방송 출연", // TODO: 영문 확정 문구 필요
+      item3Desc: "CGN 후속 프로그램 출연", // TODO: 영문 확정 문구 필요
     },
     steps: {
       subtitle: "How to Apply",
@@ -242,7 +283,7 @@ export const translations = {
     },
     footer: {
       phone: "02-3275-9333",
-      phoneHours: "(평일 10:00~18:00)",
+      phoneHours: "(평일 09:00~18:00)", // 2026-08-27 Figma 답변 기준으로 시간 갱신(기존 10:00 → 09:00)
       kakao: "카카오톡 채널 'CGN 힐링보이스'",
     },
     modal: {
@@ -255,6 +296,13 @@ export const translations = {
     awards: "Awards",
     howtoapply: "Application Process",
     apply: "Apply now",
+    header: {
+      nav: {
+        about: "About",
+        cast: "Cast",
+      },
+      cta: "Go to Fondant",
+    },
     hero: {
       tagline: "A Voice That Heals, A Song That Restores", // 0305 수정 0306 이미지 대체
       taglineLine1: "A Voice That Heals the World ", // 임시 번역 - 확인 필요
@@ -262,11 +310,45 @@ export const translations = {
       period: "Application: March 15 - May 10, 2026",
       downloadBtn: "Download Form",
       infoBtn: "Watch More",
+      // 01_Hero 리뉴얼 — anniversaryTag/broadcastInfo1/2는 확정 영문 문구 전달 전까지 국문 임시 사용
+      anniversaryTag: "5주년 특별 기획", // TODO: 영문 확정 문구 필요
+      broadcastInfo1: "오후 3시 퐁당 선공개", // TODO: 영문 확정 문구 필요
+      broadcastInfo2: "오후 5시 유튜브, TV", // TODO: 영문 확정 문구 필요
+      premiereFallback: "Premieres Sept 20, 2026", // 확정 문구 — EN 배지 이미지 도착 전까지 텍스트로 대체
+    },
+    // 02_Big Text — 영문 확정 문구 전달 전까지 국문 임시 사용
+    bigText: {
+      heading: "퐁당 5주년 특별 기획 K-CCM 글로벌 오디션", // TODO: 영문 확정 문구 필요
+      line2: "세상을 치유하는 목소리", // TODO: 영문 확정 문구 필요
+      bodyPart1: "상처받고 지친 세상을 향해 ", // TODO: 영문 확정 문구 필요
+      bodyHighlight: "따뜻한 위로와 희망", // TODO: 영문 확정 문구 필요
+      bodyPart2: "을 전파할\n단 하나의 목소리를 전합니다.", // TODO: 영문 확정 문구 필요
     },
     gallery: {
       subtitle: "Official Video",
       title: "Official Video",
       desc: "Meet the official videos of Healing Voice",
+    },
+    // 출연진(Cast) 섹션 — desc는 확정 문구
+    cast: {
+      eyebrow: "Cast",
+      title: "Cast",
+      desc: "Meet the Host and Healing Mentors joining the journey of Healing Voice",
+      mcLabel: "Host | Jang Sungkyu",
+      mentorsTitle: "Healing Mentors",
+    },
+    // 시상내역(Awards) 섹션 — 영문 확정 문구 전달 전까지 국문 임시 사용
+    awardsSection: {
+      eyebrow: "Awards",
+      desc: "최종 우승자와 TOP7을 위한 다양한 특전", // TODO: 영문 확정 문구 필요
+      grandPrizeBadge: "최종 우승자 1인", // TODO: 영문 확정 문구 필요
+      grandPrizeAmount: "상금 3,000만원", // TODO: 영문 확정 문구 필요
+      item1Title: "음원 발매", // TODO: 영문 확정 문구 필요
+      item1Desc: "CCM 음원 발매 지원", // TODO: 영문 확정 문구 필요
+      item2Title: "콘서트", // TODO: 영문 확정 문구 필요
+      item2Desc: "국·내외 투어 콘서트 개최", // TODO: 영문 확정 문구 필요
+      item3Title: "방송 출연", // TODO: 영문 확정 문구 필요
+      item3Desc: "CGN 후속 프로그램 출연", // TODO: 영문 확정 문구 필요
     },
     steps: {
       subtitle: "How to Apply",
@@ -466,7 +548,7 @@ export const translations = {
     },
     footer: {
       phone: "+82 2-3275-9333",
-      phoneHours: "(Weekdays 10:00~18:00 KST)",
+      phoneHours: "(Weekdays 09:00~18:00 KST)", // 2026-08-27 Figma 답변 기준으로 시간 갱신
       email: "cgnhealingvoice@daum.net",
     },
     modal: {

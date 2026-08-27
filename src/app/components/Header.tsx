@@ -1,87 +1,87 @@
 import { Link } from "react-router";
 import { Globe } from "lucide-react";
-import { useState } from "react";
 import { useLanguage } from "../context/LanguageContext";
-import { getDeadlineDate } from "../constants/deadline";
-import { useEffect } from "react";
 
-// 힐링보이스 로고 - 헤더 전용 국문 파일 / 영문은 Hero 섹션과 동일 파일 사용
-const logoImageKo = "/images/hero/healing%20voice%20logo_final_ko_header.png";
-const logoImageEn = "/images/hero/healing%20voice%20logo_final_en_trimmed.png";
+// 힐링보이스 통합 로고 (Figma Header 스펙, 2026-08-27 슬랙 답변 기준)
+const logoSrc = "/images/header/healingvoice_logo.png";
+const FONDANT_URL = "https://www.fondant.kr";
 
-function LanguageSwitcher({ className = "" }: { className?: string }) {
+function LanguageSwitcher() {
   const { lang, toggleLang } = useLanguage();
   return (
     <button
       onClick={toggleLang}
-      className={`flex items-center gap-1 font-bold text-[#101828] hover:text-[#44a9ff] transition-colors border-2 border-[#e8e8e8] hover:border-[#44a9ff] rounded-full px-3 max-[420px]:px-2 py-1.5 md:py-2 text-xs md:text-sm whitespace-nowrap ${className}`}
+      className="flex items-center gap-1 md:gap-[0.2083vw] px-3 py-1.5 md:px-[0.625vw] md:py-[0.4167vw] rounded-full border-2 border-[#E8E8E8] text-white font-bold text-xs md:text-[0.7292vw] leading-none md:leading-[1.0417vw] hover:border-white transition-colors whitespace-nowrap"
     >
-      <Globe className="w-3.5 h-3.5 md:w-4 md:h-4" />
+      <Globe className="w-3.5 h-3.5 md:w-[0.8333vw] md:h-[0.8333vw]" strokeWidth={1.5} />
       <span>{lang === "ko" ? "EN" : "KO"}</span>
     </button>
   );
 }
 
 export function Header() {
-  const { t, lang } = useLanguage();
-  const [isClosed, setIsClosed] = useState(false);
+  const { t } = useLanguage();
 
-  useEffect(() => {
-    const checkDeadline = () => {
-      const deadline = new Date(getDeadlineDate()).getTime();
-      setIsClosed(Date.now() >= deadline);
-    };
-    checkDeadline();
-    const timer = setInterval(checkDeadline, 1000);
-    return () => clearInterval(timer);
-  }, []);
+  // 데스크탑 GNB 앵커 대상. "소개(about)" 앵커 대상 섹션은 기획 확인 중 — 우선 Big Text 섹션(id="about")로 가정.
+  const navItems = [
+    { label: t("header.nav.about"), id: "#about" },
+    { label: t("header.nav.cast"), id: "#cast" },
+    { label: t("awards"), id: "#awards" },
+  ];
 
   const scrollToSection = (id: string) => {
-    const element = document.querySelector(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#d2e8fb]">
-      <div className="container mx-auto px-4 max-[420px]:px-3 h-16 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[rgba(18,24,45,0.1)] backdrop-blur-[24px] md:py-[0.8333vw]">
+      <div className="flex items-center justify-between h-16 px-4 md:h-[3.3333vw] md:max-w-[80vw] md:mx-auto md:px-[0.8333vw]">
         {/* 로고 */}
-        <Link
-          to="/"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="flex items-center gap-2"
-        >
+        <Link to="/" onClick={scrollToTop} className="flex items-center shrink-0">
           <img
-            src={lang === "en" ? logoImageEn : logoImageKo}
+            src={logoSrc}
             alt="Healing Voice"
-            // 영문 로고는 모바일 GNB에서만 25% 축소(w-[100.5px] h-[30px]), md 이상에서는 원래 크기로 복귀
-            // 국문 로고는 원본 캔버스 비율(2.44:1)이 박스(134:40)보다 좁아 object-contain이 좌측에 ~18px 여백을 만듦.
-            // 영문 로고는 원본 비율(4.88:1)이 박스보다 넓어 여백 없이 완전히 좌측에 붙으므로, 모바일에서 ml-[18px]로 시작 위치를 국문과 맞춤
-            className={`object-contain ${lang === "en" ? "w-[100.5px] h-[30px] ml-[18px] md:w-[134px] md:h-[40px] md:ml-0" : "w-[134px] h-[40px]"}`}
-            // 국문 로고 PNG는 상단에만 투명 여백이 있어(하단은 0) 그대로 두면 아래로 치우쳐 보임 - 시각적 중앙 정렬 보정
-            style={lang === "en" ? undefined : { transform: "translateY(-5.7px)" }}
+            className="h-8 md:h-[2.1875vw] w-auto object-contain"
           />
         </Link>
 
-        {/* 우측 영역: 언어 토글 + 퐁당 바로가기 (데스크탑/모바일 공통) */}
-        <div className="flex items-center gap-3 max-[420px]:gap-1.5 md:gap-8">
-          {/* 언어 토글 버튼 */}
+        {/* 데스크탑 내비게이션 (md 이상, 768px~) */}
+        <nav className="hidden md:flex items-center gap-[1.6667vw]">
+          {navItems.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className="text-white font-bold text-[0.9375vw] leading-[1.4063vw] hover:text-[#8890FC] transition-colors whitespace-nowrap"
+            >
+              {item.label}
+            </button>
+          ))}
+
           <LanguageSwitcher />
 
-          {/* 지원하기 / 퐁당 바로가기 버튼 */}
-          <button
-            onClick={() => {
-              if (isClosed) {
-                window.open("https://www.fondant.kr", "_blank");
-              } else {
-                scrollToSection("#steps");
-              }
-            }}
-            className={`${isClosed ? "bg-[#6a71f0] hover:bg-[#5b63eb]" : "bg-[#44a9ff] hover:bg-[#2f94f0]"} text-white font-bold px-4 max-[420px]:px-3 py-2 md:px-7 md:py-3 rounded-full transition-colors whitespace-nowrap shadow-sm text-[14px] max-[420px]:text-[13px] md:text-[16px]`}
+          <a
+            href={FONDANT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center px-[1.4583vw] py-[0.625vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] text-white font-bold text-[0.8333vw] leading-[1.25vw] whitespace-nowrap transition-colors"
           >
-            {isClosed ? (lang === 'ko' ? "퐁당 바로가기" : "Go to Fondant") : t("apply")}
-          </button>
+            {t("header.cta")}
+          </a>
+        </nav>
+
+        {/* 모바일(768px 미만) — 별도 모바일 기획 전까지 텍스트 내비 없이 언어토글+CTA만 노출 */}
+        <div className="flex md:hidden items-center gap-3">
+          <LanguageSwitcher />
+          <a
+            href={FONDANT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center px-4 py-2 rounded-full bg-[#6276FB] text-white font-bold text-sm whitespace-nowrap"
+          >
+            {t("header.cta")}
+          </a>
         </div>
       </div>
     </header>

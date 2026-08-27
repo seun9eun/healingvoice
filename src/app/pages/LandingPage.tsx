@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Hero } from "../components/Hero";
-import { InfoSection } from "../components/InfoSection";
+import { Awards } from "../components/Awards";
 import { YouTubeEmbed } from "../components/YouTubeEmbed";
-import { TaglineSection } from "../components/TaglineSection";
+import { BigText } from "../components/BigText";
+import { Cast } from "../components/Cast";
 import { DeadlineModal } from "../components/DeadlineModal";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -29,9 +30,10 @@ export function LandingPage() {
         onClose={() => setShowDeadlineModal(false)}
       />
       <Hero />
-      <TaglineSection />
+      <BigText />
       <YouTubeEmbed lang={lang} />
-      <InfoSection />
+      <Cast />
+      <Awards />
     </>
   );
 }

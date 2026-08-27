@@ -1,1 +1,32 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+
+/* Paperlogy — OFL 무료 폰트 (fonts-archive/Paperlogy). 01_Hero 방송정보 텍스트(ExtraBold)에 사용 */
+@font-face {
+  font-family: "Paperlogy";
+  src: url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-8ExtraBold.woff2") format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-8ExtraBold.woff") format("woff");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 02_Big Text 헤드라인(Black)에 사용 */
+@font-face {
+  font-family: "Paperlogy";
+  src: url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-9Black.woff2") format("woff2"),
+    url("https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-9Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* HiKR ExtraBold — 무료 폰트(하이커 그라운드 배포, Noonnu). 02_Big Text 이후 섹션 대형 헤딩에 사용 */
+@font-face {
+  font-family: "HiKR";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/2607101609@hikr-extrabold/hikr-extrabold/HiKR-ExtraBold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Sandoll Nemony2 — Sandoll Cloud 상업 웹폰트 라이선스 필요(무료 아님). 라이선스 확인 전까지 미적용, Pretendard로 대체 */

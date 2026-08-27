@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { VIDEO_DATA } from "../data/videoData";
 
+const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
+
 export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
   const { t } = useLanguage();
 
@@ -86,156 +88,149 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
     return (activeIndex / (currentVideos.length - 1)) * 100;
   };
 
-  // 10. 기기별(PC/모바일) 반응형 감지
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile(); // 초기 실행
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
   if (currentVideos.length === 0) return null;
   const currentVideo = currentVideos[activeIndex] || currentVideos[0];
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto my-16 px-4 font-sans">
-      {/* 헤더 영역 */}
-      <div className="text-center mb-10">
-        <span className="text-[#44a9ff] font-bold uppercase tracking-widest text-[14px] md:text-[16px]">
-          {t("gallery.subtitle")}
-        </span>
-        <h2 className="text-[28px] md:text-[48px] font-extrabold text-[#101828] leading-tight mt-2">
-          {t("gallery.title")}
-        </h2>
-        <p className="text-[#7D7D7D] max-w-2xl mx-auto mt-4 whitespace-pre-line text-[16px] md:text-[20px] font-medium px-4">
-          {t("gallery.desc")}
-        </p>
-      </div>
+    <div className="relative w-full flex flex-col items-center py-16 md:py-[6.25vw] px-4">
+      <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[896px] md:max-w-[46.667vw]">
+        {/* 헤더 영역 */}
+        <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] text-center">
+          <span className="text-[#4D94FF] font-bold tracking-[1.6px] text-sm md:text-[0.8333vw]">
+            {t("gallery.subtitle")}
+          </span>
+          <h2
+            className="text-3xl md:text-[2.9167vw] leading-tight font-black text-transparent bg-clip-text"
+            style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+          >
+            {t("gallery.title")}
+          </h2>
+          <p className="max-w-[672px] md:w-[35vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-semibold leading-[1.5] whitespace-pre-line">
+            {t("gallery.desc")}
+          </p>
+        </div>
 
-      {/* 메인 비디오 플레이어 */}
-      <div className="relative overflow-hidden shadow-2xl rounded-3xl bg-black aspect-video mb-8">
-        <iframe
-          key={currentVideo.id}
-          className="absolute inset-0 w-full h-full"
-          src={`https://www.youtube.com/embed/${currentVideo.id}?rel=0${lang === "en" ? "&cc_load_policy=1&cc_lang_pref=en" : ""}`}
-          title={currentVideo.title}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
-      </div>
+        {/* 메인 비디오 플레이어 */}
+        <div className="relative overflow-hidden shadow-2xl rounded-3xl md:rounded-[1.25vw] bg-black aspect-video w-full">
+          <iframe
+            key={currentVideo.id}
+            className="absolute inset-0 w-full h-full"
+            src={`https://www.youtube.com/embed/${currentVideo.id}?rel=0${lang === "en" ? "&cc_load_policy=1&cc_lang_pref=en" : ""}`}
+            title={currentVideo.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
 
-      {/* 썸네일 섹션 */}
-      <div className="relative group px-2">
+        {/* 썸네일 섹션 */}
+        <div className="relative group w-full px-2">
+          {currentVideos.length > 1 && (
+            <>
+              {/* 좌우 화살표 스타일이 디자인상 서로 다름(좌: 흰배경+파란아이콘, 우: 파란배경+흰아이콘) — 스펙 그대로 구현 */}
+              <button
+                onClick={() => scroll("left")}
+                className="absolute -left-2 md:-left-14 top-[35%] -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] hover:scale-110 text-[#6276FB] transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
+                aria-label="Previous video"
+              >
+                <ChevronLeft size={20} strokeWidth={3} />
+              </button>
+              <button
+                onClick={() => scroll("right")}
+                className="absolute -right-2 md:-right-14 top-[35%] -translate-y-1/2 z-10 bg-[#6276FB] p-3 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] hover:scale-110 text-white transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
+                aria-label="Next video"
+              >
+                <ChevronRight size={20} strokeWidth={3} />
+              </button>
+            </>
+          )}
+
+          <div
+            ref={scrollRef}
+            className={`flex gap-4 md:gap-[1.0781vw] overflow-x-auto pb-6 snap-x scroll-smooth no-scrollbar ${currentVideos.length === 1 ? "justify-center" : ""
+              }`}
+            style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+          >
+            {currentVideos.map((video, index) => {
+              const isPinnedItem = (video as any).isPinned;
+              const isOriginalNewest = video.id === newestVideoId;
+              const showSeparator = index === 0 && isPinnedItem && currentVideos.length > 1;
+              const isActive = activeIndex === index;
+
+              return (
+                <React.Fragment key={`${video.id}-${index}`}>
+                  <button
+                    onClick={() => handleVideoChange(index)}
+                    className={`flex-shrink-0 w-[140px] md:w-[10vw] snap-start origin-top transition-transform duration-300 ${isActive ? "scale-100" : "scale-[0.9505] hover:scale-100"
+                      }`}
+                  >
+                    <div className={`relative aspect-video rounded-2xl md:rounded-[0.8333vw] overflow-hidden mb-3 border-2 transition-colors ${isActive ? "border-[#44A9FF] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
+                      }`}>
+                      <img
+                        src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
+                        alt={video.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {/* NEW 배지: 데이터상 0번(최신) 영상에만 표시 */}
+                      {isOriginalNewest && (
+                        <div className="absolute top-1.5 left-1.5 bg-[#4D94FF] text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow-md">
+                          NEW
+                        </div>
+                      )}
+                    </div>
+                    <div className="text-left px-1">
+                      <p className={`text-[10px] font-extrabold tracking-[1px] mb-1 ${isActive ? "text-[#4D94FF]" : "text-[#9CA3AF]"
+                        }`}>
+                        {video.label}
+                      </p>
+                      {/* 활성 카드 제목 색은 Figma 스펙상 #101828(거의 검정)이지만 어두운 배경 위에서 안 보여 흰색으로 대체(디자인 확인 필요) */}
+                      <p className="text-[12px] font-semibold text-white truncate">
+                        {video.title}
+                      </p>
+                    </div>
+                  </button>
+                  {/* 세로 구분선: 텍스트 제외, 썸네일 이미지 영역의 중앙에 오도록 위치 상단으로 조정 */}
+                  {showSeparator && (
+                    <div className="w-[0.5px] h-16 md:h-20 bg-white/30 self-start mt-3 md:mt-4 mx-2 shrink-0" />
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 하단 스크롤 인디케이터 및 모바일 조작 버튼 */}
         {currentVideos.length > 1 && (
-          <>
+          <div className="flex items-center justify-center gap-6">
+            {/* 모바일용 왼쪽 화살표 */}
             <button
               onClick={() => scroll("left")}
-              className="absolute -left-2 md:-left-14 top-[35%] -translate-y-1/2 z-10 bg-white/90 p-2 md:p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 text-[#44a9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center border border-gray-100"
+              className="md:hidden p-2 text-[#9CA3AF] hover:text-[#4D94FF] transition-all active:scale-90"
+              aria-label="Previous video"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-              </svg>
+              <ChevronLeft size={28} />
             </button>
+
+            <div className="w-full max-w-[150px] h-1 bg-[#E8E8E8] rounded-full overflow-hidden relative">
+              <div
+                className="h-full bg-[#4D94FF] transition-all duration-300 ease-out absolute top-0 left-0"
+                style={{
+                  width: `${100 / currentVideos.length}%`,
+                  left: `${getIndicatorPosition() * (1 - 1 / currentVideos.length)}%`,
+                }}
+              />
+            </div>
+
+            {/* 모바일용 오른쪽 화살표 */}
             <button
               onClick={() => scroll("right")}
-              className="absolute -right-2 md:-right-14 top-[35%] -translate-y-1/2 z-10 bg-white/90 p-2 md:p-3 rounded-full shadow-lg hover:bg-white hover:scale-110 text-[#44a9ff] transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center border border-gray-100"
+              className="md:hidden p-2 text-[#9CA3AF] hover:text-[#4D94FF] transition-all active:scale-90"
+              aria-label="Next video"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor" className="w-5 h-5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-              </svg>
+              <ChevronRight size={28} />
             </button>
-          </>
-        )}
-
-        <div
-          ref={scrollRef}
-          className={`flex gap-4 overflow-x-auto pb-4 snap-x scroll-smooth no-scrollbar ${currentVideos.length === 1 ? "justify-center" : ""
-            }`}
-          style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
-        >
-          {currentVideos.map((video, index) => {
-            const isPinnedItem = (video as any).isPinned;
-            const isOriginalNewest = video.id === newestVideoId;
-            const showSeparator = index === 0 && isPinnedItem && currentVideos.length > 1;
-
-            return (
-              <React.Fragment key={`${video.id}-${index}`}>
-                <button
-                  onClick={() => handleVideoChange(index)}
-                  className={`flex-shrink-0 w-[140px] md:w-48 snap-start transition-all duration-300 ${activeIndex === index ? "opacity-100" : "opacity-60 hover:opacity-100"
-                    }`}
-                >
-                  <div className={`relative aspect-video rounded-2xl overflow-hidden mb-3 border-2 transition-all ${activeIndex === index ? "border-[#44a9ff] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
-                    }`}>
-                    <img
-                      src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
-                      alt={video.title}
-                      className="w-full h-full object-cover"
-                    />
-                    {/* NEW 배지: 데이터상 0번(최신) 영상에만 표시 */}
-                    {isOriginalNewest && (
-                      <div className="absolute top-2 left-2 bg-[#44a9ff] text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow-md">
-                        NEW
-                      </div>
-                    )}
-                  </div>
-                  <div className="text-left px-1">
-                    <p className={`text-[10px] font-bold uppercase tracking-tighter mb-1 ${activeIndex === index ? "text-[#44a9ff]" : "text-gray-400"
-                      }`}>
-                      {video.label}
-                    </p>
-                    <p className={`text-[13px] font-bold truncate ${activeIndex === index ? "text-gray-900" : "text-gray-500"
-                      }`}>
-                      {video.title}
-                    </p>
-                  </div>
-                </button>
-                {/* 세로 구분선: 텍스트 제외, 썸네일 이미지 영역의 중앙에 오도록 위치 상단으로 조정 */}
-                {showSeparator && (
-                  <div className="w-[0.5px] h-16 md:h-20 bg-gray-400 self-start mt-3 md:mt-4 mx-2 shrink-0 opacity-30" />
-                )}
-              </React.Fragment>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* 하단 스크롤 인디케이터 및 모바일 조작 버튼 */}
-      {currentVideos.length > 1 && (
-        <div className="mt-8 flex items-center justify-center gap-6">
-          {/* 모바일용 왼쪽 화살표 */}
-          <button
-            onClick={() => scroll("left")}
-            className="md:hidden p-2 text-gray-400 hover:text-[#44a9ff] transition-all active:scale-90"
-            aria-label="Previous video"
-          >
-            <ChevronLeft size={28} />
-          </button>
-
-          <div className="w-full max-w-[100px] md:max-w-[120px] h-1 bg-gray-100 rounded-full overflow-hidden relative">
-            <div
-              className="h-full bg-[#44a9ff] transition-all duration-300 ease-out absolute top-0 left-0"
-              style={{
-                width: `${100 / currentVideos.length}%`,
-                left: `${getIndicatorPosition() * (1 - 1 / currentVideos.length)}%`,
-              }}
-            />
           </div>
-
-          {/* 모바일용 오른쪽 화살표 */}
-          <button
-            onClick={() => scroll("right")}
-            className="md:hidden p-2 text-gray-400 hover:text-[#44a9ff] transition-all active:scale-90"
-            aria-label="Next video"
-          >
-            <ChevronRight size={28} />
-          </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
-
