@@ -16,11 +16,11 @@ export const MC_DATA: CastMember[] = [
     id: 1,
     nameKo: "장성규",
     nameEn: "Jang Sungkyu",
-    descKo: "센스와 순발력, 진행력을 겸비한 분위기 메이커",
+    descKo: "센스와 순발력,\n진행력을 겸비한 분위기 메이커",
     descEn: "A witty, sharp-minded mood maker with flawless hosting skills",
     roleKo: "",
     roleEn: "",
-    photo: "/images/cast/mc_jangsungkyu.jpg",
+    photo: "/images/cast/mc_jangsungkyu.png",
   },
 ];
 
@@ -33,7 +33,7 @@ export const MENTOR_DATA: CastMember[] = [
     descEn: "A guiding mentor walking with contestants toward greater growth through deep experience",
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
-    photo: "/images/cast/mentor_songjungmee.jpg",
+    photo: "/images/cast/mentor_songjungmee.png",
     nameImage: "/images/cast/name_songjungmee.png",
   },
   {
@@ -44,7 +44,7 @@ export const MENTOR_DATA: CastMember[] = [
     descEn: "An energetic mentor filling contestants with confidence and positivity",
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
-    photo: "/images/cast/mentor_chohyelyun.jpg",
+    photo: "/images/cast/mentor_chohyelyun.png",
     nameImage: "/images/cast/name_chohyelyun.png",
   },
   {
@@ -55,7 +55,7 @@ export const MENTOR_DATA: CastMember[] = [
     descEn: "A growth mentor unlocking hidden potential through sharp, insightful advice",
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
-    photo: "/images/cast/mentor_kimjohan.jpg",
+    photo: "/images/cast/mentor_kimjohan.png",
     nameImage: "/images/cast/name_kimjohan.png",
   },
   {
@@ -66,7 +66,7 @@ export const MENTOR_DATA: CastMember[] = [
     descEn: "An empathetic mentor connecting deeply with contestants through her own journey",
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
-    photo: "/images/cast/mentor_sohyang.jpg",
+    photo: "/images/cast/mentor_sohyang.png",
     nameImage: "/images/cast/name_sohyang.png",
   },
   {
@@ -77,7 +77,7 @@ export const MENTOR_DATA: CastMember[] = [
     descEn: "An analytical mentor combining flexibility and keen insight",
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
-    photo: "/images/cast/mentor_kimyoungwoo.jpg",
+    photo: "/images/cast/mentor_kimyoungwoo.png",
     nameImage: "/images/cast/name_kimyoungwoo.png",
   },
 ];

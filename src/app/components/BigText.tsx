@@ -12,7 +12,7 @@ export function BigText() {
   return (
     <section
       id="about"
-      className="relative w-full flex flex-col items-center gap-2 md:gap-[0.5208vw] overflow-hidden pt-16 pb-20 md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#141F45_0%,rgba(20,31,69,0)_100%)]"
+      className="relative w-full flex flex-col items-center gap-2 md:gap-[0.5208vw] pt-16 pb-20 md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
     >
       <div className="flex items-center justify-center rounded-2xl md:rounded-[0.8333vw] px-4 md:px-[0.8333vw]">
         <p
