@@ -126,17 +126,17 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
         <div className="relative group w-full px-2">
           {currentVideos.length > 1 && (
             <>
-              {/* 좌우 화살표 스타일이 디자인상 서로 다름(좌: 흰배경+파란아이콘, 우: 파란배경+흰아이콘) — 스펙 그대로 구현 */}
+              {/* 좌우 화살표: 평소 흰배경+파란아이콘, hover/클릭(active) 시 파란배경+흰아이콘 — 좌우 동일 */}
               <button
                 onClick={() => scroll("left")}
-                className="absolute -left-2 md:-left-14 top-[35%] -translate-y-1/2 z-10 bg-white p-3 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] hover:scale-110 text-[#6276FB] transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
+                className="absolute -left-2 md:-left-14 top-[35%] -translate-y-1/2 z-10 bg-white hover:bg-[#6276FB] active:bg-[#6276FB] p-3 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] hover:scale-110 text-[#6276FB] hover:text-white active:text-white transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
                 aria-label="Previous video"
               >
                 <ChevronLeft size={20} strokeWidth={3} />
               </button>
               <button
                 onClick={() => scroll("right")}
-                className="absolute -right-2 md:-right-14 top-[35%] -translate-y-1/2 z-10 bg-[#6276FB] p-3 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] hover:scale-110 text-white transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
+                className="absolute -right-2 md:-right-14 top-[35%] -translate-y-1/2 z-10 bg-white hover:bg-[#6276FB] active:bg-[#6276FB] p-3 rounded-full shadow-[0_20px_25px_-5px_rgba(0,0,0,0.1),0_8px_10px_-6px_rgba(0,0,0,0.1)] hover:scale-110 text-[#6276FB] hover:text-white active:text-white transition-all opacity-0 group-hover:opacity-100 hidden md:flex items-center justify-center"
                 aria-label="Next video"
               >
                 <ChevronRight size={20} strokeWidth={3} />
@@ -160,7 +160,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                 <React.Fragment key={`${video.id}-${index}`}>
                   <button
                     onClick={() => handleVideoChange(index)}
-                    className={`flex-shrink-0 w-[140px] md:w-[10vw] snap-start origin-top transition-transform duration-300 ${isActive ? "scale-100" : "scale-[0.9505] hover:scale-100"
+                    className={`flex-shrink-0 w-[140px] md:w-[10vw] snap-start origin-top transition-all duration-300 ${isActive ? "scale-100 opacity-100" : "scale-[0.9505] opacity-70 hover:scale-100 hover:opacity-100"
                       }`}
                   >
                     <div className={`relative aspect-video rounded-2xl md:rounded-[0.8333vw] overflow-hidden mb-3 border-2 transition-colors ${isActive ? "border-[#44A9FF] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
@@ -182,8 +182,8 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                         }`}>
                         {video.label}
                       </p>
-                      {/* 활성 카드 제목 색은 Figma 스펙상 #101828(거의 검정)이지만 어두운 배경 위에서 안 보여 흰색으로 대체(디자인 확인 필요) */}
-                      <p className="text-[12px] font-semibold text-white truncate">
+                      {/* 사용자 확인: 활성 #D4DCFF, 비활성 #FFFFFF */}
+                      <p className={`text-[12px] font-semibold truncate ${isActive ? "text-[#D4DCFF]" : "text-white"}`}>
                         {video.title}
                       </p>
                     </div>
@@ -200,7 +200,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
 
         {/* 하단 스크롤 인디케이터 및 모바일 조작 버튼 */}
         {currentVideos.length > 1 && (
-          <div className="flex items-center justify-center gap-6">
+          <div className="flex items-center justify-center gap-6 w-full">
             {/* 모바일용 왼쪽 화살표 */}
             <button
               onClick={() => scroll("left")}
