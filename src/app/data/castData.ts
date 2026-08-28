@@ -8,6 +8,7 @@ export interface CastMember {
   roleKo: string; // 카드 하이라이트 태그 (Figma "role" 텍스트) — descKo 끝부분과 동일
   roleEn: string; // descEn 안의 역할 표현에서 발췌 (확정 문구 아님, 저위험 직역)
   photo?: string;
+  nameImage?: string; // Figma상 이름이 스타일링된 이미지로 되어있음(국문 전용, 영문은 nameEn 텍스트로 대체)
 }
 
 export const MC_DATA: CastMember[] = [
@@ -33,6 +34,7 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
     photo: "/images/cast/mentor_songjungmee.jpg",
+    nameImage: "/images/cast/name_songjungmee.png",
   },
   {
     id: 2,
@@ -43,6 +45,7 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
     photo: "/images/cast/mentor_chohyelyun.jpg",
+    nameImage: "/images/cast/name_chohyelyun.png",
   },
   {
     id: 3,
@@ -53,6 +56,7 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
     photo: "/images/cast/mentor_kimjohan.jpg",
+    nameImage: "/images/cast/name_kimjohan.png",
   },
   {
     id: 4,
@@ -63,6 +67,7 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
     photo: "/images/cast/mentor_sohyang.jpg",
+    nameImage: "/images/cast/name_sohyang.png",
   },
   {
     id: 5,
@@ -73,5 +78,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
     photo: "/images/cast/mentor_kimyoungwoo.jpg",
+    nameImage: "/images/cast/name_kimyoungwoo.png",
   },
 ];

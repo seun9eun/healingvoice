@@ -3,15 +3,15 @@ import { MC_DATA, MENTOR_DATA, CastMember } from "../data/castData";
 
 // 출연진(Cast) 섹션 에셋 (Figma 답변, 2026-08-27) — 원본 3배수 PNG는 용량이 커서(최대 18MB) 리사이즈+JPEG로 최적화해 저장함
 const bgSrc = "/images/cast/cast_bg.jpg";
+const mcSign = "/images/cast/mc_sign.png";
 
 const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
-const nameGradient = "linear-gradient(180deg, #FFFFFF 0%, #C9D6FF 100%)";
 const roleGradient = "linear-gradient(180deg, #ECFBFA 0%, #7CF0E6 100%)";
 const cardBorder =
-  "linear-gradient(180deg, #96F9FF 0%, #C9FEFF 16%, #92C8F2 60.5%, #889BF0 80.5%, #8384EF 93.8%, #E8E8FF 100%)";
-const cardBg = "linear-gradient(160deg, #323CA6 0%, #1B2266 60%, #141B5C 100%)";
-// Figma 카드는 좌상단이 사선으로 잘린 배지형 모양 — clip-path로 재현 (참고 스크린샷 기준)
-const cardClip = "polygon(13% 0, 100% 0, 100% 100%, 0 100%, 0 13%)";
+  "linear-gradient(180deg, #96F9FF 0%, #C9FEFF 16%, #92C8F2 61%, #889BF0 81%, #8384EF 94%, #E8E8FF 100%)";
+const cardBg = "/images/cast/mentor_card_bg.jpg";
+// Figma 답변으로 받은 정확한 카드 외곽선(368x425 기준 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)을 %로 환산
+const cardClip = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
 
 function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" }) {
   // Figma 디자인은 국문 설명 끝의 "OO 멘토" 부분만 별도 하이라이트 색으로 분리 표시함
@@ -23,31 +23,37 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
       style={{ backgroundImage: cardBorder, clipPath: cardClip }}
     >
       <div
-        className="relative flex size-full flex-col items-center gap-2 md:gap-[0.4167vw] overflow-hidden pt-5 md:pt-[1.25vw] px-3"
-        style={{ backgroundImage: cardBg, clipPath: cardClip }}
+        className="relative size-full overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
       >
-        <p
-          className="text-xl md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-transparent bg-clip-text"
-          style={{ backgroundImage: nameGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
-        >
-          {lang === "ko" ? member.nameKo : member.nameEn}
-        </p>
-        <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
-          <p className="text-xs md:text-[0.9375vw] leading-[1.4] text-center font-medium text-white">
-            {lang === "ko" ? bodyKo : member.descEn}
-          </p>
-          <p
-            className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
-            style={{ backgroundImage: roleGradient }}
-          >
-            {lang === "ko" ? member.roleKo : member.roleEn}
-          </p>
-        </div>
-        <div className="relative w-[80%] flex-1 mt-auto">
-          {member.photo && (
-            <img src={member.photo} alt={member.nameKo} className="absolute bottom-0 inset-x-0 w-full h-auto max-h-full object-contain object-bottom" />
+        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-[0.4167vw] pt-8 md:pt-[2vw] px-3">
+          {member.nameImage && lang === "ko" ? (
+            <img src={member.nameImage} alt={member.nameKo} className="h-8 md:h-[2.1vw] w-auto object-contain" />
+          ) : (
+            <p className="text-xl md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-white">
+              {member.nameEn}
+            </p>
           )}
+          <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
+            <p className="text-xs md:text-[0.9375vw] leading-[1.4] text-center font-medium text-white">
+              {lang === "ko" ? bodyKo : member.descEn}
+            </p>
+            <p
+              className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
+              style={{ backgroundImage: roleGradient }}
+            >
+              {lang === "ko" ? member.roleKo : member.roleEn}
+            </p>
+          </div>
         </div>
+        {/* 사진은 카드보다 넓게(122.8%) 중앙 기준 오버플로되며 카드 y34.6% 지점부터 시작 — Figma 좌표 환산 */}
+        {member.photo && (
+          <img
+            src={member.photo}
+            alt={member.nameKo}
+            className="absolute w-[122.8%] left-[-11.4%] top-[34.6%] h-auto object-contain"
+          />
+        )}
       </div>
     </div>
   );
@@ -99,11 +105,19 @@ export function Cast() {
           </p>
         </div>
         {mc.photo && (
-          <img
-            src={mc.photo}
-            alt={mc.nameKo}
-            className="w-full max-w-[520px] md:max-w-none md:flex-1 h-auto md:h-[30.104vw] object-cover object-top rounded-3xl md:rounded-[2.5vw]"
-          />
+          <div className="relative w-full max-w-[520px] md:max-w-none md:flex-1">
+            <img
+              src={mc.photo}
+              alt={mc.nameKo}
+              className="w-full h-auto md:h-[30.104vw] object-cover object-top rounded-3xl md:rounded-[2.5vw]"
+            />
+            {/* MC 사인("힐링보이스 장성규") — 사진 우상단 근처, Figma 좌표 환산(사진 대비 left 69%, top 20%, width 21.6%) */}
+            <img
+              src={mcSign}
+              alt=""
+              className="absolute w-[21.6%] left-[69%] top-[20%] h-auto object-contain"
+            />
+          </div>
         )}
       </div>
 
