@@ -6,7 +6,9 @@ const heroBg = "/images/hero/hero_bg.jpg";
 const logoSrc = "/images/header/healingvoice_logo.png";
 const kccmBadge = "/images/hero/hero_badge_kccm_ko.png"; // "K-CCM 글로벌 오디션" — 국문 이미지만 있음, EN 버전 디자인팀 확인 필요
 const premiereBadgeKo = "/images/hero/hero_badge_premiere_ko.png"; // "9월 20일 첫 방송" — 국문 이미지만 있음, EN 버전 디자인팀 확인 필요
-const fondantMark = "/images/hero/hero_fondant_mark.svg";
+// 퐁당 아이콘: Figma에서 받은 벡터 export가 깨진 상태였어서(빈 클리핑 박스), 기존 프로젝트에 있던
+// 확정 브랜드 아이콘(퐁당 5주년 특별 기획.png)에서 아이콘 부분만 잘라 재사용
+const fondantMark = "/images/hero/hero_fondant_mark.png";
 const FONDANT_URL = "https://www.fondant.kr";
 
 const broadcastGradient =
@@ -23,7 +25,7 @@ export function Hero() {
       {/* 배경 사진 + 하단 그라디언트 */}
       <div className="absolute inset-0" aria-hidden>
         <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0.12)_10%,#061E49_100%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 
       {/* 콘텐츠 */}
