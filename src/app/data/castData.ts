@@ -18,7 +18,7 @@ export const MC_DATA: CastMember[] = [
     nameKo: "장성규",
     nameEn: "Jang Sungkyu",
     descKo: "센스와 순발력,\n진행력을 겸비한 분위기 메이커",
-    descEn: "A witty, sharp-minded mood maker with flawless hosting skills",
+    descEn: "A witty, sharp-minded mood maker\nwith flawless hosting skills", // 2026-08-31 확인: 원문 줄바꿈 있음(2줄)
     roleKo: "",
     roleEn: "",
     photo: "/images/cast/mc_jangsungkyu.png",
@@ -31,7 +31,7 @@ export const MENTOR_DATA: CastMember[] = [
     nameKo: "송정미",
     nameEn: "Song Jungmee",
     descKo: "깊은 연륜으로 더 큰 성장을 이끄는 동행 멘토",
-    descEn: "A guiding mentor walking with contestants toward greater growth through deep experience",
+    descEn: "A guiding mentor walking with\ncontestants toward greater growth\nthrough deep experience", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
     photo: "/images/cast/mentor_songjungmee.png",
@@ -43,7 +43,7 @@ export const MENTOR_DATA: CastMember[] = [
     nameKo: "조혜련",
     nameEn: "Cho Hyelyun",
     descKo: "긍정의 에너지로 자신감을 채워주는 에너지 멘토",
-    descEn: "An energetic mentor filling contestants with confidence and positivity",
+    descEn: "An energetic mentor\nfilling contestants\nwith confidence and positivity", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
     photo: "/images/cast/mentor_chohyelyun.png",
@@ -55,7 +55,7 @@ export const MENTOR_DATA: CastMember[] = [
     nameKo: "김조한",
     nameEn: "Kim Johan",
     descKo: "날카로운 조언으로 숨은 잠재력을 발견하는 성장 멘토",
-    descEn: "A growth mentor unlocking hidden potential through sharp, insightful advice",
+    descEn: "A growth mentor\nunlocking hidden potential\nthrough sharp, insightful advice", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
     photo: "/images/cast/mentor_kimjohan.png",
@@ -67,7 +67,7 @@ export const MENTOR_DATA: CastMember[] = [
     nameKo: "소향",
     nameEn: "Sohyang",
     descKo: "경험을 살려 참가자의 마음까지 헤아리는 공감형 멘토",
-    descEn: "An empathetic mentor connecting deeply with contestants through her own journey",
+    descEn: "An empathetic mentor\nconnecting deeply with contestants\nthrough her own journey", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
     photo: "/images/cast/mentor_sohyang.png",
@@ -79,7 +79,7 @@ export const MENTOR_DATA: CastMember[] = [
     nameKo: "김영우",
     nameEn: "Kim Youngwoo",
     descKo: "유연한 시선과 통찰력을 겸비한 분석형 멘토",
-    descEn: "An analytical mentor combining flexibility and keen insight",
+    descEn: "An analytical mentor\ncombining flexibility\nand keen insight", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
     photo: "/images/cast/mentor_kimyoungwoo.png",

@@ -9,6 +9,7 @@ export const translations = {
       nav: {
         about: "소개",
         cast: "출연진",
+        awards: "시상 내역",
       },
       cta: "퐁당 바로가기",
     },
@@ -51,6 +52,7 @@ export const translations = {
     // 시상내역(Awards) 섹션 (2026-08-31 Figma 답변 기준 확정)
     awardsSection: {
       eyebrow: "Awards",
+      title: "시상 내역",
       desc: "최종 우승자와 TOP7을 위한 다양한 특전",
       grandPrizeBadge: "최종 우승자 1인",
       grandPrizeAmount: "상금 3,000만원",
@@ -284,7 +286,8 @@ export const translations = {
     },
     footer: {
       phone: "02-3275-9333",
-      phoneHours: "(평일 09:00~18:00)", // 2026-08-27 Figma 답변 기준으로 시간 갱신(기존 10:00 → 09:00)
+      phoneHours: "(평일 09:00~18:00)", // 데스크탑 기준(2026-08-27 답변)
+      phoneHoursMobile: "(평일 10:00~18:00)", // 모바일 국문은 시작 시각이 다름(2026-08-31 모바일 스펙 확인)
       kakao: "카카오톡 채널 'CGN 힐링보이스'",
     },
     modal: {
@@ -301,6 +304,7 @@ export const translations = {
       nav: {
         about: "About",
         cast: "Cast",
+        awards: "Awards",
       },
       cta: "Go to Fondant",
     },
@@ -314,7 +318,7 @@ export const translations = {
       anniversaryTag: "5th Anniversary Special Project",
       broadcastInfo1: "3 PM Pre-release on Fondant",
       broadcastInfo2: "5 PM YouTube & TV",
-      premiereFallback: "First episode airs on 09/20", // Figma 텍스트 레이어 그대로(이미지 배지 아님)
+      premiereFallback: "Premieres Sept 20", // 2026-08-31 확인: 실제 텍스트 콘텐츠는 레이어명("First episode")이 아니라 이 문구
       taglineLine1: "a voice that heals the world",
     },
     // 02_Big Text — 2026-08-31 Figma EN 페이지 답변으로 확정. 국문과 달리 줄 하나(subLine)가 더 있음
@@ -322,14 +326,14 @@ export const translations = {
       heading: "Fondant 5th Anniversary Special Project:",
       line2: "K-CCM Global Audition",
       subLine: "The Voice that heals the world",
-      bodyPart1: "Bringing the one and only VOICE",
-      bodyHighlight: "",
+      bodyPart1: "Bringing the one and only ",
+      bodyHighlight: "VOICE",
       bodyPart2: "\nto offer warm comfort and hope to a hurting world.",
     },
     gallery: {
       subtitle: "Official Video",
       title: "Official Video",
-      desc: "Meet the official videos of Healing Voice",
+      desc: "Watch official teasers and videos for Healing Voice", // 2026-08-31 확인: 실제 문구
     },
     // 출연진(Cast) 섹션 — desc는 확정 문구
     cast: {
@@ -342,15 +346,16 @@ export const translations = {
     // 시상내역(Awards) 섹션 — 영문 확정 문구 전달 전까지 국문 임시 사용
     awardsSection: {
       eyebrow: "Awards",
+      title: "Awards & Benefits", // 2026-08-31 확인: 헤더 GNB의 "Awards"와 달리 섹션 H2는 "& Benefits"가 붙음
       desc: "Exclusive benefits for the Winner and TOP 7",
       grandPrizeBadge: "Final Winner (1 Person)",
       grandPrizeAmount: "30,000,000 KRW",
       item1Title: "Album Release",
-      item1Desc: "Support for CCM single production and distribution",
+      item1Desc: "Support for CCM\nsingle production\nand distribution", // 2026-08-31 확인: 원문 줄바꿈 위치
       item2Title: "Concerts",
-      item2Desc: "Opportunities for domestic and international tour concerts",
-      item3Title: "Media Appearances",
-      item3Desc: "Appearances on CGN follow-up programs",
+      item2Desc: "Opportunities for\ndomestic and international\ntour concerts", // 2026-08-31 확인: 원문 줄바꿈 위치
+      item3Title: "Media\nAppearances", // 2026-08-31 확인: 원문 줄바꿈 위치
+      item3Desc: "Appearances on\nCGN follow-up programs", // 2026-08-31 확인: 원문 줄바꿈 위치
     },
     steps: {
       subtitle: "How to Apply",
@@ -551,6 +556,7 @@ export const translations = {
     footer: {
       phone: "+82 2-3275-9333",
       phoneHours: "(Weekdays 10:00~18:00 KST)", // 2026-08-31 Figma EN 페이지 답변 기준(국문 09:00과 다름, 확인됨)
+      phoneHoursMobile: "(Weekdays 10:00~18:00 KST)", // 영문 모바일 스펙 미확인 — 우선 데스크탑과 동일값 사용
       email: "cgnhealingvoice@daum.net",
     },
     modal: {

@@ -12,7 +12,11 @@ const mentorsTitleGradient = "linear-gradient(180deg, #FFFFFF 0%, #A9A9FF 100%)"
 // beam light — SVG 벡터 원본 그대로: 흰색→검은색 radial + COLOR_DODGE. 남색 배경 위에서 합성해보면 청록색으로 나오는데,
 // 이는 그 배경색 때문이지 이펙트 자체 색이 아님 — 실제 배경(보라색 계열) 위에 dodge를 걸면 마젠타/보라로 보임(2026-08-28 확인)
 const beamLight = "radial-gradient(14.82vw 0.1853vw at center, #FFFFFF 0%, #000000 100%)";
-const roleGradient = "linear-gradient(180deg, #ECFBFA 0%, #7CF0E6 100%)";
+// 모바일은 섹션 자체 보라색 배경이 없어(공용 별배경만 있음) color-dodge가 배경과 만나 색이 안 나오므로,
+// 일반 블렌드로 보이는 선명한 그라디언트를 따로 사용(중앙 마젠타/흰색 → 가장자리 파랑, 2026-08-31 모바일 확인 중 발견)
+const beamLightMobile =
+  "linear-gradient(90deg, rgba(45,60,255,0) 0%, #3D5FFF 12%, #8B2FE8 35%, #FFFFFF 48%, #E63EFA 52%, #8B2FE8 65%, #3D5FFF 88%, rgba(45,60,255,0) 100%)";
+// "OO 멘토" 하이라이트: 피그마상 멘토별로 그라데이션/단색이 제각각이나(2026-08-31 재확인), 5개 모두 흰색 단일로 통일하기로 결정
 const cardBorder =
   "linear-gradient(180deg, #96F9FF 0%, #C9FEFF 16%, #92C8F2 61%, #889BF0 81%, #8384EF 94%, #E8E8FF 100%)";
 // 카드 배경 합성 완료본(#7055D3 단색 + 텍스처 HARD_LIGHT 70% 블렌드, Figma에서 직접 합성해 받음, 2026-08-28)
@@ -20,13 +24,31 @@ const cardBg = "/images/cast/mentor_card_bg.jpg";
 // Figma 답변으로 받은 정확한 카드 외곽선(368x425 기준 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)을 %로 환산
 const cardClip = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
 
+// 모바일(일반 블렌드 컬러 그라디언트) / 데스크탑(color-dodge) 두 버전을 각각 그리고 반응형으로 하나만 보이게 함
+function BeamLight() {
+  return (
+    <>
+      <span
+        aria-hidden
+        className="md:hidden block w-full max-w-[800px] h-[18px]"
+        style={{ backgroundImage: beamLightMobile, clipPath: "ellipse(50% 50% at center)" }}
+      />
+      <span
+        aria-hidden
+        className="hidden md:block w-full max-w-[800px] md:h-[0.9375vw] mix-blend-color-dodge"
+        style={{ backgroundImage: beamLight, clipPath: "ellipse(50% 50% at center)" }}
+      />
+    </>
+  );
+}
+
 function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" }) {
   // Figma 디자인은 국문 설명 끝의 "OO 멘토" 부분만 별도 하이라이트 색으로 분리 표시함
   const bodyKo = member.descKo.replace(member.roleKo, "").trim();
 
   return (
     <div
-      className="relative w-full max-w-[368px] md:w-[19.1667vw] aspect-[368/425] p-1 md:p-[0.2083vw] shrink-0"
+      className="relative w-full max-w-[172px] md:max-w-none md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-1 md:p-[0.2083vw] shrink-0"
       style={{ backgroundImage: cardBorder, clipPath: cardClip }}
     >
       <div
@@ -44,23 +66,27 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             </p>
           )}
           <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
-            <p className="text-xs md:text-[0.9375vw] leading-[1.4] text-center font-medium text-white">
-              {lang === "ko" ? bodyKo : member.descEn}
+            {/* 폰트 20px(1920 기준), 행간140% — 지정된 위치에서만 줄바꿈(2026-08-31 확인). 스펙은 Medium이지만 화면상 볼드로 보여 EN은 Regular로 낮춤 */}
+            <p className={`text-xs md:text-[1.0417vw] leading-[1.4] text-center text-white ${lang === "en" ? "font-normal" : "font-medium"}`}>
+              {(lang === "ko" ? bodyKo : member.descEn).split("\n").map((line, i) => (
+                <span key={i}>
+                  {i > 0 && <br />}
+                  {line}
+                </span>
+              ))}
             </p>
             {/* 영문판은 역할 태그가 소개 문장에 통합되어 있어 별도 줄이 없음(2026-08-31 확인) */}
             {lang === "ko" && (
-              <p
-                className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
-                style={{ backgroundImage: roleGradient }}
-              >
+              <p className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-white">
                 {member.roleKo}
               </p>
             )}
           </div>
         </div>
         {/* 사진은 카드보다 넓게(122.8%) 오버플로되며 카드 y34.6% 지점부터 시작 — 스펙 비율(462:291)로 크롭해서 원본 파일 비율 차이에 영향받지 않도록 처리 */}
+        {/* 영문판은 소개문이 3줄이라 34.6%로는 사진과 겹침 — 텍스트 블록 실측 높이만큼 내려서 여유 확보(2026-08-31 확인) */}
         {member.photo && (
-          <div className="absolute inset-x-0 top-[34.6%] bottom-0 flex items-start justify-center overflow-visible">
+          <div className={`absolute inset-x-0 ${lang === "en" ? "top-[42%]" : "top-[34.6%]"} bottom-0 flex items-start justify-center overflow-visible`}>
             <img
               src={member.photo}
               alt={member.nameKo}
@@ -119,19 +145,22 @@ export function Cast() {
           {t("cast.eyebrow")}
         </span>
         <h2
-          className="text-3xl md:text-[2.9167vw] leading-tight font-black text-transparent bg-clip-text"
+          className="text-3xl md:text-[2.9167vw] leading-tight font-black uppercase text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("cast.title")}
         </h2>
-        <p className="max-w-[527px] text-[#D4EBFF] text-base md:text-[1.1458vw] font-semibold leading-[1.4]">
+        {/* 컨테이너 724px(1920 기준, 2026-08-31 확인) — 이전 527px는 너무 좁아 한 줄로 안 나옴 */}
+        <p className="max-w-[527px] md:max-w-[37.708vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-normal leading-[1.4] md:whitespace-nowrap">
           {t("cast.desc")}
         </p>
       </div>
 
       {/* MC */}
       <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] gap-6 md:gap-[1.25vw] rounded-[2rem] md:rounded-[2.5vw] md:px-[6.25vw]">
-        <div className="flex flex-col items-center gap-2 md:gap-[0.4167vw] md:w-[14.479vw] shrink-0 text-center">
+        {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
+        {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 */}
+        <div className={`order-2 md:order-1 flex flex-col items-center gap-2 md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
           {lang === "ko" ? (
             <p
               className="text-2xl md:text-[2.0833vw] leading-none font-extrabold text-white"
@@ -140,17 +169,14 @@ export function Cast() {
               {t("cast.mcLabel")}
             </p>
           ) : (
-            // 영문판은 "MC"/"Jang Sungkyu" 두 줄로 분리(2026-08-31 확인)
-            <p
-              className="text-2xl md:text-[2.0833vw] leading-tight font-extrabold text-white"
-              style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
-            >
-              MC
+            // 영문판은 "Host"/"Jang Sungkyu" 두 줄로 분리(2026-08-31 확인). 둘 다 그라데이션 적용
+            <p className="text-2xl md:text-[2.0833vw] leading-tight font-extrabold" style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}>
+              <span className="uppercase text-transparent bg-clip-text" style={{ backgroundImage: titleGradient }}>Host</span>
               <br />
-              {mc.nameEn}
+              <span className="text-transparent bg-clip-text" style={{ backgroundImage: mentorsTitleGradient }}>{mc.nameEn}</span>
             </p>
           )}
-          <p className="text-lg md:text-[1.25vw] leading-[1.4] tracking-[-0.03em] font-medium text-white break-keep">
+          <p className={`text-lg md:text-[1.25vw] leading-[1.4] tracking-[-0.03em] ${lang === "en" ? "font-normal" : "font-medium"} text-white break-keep`}>
             {lang === "ko"
               ? mc.descKo.split("\n").map((line, i) => (
                   <span key={i}>
@@ -158,15 +184,20 @@ export function Cast() {
                     {line}
                   </span>
                 ))
-              : mc.descEn}
+              : mc.descEn.split("\n").map((line, i) => (
+                  <span key={i}>
+                    {i > 0 && <br />}
+                    {line}
+                  </span>
+                ))}
           </p>
         </div>
         {mc.photo && (
-          <div className="relative w-full max-w-[520px] md:max-w-none md:flex-1">
+          <div className="order-1 md:order-2 relative w-full max-w-[520px] md:max-w-none md:flex-1">
             <img
               src={mc.photo}
               alt={mc.nameKo}
-              className="w-full h-auto md:h-[30.104vw] object-cover object-top rounded-3xl md:rounded-[2.5vw]"
+              className="w-full h-[313px] md:h-[30.104vw] object-cover object-top rounded-3xl md:rounded-[2.5vw]"
             />
             {/* MC 사인("힐링보이스 장성규") — 사진 우상단 근처, Figma 좌표 환산(사진 대비 left 69%, top 20%, width 21.6%) */}
             <img
@@ -182,11 +213,7 @@ export function Cast() {
       <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[1200px]">
         <div className="flex flex-col items-center gap-2 md:gap-[0.4167vw] w-full max-w-[800px] py-2 md:py-[0.8333vw]">
           {/* beam light — 텍스트 위/아래 가로 빛줄기 */}
-          <span
-            aria-hidden
-            className="block w-full max-w-[800px] h-[18px] md:h-[0.9375vw] mix-blend-color-dodge"
-            style={{ backgroundImage: beamLight, clipPath: "ellipse(50% 50% at center)" }}
-          />
+          <BeamLight />
           <h3
             className="text-2xl md:text-[2.5vw] leading-tight font-black text-transparent bg-clip-text"
             style={{
@@ -196,11 +223,7 @@ export function Cast() {
           >
             {t("cast.mentorsTitle")}
           </h3>
-          <span
-            aria-hidden
-            className="block w-full max-w-[800px] h-[18px] md:h-[0.9375vw] mix-blend-color-dodge"
-            style={{ backgroundImage: beamLight, clipPath: "ellipse(50% 50% at center)" }}
-          />
+          <BeamLight />
         </div>
 
         {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드 */}
@@ -214,9 +237,12 @@ export function Cast() {
             <MentorCard key={m.id} member={m} lang={lang} />
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-4 w-full md:hidden">
-          {MENTOR_DATA.map((m) => (
-            <MentorCard key={m.id} member={m} lang={lang} />
+        {/* 모바일: 2열 그리드, 마지막 1장만 중앙 정렬(2x2+1, 2026-08-31 모바일 스펙) */}
+        <div className="grid grid-cols-2 gap-4 w-full md:hidden justify-items-center">
+          {MENTOR_DATA.map((m, i) => (
+            <div key={m.id} className={i === MENTOR_DATA.length - 1 ? "col-span-2" : ""}>
+              <MentorCard member={m} lang={lang} />
+            </div>
           ))}
         </div>
       </div>

@@ -41,7 +41,8 @@ export function BigText() {
       {/* 영문판에만 있는 추가 줄(subLine) — 국문은 빈 문자열이라 렌더링 안 됨 */}
       {t("bigText.subLine") && (
         <p
-          className="max-w-full md:max-w-[46.771vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-4"
+          // 컨테이너 930px(텍스트 898px + 좌우 padding 16px씩) 기준 — 여유 없이 딱 맞추면 폰트 렌더링 오차로 의도치 않게 줄바꿈되어 그라데이션이 깨짐(2026-08-31 확인)
+          className="max-w-full md:max-w-[48.4375vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-4"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("bigText.subLine")}
@@ -49,7 +50,8 @@ export function BigText() {
       )}
 
       <div className="flex items-center justify-center pt-10 md:pt-[6.25vw] px-4">
-        <p className="w-full max-w-[688px] md:w-[35.8333vw] text-lg md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
+        {/* 컨테이너 760px(1920 기준, 2026-08-31 EN 스펙 확인) — 이전 688px는 너무 좁아 마지막 단어가 3번째 줄로 밀림 */}
+        <p className="w-full max-w-[688px] md:max-w-[39.583vw] text-lg md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
           {t("bigText.bodyPart1")}
           <span className="text-[#7992FB]">{t("bigText.bodyHighlight")}</span>
           {bodyLines[0]}

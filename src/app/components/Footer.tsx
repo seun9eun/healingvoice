@@ -26,7 +26,9 @@ export function Footer() {
               <Phone className="w-4 h-4 md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
               <span className="text-sm md:text-[0.7292vw] leading-6 text-[#E2E2E2]">{t("footer.phone")}</span>
             </span>
-            <span className="text-xs md:text-[0.6771vw] leading-5 text-[#E2E2E2] opacity-80">
+            {/* 모바일/데스크탑 운영시간 시작 시각이 달라서(모바일 10:00, 데스크탑 09:00) 반응형으로 분리 표시 */}
+            <span className="md:hidden text-xs leading-5 text-[#E2E2E2] opacity-80">{t("footer.phoneHoursMobile")}</span>
+            <span className="hidden md:inline md:text-[0.6771vw] leading-5 text-[#E2E2E2] opacity-80">
               {t("footer.phoneHours")}
             </span>
           </div>
@@ -60,7 +62,7 @@ export function Footer() {
               href="https://www.cgnkorea.net/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center rounded md:rounded-[0.2083vw] bg-white/10 hover:bg-white/20 px-4 py-2 md:px-[0.8333vw] md:py-[0.4167vw] transition-colors"
+              className="flex items-center justify-center px-4 py-2 md:px-[0.8333vw] md:py-[0.4167vw] hover:opacity-80 transition-opacity"
             >
               <img src={CgnlogoImage} alt="CGN" className="h-5 md:h-[1.25vw] object-contain" />
             </a>
@@ -68,7 +70,7 @@ export function Footer() {
               href="https://www.fondant.kr/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center rounded md:rounded-[0.2083vw] bg-white/10 hover:bg-white/20 px-4 py-2 md:px-[0.8333vw] md:py-[0.4167vw] transition-colors"
+              className="flex items-center justify-center px-4 py-2 md:px-[0.8333vw] md:py-[0.4167vw] hover:opacity-80 transition-opacity"
             >
               <img src={FondantLogoImage} alt="Fondant" className="h-5 md:h-[1.25vw] object-contain" />
             </a>

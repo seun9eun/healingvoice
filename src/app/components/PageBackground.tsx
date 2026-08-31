@@ -2,7 +2,7 @@
 // Hero 하단부터 Footer까지 여러 섹션 뒤를 한 장으로 관통하는 배경.
 // Hero 자체 배경이 완전히 불투명해서 Hero 구간에서는 가려지고,
 // Big Text의 위→아래 투명 그라디언트가 옅어지면서부터 드러나는 구조.
-const starField = "/images/bg/star_field.jpg";
+const starField = "/images/bg/star_field.jpg"; // 원본 하단 약 23%(y1180~1542)에 별이 전혀 없어 반복 시 빈 띠가 생기던 것을 크롭해서 수정(2026-08-31)
 const blueGlow = "radial-gradient(circle, #386FB7 0%, rgba(0,111,255,0) 83%)";
 const purpleGlow = "radial-gradient(circle, #722FF6 0%, rgba(26,0,255,0) 83%)";
 

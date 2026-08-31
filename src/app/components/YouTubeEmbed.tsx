@@ -100,12 +100,12 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
             {t("gallery.subtitle")}
           </span>
           <h2
-            className="text-3xl md:text-[2.9167vw] leading-tight font-black text-transparent bg-clip-text"
+            className="text-3xl md:text-[2.9167vw] leading-tight font-black uppercase text-transparent bg-clip-text"
             style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
           >
             {t("gallery.title")}
           </h2>
-          <p className="max-w-[672px] md:w-[35vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-semibold leading-[1.5] whitespace-pre-line">
+          <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-normal leading-[1.5] whitespace-pre-line">
             {t("gallery.desc")}
           </p>
         </div>
@@ -210,7 +210,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
               <ChevronLeft size={28} />
             </button>
 
-            <div className="w-full max-w-[150px] h-1 bg-[#E8E8E8] rounded-full overflow-hidden relative">
+            <div className="w-full max-w-[100px] h-1 bg-[#E8E8E8] rounded-full overflow-hidden relative">
               <div
                 className="h-full bg-[#4D94FF] transition-all duration-300 ease-out absolute top-0 left-0"
                 style={{
