@@ -3,8 +3,7 @@ import { useLanguage } from "../context/LanguageContext";
 
 // Figma Footer 참고 스크린샷 확인 결과 로고는 Header와 동일한 그라디언트 로고였음(레이어명은 "HEALING VOICE"였지만 실제 이미지는 국문 로고)
 const logoImage_w = "/images/header/healingvoice_logo.png";
-// 영문 버전은 참고 스크린샷이 없어 기존 프로젝트에 있던 에셋 재사용 — 확인 필요
-const logoImageEn_w = "https://i.imgur.com/qVJ5hKL.png";
+const logoImageEn_w = "/images/footer/healingvoice_logo_en.png"; // 2026-08-31 Figma EN 페이지 답변으로 원본 에셋 확보
 const CgnlogoImage = "https://i.imgur.com/N6ZvM5s.png";
 const FondantLogoImage = "https://i.imgur.com/yZuLvLq.png";
 
@@ -43,10 +42,14 @@ export function Footer() {
               <span className="text-sm md:text-[0.8333vw] leading-6">{t("footer.kakao")}</span>
             </a>
           ) : (
-            <div className="flex items-center gap-2 md:gap-[0.4167vw] text-[#E2E2E2]">
+            // 영문판은 카카오톡 채널 대신 이메일 링크로 채널 자체가 바뀜(2026-08-31 확인)
+            <a
+              href={`mailto:${t("footer.email")}`}
+              className="flex items-center gap-2 md:gap-[0.4167vw] text-[#E2E2E2] hover:text-sky-400 transition-colors"
+            >
               <Mail className="w-4 h-4 md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
               <span className="text-sm md:text-[0.8333vw] leading-6">{t("footer.email")}</span>
-            </div>
+            </a>
           )}
         </div>
 

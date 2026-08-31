@@ -15,24 +15,25 @@ export const translations = {
     //hero
     hero: {
       tagline: "세상을 치유하고,\n 영혼을 울리는 목소리",
-      taglineLine1: "세상을 치유하는 목소리 ",
       descPart1: "글로벌 CCM 인재들과 함께 여러분 곁을 찾아갑니다.",
       period: "모집 기간 : 2026.3.15 ~ 5.10",
       downloadBtn: "지원서 다운로드",
       infoBtn: "영상 더 보기",
       // 01_Hero 리뉴얼(2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
-      anniversaryTag: "5주년 특별 기획", // TODO: 영문 확정 문구 필요
-      broadcastInfo1: "오후 3시 퐁당 선공개", // TODO: 영문 확정 문구 필요
-      broadcastInfo2: "오후 5시 유튜브, TV", // TODO: 영문 확정 문구 필요
+      anniversaryTag: "5주년 특별 기획",
+      broadcastInfo1: "오후 3시 퐁당 선공개",
+      broadcastInfo2: "오후 5시 유튜브, TV",
       premiereFallback: "9월 20일 첫 방송", // 이미지 배지 대체 텍스트(alt)
+      taglineLine1: "세상을 치유하는 목소리", // Hero 태그라인(국문은 이미지, 영문은 텍스트) — 2026-08-31 Figma 답변
     },
-    // 02_Big Text (2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
+    // 02_Big Text (2026-08-31 Figma 답변 기준 확정)
     bigText: {
-      heading: "퐁당 5주년 특별 기획 K-CCM 글로벌 오디션", // TODO: 영문 확정 문구 필요
-      line2: "세상을 치유하는 목소리", // TODO: 영문 확정 문구 필요
-      bodyPart1: "상처받고 지친 세상을 향해 ", // TODO: 영문 확정 문구 필요
-      bodyHighlight: "따뜻한 위로와 희망", // TODO: 영문 확정 문구 필요
-      bodyPart2: "을 전파할\n단 하나의 목소리를 전합니다.", // TODO: 영문 확정 문구 필요
+      heading: "퐁당 5주년 특별 기획 K-CCM 글로벌 오디션",
+      line2: "세상을 치유하는 목소리",
+      subLine: "", // 영문판에만 있는 추가 줄("The Voice that heals the world") — 국문은 없음
+      bodyPart1: "상처받고 지친 세상을 향해 ",
+      bodyHighlight: "따뜻한 위로와 희망",
+      bodyPart2: "을 전파할\n단 하나의 목소리를 전합니다.",
     },
     gallery: {
       subtitle: "Official Video",
@@ -45,20 +46,20 @@ export const translations = {
       title: "출연진",
       desc: "<힐링보이스>의 여정을 함께할 MC와 힐링멘토를 소개합니다",
       mcLabel: "MC 장성규",
-      mentorsTitle: "힐링멘토 5인", // TODO: 영문 확정 문구 필요("힐링멘토"만 확정)
+      mentorsTitle: "힐링멘토 5인",
     },
-    // 시상내역(Awards) 섹션 (2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
+    // 시상내역(Awards) 섹션 (2026-08-31 Figma 답변 기준 확정)
     awardsSection: {
       eyebrow: "Awards",
-      desc: "최종 우승자와 TOP7을 위한 다양한 특전", // TODO: 영문 확정 문구 필요
-      grandPrizeBadge: "최종 우승자 1인", // TODO: 영문 확정 문구 필요
-      grandPrizeAmount: "상금 3,000만원", // TODO: 영문 확정 문구 필요
-      item1Title: "음원 발매", // TODO: 영문 확정 문구 필요
-      item1Desc: "CCM 음원 발매 지원", // TODO: 영문 확정 문구 필요
-      item2Title: "콘서트", // TODO: 영문 확정 문구 필요
-      item2Desc: "국·내외 투어 콘서트 개최", // TODO: 영문 확정 문구 필요
-      item3Title: "방송 출연", // TODO: 영문 확정 문구 필요
-      item3Desc: "CGN 후속 프로그램 출연", // TODO: 영문 확정 문구 필요
+      desc: "최종 우승자와 TOP7을 위한 다양한 특전",
+      grandPrizeBadge: "최종 우승자 1인",
+      grandPrizeAmount: "상금 3,000만원",
+      item1Title: "음원 발매",
+      item1Desc: "CCM 음원 발매 지원",
+      item2Title: "콘서트",
+      item2Desc: "국·내외 투어 콘서트 개최",
+      item3Title: "방송 출연",
+      item3Desc: "CGN 후속 프로그램 출연",
     },
     steps: {
       subtitle: "How to Apply",
@@ -305,24 +306,25 @@ export const translations = {
     },
     hero: {
       tagline: "A Voice That Heals, A Song That Restores", // 0305 수정 0306 이미지 대체
-      taglineLine1: "A Voice That Heals the World ", // 임시 번역 - 확인 필요
       descPart1: "Coming to your side together with global CCM talent.", // 임시 번역 - 확인 필요
       period: "Application: March 15 - May 10, 2026",
       downloadBtn: "Download Form",
       infoBtn: "Watch More",
-      // 01_Hero 리뉴얼 — anniversaryTag/broadcastInfo1/2는 확정 영문 문구 전달 전까지 국문 임시 사용
-      anniversaryTag: "5주년 특별 기획", // TODO: 영문 확정 문구 필요
-      broadcastInfo1: "오후 3시 퐁당 선공개", // TODO: 영문 확정 문구 필요
-      broadcastInfo2: "오후 5시 유튜브, TV", // TODO: 영문 확정 문구 필요
-      premiereFallback: "Premieres Sept 20, 2026", // 확정 문구 — EN 배지 이미지 도착 전까지 텍스트로 대체
+      // 01_Hero — 2026-08-31 Figma EN 페이지 답변으로 확정
+      anniversaryTag: "5th Anniversary Special Project",
+      broadcastInfo1: "3 PM Pre-release on Fondant",
+      broadcastInfo2: "5 PM YouTube & TV",
+      premiereFallback: "First episode airs on 09/20", // Figma 텍스트 레이어 그대로(이미지 배지 아님)
+      taglineLine1: "a voice that heals the world",
     },
-    // 02_Big Text — 영문 확정 문구 전달 전까지 국문 임시 사용
+    // 02_Big Text — 2026-08-31 Figma EN 페이지 답변으로 확정. 국문과 달리 줄 하나(subLine)가 더 있음
     bigText: {
-      heading: "퐁당 5주년 특별 기획 K-CCM 글로벌 오디션", // TODO: 영문 확정 문구 필요
-      line2: "세상을 치유하는 목소리", // TODO: 영문 확정 문구 필요
-      bodyPart1: "상처받고 지친 세상을 향해 ", // TODO: 영문 확정 문구 필요
-      bodyHighlight: "따뜻한 위로와 희망", // TODO: 영문 확정 문구 필요
-      bodyPart2: "을 전파할\n단 하나의 목소리를 전합니다.", // TODO: 영문 확정 문구 필요
+      heading: "Fondant 5th Anniversary Special Project:",
+      line2: "K-CCM Global Audition",
+      subLine: "The Voice that heals the world",
+      bodyPart1: "Bringing the one and only VOICE",
+      bodyHighlight: "",
+      bodyPart2: "\nto offer warm comfort and hope to a hurting world.",
     },
     gallery: {
       subtitle: "Official Video",
@@ -340,15 +342,15 @@ export const translations = {
     // 시상내역(Awards) 섹션 — 영문 확정 문구 전달 전까지 국문 임시 사용
     awardsSection: {
       eyebrow: "Awards",
-      desc: "최종 우승자와 TOP7을 위한 다양한 특전", // TODO: 영문 확정 문구 필요
-      grandPrizeBadge: "최종 우승자 1인", // TODO: 영문 확정 문구 필요
-      grandPrizeAmount: "상금 3,000만원", // TODO: 영문 확정 문구 필요
-      item1Title: "음원 발매", // TODO: 영문 확정 문구 필요
-      item1Desc: "CCM 음원 발매 지원", // TODO: 영문 확정 문구 필요
-      item2Title: "콘서트", // TODO: 영문 확정 문구 필요
-      item2Desc: "국·내외 투어 콘서트 개최", // TODO: 영문 확정 문구 필요
-      item3Title: "방송 출연", // TODO: 영문 확정 문구 필요
-      item3Desc: "CGN 후속 프로그램 출연", // TODO: 영문 확정 문구 필요
+      desc: "Exclusive benefits for the Winner and TOP 7",
+      grandPrizeBadge: "Final Winner (1 Person)",
+      grandPrizeAmount: "30,000,000 KRW",
+      item1Title: "Album Release",
+      item1Desc: "Support for CCM single production and distribution",
+      item2Title: "Concerts",
+      item2Desc: "Opportunities for domestic and international tour concerts",
+      item3Title: "Media Appearances",
+      item3Desc: "Appearances on CGN follow-up programs",
     },
     steps: {
       subtitle: "How to Apply",
@@ -548,7 +550,7 @@ export const translations = {
     },
     footer: {
       phone: "+82 2-3275-9333",
-      phoneHours: "(Weekdays 09:00~18:00 KST)", // 2026-08-27 Figma 답변 기준으로 시간 갱신
+      phoneHours: "(Weekdays 10:00~18:00 KST)", // 2026-08-31 Figma EN 페이지 답변 기준(국문 09:00과 다름, 확인됨)
       email: "cgnhealingvoice@daum.net",
     },
     modal: {

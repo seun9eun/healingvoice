@@ -4,8 +4,9 @@ import { useLanguage } from "../context/LanguageContext";
 // 01_Hero 에셋 (Figma 답변, 2026-08-27)
 const heroBg = "/images/hero/hero_bg.jpg";
 const logoSrc = "/images/header/healingvoice_logo.png";
-const kccmBadge = "/images/hero/hero_badge_kccm_ko.png"; // "K-CCM 글로벌 오디션" — 국문 이미지만 있음, EN 버전 디자인팀 확인 필요
-const premiereBadgeKo = "/images/hero/hero_badge_premiere_ko.png"; // "9월 20일 첫 방송" — 국문 이미지만 있음, EN 버전 디자인팀 확인 필요
+const kccmBadge = "/images/hero/hero_badge_kccm_ko.png"; // "K-CCM 글로벌 오디션" — 국문 전용 이미지. 영문판은 이 배지 자체가 없음(Big Text에 텍스트로만 존재, 2026-08-31 확인)
+const premiereBadgeKo = "/images/hero/hero_badge_premiere_ko.png"; // "9월 20일 첫 방송" — 국문 전용 이미지. 영문판은 이미지가 아니라 단색 배경(#03133b)+텍스트(2026-08-31 확인)
+const heroLogoEn = "/images/hero/hero_logo_en.png"; // 영문판 전용 Hero 워드마크(국문은 기존 헤더 로고 재사용)
 // 퐁당 아이콘: Figma에서 받은 벡터 export가 깨진 상태였어서(빈 클리핑 박스), 기존 프로젝트에 있던
 // 확정 브랜드 아이콘(퐁당 5주년 특별 기획.png)에서 아이콘 부분만 잘라 재사용
 const fondantMark = "/images/hero/hero_fondant_mark.png";
@@ -39,27 +40,41 @@ export function Hero() {
             </p>
           </div>
 
+          <p className="text-sm md:text-[1.1979vw] leading-tight text-center text-white font-medium">
+            {t("hero.taglineLine1")}
+          </p>
+
           <div className="flex flex-col items-center gap-1.5 md:gap-2">
+            {lang === "ko" && (
+              <img
+                src={kccmBadge}
+                alt="K-CCM 글로벌 오디션"
+                className="w-auto h-6 md:h-[1.7885vw] object-contain"
+              />
+            )}
             <img
-              src={kccmBadge}
-              alt="K-CCM 글로벌 오디션"
-              className="w-auto h-6 md:h-[1.7885vw] object-contain"
-            />
-            <img
-              src={logoSrc}
+              src={lang === "ko" ? logoSrc : heroLogoEn}
               alt="Healing Voice"
-              className="w-auto h-14 md:h-[8.3167vw] object-contain"
+              className={lang === "ko" ? "w-auto h-14 md:h-[8.3167vw] object-contain" : "w-auto h-10 md:h-[5.8vw] object-contain"}
             />
           </div>
         </div>
 
         {/* 방송 정보 */}
         <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full">
-          <img
-            src={premiereBadgeKo}
-            alt={t("hero.premiereFallback")}
-            className="w-auto h-9 md:h-[3.6458vw] object-contain"
-          />
+          {lang === "ko" ? (
+            <img
+              src={premiereBadgeKo}
+              alt={t("hero.premiereFallback")}
+              className="w-auto h-9 md:h-[3.6458vw] object-contain"
+            />
+          ) : (
+            <div className="flex items-center justify-center rounded-full bg-[#03133b] px-5 py-2 md:px-[1.5625vw] md:py-[0.625vw]">
+              <p className="text-sm md:text-[1.0417vw] leading-tight text-center text-white font-bold whitespace-nowrap">
+                {t("hero.premiereFallback")}
+              </p>
+            </div>
+          )}
           <div className="flex items-center gap-2 md:gap-[0.625vw]">
             <p
               className="text-base md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"

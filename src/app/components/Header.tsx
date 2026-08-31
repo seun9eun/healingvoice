@@ -4,6 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 
 // 힐링보이스 통합 로고 (Figma Header 스펙, 2026-08-27 슬랙 답변 기준)
 const logoSrc = "/images/header/healingvoice_logo.png";
+const logoSrcEn = "/images/header/healingvoice_logo_en.png"; // 2026-08-31 Figma EN 페이지 답변 — 국문과 다른 파일(182x40)
 const FONDANT_URL = "https://www.fondant.kr";
 
 function LanguageSwitcher() {
@@ -20,7 +21,7 @@ function LanguageSwitcher() {
 }
 
 export function Header() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   // 데스크탑 GNB 앵커 대상. "소개(about)" 앵커 대상 섹션은 기획 확인 중 — 우선 Big Text 섹션(id="about")로 가정.
   const navItems = [
@@ -41,7 +42,7 @@ export function Header() {
         {/* 로고 */}
         <Link to="/" onClick={scrollToTop} className="flex items-center shrink-0">
           <img
-            src={logoSrc}
+            src={lang === "ko" ? logoSrc : logoSrcEn}
             alt="Healing Voice"
             className="h-8 md:h-[2.1875vw] w-auto object-contain"
           />

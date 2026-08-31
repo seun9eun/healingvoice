@@ -7,6 +7,11 @@ const mcSign = "/images/cast/mc_sign.png";
 const bgCastPhoto = "/images/cast/bg_cast.webp";
 
 const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
+// "힐링멘토 5인" 텍스트는 다른 타이틀과 다르게 흰색→연보라 그라디언트가 위에 한 겹 더 덮여 보임(Figma 답변, 2026-08-28)
+const mentorsTitleGradient = "linear-gradient(180deg, #FFFFFF 0%, #A9A9FF 100%)";
+// beam light — SVG 벡터 원본 그대로: 흰색→검은색 radial + COLOR_DODGE. 남색 배경 위에서 합성해보면 청록색으로 나오는데,
+// 이는 그 배경색 때문이지 이펙트 자체 색이 아님 — 실제 배경(보라색 계열) 위에 dodge를 걸면 마젠타/보라로 보임(2026-08-28 확인)
+const beamLight = "radial-gradient(14.82vw 0.1853vw at center, #FFFFFF 0%, #000000 100%)";
 const roleGradient = "linear-gradient(180deg, #ECFBFA 0%, #7CF0E6 100%)";
 const cardBorder =
   "linear-gradient(180deg, #96F9FF 0%, #C9FEFF 16%, #92C8F2 61%, #889BF0 81%, #8384EF 94%, #E8E8FF 100%)";
@@ -29,8 +34,10 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
         style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
       >
         <div className="relative z-10 flex flex-col items-center gap-2 md:gap-[0.4167vw] pt-8 md:pt-[2vw] px-3">
-          {member.nameImage && lang === "ko" ? (
+          {lang === "ko" && member.nameImage ? (
             <img src={member.nameImage} alt={member.nameKo} className="h-8 md:h-[2.1vw] w-auto object-contain" />
+          ) : lang === "en" && member.nameImageEn ? (
+            <img src={member.nameImageEn} alt={member.nameEn} className="h-8 md:h-[2.1vw] w-auto object-contain" />
           ) : (
             <p className="text-xl md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-white">
               {member.nameEn}
@@ -40,12 +47,15 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             <p className="text-xs md:text-[0.9375vw] leading-[1.4] text-center font-medium text-white">
               {lang === "ko" ? bodyKo : member.descEn}
             </p>
-            <p
-              className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
-              style={{ backgroundImage: roleGradient }}
-            >
-              {lang === "ko" ? member.roleKo : member.roleEn}
-            </p>
+            {/* 영문판은 역할 태그가 소개 문장에 통합되어 있어 별도 줄이 없음(2026-08-31 확인) */}
+            {lang === "ko" && (
+              <p
+                className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-transparent bg-clip-text"
+                style={{ backgroundImage: roleGradient }}
+              >
+                {member.roleKo}
+              </p>
+            )}
           </div>
         </div>
         {/* 사진은 카드보다 넓게(122.8%) 오버플로되며 카드 y34.6% 지점부터 시작 — 스펙 비율(462:291)로 크롭해서 원본 파일 비율 차이에 영향받지 않도록 처리 */}
@@ -122,12 +132,24 @@ export function Cast() {
       {/* MC */}
       <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] gap-6 md:gap-[1.25vw] rounded-[2rem] md:rounded-[2.5vw] md:px-[6.25vw]">
         <div className="flex flex-col items-center gap-2 md:gap-[0.4167vw] md:w-[14.479vw] shrink-0 text-center">
-          <p
-            className="text-2xl md:text-[2.0833vw] leading-none font-extrabold text-white"
-            style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
-          >
-            {t("cast.mcLabel")}
-          </p>
+          {lang === "ko" ? (
+            <p
+              className="text-2xl md:text-[2.0833vw] leading-none font-extrabold text-white"
+              style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+            >
+              {t("cast.mcLabel")}
+            </p>
+          ) : (
+            // 영문판은 "MC"/"Jang Sungkyu" 두 줄로 분리(2026-08-31 확인)
+            <p
+              className="text-2xl md:text-[2.0833vw] leading-tight font-extrabold text-white"
+              style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+            >
+              MC
+              <br />
+              {mc.nameEn}
+            </p>
+          )}
           <p className="text-lg md:text-[1.25vw] leading-[1.4] tracking-[-0.03em] font-medium text-white break-keep">
             {lang === "ko"
               ? mc.descKo.split("\n").map((line, i) => (
@@ -159,28 +181,25 @@ export function Cast() {
       {/* 힐링멘토 */}
       <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[1200px]">
         <div className="flex flex-col items-center gap-2 md:gap-[0.4167vw] w-full max-w-[800px] py-2 md:py-[0.8333vw]">
-          {/* beam light — 텍스트 위/아래 가로 빛줄기(수평 그라디언트, 중앙 마젠타에서 양끝 짙은 보라로 갈라짐) */}
+          {/* beam light — 텍스트 위/아래 가로 빛줄기 */}
           <span
             aria-hidden
-            className="block w-full max-w-[800px] h-[3px] md:h-[0.4167vw]"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, rgba(40,20,90,0) 0%, #5A2E9E 15%, #E77BFB 50%, #5A2E9E 85%, rgba(40,20,90,0) 100%)",
-            }}
+            className="block w-full max-w-[800px] h-[18px] md:h-[0.9375vw] mix-blend-color-dodge"
+            style={{ backgroundImage: beamLight, clipPath: "ellipse(50% 50% at center)" }}
           />
           <h3
             className="text-2xl md:text-[2.5vw] leading-tight font-black text-transparent bg-clip-text"
-            style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+            style={{
+              backgroundImage: mentorsTitleGradient,
+              fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif",
+            }}
           >
             {t("cast.mentorsTitle")}
           </h3>
           <span
             aria-hidden
-            className="block w-full max-w-[800px] h-[3px] md:h-[0.4167vw]"
-            style={{
-              backgroundImage:
-                "linear-gradient(90deg, rgba(40,20,90,0) 0%, #5A2E9E 15%, #E77BFB 50%, #5A2E9E 85%, rgba(40,20,90,0) 100%)",
-            }}
+            className="block w-full max-w-[800px] h-[18px] md:h-[0.9375vw] mix-blend-color-dodge"
+            style={{ backgroundImage: beamLight, clipPath: "ellipse(50% 50% at center)" }}
           />
         </div>
 
