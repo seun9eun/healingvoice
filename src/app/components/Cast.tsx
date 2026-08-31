@@ -66,8 +66,8 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             </p>
           )}
           <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
-            {/* 폰트 20px(1920 기준), 행간140% — 지정된 위치에서만 줄바꿈(2026-08-31 확인). 스펙은 Medium이지만 화면상 볼드로 보여 EN은 Regular로 낮춤 */}
-            <p className={`text-xs md:text-[1.0417vw] leading-[1.4] text-center text-white ${lang === "en" ? "font-normal" : "font-medium"}`}>
+            {/* 영문 폰트 20px(1920 기준, 2026-08-31 확인) — 국문은 기존 18px 유지(실수로 같이 키웠다가 국문 카드 줄바꿈 깨짐, 되돌림) */}
+            <p className={`text-xs ${lang === "en" ? "md:text-[1.0417vw] font-normal" : "md:text-[0.9375vw] font-medium"} leading-[1.4] text-center text-white`}>
               {(lang === "ko" ? bodyKo : member.descEn).split("\n").map((line, i) => (
                 <span key={i}>
                   {i > 0 && <br />}

@@ -81,7 +81,8 @@ export function Awards() {
       id="awards"
       className="w-full flex flex-col items-center gap-16 md:gap-[3.3333vw] py-16 md:py-[6.25vw] px-4"
     >
-      <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full max-w-[1200px] text-center">
+      {/* 고정 px 폭 + vw 비례 텍스트 조합은 초광폭 화면에서 줄바꿈이 깨지므로 md 이상은 전부 vw로 스케일(2026-08-31 확인) */}
+      <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full max-w-[1200px] md:max-w-[62.5vw] text-center">
         <span className="text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-sm md:text-[0.8333vw]">
           {t("awardsSection.eyebrow")}
         </span>
@@ -91,12 +92,12 @@ export function Awards() {
         >
           {t("awardsSection.title")}
         </h2>
-        <p className="max-w-[672px] text-[#D4EBFF] text-base md:text-[1.1094vw] font-normal leading-[1.5]">
+        <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-base md:text-[1.1094vw] font-normal leading-[1.5]">
           {t("awardsSection.desc")}
         </p>
       </div>
 
-      <div className="flex flex-col items-center gap-6 md:gap-[1.25vw] w-full max-w-[1024px]">
+      <div className="flex flex-col items-center gap-6 md:gap-[1.25vw] w-full max-w-[1024px] md:max-w-[53.333vw]">
         {/* 대상(그랜드 프라이즈) — 테두리는 EN 스펙에서만 확인되어 EN에만 적용(국문은 기존 확정 상태 유지, 2026-08-31) */}
         <div
           className={`relative w-full overflow-hidden rounded-[32px] md:rounded-[2.5vw] px-6 py-10 md:px-[4.1667vw] md:py-[2.9167vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] ${lang === "en" ? "border-[3px] border-transparent" : ""}`}

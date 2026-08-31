@@ -41,8 +41,8 @@ export function BigText() {
       {/* 영문판에만 있는 추가 줄(subLine) — 국문은 빈 문자열이라 렌더링 안 됨 */}
       {t("bigText.subLine") && (
         <p
-          // 컨테이너 930px(텍스트 898px + 좌우 padding 16px씩) 기준 — 여유 없이 딱 맞추면 폰트 렌더링 오차로 의도치 않게 줄바꿈되어 그라데이션이 깨짐(2026-08-31 확인)
-          className="max-w-full md:max-w-[48.4375vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-4"
+          // 컨테이너 930px(텍스트 898px + 좌우 padding 16px씩) 기준 — 폭이 좁아질수록 폰트 렌더링 반올림 오차 영향이 커져 1024px 부근에서도 줄바꿈되는 것 확인, 여유를 더 둠(2026-08-31 확인)
+          className="max-w-full md:max-w-[52vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-4"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("bigText.subLine")}
