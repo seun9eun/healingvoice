@@ -39,26 +39,24 @@ export function Hero() {
       {/* 콘텐츠 */}
       <div className="relative z-10 flex flex-col items-center gap-6 md:gap-[1.6667vw] w-full max-w-[420px] md:max-w-[30.469vw] px-4 pb-8 md:pb-[1.25vw]">
         {/* 태그 + 로고 그룹 — 영문은 모바일/데스크탑 배치 순서가 달라(모바일: 뱃지→로고→태그라인) 분리 렌더링(2026-08-31 모바일 스펙) */}
-        <div className="md:hidden flex flex-col items-center gap-3">
+        {/* 국문 모바일 실측 스펙 반영(2026-09-01 확인): 뱃지-로고그룹 gap16, 아이콘 24.89px, 로고 115.43px 등 */}
+        <div className="md:hidden flex flex-col items-center gap-4">
           <div className="flex items-center gap-1.5">
             {lang === "en" ? (
               <img src={fondantWordmarkEn} alt="fondant" className="h-4 w-auto object-contain" />
             ) : (
-              <img src={fondantMark} alt="" className="h-4 w-auto" />
+              <img src={fondantMark} alt="" className="h-[24.89px] w-auto" />
             )}
-            <p className="text-sm leading-tight tracking-[-0.05em] text-center text-white font-bold">
+            <p className="text-[15.61px] leading-[16.39px] tracking-[-0.05em] text-center text-white font-bold">
               {t("hero.anniversaryTag")}
             </p>
           </div>
 
           {lang === "ko" ? (
-            <>
-              <p className="text-sm leading-tight text-center text-white font-medium">{t("hero.taglineLine1")}</p>
-              <div className="flex flex-col items-center gap-1.5">
-                <img src={kccmBadge} alt="K-CCM 글로벌 오디션" className="w-auto h-6 object-contain" />
-                <img src={logoSrc} alt="Healing Voice" className="w-auto h-14 object-contain" />
-              </div>
-            </>
+            <div className="flex flex-col items-center gap-1.5">
+              <img src={kccmBadge} alt="K-CCM 글로벌 오디션" className="w-auto h-[19.12px] object-contain" />
+              <img src={logoSrc} alt="Healing Voice" className="w-auto h-[115.43px] object-contain" />
+            </div>
           ) : (
             <>
               <img src={heroLogoEn} alt="Healing Voice" className="w-auto h-10 object-contain" />
@@ -168,14 +166,14 @@ export function Hero() {
           ) : (
             <div className="flex items-center gap-2 md:gap-[0.625vw]">
               <p
-                className="text-base md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                className="text-xl md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                 style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("hero.broadcastInfo1")}
               </p>
               <span className="h-4 w-px md:h-[1.6667vw] md:w-[0.1042vw] bg-[#D4EBFF]" />
               <p
-                className="text-base md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                className="text-xl md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                 style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("hero.broadcastInfo2")}
@@ -189,12 +187,12 @@ export function Hero() {
           href={FONDANT_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-6 py-3 md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
+          className="flex items-center justify-center gap-2 md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-8 py-4 md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
         >
-          <span className="text-base md:text-[1.25vw] leading-none text-center font-bold text-white">
+          <span className="text-lg md:text-[1.25vw] leading-none text-center font-bold text-white">
             {t("header.cta")}
           </span>
-          <ArrowUpRight className="w-4 h-4 md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
+          <ArrowUpRight className="w-5 h-5 md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
         </a>
       </div>
     </section>

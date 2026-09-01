@@ -8,6 +8,7 @@ const glow = "radial-gradient(circle, #722FF6 0%, rgba(26,0,255,0) 83.27%)";
 export function BigText() {
   const { t, lang } = useLanguage();
   const bodyLines = t("bigText.bodyPart2").split("\n");
+  const headingPart2 = t("bigText.headingPart2");
 
   return (
     // 장식용 글로우가 모바일 폭(390px)에서 77.5vw+36.6vw=114vw로 화면 밖까지 튀어나가 페이지 전체에
@@ -16,16 +17,34 @@ export function BigText() {
       id="about"
       className="relative w-full overflow-hidden flex flex-col items-center gap-2 md:gap-[0.5208vw] pt-16 pb-20 md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
     >
-      <div className="flex items-center justify-center rounded-2xl md:rounded-[0.8333vw] px-4 md:px-[0.8333vw] w-full">
+      {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
+      {lang === "ko" && (
+        <div className="flex md:hidden flex-col items-center gap-1 px-4">
+          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            {t("bigText.heading")}
+          </p>
+          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            {headingPart2}
+          </p>
+          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            {t("bigText.line2")}
+          </p>
+          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            &lt;힐링보이스&gt;
+          </p>
+        </div>
+      )}
+
+      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} items-center justify-center rounded-2xl md:rounded-[0.8333vw] px-4 md:px-[0.8333vw] w-full`}>
         <p
           className="max-w-full md:max-w-[63.542vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
-          {t("bigText.heading")}
+          {t("bigText.heading")}{lang === "ko" ? ` ${headingPart2}` : ""}
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-2 md:gap-[0.5208vw] px-4">
+      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} flex-wrap items-center justify-center gap-2 md:gap-[0.5208vw] px-4`}>
         <p
           className="text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
@@ -51,9 +70,9 @@ export function BigText() {
         </p>
       )}
 
-      <div className="flex items-center justify-center pt-10 md:pt-[6.25vw] px-4">
-        {/* 컨테이너 760px(1920 기준, 2026-08-31 EN 스펙 확인) — 이전 688px는 너무 좁아 마지막 단어가 3번째 줄로 밀림 */}
-        <p className="w-full max-w-[688px] md:max-w-[39.583vw] text-lg md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
+      <div className="flex items-center justify-center pt-20 md:pt-[6.25vw] px-4">
+        {/* 컨테이너 760px(1920 기준, 2026-08-31 EN 스펙 확인) — 이전 688px는 너무 좁아 마지막 단어가 3번째 줄로 밀림. 모바일 폰트 20px(2026-09-01 확인) */}
+        <p className="w-full max-w-[688px] md:max-w-[39.583vw] text-xl md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
           {t("bigText.bodyPart1")}
           <span className="text-[#7992FB]">{t("bigText.bodyHighlight")}</span>
           {bodyLines[0]}

@@ -29,7 +29,8 @@ export const translations = {
     },
     // 02_Big Text (2026-08-31 Figma 답변 기준 확정)
     bigText: {
-      heading: "퐁당 5주년 특별 기획 K-CCM 글로벌 오디션",
+      heading: "퐁당 5주년 특별 기획",
+      headingPart2: "K-CCM 글로벌 오디션", // 2026-09-01 모바일 확인: 4줄로 각각 분리 표시되어야 해서 heading에서 분리
       line2: "세상을 치유하는 목소리",
       subLine: "", // 영문판에만 있는 추가 줄("The Voice that heals the world") — 국문은 없음
       bodyPart1: "상처받고 지친 세상을 향해 ",
@@ -324,6 +325,7 @@ export const translations = {
     // 02_Big Text — 2026-08-31 Figma EN 페이지 답변으로 확정. 국문과 달리 줄 하나(subLine)가 더 있음
     bigText: {
       heading: "Fondant 5th Anniversary Special Project:",
+      headingPart2: "", // 국문 모바일 4줄 분리용 — 영문은 heading/line2 구조가 이미 달라서 미사용
       line2: "K-CCM Global Audition",
       subLine: "The Voice that heals the world",
       bodyPart1: "Bringing the one and only ",
