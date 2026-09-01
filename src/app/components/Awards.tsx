@@ -10,6 +10,10 @@ const cardBroadcast = "/images/awards/card_broadcast.svg";
 const iconRelease = "/images/awards/icon_release.svg";
 const iconConcert = "/images/awards/icon_concert.svg";
 const iconBroadcast = "/images/awards/icon_broadcast.svg";
+// 영문 모바일 전용 아이콘(2026-09-01 확인) — 데스크탑용과 별도 SVG(색상 #17bab5/#6ad6ea)
+const iconReleaseEnMobile = "/images/awards/icon_release_en.svg";
+const iconConcertEnMobile = "/images/awards/icon_concert_en.svg";
+const iconBroadcastEnMobile = "/images/awards/icon_broadcast_en.svg";
 
 const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
 // 위→아래가 아니라 왼쪽→오른쪽 그라데이션(2026-08-31 확인)
@@ -82,11 +86,15 @@ function PrizeCardKoMobile({
   desc,
   icon,
   iconStyle,
+  dimDesc,
 }: {
   title: string;
   desc: string;
   icon: string;
-  iconStyle: { w: string; h: string; right: string; bottom: string };
+  // bottom 앵커는 카드 높이가 스펙(HUG로 늘어난 카드)과 실제 렌더(min-h로 고정) 사이에 차이가 있으면
+  // 텍스트와 겹치므로, 텍스트 길이가 긴 카드는 top으로 앵커(카드 상단 기준 절대 위치)해서 이 문제를 피함
+  iconStyle: { w: string; h: string; right: string; bottom?: string; top?: string };
+  dimDesc?: boolean; // 영문 스펙: 본문 opacity 0.8(2026-09-01 확인) — 국문은 명시 없어 미적용
 }) {
   return (
     <div
@@ -99,12 +107,18 @@ function PrizeCardKoMobile({
       >
         {title}
       </p>
-      <p className="text-[4.6154vw] leading-[7.5vw] font-medium text-[#062259]">{desc}</p>
+      <p className={`text-[4.6154vw] leading-[7.5vw] font-medium text-[#062259] ${dimDesc ? "opacity-80" : ""}`}>{desc}</p>
       <img
         src={icon}
         alt=""
         className="absolute object-contain"
-        style={{ width: iconStyle.w, height: iconStyle.h, right: iconStyle.right, bottom: iconStyle.bottom }}
+        style={{
+          width: iconStyle.w,
+          height: iconStyle.h,
+          right: iconStyle.right,
+          bottom: iconStyle.bottom,
+          top: iconStyle.top,
+        }}
       />
     </div>
   );
@@ -125,12 +139,24 @@ export function Awards() {
         <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-[4.1026vw] md:text-[0.8333vw]">
           {t("awardsSection.eyebrow")}
         </span>
-        <h2
-          className="text-[10.2564vw] leading-[8.9744vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
-          style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
-        >
-          {t("awardsSection.title")}
-        </h2>
+        {lang === "en" ? (
+          // 영문 모바일: "Awards" / "& Benefits" 2줄, 행간110%(44px, 2026-09-01 확인)
+          <h2
+            className="text-[10.2564vw] leading-[11.2821vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
+            style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+          >
+            <span className="md:hidden block">Awards</span>
+            <span className="md:hidden block">&amp; Benefits</span>
+            <span className="hidden md:inline">{t("awardsSection.title")}</span>
+          </h2>
+        ) : (
+          <h2
+            className="text-[10.2564vw] leading-[8.9744vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
+            style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+          >
+            {t("awardsSection.title")}
+          </h2>
+        )}
         <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-[4.1026vw] md:text-[1.1094vw] font-normal leading-[1.5]">
           {t("awardsSection.desc")}
         </p>
@@ -156,7 +182,7 @@ export function Awards() {
                 {t("awardsSection.grandPrizeBadge")}
               </span>
               <p
-                className="text-[9.2308vw] leading-[12.3077vw] md:text-[2.5vw] md:leading-[1.2] font-extrabold text-white"
+                className="text-[9.2308vw] leading-[12.3077vw] md:text-[2.5vw] md:leading-[1.2] font-extrabold text-white whitespace-nowrap"
                 style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("awardsSection.grandPrizeAmount")}
@@ -198,26 +224,53 @@ export function Awards() {
             </div>
           </>
         ) : (
-          <div className="flex flex-col md:flex-row w-full gap-[6.1538vw] md:gap-[1.25vw]">
-            <PrizeCardEn
-              title={t("awardsSection.item1Title")}
-              desc={t("awardsSection.item1Desc")}
-              icon={iconRelease}
-              iconStyle={{ w: "4.945vw", h: "3.75vw", right: "2.475vw", bottom: "1.406vw" }}
-            />
-            <PrizeCardEn
-              title={t("awardsSection.item2Title")}
-              desc={t("awardsSection.item2Desc")}
-              icon={iconConcert}
-              iconStyle={{ w: "3.945vw", h: "5.208vw", right: "2.975vw", bottom: "0.677vw" }}
-            />
-            <PrizeCardEn
-              title={t("awardsSection.item3Title")}
-              desc={t("awardsSection.item3Desc")}
-              icon={iconBroadcast}
-              iconStyle={{ w: "4.031vw", h: "3.768vw", right: "2.932vw", bottom: "1.397vw" }}
-            />
-          </div>
+          <>
+            {/* 모바일: 국문과 동일한 HTML 카드 패턴 재사용, 영문 전용 아이콘·자연 줄바꿈 텍스트(2026-09-01 스펙) */}
+            <div className="flex flex-col md:hidden w-full gap-[6.1538vw]">
+              <PrizeCardKoMobile
+                title={t("awardsSection.item1Title")}
+                desc={t("awardsSection.item1Desc").replace(/\n/g, " ")}
+                icon={iconReleaseEnMobile}
+                iconStyle={{ w: "18.4615vw", h: "14vw", right: "12.3077vw", bottom: "9.2487vw" }}
+                dimDesc
+              />
+              <PrizeCardKoMobile
+                title={t("awardsSection.item2Title")}
+                desc={t("awardsSection.item2Desc").replace(/\n/g, " ")}
+                icon={iconConcertEnMobile}
+                iconStyle={{ w: "16.1872vw", h: "21.3667vw", right: "17.659vw", top: "37.5vw" }}
+                dimDesc
+              />
+              <PrizeCardKoMobile
+                title={t("awardsSection.item3Title").replace(/\n/g, " ")}
+                desc={t("awardsSection.item3Desc").replace(/\n/g, " ")}
+                icon={iconBroadcastEnMobile}
+                iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "18.3333vw", top: "48.7179vw" }}
+                dimDesc
+              />
+            </div>
+            {/* 데스크탑: 기존 확정된 레이아웃 그대로 사용 */}
+            <div className="hidden md:flex w-full gap-[1.25vw]">
+              <PrizeCardEn
+                title={t("awardsSection.item1Title")}
+                desc={t("awardsSection.item1Desc")}
+                icon={iconRelease}
+                iconStyle={{ w: "4.945vw", h: "3.75vw", right: "2.475vw", bottom: "1.406vw" }}
+              />
+              <PrizeCardEn
+                title={t("awardsSection.item2Title")}
+                desc={t("awardsSection.item2Desc")}
+                icon={iconConcert}
+                iconStyle={{ w: "3.945vw", h: "5.208vw", right: "2.975vw", bottom: "0.677vw" }}
+              />
+              <PrizeCardEn
+                title={t("awardsSection.item3Title")}
+                desc={t("awardsSection.item3Desc")}
+                icon={iconBroadcast}
+                iconStyle={{ w: "4.031vw", h: "3.768vw", right: "2.932vw", bottom: "1.397vw" }}
+              />
+            </div>
+          </>
         )}
       </div>
     </section>
