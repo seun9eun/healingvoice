@@ -45,7 +45,8 @@ export function Hero() {
       <div className="relative z-10 flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full max-w-[107.6923vw] md:max-w-[30.469vw] px-[4.1026vw] md:px-4 pb-[6.1538vw] md:pb-[1.25vw]">
         {/* 태그 + 로고 그룹 — 영문은 모바일/데스크탑 배치 순서가 달라(모바일: 뱃지→로고→태그라인) 분리 렌더링(2026-08-31 모바일 스펙) */}
         {/* 국문 모바일 실측 스펙 반영(2026-09-01 확인): 뱃지-로고그룹 gap16, 아이콘 24.89px, 로고 115.43px 등 */}
-        <div className="md:hidden flex flex-col items-center gap-[4.1026vw]">
+        {/* 영문 모바일 스펙 확인(2026-09-01, node 1374:4707): 뱃지row-로고그룹 gap18.82px(=4.8256vw) — 국문(4.1026vw)과 다름 */}
+        <div className={`md:hidden flex flex-col items-center ${lang === "en" ? "gap-[4.8256vw]" : "gap-[4.1026vw]"}`}>
           <div className="flex items-center gap-[1.5385vw]">
             {lang === "en" ? (
               <img src={fondantWordmarkEn} alt="fondant" className="h-[4.1026vw] w-auto object-contain" />
@@ -55,9 +56,8 @@ export function Hero() {
             {lang === "ko" ? (
               <img src={heroAnniversaryTagKo} alt={t("hero.anniversaryTag")} className="h-[4.359vw] w-auto object-contain" />
             ) : (
-              <p className="text-[4.0026vw] leading-[4.2026vw] tracking-[-0.05em] text-center text-white font-normal">
-                {t("hero.anniversaryTag")}
-              </p>
+              // "5th Anniversary Special Project" — Sandoll Nemony2 폰트 없어 이미지 대체(PC용 에셋 재사용, 2026-09-01 확인)
+              <img src={heroAnniversaryTagEn} alt={t("hero.anniversaryTag")} className="h-[4.2205vw] w-auto object-contain" />
             )}
           </div>
 
@@ -69,10 +69,12 @@ export function Hero() {
               <img src={logoSrc} alt="Healing Voice" className="w-[73.9974vw] h-[29.5974vw] object-contain -mt-[2.8205vw]" />
             </div>
           ) : (
-            <>
-              <img src={heroLogoEn} alt="Healing Voice" className="w-auto h-[10.2564vw] object-contain" />
-              <p className="text-[3.5897vw] leading-tight text-center text-white font-medium">{t("hero.taglineLine1")}</p>
-            </>
+            // "a voice that heals the world" — KoreanHDRIB 폰트 없어 이미지 대체(PC용 에셋 재사용).
+            // 스펙상 로고 위쪽과 겹치는 절대배치 구조라 음수 마진으로 근사(2026-09-01 확인)
+            <div className="flex flex-col items-center">
+              <img src={heroTaglineEn} alt={t("hero.taglineLine1")} className="h-[3.859vw] w-auto object-contain" />
+              <img src={heroLogoEn} alt="Healing Voice" className="w-auto h-[10.2564vw] object-contain -mt-[1.5385vw]" />
+            </div>
           )}
         </div>
 
@@ -125,20 +127,16 @@ export function Hero() {
             />
           ) : (
             // 배지 테두리: linear-gradient(#D2DFFF 1.16% → #89A3FF 100%, 135deg) 2px INSIDE — background-clip 이중 배경으로 구현(2026-08-31 확인)
-            // 텍스트 지정 폰트(SB Aggro Bold)는 프로젝트에 없어 기본 서체로 대체
+            // 텍스트 지정 폰트(SB Aggro Bold)는 프로젝트에 없어 이미지로 대체 — 모바일도 PC용 에셋 재사용(2026-09-01 확인, radius 16px→8px)
             <div
-              className="flex items-center justify-center rounded-[4.1026vw] md:rounded-[0.8333vw] px-[5.1282vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
+              className="flex items-center justify-center rounded-[2.0513vw] md:rounded-[0.8333vw] px-[4.1026vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
               style={{
                 backgroundImage: "linear-gradient(#03133b, #03133b), linear-gradient(135deg, #D2DFFF 1.16%, #89A3FF 100%)",
                 backgroundOrigin: "border-box",
                 backgroundClip: "padding-box, border-box",
               }}
             >
-              {/* SB Aggro 폰트가 없어 이미지로 대체(2026-08-31 확인) — 모바일은 기존 텍스트 유지 */}
-              <img src={heroPremiereTextEn} alt={t("hero.premiereFallback")} className="hidden md:block md:h-[1.493vw] w-auto object-contain" />
-              <p className="md:hidden text-[4.1026vw] leading-none text-center text-white font-bold whitespace-nowrap">
-                {t("hero.premiereFallback")}
-              </p>
+              <img src={heroPremiereTextEn} alt={t("hero.premiereFallback")} className="h-[4.1026vw] md:h-[1.493vw] w-auto object-contain" />
             </div>
           )}
           {lang === "en" ? (
