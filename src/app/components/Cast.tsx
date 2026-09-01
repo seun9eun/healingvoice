@@ -73,14 +73,36 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
           {/* 소개문-역할 사이는 실제 gap이 아니라 행간 여백으로 만들어짐(2026-09-01 확인) — gap 없앰 */}
           <div className="flex w-full flex-col items-center gap-0 md:gap-[0.2083vw]">
             {/* 스크린샷 대조 결과 소개문은 Medium이 아니라 Regular로 보임(2026-09-01) — 슬랙 답변과 실제 렌더가 달라 실측 우선 */}
-            <p className={`text-[3.0769vw] ${lang === "en" ? "md:text-[1.0417vw]" : "md:text-[0.9375vw]"} font-normal leading-[1.3] md:leading-[1.4] text-center text-white`}>
-              {(lang === "ko" ? bodyKo : member.descEn).split("\n").map((line, i) => (
-                <span key={i}>
-                  {i > 0 && <br />}
-                  {line}
-                </span>
-              ))}
-            </p>
+            {/* 영문판은 모바일/PC 줄바꿈 위치가 서로 달라(2026-09-01 재확인) 브레이크포인트별로 별도 렌더 */}
+            {lang === "ko" ? (
+              <p className="text-[3.0769vw] md:text-[0.9375vw] font-normal leading-[1.3] md:leading-[1.4] text-center text-white">
+                {bodyKo.split("\n").map((line, i) => (
+                  <span key={i}>
+                    {i > 0 && <br />}
+                    {line}
+                  </span>
+                ))}
+              </p>
+            ) : (
+              <>
+                <p className="md:hidden text-[3.0769vw] font-normal leading-[1.3] text-center text-white">
+                  {(member.descEnMobile ?? member.descEn).split("\n").map((line, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </p>
+                <p className="hidden md:block md:text-[1.0417vw] font-normal leading-[1.4] text-center text-white">
+                  {member.descEn.split("\n").map((line, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </p>
+              </>
+            )}
             {/* 영문판은 역할 태그가 소개 문장에 통합되어 있어 별도 줄이 없음(2026-08-31 확인) */}
             {lang === "ko" && (
               <p className="text-[3.0769vw] md:text-[1.1458vw] leading-[1.3] md:leading-[1.2] tracking-[-0.05em] text-center font-bold text-white">

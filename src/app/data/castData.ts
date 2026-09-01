@@ -5,6 +5,7 @@ export interface CastMember {
   nameEn: string;
   descKo: string;
   descEn: string;
+  descEnMobile?: string; // 모바일 전용 하드 개행(2026-09-01 재확인) — PC(descEn)와 줄바꿈 위치가 다름
   roleKo: string; // 카드 하이라이트 태그 (Figma "role" 텍스트) — descKo 끝부분과 동일
   roleEn: string; // descEn 안의 역할 표현에서 발췌 (확정 문구 아님, 저위험 직역)
   photo?: string;
@@ -32,7 +33,8 @@ export const MENTOR_DATA: CastMember[] = [
     nameEn: "Song Jungmee",
     // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "깊은 연륜으로" / "더 큰 성장을 이끄는"
     descKo: "깊은 연륜으로\n더 큰 성장을 이끄는 동행 멘토",
-    descEn: "A guiding mentor walking with\ncontestants toward greater growth\nthrough deep experience", // 2026-08-31 확인: 실제 줄바꿈 위치
+    descEn: "A guiding mentor walking with\ncontestants toward greater growth\nthrough deep experience", // 2026-08-31 확인: 실제 줄바꿈 위치(PC)
+    descEnMobile: "A guiding mentor\nwalking with contestants toward greater growth through deep experience", // 2026-09-01 확인: 모바일 줄바꿈 위치
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
     photo: "/images/cast/mentor_songjungmee.png",
@@ -45,7 +47,8 @@ export const MENTOR_DATA: CastMember[] = [
     nameEn: "Cho Hyelyun",
     // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "긍정의 에너지로" / "자신감을 채워주는"
     descKo: "긍정의 에너지로\n자신감을 채워주는 에너지 멘토",
-    descEn: "An energetic mentor\nfilling contestants\nwith confidence and positivity", // 2026-08-31 확인: 실제 줄바꿈 위치
+    descEn: "An energetic mentor\nfilling contestants\nwith confidence and positivity", // 2026-08-31 확인: 실제 줄바꿈 위치(PC)
+    descEnMobile: "An energetic mentor\nfilling contestants with confidence and\npositivity", // 2026-09-01 확인: 모바일 줄바꿈 위치
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
     photo: "/images/cast/mentor_chohyelyun.png",
@@ -58,7 +61,8 @@ export const MENTOR_DATA: CastMember[] = [
     nameEn: "Kim Johan",
     // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "날카로운 조언으로" / "숨은 잠재력을 발견하는"
     descKo: "날카로운 조언으로\n숨은 잠재력을 발견하는 성장 멘토",
-    descEn: "A growth mentor\nunlocking hidden potential\nthrough sharp, insightful advice", // 2026-08-31 확인: 실제 줄바꿈 위치
+    descEn: "A growth mentor\nunlocking hidden potential\nthrough sharp, insightful advice", // 2026-08-31 확인: 실제 줄바꿈 위치(PC)
+    descEnMobile: "A growth mentor\nunlocking hidden potential through sharp,\ninsightful advice", // 2026-09-01 확인: 모바일 줄바꿈 위치
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
     photo: "/images/cast/mentor_kimjohan.png",
@@ -71,7 +75,8 @@ export const MENTOR_DATA: CastMember[] = [
     nameEn: "Sohyang",
     // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "경험을 살려" / "참가자의 마음까지 헤아리는"
     descKo: "경험을 살려\n참가자의 마음까지 헤아리는 공감형 멘토",
-    descEn: "An empathetic mentor\nconnecting deeply with contestants\nthrough her own journey", // 2026-08-31 확인: 실제 줄바꿈 위치
+    descEn: "An empathetic mentor\nconnecting deeply with contestants\nthrough her own journey", // 2026-08-31 확인: 실제 줄바꿈 위치(PC)
+    descEnMobile: "An empathetic mentor connecting deeply\nwith contestants through\nher own journey", // 2026-09-01 확인: 모바일 줄바꿈 위치
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
     photo: "/images/cast/mentor_sohyang.png",
@@ -84,7 +89,8 @@ export const MENTOR_DATA: CastMember[] = [
     nameEn: "Kim Youngwoo",
     // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "유연한 시선과" / "통찰력을 겸비한"
     descKo: "유연한 시선과\n통찰력을 겸비한 분석형 멘토",
-    descEn: "An analytical mentor\ncombining flexibility\nand keen insight", // 2026-08-31 확인: 실제 줄바꿈 위치
+    descEn: "An analytical mentor\ncombining flexibility\nand keen insight", // 2026-08-31 확인: 실제 줄바꿈 위치(PC)
+    descEnMobile: "An analytical mentor\ncombining flexibility\nand keen insight", // 2026-09-01 확인: 모바일 줄바꿈 위치(PC와 동일)
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
     photo: "/images/cast/mentor_kimyoungwoo.png",
