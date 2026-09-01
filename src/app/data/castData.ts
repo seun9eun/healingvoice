@@ -43,7 +43,8 @@ export const MENTOR_DATA: CastMember[] = [
     id: 2,
     nameKo: "조혜련",
     nameEn: "Cho Hyelyun",
-    descKo: "긍정의 에너지로 자신감을 채워주는 에너지 멘토",
+    // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "긍정의 에너지로" / "자신감을 채워주는"
+    descKo: "긍정의 에너지로\n자신감을 채워주는 에너지 멘토",
     descEn: "An energetic mentor\nfilling contestants\nwith confidence and positivity", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
@@ -55,7 +56,8 @@ export const MENTOR_DATA: CastMember[] = [
     id: 3,
     nameKo: "김조한",
     nameEn: "Kim Johan",
-    descKo: "날카로운 조언으로 숨은 잠재력을 발견하는 성장 멘토",
+    // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "날카로운 조언으로" / "숨은 잠재력을 발견하는"
+    descKo: "날카로운 조언으로\n숨은 잠재력을 발견하는 성장 멘토",
     descEn: "A growth mentor\nunlocking hidden potential\nthrough sharp, insightful advice", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
@@ -67,7 +69,8 @@ export const MENTOR_DATA: CastMember[] = [
     id: 4,
     nameKo: "소향",
     nameEn: "Sohyang",
-    descKo: "경험을 살려 참가자의 마음까지 헤아리는 공감형 멘토",
+    // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "경험을 살려" / "참가자의 마음까지 헤아리는"
+    descKo: "경험을 살려\n참가자의 마음까지 헤아리는 공감형 멘토",
     descEn: "An empathetic mentor\nconnecting deeply with contestants\nthrough her own journey", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
@@ -79,7 +82,8 @@ export const MENTOR_DATA: CastMember[] = [
     id: 5,
     nameKo: "김영우",
     nameEn: "Kim Youngwoo",
-    descKo: "유연한 시선과 통찰력을 겸비한 분석형 멘토",
+    // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "유연한 시선과" / "통찰력을 겸비한"
+    descKo: "유연한 시선과\n통찰력을 겸비한 분석형 멘토",
     descEn: "An analytical mentor\ncombining flexibility\nand keen insight", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
