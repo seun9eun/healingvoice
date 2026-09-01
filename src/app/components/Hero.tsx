@@ -17,6 +17,8 @@ const fondantMark = "/images/hero/hero_fondant_mark.png";
 const fondantWordmarkEn = "https://i.imgur.com/yZuLvLq.png";
 // 영문판 전용: 프로젝트에 없는 폰트(Sandoll Nemony2, KoreanHDRIB, SB Aggro)로 지정된 텍스트 3건은 이미지로 대체(2026-08-31 확인)
 const heroAnniversaryTagEn = "/images/hero/hero_anniversary_tag_en.png";
+// 국문 모바일 "5주년 특별 기획" — 지정 폰트(Sandoll Nemony2) 없어서 이미지로 대체(2026-09-01 확인)
+const heroAnniversaryTagKo = "/images/hero/hero_anniversary_tag_ko.png";
 const heroTaglineEn = "/images/hero/hero_tagline_en.png";
 const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
@@ -50,10 +52,13 @@ export function Hero() {
             ) : (
               <img src={fondantMark} alt="" className="h-[24.89px] w-auto" />
             )}
-            {/* Sandoll Nemony2 03 Basic Rg(Regular) — 볼드 아님(2026-09-01 확인) */}
-            <p className="text-[15.61px] leading-[16.39px] tracking-[-0.05em] text-center text-white font-normal">
-              {t("hero.anniversaryTag")}
-            </p>
+            {lang === "ko" ? (
+              <img src={heroAnniversaryTagKo} alt={t("hero.anniversaryTag")} className="h-[17px] w-auto object-contain" />
+            ) : (
+              <p className="text-[15.61px] leading-[16.39px] tracking-[-0.05em] text-center text-white font-normal">
+                {t("hero.anniversaryTag")}
+              </p>
+            )}
           </div>
 
           {lang === "ko" ? (
