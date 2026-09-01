@@ -58,7 +58,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
         className="relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center"
         style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
       >
-        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-[0.4167vw] pt-[18px] md:pt-[2vw] px-3">
+        <div className="relative z-10 flex flex-col items-center gap-1 md:gap-[0.4167vw] pt-[18px] md:pt-[2vw] px-3">
           {lang === "ko" && member.nameImage ? (
             <img src={member.nameImage} alt={member.nameKo} className="h-6 md:h-[2.1vw] w-auto object-contain" />
           ) : lang === "en" && member.nameImageEn ? (
@@ -68,9 +68,10 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
               {member.nameEn}
             </p>
           )}
-          <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
-            {/* 영문 폰트 20px(1920 기준, 2026-08-31 확인) — 국문은 기존 18px 유지(실수로 같이 키웠다가 국문 카드 줄바꿈 깨짐, 되돌림) */}
-            <p className={`text-xs ${lang === "en" ? "md:text-[1.0417vw] font-normal" : "md:text-[0.9375vw] font-medium"} leading-[1.3] md:leading-[1.4] text-center text-white`}>
+          {/* 소개문-역할 사이는 실제 gap이 아니라 행간 여백으로 만들어짐(2026-09-01 확인) — gap 없앰 */}
+          <div className="flex w-full flex-col items-center gap-0 md:gap-[0.2083vw]">
+            {/* 스크린샷 대조 결과 소개문은 Medium이 아니라 Regular로 보임(2026-09-01) — 슬랙 답변과 실제 렌더가 달라 실측 우선 */}
+            <p className={`text-xs ${lang === "en" ? "md:text-[1.0417vw]" : "md:text-[0.9375vw]"} font-normal leading-[1.3] md:leading-[1.4] text-center text-white`}>
               {(lang === "ko" ? bodyKo : member.descEn).split("\n").map((line, i) => (
                 <span key={i}>
                   {i > 0 && <br />}
