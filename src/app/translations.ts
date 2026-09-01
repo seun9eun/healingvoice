@@ -557,7 +557,8 @@ export const translations = {
       ],
     },
     footer: {
-      phone: "+82 2-3275-9333",
+      // 영문 모바일 스크린샷 확인(2026-09-01): "+82" 국제표기 없이 국문과 동일한 국내 표기
+      phone: "02-3275-9333",
       phoneHours: "(Weekdays 10:00~18:00 KST)", // 2026-08-31 Figma EN 페이지 답변 기준(국문 09:00과 다름, 확인됨)
       phoneHoursMobile: "(Weekdays 10:00~18:00 KST)", // 영문 모바일 스펙 미확인 — 우선 데스크탑과 동일값 사용
       email: "cgnhealingvoice@daum.net",
