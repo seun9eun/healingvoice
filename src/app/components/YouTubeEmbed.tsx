@@ -92,15 +92,15 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
   const currentVideo = currentVideos[activeIndex] || currentVideos[0];
 
   return (
-    <div className="relative w-full flex flex-col items-center py-16 md:py-[6.25vw] px-4">
+    <div className="relative w-full flex flex-col items-center py-24 md:py-[6.25vw] px-4">
       <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[896px] md:max-w-[46.667vw]">
-        {/* 헤더 영역 */}
-        <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] text-center">
-          <span className="text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-sm md:text-[0.8333vw]">
+        {/* 헤더 영역 — 국문 모바일 스펙 확인(2026-09-01): gap9.5, 제목 40px */}
+        <div className="flex flex-col items-center gap-[9.5px] md:gap-[0.8333vw] text-center">
+          <span className="text-[#4D94FF] font-bold uppercase tracking-[1.4px] text-sm md:text-[0.8333vw]">
             {t("gallery.subtitle")}
           </span>
           <h2
-            className="text-3xl md:text-[2.9167vw] leading-tight font-black uppercase text-transparent bg-clip-text"
+            className="text-[40px] leading-[35px] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
             style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
           >
             {t("gallery.title")}
@@ -190,7 +190,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                   </button>
                   {/* 세로 구분선: 텍스트 제외, 썸네일 이미지 영역의 중앙에 오도록 위치 상단으로 조정 */}
                   {showSeparator && (
-                    <div className="w-[0.5px] h-16 md:h-20 bg-white/30 self-start mt-3 md:mt-4 mx-2 shrink-0" />
+                    <div className="w-[0.5px] h-16 md:h-20 bg-[#9CA3AF] self-start mt-3 md:mt-4 mx-2 shrink-0" />
                   )}
                 </React.Fragment>
               );
@@ -210,9 +210,9 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
               <ChevronLeft size={28} />
             </button>
 
-            <div className="w-full max-w-[100px] h-1 bg-[#E8E8E8] rounded-full overflow-hidden relative">
+            <div className="w-full max-w-[100px] h-1 bg-[#F3F4F6] rounded-full overflow-hidden relative">
               <div
-                className="h-full bg-[#4D94FF] transition-all duration-300 ease-out absolute top-0 left-0"
+                className="h-full bg-[#44A9FF] transition-all duration-300 ease-out absolute top-0 left-0"
                 style={{
                   width: `${100 / currentVideos.length}%`,
                   left: `${getIndicatorPosition() * (1 - 1 / currentVideos.length)}%`,
