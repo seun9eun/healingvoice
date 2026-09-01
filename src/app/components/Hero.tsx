@@ -49,7 +49,7 @@ export function Hero() {
         <div className={`md:hidden flex flex-col items-center ${lang === "en" ? "gap-[4.8256vw]" : "gap-[4.1026vw]"}`}>
           <div className="flex items-center gap-[1.5385vw]">
             {lang === "en" ? (
-              <img src={fondantWordmarkEn} alt="fondant" className="h-[5.641vw] w-auto object-contain" />
+              <img src={fondantWordmarkEn} alt="fondant" className="h-[3.5vw] w-auto object-contain mt-[0.8vw]" />
             ) : (
               <img src={fondantMark} alt="" className="h-[6.3821vw] w-auto" />
             )}
@@ -72,7 +72,7 @@ export function Hero() {
             // "a voice that heals the world" — KoreanHDRIB 폰트 없어 이미지 대체(PC용 에셋 재사용).
             // 스펙상 로고 위쪽과 겹치는 절대배치 구조라 음수 마진으로 근사(2026-09-01 확인)
             <div className="flex flex-col items-center w-full">
-              <img src={heroTaglineEn} alt={t("hero.taglineLine1")} className="h-[4.6vw] w-auto object-contain" />
+              <img src={heroTaglineEn} alt={t("hero.taglineLine1")} className="h-[3.5vw] w-auto object-contain" />
               {/* 사용자 확인(2026-09-01): 로고가 좌우로 거의 가득 차야 함 — 폭 기준으로 확대. 2·3번째 줄 간격도 확대 요청 반영 */}
               <img src={heroLogoEn} alt="Healing Voice" className="w-full h-auto object-contain mt-[1vw]" />
             </div>
