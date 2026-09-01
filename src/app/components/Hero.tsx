@@ -50,7 +50,8 @@ export function Hero() {
             ) : (
               <img src={fondantMark} alt="" className="h-[24.89px] w-auto" />
             )}
-            <p className="text-[15.61px] leading-[16.39px] tracking-[-0.05em] text-center text-white font-bold">
+            {/* Sandoll Nemony2 03 Basic Rg(Regular) — 볼드 아님(2026-09-01 확인) */}
+            <p className="text-[15.61px] leading-[16.39px] tracking-[-0.05em] text-center text-white font-normal">
               {t("hero.anniversaryTag")}
             </p>
           </div>

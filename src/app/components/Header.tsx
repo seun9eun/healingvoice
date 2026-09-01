@@ -31,13 +31,40 @@ export function Header() {
   const { t, lang } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // 모바일 메뉴가 열려있는 동안 배경 스크롤 차단(Figma 답변, 2026-08-31 모달 동작 스펙)
+  // 모바일 메뉴가 열려있는 동안 배경 스크롤 완전 차단(Figma 답변, 2026-08-31 모달 동작 스펙)
+  // overflow:hidden만으로는 모바일에서 러버밴드 스크롤로 배경이 살짝 움직일 수 있어서
+  // body를 position:fixed로 고정하고 닫을 때 원래 스크롤 위치로 복원(2026-09-01 확인)
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (menuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      if (scrollY) {
+        window.scrollTo(0, -parseInt(scrollY, 10));
+      }
+    }
   }, [menuOpen]);
+
+  // 위 useEffect 클린업은 다음 렌더 이후에야 실행되므로, 메뉴 닫기+스크롤 이동이 같은 동기 함수 안에서
+  // 일어날 때는 여기서 body 잠금을 먼저 동기적으로 풀어줘야 한다.
+  const unlockBodyScroll = () => {
+    const scrollY = document.body.style.top;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.left = "";
+    document.body.style.right = "";
+    if (scrollY) {
+      window.scrollTo(0, -parseInt(scrollY, 10));
+    }
+  };
 
   // 데스크탑 GNB 앵커 대상. "소개(about)" 앵커 대상 섹션은 기획 확인 중 — 우선 Big Text 섹션(id="about")로 가정.
   const navItems = [
@@ -46,17 +73,17 @@ export function Header() {
     { label: t("header.nav.awards"), id: "#awards" },
   ];
 
-  // setMenuOpen(false)의 useEffect 클린업은 다음 렌더 이후에야 실행되므로, body가 overflow:hidden인 상태로
+  // setMenuOpen(false)의 useEffect 클린업은 다음 렌더 이후에야 실행되므로, body가 잠긴 상태로
   // scrollIntoView가 먼저 호출되면 스크롤이 씹힌다 — 여기서 동기적으로 먼저 풀어준다.
   const scrollToSection = (id: string) => {
     setMenuOpen(false);
-    document.body.style.overflow = "";
+    unlockBodyScroll();
     document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
   const scrollToTop = () => {
     setMenuOpen(false);
-    document.body.style.overflow = "";
+    unlockBodyScroll();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
