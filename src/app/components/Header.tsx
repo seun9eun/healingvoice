@@ -99,8 +99,8 @@ export function Header() {
           </a>
         </nav>
 
-        {/* 모바일(768px 미만) — 닫힌 상태는 햄버거 버튼만, 열리면 언어토글+닫기(X) 버튼(2026-08-31 모바일 GNB 스펙) */}
-        <div className="flex md:hidden items-center gap-3">
+        {/* 모바일(840px 미만) — 닫힌 상태에도 언어 전환 버튼이 햄버거 옆에 항상 같이 보임(2026-09-01 확인, 이전 스펙과 다름) */}
+        <div className="flex md:hidden items-center gap-1.5">
           {menuOpen ? (
             <>
               <LanguageSwitcher variant="light" />
@@ -113,13 +113,16 @@ export function Header() {
               </button>
             </>
           ) : (
-            <button
-              onClick={() => setMenuOpen(true)}
-              aria-label="메뉴 열기"
-              className="flex items-center justify-center w-10 h-9 rounded-full"
-            >
-              <Menu className="w-6 h-6 text-white" strokeWidth={2} />
-            </button>
+            <>
+              <LanguageSwitcher />
+              <button
+                onClick={() => setMenuOpen(true)}
+                aria-label="메뉴 열기"
+                className="flex items-center justify-center w-10 h-9 rounded-full"
+              >
+                <Menu className="w-6 h-6 text-white" strokeWidth={2} />
+              </button>
+            </>
           )}
         </div>
       </div>
