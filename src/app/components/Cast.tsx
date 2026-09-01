@@ -12,11 +12,10 @@ const mentorsTitleGradient = "linear-gradient(180deg, #FFFFFF 0%, #A9A9FF 100%)"
 // beam light — SVG 벡터 원본 그대로: 흰색→검은색 radial + COLOR_DODGE. 남색 배경 위에서 합성해보면 청록색으로 나오는데,
 // 이는 그 배경색 때문이지 이펙트 자체 색이 아님 — 실제 배경(보라색 계열) 위에 dodge를 걸면 마젠타/보라로 보임(2026-08-28 확인)
 const beamLight = "radial-gradient(14.82vw 0.1853vw at center, #FFFFFF 0%, #000000 100%)";
-// 모바일은 섹션 자체 보라색 배경이 없어(공용 별배경만 있음) color-dodge가 배경과 만나 색이 안 나오므로,
-// 일반 블렌드로 보이는 그라디언트를 따로 사용. 처음엔 좌우로 넓게 퍼지는 선형 그라디언트로 만들었는데
-// 스크린샷 대조 결과 실제로는 중앙에 좁게 뭉친 타원형 광채(핑크빛 흰색 중심→보라 계열)였음(2026-09-01 재확인)
-const beamLightMobile =
-  "radial-gradient(105px 6px at center, #FFFFFF 0%, #F0C6FF 25%, #8B4FE0 55%, rgba(61,95,255,0) 100%)";
+// 모바일도 CSS로 근사하는 대신 실제 벡터 SVG 원본 + mix-blend-mode: color-dodge를 그대로 사용(2026-09-01 확인).
+// color-dodge는 실제 배경(bg_출연진 사진+그라디언트) 위에서 합성돼야 의도한 색이 나오는데, 이전엔 그 배경 자체가
+// 모바일에 없어서 CSS로 억지로 흉내내다 계속 스크린샷과 미묘하게 달랐음 — 배경을 추가한 뒤 원본 방식으로 교체
+const beamLightSvg = "/images/cast/beam_light.svg";
 // "OO 멘토" 하이라이트: 피그마상 멘토별로 그라데이션/단색이 제각각이나(2026-08-31 재확인), 5개 모두 흰색 단일로 통일하기로 결정
 const cardBorder =
   "linear-gradient(180deg, #96F9FF 0%, #C9FEFF 16%, #92C8F2 61%, #889BF0 81%, #8384EF 94%, #E8E8FF 100%)";
@@ -25,15 +24,15 @@ const cardBg = "/images/cast/mentor_card_bg.jpg";
 // Figma 답변으로 받은 정확한 카드 외곽선(368x425 기준 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)을 %로 환산
 const cardClip = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
 
-// 모바일(일반 블렌드 컬러 그라디언트) / 데스크탑(color-dodge) 두 버전을 각각 그리고 반응형으로 하나만 보이게 함
+// 모바일(실제 SVG+color-dodge) / 데스크탑(CSS 근사+color-dodge) 두 버전을 각각 그리고 반응형으로 하나만 보이게 함
 function BeamLight() {
   return (
     <>
-      {/* 스크린샷 대조 결과 얇고 은은한 빛줄기인데 기존 18px 두께+선명한 그라디언트라 너무 두꺼워 보였음(2026-09-01 확인) — 얇게 줄이고 블러로 은은하게 처리 */}
-      <span
+      <img
         aria-hidden
-        className="md:hidden block w-full max-w-[800px] h-[3px]"
-        style={{ backgroundImage: beamLightMobile, filter: "blur(1.5px)" }}
+        alt=""
+        src={beamLightSvg}
+        className="md:hidden block w-[360px] max-w-full h-[18px] mix-blend-color-dodge"
       />
       <span
         aria-hidden
@@ -145,8 +144,8 @@ export function Cast() {
         className="md:hidden absolute -z-10 w-full pointer-events-none"
         style={{
           top: 0,
-          height: "607px",
-          backgroundImage: "linear-gradient(to top, rgba(21,57,118,0) 0%, #00163b 100%)",
+          height: "606.74px",
+          backgroundImage: "linear-gradient(180deg, #00163B 0%, #00163B 7.41%, rgba(21,57,118,0) 100%)",
         }}
         aria-hidden
       />
