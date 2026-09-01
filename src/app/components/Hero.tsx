@@ -3,6 +3,8 @@ import { useLanguage } from "../context/LanguageContext";
 
 // 01_Hero 에셋 (Figma 답변, 2026-08-27)
 const heroBg = "/images/hero/hero_bg.jpg";
+// 모바일은 데스크탑 가로 사진을 그대로 세로로 잘라 쓰고 있어 인물이 과도하게 잘렸음 — 모바일 전용으로 별도 크롭된 사진으로 교체(2026-09-01 확인)
+const heroBgMobile = "/images/hero/hero_bg_mobile.jpg";
 const logoSrc = "/images/header/healingvoice_logo.png";
 const kccmBadge = "/images/hero/hero_badge_kccm_ko.png"; // "K-CCM 글로벌 오디션" — 국문 전용 이미지. 영문판은 이 배지 자체가 없음(Big Text에 텍스트로만 존재, 2026-08-31 확인)
 const premiereBadgeKo = "/images/hero/hero_badge_premiere_ko.png"; // "9월 20일 첫 방송" — 국문 전용 이미지. 영문판은 이미지가 아니라 단색 배경(#03133b)+텍스트(2026-08-31 확인)
@@ -32,7 +34,8 @@ export function Hero() {
     >
       {/* 배경 사진 + 하단 그라디언트 — 모바일은 섹션(752px)보다 사진이 커서(844px) 아래로 92px 넘치는 구조(2026-08-31 모바일 스펙) */}
       <div className="absolute inset-x-0 top-0 h-[844px] md:inset-0 md:h-full" aria-hidden>
-        <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img src={heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover md:hidden" />
+        <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover hidden md:block" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 
