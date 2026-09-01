@@ -20,16 +20,16 @@ export function BigText() {
       {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
       {lang === "ko" && (
         <div className="flex md:hidden flex-col items-center gap-1 px-4">
-          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {t("bigText.heading")}
           </p>
-          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {headingPart2}
           </p>
-          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {t("bigText.line2")}
           </p>
-          <p className="text-2xl leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             &lt;힐링보이스&gt;
           </p>
         </div>
@@ -74,6 +74,8 @@ export function BigText() {
         {/* 컨테이너 760px(1920 기준, 2026-08-31 EN 스펙 확인) — 이전 688px는 너무 좁아 마지막 단어가 3번째 줄로 밀림. 모바일 폰트 20px(2026-09-01 확인) */}
         <p className="w-full max-w-[688px] md:max-w-[39.583vw] text-xl md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
           {t("bigText.bodyPart1")}
+          {/* 국문 모바일은 3줄(향해 / 전파할 / 전합니다.)로 나뉘어야 함(2026-09-01 확인) — 데스크탑은 2줄 유지 */}
+          {lang === "ko" && <br className="md:hidden" />}
           <span className="text-[#7992FB]">{t("bigText.bodyHighlight")}</span>
           {bodyLines[0]}
           <br />
