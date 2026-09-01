@@ -107,7 +107,7 @@ export function Cast() {
   return (
     <section
       id="cast"
-      className="relative w-full flex flex-col items-center gap-16 md:gap-[3.3333vw] overflow-hidden px-4 md:px-[18.75vw] py-16 md:py-[6.25vw]"
+      className="relative w-full flex flex-col items-center gap-12 md:gap-[3.3333vw] overflow-hidden px-4 md:px-[18.75vw] pt-24 pb-0 md:py-[6.25vw]"
     >
       {/* 섹션 자체 배경(bg_출연진, Figma 1178:603) — 조명 그래픽 사진 + 상단 그라디언트. PC 전용(모바일은 공용 배경만) */}
       <div
@@ -139,20 +139,30 @@ export function Cast() {
         aria-hidden
       />
 
-      {/* 타이틀 */}
-      <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full max-w-[1200px] text-center">
-        <span className="text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-sm md:text-[0.8333vw]">
+      {/* 타이틀 — 국문 모바일 스펙 확인(2026-09-01): eyebrow 16px #44a9ff, 제목 40px, 부제 #7d7d7d */}
+      <div className="flex flex-col items-center gap-4 md:gap-[0.8333vw] w-full max-w-[1200px] text-center">
+        <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-base md:text-[0.8333vw]">
           {t("cast.eyebrow")}
         </span>
         <h2
-          className="text-3xl md:text-[2.9167vw] leading-tight font-black uppercase text-transparent bg-clip-text"
+          className="text-[40px] leading-[35px] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("cast.title")}
         </h2>
         {/* 컨테이너 724px(1920 기준, 2026-08-31 확인) — 이전 527px는 너무 좁아 한 줄로 안 나옴 */}
-        <p className="max-w-[527px] md:max-w-[37.708vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-normal leading-[1.4] md:whitespace-nowrap">
-          {t("cast.desc")}
+        <p className="max-w-[527px] md:max-w-[37.708vw] text-[#7D7D7D] md:text-[#D4EBFF] text-base md:text-[1.1458vw] font-semibold md:font-normal tracking-[-0.48px] md:tracking-normal leading-[1.5] md:leading-[1.4] md:whitespace-nowrap">
+          {/* 국문 모바일: "~함께할" / "MC와~" 2줄로 고정(2026-09-01 확인) */}
+          {lang === "ko" ? (
+            <>
+              {t("cast.desc").replace("MC와 힐링멘토를 소개합니다", "").trim()}
+              <br className="md:hidden" />
+              <span className="md:hidden">MC와 힐링멘토를 소개합니다</span>
+              <span className="hidden md:inline"> MC와 힐링멘토를 소개합니다</span>
+            </>
+          ) : (
+            t("cast.desc")
+          )}
         </p>
       </div>
 
@@ -163,7 +173,7 @@ export function Cast() {
         <div className={`order-2 md:order-1 flex flex-col items-center gap-2 md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
           {lang === "ko" ? (
             <p
-              className="text-2xl md:text-[2.0833vw] leading-none font-extrabold text-white"
+              className="text-[28px] md:text-[2.0833vw] leading-none font-extrabold text-white"
               style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
             >
               {t("cast.mcLabel")}
@@ -176,7 +186,7 @@ export function Cast() {
               <span className="text-transparent bg-clip-text" style={{ backgroundImage: mentorsTitleGradient }}>{mc.nameEn}</span>
             </p>
           )}
-          <p className={`text-lg md:text-[1.25vw] leading-[1.4] tracking-[-0.03em] ${lang === "en" ? "font-normal" : "font-medium"} text-white break-keep`}>
+          <p className={`text-base md:text-[1.25vw] leading-[1.4] tracking-[-0.66px] md:tracking-[-0.03em] ${lang === "en" ? "font-normal" : "font-medium"} text-white break-keep`}>
             {lang === "ko"
               ? mc.descKo.split("\n").map((line, i) => (
                   <span key={i}>
@@ -215,7 +225,7 @@ export function Cast() {
           {/* beam light — 텍스트 위/아래 가로 빛줄기 */}
           <BeamLight />
           <h3
-            className="text-2xl md:text-[2.5vw] leading-tight font-black text-transparent bg-clip-text"
+            className="text-[32px] leading-[48px] md:text-[2.5vw] md:leading-tight font-black text-transparent bg-clip-text"
             style={{
               backgroundImage: mentorsTitleGradient,
               fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif",
