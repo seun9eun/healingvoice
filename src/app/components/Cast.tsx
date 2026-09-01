@@ -57,9 +57,9 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
       >
         <div className="relative z-10 flex flex-col items-center gap-2 md:gap-[0.4167vw] pt-[18px] md:pt-[2vw] px-3">
           {lang === "ko" && member.nameImage ? (
-            <img src={member.nameImage} alt={member.nameKo} className="h-8 md:h-[2.1vw] w-auto object-contain" />
+            <img src={member.nameImage} alt={member.nameKo} className="h-6 md:h-[2.1vw] w-auto object-contain" />
           ) : lang === "en" && member.nameImageEn ? (
-            <img src={member.nameImageEn} alt={member.nameEn} className="h-8 md:h-[2.1vw] w-auto object-contain" />
+            <img src={member.nameImageEn} alt={member.nameEn} className="h-6 md:h-[2.1vw] w-auto object-contain" />
           ) : (
             <p className="text-xl md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-white">
               {member.nameEn}
@@ -67,7 +67,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
           )}
           <div className="flex w-full flex-col items-center gap-1 md:gap-[0.2083vw]">
             {/* 영문 폰트 20px(1920 기준, 2026-08-31 확인) — 국문은 기존 18px 유지(실수로 같이 키웠다가 국문 카드 줄바꿈 깨짐, 되돌림) */}
-            <p className={`text-xs ${lang === "en" ? "md:text-[1.0417vw] font-normal" : "md:text-[0.9375vw] font-medium"} leading-[1.4] text-center text-white`}>
+            <p className={`text-xs ${lang === "en" ? "md:text-[1.0417vw] font-normal" : "md:text-[0.9375vw] font-medium"} leading-[1.3] md:leading-[1.4] text-center text-white`}>
               {(lang === "ko" ? bodyKo : member.descEn).split("\n").map((line, i) => (
                 <span key={i}>
                   {i > 0 && <br />}
@@ -77,7 +77,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             </p>
             {/* 영문판은 역할 태그가 소개 문장에 통합되어 있어 별도 줄이 없음(2026-08-31 확인) */}
             {lang === "ko" && (
-              <p className="text-base md:text-[1.1458vw] leading-[1.2] tracking-[-0.05em] text-center font-bold text-white">
+              <p className="text-xs md:text-[1.1458vw] leading-[1.3] md:leading-[1.2] tracking-[-0.05em] text-center font-bold text-white">
                 {member.roleKo}
               </p>
             )}

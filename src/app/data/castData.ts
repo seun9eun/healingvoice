@@ -30,7 +30,8 @@ export const MENTOR_DATA: CastMember[] = [
     id: 1,
     nameKo: "송정미",
     nameEn: "Song Jungmee",
-    descKo: "깊은 연륜으로 더 큰 성장을 이끄는 동행 멘토",
+    // 국문 모바일 실제 하드 개행 위치 확인(2026-09-01): "깊은 연륜으로" / "더 큰 성장을 이끄는"
+    descKo: "깊은 연륜으로\n더 큰 성장을 이끄는 동행 멘토",
     descEn: "A guiding mentor walking with\ncontestants toward greater growth\nthrough deep experience", // 2026-08-31 확인: 실제 줄바꿈 위치
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
