@@ -85,7 +85,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
               </p>
             ) : (
               <>
-                <p className="md:hidden text-[3.0769vw] font-normal leading-[1.3] text-center text-white">
+                <p className="md:hidden text-[3.0769vw] font-light leading-[1.3] text-center text-white">
                   {(member.descEnMobile ?? member.descEn).split("\n").map((line, i) => (
                     <span key={i}>
                       {i > 0 && <br />}
@@ -93,7 +93,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
                     </span>
                   ))}
                 </p>
-                <p className="hidden md:block md:text-[1.0417vw] font-normal leading-[1.4] text-center text-white">
+                <p className="hidden md:block md:text-[1.0417vw] font-light leading-[1.4] text-center text-white">
                   {member.descEn.split("\n").map((line, i) => (
                     <span key={i}>
                       {i > 0 && <br />}
@@ -112,9 +112,10 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
           </div>
         </div>
         {/* 사진은 카드보다 넓게(122.8%) 오버플로되며 카드 y34.6% 지점부터 시작 — 스펙 비율(462:291)로 크롭해서 원본 파일 비율 차이에 영향받지 않도록 처리 */}
-        {/* 영문판은 소개문이 3줄이라 34.6%로는 사진과 겹침 — 텍스트 블록 실측 높이만큼 내려서 여유 확보(2026-08-31 확인) */}
+        {/* items-end+overflow-visible 조합에서는 실제로 bottom 값만 사진 위치에 영향을 줌(top은 무시됨, 2026-09-01 실측 확인) */}
+        {/* 영문판은 소개문 하단과 사진 머리가 맞닿아 스펙(여백 있음)과 달랐음 — bottom을 음수로 내려 여백 확보(2026-09-01 확인) */}
         {member.photo && (
-          <div className={`absolute inset-x-0 ${lang === "en" ? "top-[42%]" : "top-[34.6%]"} bottom-0 flex items-end justify-center overflow-visible`}>
+          <div className={`absolute inset-x-0 top-[34.6%] flex items-end justify-center overflow-visible ${lang === "en" ? "bottom-[-8%]" : "bottom-0"}`}>
             <img
               src={member.photo}
               alt={member.nameKo}
