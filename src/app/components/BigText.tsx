@@ -15,44 +15,44 @@ export function BigText() {
     // 가로 스크롤을 만들던 문제 — overflow-hidden으로 섹션 안에서만 잘리게 함(2026-09-01 확인)
     <section
       id="about"
-      className="relative w-full overflow-hidden flex flex-col items-center gap-2 md:gap-[0.5208vw] pt-16 pb-20 md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
+      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[16.4103vw] pb-[20.5128vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
     >
       {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
       {lang === "ko" && (
-        <div className="flex md:hidden flex-col items-center gap-1 px-4">
-          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+        <div className="flex md:hidden flex-col items-center gap-[1.0256vw] px-[4.1026vw]">
+          <p className="text-[7.1795vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {t("bigText.heading")}
           </p>
-          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[7.1795vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {headingPart2}
           </p>
-          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[7.1795vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {t("bigText.line2")}
           </p>
-          <p className="text-[28px] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+          <p className="text-[7.1795vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             &lt;힐링보이스&gt;
           </p>
         </div>
       )}
 
-      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} items-center justify-center rounded-2xl md:rounded-[0.8333vw] px-4 md:px-[0.8333vw] w-full`}>
+      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} items-center justify-center rounded-[4.1026vw] md:rounded-[0.8333vw] px-[4.1026vw] md:px-[0.8333vw] w-full`}>
         <p
-          className="max-w-full md:max-w-[63.542vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
+          className="max-w-full md:max-w-[63.542vw] text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("bigText.heading")}{lang === "ko" ? ` ${headingPart2}` : ""}
         </p>
       </div>
 
-      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} flex-wrap items-center justify-center gap-2 md:gap-[0.5208vw] px-4`}>
+      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} flex-wrap items-center justify-center gap-[2.0513vw] md:gap-[0.5208vw] px-[4.1026vw]`}>
         <p
-          className="text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
+          className="text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("bigText.line2")}
         </p>
         <p
-          className="text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
+          className="text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {lang === "ko" ? "<힐링보이스>" : "Healing Voice"}
@@ -63,16 +63,16 @@ export function BigText() {
       {t("bigText.subLine") && (
         <p
           // 컨테이너 930px(텍스트 898px + 좌우 padding 16px씩) 기준 — 폭이 좁아질수록 폰트 렌더링 반올림 오차 영향이 커져 1024px 부근에서도 줄바꿈되는 것 확인, 여유를 더 둠(2026-08-31 확인)
-          className="max-w-full md:max-w-[52vw] text-2xl md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-4"
+          className="max-w-full md:max-w-[52vw] text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-[4.1026vw]"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("bigText.subLine")}
         </p>
       )}
 
-      <div className="flex items-center justify-center pt-20 md:pt-[6.25vw] px-4">
+      <div className="flex items-center justify-center pt-[20.5128vw] md:pt-[6.25vw] px-[4.1026vw]">
         {/* 컨테이너 760px(1920 기준, 2026-08-31 EN 스펙 확인) — 이전 688px는 너무 좁아 마지막 단어가 3번째 줄로 밀림. 모바일 폰트 20px(2026-09-01 확인) */}
-        <p className="w-full max-w-[688px] md:max-w-[39.583vw] text-xl md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
+        <p className="w-full max-w-[176.4103vw] md:max-w-[39.583vw] text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
           {t("bigText.bodyPart1")}
           {/* 국문 모바일은 3줄(향해 / 전파할 / 전합니다.)로 나뉘어야 함(2026-09-01 확인) — 데스크탑은 2줄 유지 */}
           {lang === "ko" && <br className="md:hidden" />}

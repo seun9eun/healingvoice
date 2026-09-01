@@ -92,26 +92,26 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
   const currentVideo = currentVideos[activeIndex] || currentVideos[0];
 
   return (
-    <div className="relative w-full flex flex-col items-center py-24 md:py-[6.25vw] px-4">
-      <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[896px] md:max-w-[46.667vw]">
-        {/* 헤더 영역 — 국문 모바일 스펙 확인(2026-09-01): gap9.5, 제목 40px */}
-        <div className="flex flex-col items-center gap-[9.5px] md:gap-[0.8333vw] text-center">
-          <span className="text-[#4D94FF] font-bold uppercase tracking-[1.4px] text-sm md:text-[0.8333vw]">
+    <div className="relative w-full flex flex-col items-center py-[24.6154vw] md:py-[6.25vw] px-[4.1026vw]">
+      <div className="flex flex-col items-center gap-[8.2051vw] md:gap-[1.6667vw] w-full max-w-[172.3077vw] md:max-w-[46.667vw]">
+        {/* 헤더 영역 — 국문 모바일 스펙 확인(2026-09-01): gap9.5, 제목 40px. 840px 미만은 390px 기준 vw로 유동 스케일(2026-09-01) */}
+        <div className="flex flex-col items-center gap-[2.4359vw] md:gap-[0.8333vw] text-center">
+          <span className="text-[#4D94FF] font-bold uppercase tracking-[0.359vw] text-[3.5897vw] md:text-[0.8333vw]">
             {t("gallery.subtitle")}
           </span>
           <h2
-            className="text-[40px] leading-[35px] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
+            className="text-[10.2564vw] leading-[8.9744vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
             style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
           >
             {t("gallery.title")}
           </h2>
-          <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-normal leading-[1.5] whitespace-pre-line">
+          <p className="max-w-[172.3077vw] md:max-w-[35vw] text-[#D4EBFF] text-[4.1026vw] md:text-[1.1458vw] font-normal leading-[1.5] whitespace-pre-line">
             {t("gallery.desc")}
           </p>
         </div>
 
         {/* 메인 비디오 플레이어 */}
-        <div className="relative overflow-hidden shadow-2xl rounded-3xl md:rounded-[1.25vw] bg-black aspect-video w-full">
+        <div className="relative overflow-hidden shadow-2xl rounded-[6.1538vw] md:rounded-[1.25vw] bg-black aspect-video w-full">
           <iframe
             key={currentVideo.id}
             className="absolute inset-0 w-full h-full"
@@ -123,7 +123,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
         </div>
 
         {/* 썸네일 섹션 */}
-        <div className="relative group w-full px-2">
+        <div className="relative group w-full px-[2.0513vw] md:px-2">
           {currentVideos.length > 1 && (
             <>
               {/* 좌우 화살표: 평소 흰배경+파란아이콘, hover/클릭(active) 시 파란배경+흰아이콘 — 좌우 동일 */}
@@ -146,7 +146,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
 
           <div
             ref={scrollRef}
-            className={`flex gap-4 md:gap-[1.0781vw] overflow-x-auto pb-6 snap-x scroll-smooth no-scrollbar ${currentVideos.length === 1 ? "justify-center" : ""
+            className={`flex gap-[4.1026vw] md:gap-[1.0781vw] overflow-x-auto pb-[6.1538vw] md:pb-6 snap-x scroll-smooth no-scrollbar ${currentVideos.length === 1 ? "justify-center" : ""
               }`}
             style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
           >
@@ -160,10 +160,10 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                 <React.Fragment key={`${video.id}-${index}`}>
                   <button
                     onClick={() => handleVideoChange(index)}
-                    className={`flex-shrink-0 w-[140px] md:w-[10vw] snap-start origin-top transition-all duration-300 ${isActive ? "scale-100 opacity-100" : "scale-[0.9505] opacity-70 hover:scale-100 hover:opacity-100"
+                    className={`flex-shrink-0 w-[35.8974vw] md:w-[10vw] snap-start origin-top transition-all duration-300 ${isActive ? "scale-100 opacity-100" : "scale-[0.9505] opacity-70 hover:scale-100 hover:opacity-100"
                       }`}
                   >
-                    <div className={`relative aspect-video rounded-2xl md:rounded-[0.8333vw] overflow-hidden mb-3 border-2 transition-colors ${isActive ? "border-[#44A9FF] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
+                    <div className={`relative aspect-video rounded-[4.1026vw] md:rounded-[0.8333vw] overflow-hidden mb-[3.0769vw] md:mb-3 border-2 transition-colors ${isActive ? "border-[#44A9FF] shadow-lg ring-2 ring-[#44a9ff]/20" : "border-transparent"
                       }`}>
                       <img
                         src={`https://img.youtube.com/vi/${video.id}/mqdefault.jpg`}
@@ -172,25 +172,25 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
                       />
                       {/* NEW 배지: 데이터상 0번(최신) 영상에만 표시 */}
                       {isOriginalNewest && (
-                        <div className="absolute top-1.5 left-1.5 bg-[#4D94FF] text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow-md">
+                        <div className="absolute top-[1.5385vw] left-[1.5385vw] md:top-1.5 md:left-1.5 bg-[#4D94FF] text-white text-[2.5641vw] md:text-[10px] px-[2.0513vw] md:px-2 py-[0.5128vw] md:py-0.5 rounded-full font-bold shadow-md">
                           NEW
                         </div>
                       )}
                     </div>
-                    <div className="text-left px-1">
-                      <p className={`text-[10px] font-extrabold tracking-[1px] mb-1 ${isActive ? "text-[#4D94FF]" : "text-[#9CA3AF]"
+                    <div className="text-left px-[1.0256vw] md:px-1">
+                      <p className={`text-[2.5641vw] md:text-[10px] font-extrabold tracking-[0.2564vw] md:tracking-[1px] mb-[1.0256vw] md:mb-1 ${isActive ? "text-[#4D94FF]" : "text-[#9CA3AF]"
                         }`}>
                         {video.label}
                       </p>
                       {/* 사용자 확인: 활성 #D4DCFF, 비활성 #FFFFFF */}
-                      <p className={`text-[12px] font-semibold truncate ${isActive ? "text-[#D4DCFF]" : "text-white"}`}>
+                      <p className={`text-[3.0769vw] md:text-[12px] font-semibold truncate ${isActive ? "text-[#D4DCFF]" : "text-white"}`}>
                         {video.title}
                       </p>
                     </div>
                   </button>
                   {/* 세로 구분선: 텍스트 제외, 썸네일 이미지 영역의 중앙에 오도록 위치 상단으로 조정 */}
                   {showSeparator && (
-                    <div className="w-[0.5px] h-16 md:h-20 bg-[#9CA3AF] self-start mt-3 md:mt-4 mx-2 shrink-0" />
+                    <div className="w-[0.5px] h-[16.4103vw] md:h-20 bg-[#9CA3AF] self-start mt-[3.0769vw] md:mt-4 mx-[2.0513vw] md:mx-2 shrink-0" />
                   )}
                 </React.Fragment>
               );
@@ -200,17 +200,17 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
 
         {/* 하단 스크롤 인디케이터 및 모바일 조작 버튼 */}
         {currentVideos.length > 1 && (
-          <div className="flex items-center justify-center gap-6 w-full">
+          <div className="flex items-center justify-center gap-[6.1538vw] md:gap-6 w-full">
             {/* 모바일용 왼쪽 화살표 */}
             <button
               onClick={() => scroll("left")}
-              className="md:hidden p-2 text-[#9CA3AF] hover:text-[#4D94FF] transition-all active:scale-90"
+              className="md:hidden p-[2.0513vw] text-[#9CA3AF] hover:text-[#4D94FF] transition-all active:scale-90"
               aria-label="Previous video"
             >
-              <ChevronLeft size={28} />
+              <ChevronLeft className="w-[7.1795vw] h-[7.1795vw]" />
             </button>
 
-            <div className="w-full max-w-[100px] h-1 bg-[#F3F4F6] rounded-full overflow-hidden relative">
+            <div className="w-full max-w-[25.641vw] md:max-w-[100px] h-[1.0256vw] md:h-1 bg-[#F3F4F6] rounded-full overflow-hidden relative">
               <div
                 className="h-full bg-[#44A9FF] transition-all duration-300 ease-out absolute top-0 left-0"
                 style={{
@@ -223,10 +223,10 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
             {/* 모바일용 오른쪽 화살표 */}
             <button
               onClick={() => scroll("right")}
-              className="md:hidden p-2 text-[#9CA3AF] hover:text-[#4D94FF] transition-all active:scale-90"
+              className="md:hidden p-[2.0513vw] text-[#9CA3AF] hover:text-[#4D94FF] transition-all active:scale-90"
               aria-label="Next video"
             >
-              <ChevronRight size={28} />
+              <ChevronRight className="w-[7.1795vw] h-[7.1795vw]" />
             </button>
           </div>
         )}

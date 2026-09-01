@@ -32,30 +32,30 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-[752px] md:h-auto md:aspect-[1920/1080] flex items-end justify-center overflow-hidden"
+      className="relative w-full h-[192.8205vw] md:h-auto md:aspect-[1920/1080] flex items-end justify-center overflow-hidden"
     >
       {/* 배경 사진 + 하단 그라디언트 — 모바일은 섹션(752px)보다 사진이 커서(844px) 아래로 92px 넘치는 구조(2026-08-31 모바일 스펙) */}
-      <div className="absolute inset-x-0 top-0 h-[844px] md:inset-0 md:h-full" aria-hidden>
+      <div className="absolute inset-x-0 top-0 h-[216.4103vw] md:inset-0 md:h-full" aria-hidden>
         <img src={heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover md:hidden" />
         <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover hidden md:block" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 
       {/* 콘텐츠 */}
-      <div className="relative z-10 flex flex-col items-center gap-6 md:gap-[1.6667vw] w-full max-w-[420px] md:max-w-[30.469vw] px-4 pb-6 md:pb-[1.25vw]">
+      <div className="relative z-10 flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full max-w-[107.6923vw] md:max-w-[30.469vw] px-[4.1026vw] md:px-4 pb-[6.1538vw] md:pb-[1.25vw]">
         {/* 태그 + 로고 그룹 — 영문은 모바일/데스크탑 배치 순서가 달라(모바일: 뱃지→로고→태그라인) 분리 렌더링(2026-08-31 모바일 스펙) */}
         {/* 국문 모바일 실측 스펙 반영(2026-09-01 확인): 뱃지-로고그룹 gap16, 아이콘 24.89px, 로고 115.43px 등 */}
-        <div className="md:hidden flex flex-col items-center gap-4">
-          <div className="flex items-center gap-1.5">
+        <div className="md:hidden flex flex-col items-center gap-[4.1026vw]">
+          <div className="flex items-center gap-[1.5385vw]">
             {lang === "en" ? (
-              <img src={fondantWordmarkEn} alt="fondant" className="h-4 w-auto object-contain" />
+              <img src={fondantWordmarkEn} alt="fondant" className="h-[4.1026vw] w-auto object-contain" />
             ) : (
-              <img src={fondantMark} alt="" className="h-[24.89px] w-auto" />
+              <img src={fondantMark} alt="" className="h-[6.3821vw] w-auto" />
             )}
             {lang === "ko" ? (
-              <img src={heroAnniversaryTagKo} alt={t("hero.anniversaryTag")} className="h-[17px] w-auto object-contain" />
+              <img src={heroAnniversaryTagKo} alt={t("hero.anniversaryTag")} className="h-[4.359vw] w-auto object-contain" />
             ) : (
-              <p className="text-[15.61px] leading-[16.39px] tracking-[-0.05em] text-center text-white font-normal">
+              <p className="text-[4.0026vw] leading-[4.2026vw] tracking-[-0.05em] text-center text-white font-normal">
                 {t("hero.anniversaryTag")}
               </p>
             )}
@@ -65,13 +65,13 @@ export function Hero() {
             // 로고그룹 전체 높이 117px(스펙) — kccm(19.12)+logo(115.43) 그대로 쌓으면 181px가 되어
             // 음수 마진으로 겹치게 압축(로고 파일 자체의 위쪽 여백 때문으로 추정, 2026-09-01 확인)
             <div className="flex flex-col items-center">
-              <img src={kccmBadge} alt="K-CCM 글로벌 오디션" className="w-auto h-[19.12px] object-contain" />
-              <img src={logoSrc} alt="Healing Voice" className="w-[288.59px] h-[115.43px] object-contain -mt-[11px]" />
+              <img src={kccmBadge} alt="K-CCM 글로벌 오디션" className="w-auto h-[4.9026vw] object-contain" />
+              <img src={logoSrc} alt="Healing Voice" className="w-[73.9974vw] h-[29.5974vw] object-contain -mt-[2.8205vw]" />
             </div>
           ) : (
             <>
-              <img src={heroLogoEn} alt="Healing Voice" className="w-auto h-10 object-contain" />
-              <p className="text-sm leading-tight text-center text-white font-medium">{t("hero.taglineLine1")}</p>
+              <img src={heroLogoEn} alt="Healing Voice" className="w-auto h-[10.2564vw] object-contain" />
+              <p className="text-[3.5897vw] leading-tight text-center text-white font-medium">{t("hero.taglineLine1")}</p>
             </>
           )}
         </div>
@@ -116,18 +116,18 @@ export function Hero() {
         </div>
 
         {/* 방송 정보 */}
-        <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full">
+        <div className="flex flex-col items-center gap-[3.0769vw] md:gap-[0.8333vw] w-full">
           {lang === "ko" ? (
             <img
               src={premiereBadgeKo}
               alt={t("hero.premiereFallback")}
-              className="w-auto h-9 md:h-[3.6458vw] object-contain"
+              className="w-auto h-[9.2308vw] md:h-[3.6458vw] object-contain"
             />
           ) : (
             // 배지 테두리: linear-gradient(#D2DFFF 1.16% → #89A3FF 100%, 135deg) 2px INSIDE — background-clip 이중 배경으로 구현(2026-08-31 확인)
             // 텍스트 지정 폰트(SB Aggro Bold)는 프로젝트에 없어 기본 서체로 대체
             <div
-              className="flex items-center justify-center rounded-2xl md:rounded-[0.8333vw] px-5 py-3 md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
+              className="flex items-center justify-center rounded-[4.1026vw] md:rounded-[0.8333vw] px-[5.1282vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
               style={{
                 backgroundImage: "linear-gradient(#03133b, #03133b), linear-gradient(135deg, #D2DFFF 1.16%, #89A3FF 100%)",
                 backgroundOrigin: "border-box",
@@ -136,7 +136,7 @@ export function Hero() {
             >
               {/* SB Aggro 폰트가 없어 이미지로 대체(2026-08-31 확인) — 모바일은 기존 텍스트 유지 */}
               <img src={heroPremiereTextEn} alt={t("hero.premiereFallback")} className="hidden md:block md:h-[1.493vw] w-auto object-contain" />
-              <p className="md:hidden text-base leading-none text-center text-white font-bold whitespace-nowrap">
+              <p className="md:hidden text-[4.1026vw] leading-none text-center text-white font-bold whitespace-nowrap">
                 {t("hero.premiereFallback")}
               </p>
             </div>
@@ -144,15 +144,15 @@ export function Hero() {
           {lang === "en" ? (
             <>
               {/* 영문 모바일: 구분선 없이 2줄 세로 배치(2026-08-31 모바일 스펙) */}
-              <div className="md:hidden flex flex-col items-center gap-1">
+              <div className="md:hidden flex flex-col items-center gap-[1.0256vw]">
                 <p
-                  className="text-base leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-[4.1026vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                   style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
                 >
                   {t("hero.broadcastInfo1")}
                 </p>
                 <p
-                  className="text-base leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-[4.1026vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                   style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
                 >
                   {t("hero.broadcastInfo2")}
@@ -175,16 +175,16 @@ export function Hero() {
               </div>
             </>
           ) : (
-            <div className="flex items-center gap-2 md:gap-[0.625vw]">
+            <div className="flex items-center gap-[2.0513vw] md:gap-[0.625vw]">
               <p
-                className="text-xl md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                 style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("hero.broadcastInfo1")}
               </p>
-              <span className="h-4 w-px md:h-[1.6667vw] md:w-[0.1042vw] bg-[#D4EBFF]" />
+              <span className="h-[4.1026vw] w-[0.2564vw] md:h-[1.6667vw] md:w-[0.1042vw] bg-[#D4EBFF]" />
               <p
-                className="text-xl md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                 style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("hero.broadcastInfo2")}
@@ -198,12 +198,12 @@ export function Hero() {
           href={FONDANT_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-8 py-4 md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
+          className="flex items-center justify-center gap-[2.0513vw] md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-[8.2051vw] py-[4.1026vw] md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
         >
-          <span className="text-lg md:text-[1.25vw] leading-none text-center font-bold text-white">
+          <span className="text-[4.6154vw] md:text-[1.25vw] leading-none text-center font-bold text-white">
             {t("header.cta")}
           </span>
-          <ArrowUpRight className="w-5 h-5 md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
+          <ArrowUpRight className="w-[5.1282vw] h-[5.1282vw] md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
         </a>
       </div>
     </section>

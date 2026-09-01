@@ -33,16 +33,16 @@ function PrizeCardEn({
   return (
     <div
       // 카드 비율 325.33:338(거의 정사각형, 2026-08-31 확인) — aspect-ratio로 실제 렌더 폭에 비례해서 높이 계산
-      className="relative flex-1 min-w-[260px] overflow-hidden rounded-[32px] md:rounded-[2.5vw] md:aspect-[325.33/338] p-6 md:p-[1.6667vw] flex flex-col items-start justify-between border-[3px] border-transparent"
+      className="relative flex-1 min-w-[260px] overflow-hidden rounded-[8.2051vw] md:rounded-[2.5vw] md:aspect-[325.33/338] p-[6.1538vw] md:p-[1.6667vw] flex flex-col items-start justify-between border-[3px] border-transparent"
       style={{
         backgroundImage: `linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%), ${cardBorderGradient}`,
         backgroundOrigin: "border-box",
         backgroundClip: "padding-box, border-box",
       }}
     >
-      <div className="flex w-full flex-col items-start gap-2 md:gap-[0.4167vw] text-left">
+      <div className="flex w-full flex-col items-start gap-[0.5128vw] md:gap-[0.4167vw] text-left">
         <p
-          className="text-xl md:text-[1.4583vw] leading-[1.2] font-extrabold uppercase text-[#062259]"
+          className="text-[5.1282vw] md:text-[1.4583vw] leading-[1.2] font-extrabold uppercase text-[#062259]"
           style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {title.split("\n").map((line, i) => (
@@ -53,7 +53,7 @@ function PrizeCardEn({
           ))}
         </p>
         {/* 20px(1920 기준), 행간 120% — 이전 21.3px/150%는 스펙보다 큼(2026-08-31 확인). 줄바꿈은 지정된 위치에서만 일어나야 하므로 nowrap */}
-        <p className="text-sm md:text-[1.0417vw] leading-[1.2] tracking-normal font-normal text-[#062259] md:whitespace-nowrap">
+        <p className="text-[3.5897vw] md:text-[1.0417vw] leading-[1.2] tracking-normal font-normal text-[#062259] md:whitespace-nowrap">
           {desc.split("\n").map((line, i) => (
             <span key={i}>
               {i > 0 && <br />}
@@ -90,16 +90,16 @@ function PrizeCardKoMobile({
 }) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] pt-10 pr-8 pb-8 pl-8 min-h-[260px] flex flex-col items-start gap-2"
+      className="relative w-full overflow-hidden rounded-[12.3077vw] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] pt-[10.2564vw] pr-[8.2051vw] pb-[8.2051vw] pl-[8.2051vw] min-h-[66.6667vw] flex flex-col items-start gap-[2.0513vw]"
       style={{ backgroundImage: "linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%)" }}
     >
       <p
-        className="text-[32px] leading-[1.2] font-extrabold text-[#101828]"
+        className="text-[8.2051vw] leading-[1.2] font-extrabold text-[#101828]"
         style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
       >
         {title}
       </p>
-      <p className="text-lg leading-[29.25px] font-medium text-[#062259]">{desc}</p>
+      <p className="text-[4.6154vw] leading-[7.5vw] font-medium text-[#062259]">{desc}</p>
       <img
         src={icon}
         alt=""
@@ -116,29 +116,30 @@ export function Awards() {
   return (
     <section
       id="awards"
-      className="w-full flex flex-col items-center gap-12 md:gap-[3.3333vw] pt-24 pb-12 md:py-[6.25vw] px-4"
+      className="w-full flex flex-col items-center gap-[12.3077vw] md:gap-[3.3333vw] pt-[24.6154vw] pb-[12.3077vw] md:py-[6.25vw] px-[4.1026vw]"
     >
       {/* 고정 px 폭 + vw 비례 텍스트 조합은 초광폭 화면에서 줄바꿈이 깨지므로 md 이상은 전부 vw로 스케일(2026-08-31 확인) */}
       {/* 국문 모바일 스펙 확인(2026-09-01): eyebrow 16px #44a9ff, 제목 40px, 부제 #7d7d7d */}
-      <div className="flex flex-col items-center gap-4 md:gap-[0.8333vw] w-full max-w-[1200px] md:max-w-[62.5vw] text-center">
-        <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-base md:text-[0.8333vw]">
+      {/* 390px 기준 vw 변환(2026-09-01): 840px 미만에서 구조 유지한 채 유동적으로 스케일 */}
+      <div className="flex flex-col items-center gap-[4.1026vw] md:gap-[0.8333vw] w-full max-w-[1200px] md:max-w-[62.5vw] text-center">
+        <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-[4.1026vw] md:text-[0.8333vw]">
           {t("awardsSection.eyebrow")}
         </span>
         <h2
-          className="text-[40px] leading-[35px] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
+          className="text-[10.2564vw] leading-[8.9744vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("awardsSection.title")}
         </h2>
-        <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-base md:text-[1.1094vw] font-normal leading-[1.5]">
+        <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-[4.1026vw] md:text-[1.1094vw] font-normal leading-[1.5]">
           {t("awardsSection.desc")}
         </p>
       </div>
 
-      <div className="flex flex-col items-center gap-6 md:gap-[1.25vw] w-full max-w-[1024px] md:max-w-[53.333vw]">
+      <div className="flex flex-col items-center gap-[6.1538vw] md:gap-[1.25vw] w-full max-w-[1024px] md:max-w-[53.333vw]">
         {/* 대상(그랜드 프라이즈) — EN은 흰색 그라데이션 테두리(2026-08-31), 국문 모바일은 솔리드 #d3ebff 2px 테두리(2026-09-01 확인) */}
         <div
-          className={`relative w-full overflow-hidden rounded-[32px] md:rounded-[2.5vw] px-6 py-10 md:px-[4.1667vw] md:py-[2.9167vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] ${lang === "en" ? "border-[3px] border-transparent" : "border-2 border-[#D3EBFF]"}`}
+          className={`relative w-full overflow-hidden rounded-[8.2051vw] md:rounded-[2.5vw] px-[6.1538vw] py-[10.2564vw] md:px-[4.1667vw] md:py-[2.9167vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] ${lang === "en" ? "border-[3px] border-transparent" : "border-2 border-[#D3EBFF]"}`}
           style={
             lang === "en"
               ? {
@@ -149,19 +150,19 @@ export function Awards() {
               : { backgroundImage: bigBoxGradient }
           }
         >
-          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-[1.5625vw]">
-            <div className="flex flex-1 flex-col items-center md:items-start gap-3 md:gap-[0.625vw]">
-              <span className="w-fit rounded-lg md:rounded-[0.4167vw] bg-white px-3 py-1 md:px-[0.625vw] md:py-[0.2083vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] text-xl md:text-[1.25vw] tracking-[-0.66px] md:tracking-normal leading-[1.4] md:leading-none font-semibold text-[#0084D1]">
+          <div className="flex flex-col md:flex-row items-center gap-[6.1538vw] md:gap-[1.5625vw]">
+            <div className="flex flex-1 flex-col items-center md:items-start gap-[3.0769vw] md:gap-[0.625vw]">
+              <span className="w-fit rounded-[2.0513vw] md:rounded-[0.4167vw] bg-white px-[3.0769vw] py-[1.0256vw] md:px-[0.625vw] md:py-[0.2083vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] text-[5.1282vw] md:text-[1.25vw] tracking-[-0.1692vw] md:tracking-normal leading-[1.4] md:leading-none font-semibold text-[#0084D1]">
                 {t("awardsSection.grandPrizeBadge")}
               </span>
               <p
-                className="text-[36px] leading-[48px] md:text-[2.5vw] md:leading-[1.2] font-extrabold text-white"
+                className="text-[9.2308vw] leading-[12.3077vw] md:text-[2.5vw] md:leading-[1.2] font-extrabold text-white"
                 style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("awardsSection.grandPrizeAmount")}
               </p>
             </div>
-            <img src={iconTrophy} alt="" className="w-[140px] h-[140px] md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
+            <img src={iconTrophy} alt="" className="w-[35.8974vw] h-[35.8974vw] md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
           </div>
         </div>
 
@@ -169,24 +170,24 @@ export function Awards() {
         {lang === "ko" ? (
           <>
             {/* 모바일: 실제 텍스트+아이콘 카드(2026-09-01 스펙) */}
-            <div className="flex flex-col md:hidden w-full gap-6">
+            <div className="flex flex-col md:hidden w-full gap-[6.1538vw]">
               <PrizeCardKoMobile
                 title={t("awardsSection.item1Title")}
                 desc={t("awardsSection.item1Desc")}
                 icon={iconRelease}
-                iconStyle={{ w: "66px", h: "50px", right: "48px", bottom: "64px" }}
+                iconStyle={{ w: "16.9231vw", h: "12.8205vw", right: "12.3077vw", bottom: "16.4103vw" }}
               />
               <PrizeCardKoMobile
                 title={t("awardsSection.item2Title")}
                 desc={t("awardsSection.item2Desc")}
                 icon={iconConcert}
-                iconStyle={{ w: "59px", h: "78px", right: "48px", bottom: "54px" }}
+                iconStyle={{ w: "15.1282vw", h: "20vw", right: "12.3077vw", bottom: "13.8462vw" }}
               />
               <PrizeCardKoMobile
                 title={t("awardsSection.item3Title")}
                 desc={t("awardsSection.item3Desc")}
                 icon={iconBroadcast}
-                iconStyle={{ w: "56px", h: "52px", right: "52px", bottom: "60px" }}
+                iconStyle={{ w: "14.359vw", h: "13.3333vw", right: "13.3333vw", bottom: "15.3846vw" }}
               />
             </div>
             {/* 데스크탑: 기존 확정된 통합 SVG 그대로 사용 */}
@@ -197,7 +198,7 @@ export function Awards() {
             </div>
           </>
         ) : (
-          <div className="flex flex-col md:flex-row w-full gap-6 md:gap-[1.25vw]">
+          <div className="flex flex-col md:flex-row w-full gap-[6.1538vw] md:gap-[1.25vw]">
             <PrizeCardEn
               title={t("awardsSection.item1Title")}
               desc={t("awardsSection.item1Desc")}
