@@ -151,7 +151,7 @@ export function Cast() {
           {t("cast.title")}
         </h2>
         {/* 컨테이너 724px(1920 기준, 2026-08-31 확인) — 이전 527px는 너무 좁아 한 줄로 안 나옴 */}
-        <p className="max-w-[527px] md:max-w-[37.708vw] text-[#7D7D7D] md:text-[#D4EBFF] text-base md:text-[1.1458vw] font-semibold md:font-normal tracking-[-0.48px] md:tracking-normal leading-[1.5] md:leading-[1.4] md:whitespace-nowrap">
+        <p className="max-w-[527px] md:max-w-[37.708vw] text-[#D4EBFF] text-base md:text-[1.1458vw] font-normal leading-[1.5] md:leading-[1.4] md:whitespace-nowrap">
           {/* 국문 모바일: "~함께할" / "MC와~" 2줄로 고정(2026-09-01 확인) */}
           {lang === "ko" ? (
             <>

@@ -93,7 +93,7 @@ export function Awards() {
         >
           {t("awardsSection.title")}
         </h2>
-        <p className="max-w-[672px] md:max-w-[35vw] text-[#7D7D7D] md:text-[#D4EBFF] text-base md:text-[1.1094vw] font-semibold md:font-normal tracking-[-0.48px] md:tracking-normal leading-[1.5]">
+        <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-base md:text-[1.1094vw] font-normal leading-[1.5]">
           {t("awardsSection.desc")}
         </p>
       </div>
