@@ -49,7 +49,7 @@ export function Hero() {
         <div className={`md:hidden flex flex-col items-center ${lang === "en" ? "gap-[4.8256vw]" : "gap-[4.1026vw]"}`}>
           <div className="flex items-center gap-[1.5385vw]">
             {lang === "en" ? (
-              <img src={fondantWordmarkEn} alt="fondant" className="h-[4.1026vw] w-auto object-contain" />
+              <img src={fondantWordmarkEn} alt="fondant" className="h-[5.641vw] w-auto object-contain" />
             ) : (
               <img src={fondantMark} alt="" className="h-[6.3821vw] w-auto" />
             )}
@@ -71,9 +71,10 @@ export function Hero() {
           ) : (
             // "a voice that heals the world" — KoreanHDRIB 폰트 없어 이미지 대체(PC용 에셋 재사용).
             // 스펙상 로고 위쪽과 겹치는 절대배치 구조라 음수 마진으로 근사(2026-09-01 확인)
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center w-full">
               <img src={heroTaglineEn} alt={t("hero.taglineLine1")} className="h-[3.859vw] w-auto object-contain" />
-              <img src={heroLogoEn} alt="Healing Voice" className="w-auto h-[10.2564vw] object-contain -mt-[1.5385vw]" />
+              {/* 사용자 확인(2026-09-01): 로고가 좌우로 거의 가득 차야 함 — 폭 기준으로 확대 */}
+              <img src={heroLogoEn} alt="Healing Voice" className="w-full h-auto object-contain -mt-[1.5385vw]" />
             </div>
           )}
         </div>
@@ -144,13 +145,13 @@ export function Hero() {
               {/* 영문 모바일: 구분선 없이 2줄 세로 배치(2026-08-31 모바일 스펙) */}
               <div className="md:hidden flex flex-col items-center gap-[1.0256vw]">
                 <p
-                  className="text-[4.1026vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                   style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
                 >
                   {t("hero.broadcastInfo1")}
                 </p>
                 <p
-                  className="text-[4.1026vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                   style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
                 >
                   {t("hero.broadcastInfo2")}

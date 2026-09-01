@@ -317,7 +317,7 @@ export const translations = {
       infoBtn: "Watch More",
       // 01_Hero — 2026-08-31 Figma EN 페이지 답변으로 확정
       anniversaryTag: "5th Anniversary Special Project",
-      broadcastInfo1: "3 PM Pre-release on Fondant",
+      broadcastInfo1: "3 PM Pre-release on fondant", // 2026-09-01 확인: fondant 소문자
       broadcastInfo2: "5 PM YouTube & TV",
       premiereFallback: "Premieres Sept 20", // 2026-08-31 확인: 실제 텍스트 콘텐츠는 레이어명("First episode")이 아니라 이 문구
       taglineLine1: "a voice that heals the world",
