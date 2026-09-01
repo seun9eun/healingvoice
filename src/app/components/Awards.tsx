@@ -174,19 +174,19 @@ export function Awards() {
                 title={t("awardsSection.item1Title")}
                 desc={t("awardsSection.item1Desc")}
                 icon={iconRelease}
-                iconStyle={{ w: "82px", h: "62px", right: "45px", bottom: "58px" }}
+                iconStyle={{ w: "66px", h: "50px", right: "48px", bottom: "64px" }}
               />
               <PrizeCardKoMobile
                 title={t("awardsSection.item2Title")}
                 desc={t("awardsSection.item2Desc")}
                 icon={iconConcert}
-                iconStyle={{ w: "74px", h: "98px", right: "45px", bottom: "47px" }}
+                iconStyle={{ w: "59px", h: "78px", right: "48px", bottom: "54px" }}
               />
               <PrizeCardKoMobile
                 title={t("awardsSection.item3Title")}
                 desc={t("awardsSection.item3Desc")}
                 icon={iconBroadcast}
-                iconStyle={{ w: "70px", h: "65px", right: "48px", bottom: "53px" }}
+                iconStyle={{ w: "56px", h: "52px", right: "52px", bottom: "60px" }}
               />
             </div>
             {/* 데스크탑: 기존 확정된 통합 SVG 그대로 사용 */}
