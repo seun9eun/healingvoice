@@ -48,7 +48,10 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
 
   return (
     <div
-      className="relative w-full max-w-[172px] md:max-w-none md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-1 md:p-[0.2083vw] shrink-0"
+      // 모바일 폭을 w-full(%)로 두면 그리드가 justify-items-center(비-stretch)라서 퍼센트 폭이 불확정값이 되어
+      // aspect-ratio가 카드 폭이 아니라 내부 텍스트 줄 수(콘텐츠 높이)에 맞춰 카드 크기 자체를 줄여버리는 문제가 있었음
+      // (실제로 소개문이 2줄로 짧아진 첫 카드만 눈에 띄게 작아짐, 2026-09-01 확인) — 고정 px 폭으로 변경해 해결
+      className="relative w-[172px] md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-1 md:p-[0.2083vw] shrink-0"
       style={{ backgroundImage: cardBorder, clipPath: cardClip }}
     >
       <div
@@ -86,7 +89,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
         {/* 사진은 카드보다 넓게(122.8%) 오버플로되며 카드 y34.6% 지점부터 시작 — 스펙 비율(462:291)로 크롭해서 원본 파일 비율 차이에 영향받지 않도록 처리 */}
         {/* 영문판은 소개문이 3줄이라 34.6%로는 사진과 겹침 — 텍스트 블록 실측 높이만큼 내려서 여유 확보(2026-08-31 확인) */}
         {member.photo && (
-          <div className={`absolute inset-x-0 ${lang === "en" ? "top-[42%]" : "top-[34.6%]"} bottom-0 flex items-start justify-center overflow-visible`}>
+          <div className={`absolute inset-x-0 ${lang === "en" ? "top-[42%]" : "top-[34.6%]"} bottom-0 flex items-end justify-center overflow-visible`}>
             <img
               src={member.photo}
               alt={member.nameKo}
