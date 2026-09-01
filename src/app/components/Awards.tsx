@@ -242,16 +242,20 @@ export function Awards() {
                 title={t("awardsSection.item2Title")}
                 desc={t("awardsSection.item2Desc").replace(/\n/g, " ")}
                 icon={iconConcertEnMobile}
-                iconStyle={{ w: "16.1872vw", h: "21.3667vw", right: "17.659vw", top: "37.5vw" }}
+                // 2026-09-01 재확인: 아이콘은 100x100 박스 중앙 정렬, 박스 자체가 카드 우측에서 32px 안쪽
+                iconStyle={{ w: "16.1872vw", h: "21.3667vw", right: "12.9321vw", top: "39.6372vw" }}
                 dimDesc
+                titleSize="text-[7.6923vw]"
+                titleNowrap
               />
               <PrizeCardKoMobile
                 title={t("awardsSection.item3Title").replace(/\n/g, " ")}
                 desc={t("awardsSection.item3Desc").replace(/\n/g, " ")}
                 icon={iconBroadcastEnMobile}
-                iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "18.3333vw", top: "42.5321vw" }}
+                // 2026-09-01 재확인: 카드2와 동일한 박스 위치 기준(디자이너 권장)으로 정렬
+                iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "12.7564vw", top: "42.5282vw" }}
                 dimDesc
-                titleSize="text-[7.1795vw]"
+                titleSize="text-[7.6923vw]"
                 titleNowrap
               />
             </div>
