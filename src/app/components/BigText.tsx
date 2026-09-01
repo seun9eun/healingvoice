@@ -10,9 +10,11 @@ export function BigText() {
   const bodyLines = t("bigText.bodyPart2").split("\n");
 
   return (
+    // 장식용 글로우가 모바일 폭(390px)에서 77.5vw+36.6vw=114vw로 화면 밖까지 튀어나가 페이지 전체에
+    // 가로 스크롤을 만들던 문제 — overflow-hidden으로 섹션 안에서만 잘리게 함(2026-09-01 확인)
     <section
       id="about"
-      className="relative w-full flex flex-col items-center gap-2 md:gap-[0.5208vw] pt-16 pb-20 md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
+      className="relative w-full overflow-hidden flex flex-col items-center gap-2 md:gap-[0.5208vw] pt-16 pb-20 md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
     >
       <div className="flex items-center justify-center rounded-2xl md:rounded-[0.8333vw] px-4 md:px-[0.8333vw] w-full">
         <p
