@@ -218,15 +218,16 @@ export function Cast() {
               >
                 Host
               </p>
+              {/* 스크린샷 확인(2026-09-01): "Jang Sungkyu"도 흰색 단색이 아니라 흰색→연보라 그라데이션 */}
               <p
-                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-white"
-                style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-transparent bg-clip-text"
+                style={{ backgroundImage: mentorsTitleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {mc.nameEn}
               </p>
             </div>
           )}
-          <p className={`text-[4.1026vw] md:text-[1.25vw] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-normal" : "font-medium"} text-white break-keep`}>
+          <p className={`text-[4.1026vw] md:text-[1.25vw] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-light" : "font-medium"} text-white break-keep`}>
             {lang === "ko"
               ? mc.descKo.split("\n").map((line, i) => (
                   <span key={i}>
