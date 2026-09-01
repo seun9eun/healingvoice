@@ -79,28 +79,29 @@ export function Awards() {
   return (
     <section
       id="awards"
-      className="w-full flex flex-col items-center gap-16 md:gap-[3.3333vw] py-16 md:py-[6.25vw] px-4"
+      className="w-full flex flex-col items-center gap-12 md:gap-[3.3333vw] pt-24 pb-12 md:py-[6.25vw] px-4"
     >
       {/* 고정 px 폭 + vw 비례 텍스트 조합은 초광폭 화면에서 줄바꿈이 깨지므로 md 이상은 전부 vw로 스케일(2026-08-31 확인) */}
-      <div className="flex flex-col items-center gap-3 md:gap-[0.8333vw] w-full max-w-[1200px] md:max-w-[62.5vw] text-center">
-        <span className="text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-sm md:text-[0.8333vw]">
+      {/* 국문 모바일 스펙 확인(2026-09-01): eyebrow 16px #44a9ff, 제목 40px, 부제 #7d7d7d */}
+      <div className="flex flex-col items-center gap-4 md:gap-[0.8333vw] w-full max-w-[1200px] md:max-w-[62.5vw] text-center">
+        <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[1.6px] text-base md:text-[0.8333vw]">
           {t("awardsSection.eyebrow")}
         </span>
         <h2
-          className="text-3xl md:text-[2.9167vw] leading-tight font-black uppercase text-transparent bg-clip-text"
+          className="text-[40px] leading-[35px] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("awardsSection.title")}
         </h2>
-        <p className="max-w-[672px] md:max-w-[35vw] text-[#D4EBFF] text-base md:text-[1.1094vw] font-normal leading-[1.5]">
+        <p className="max-w-[672px] md:max-w-[35vw] text-[#7D7D7D] md:text-[#D4EBFF] text-base md:text-[1.1094vw] font-semibold md:font-normal tracking-[-0.48px] md:tracking-normal leading-[1.5]">
           {t("awardsSection.desc")}
         </p>
       </div>
 
       <div className="flex flex-col items-center gap-6 md:gap-[1.25vw] w-full max-w-[1024px] md:max-w-[53.333vw]">
-        {/* 대상(그랜드 프라이즈) — 테두리는 EN 스펙에서만 확인되어 EN에만 적용(국문은 기존 확정 상태 유지, 2026-08-31) */}
+        {/* 대상(그랜드 프라이즈) — EN은 흰색 그라데이션 테두리(2026-08-31), 국문 모바일은 솔리드 #d3ebff 2px 테두리(2026-09-01 확인) */}
         <div
-          className={`relative w-full overflow-hidden rounded-[32px] md:rounded-[2.5vw] px-6 py-10 md:px-[4.1667vw] md:py-[2.9167vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] ${lang === "en" ? "border-[3px] border-transparent" : ""}`}
+          className={`relative w-full overflow-hidden rounded-[32px] md:rounded-[2.5vw] px-6 py-10 md:px-[4.1667vw] md:py-[2.9167vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] ${lang === "en" ? "border-[3px] border-transparent" : "border-2 border-[#D3EBFF]"}`}
           style={
             lang === "en"
               ? {
@@ -113,17 +114,17 @@ export function Awards() {
         >
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-[1.5625vw]">
             <div className="flex flex-1 flex-col items-center md:items-start gap-3 md:gap-[0.625vw]">
-              <span className="w-fit rounded-lg md:rounded-[0.4167vw] bg-white px-3 py-1 md:px-[0.625vw] md:py-[0.2083vw] text-lg md:text-[1.25vw] font-semibold text-[#0084D1]">
+              <span className="w-fit rounded-lg md:rounded-[0.4167vw] bg-white px-3 py-1 md:px-[0.625vw] md:py-[0.2083vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] text-xl md:text-[1.25vw] tracking-[-0.66px] md:tracking-normal leading-[1.4] md:leading-none font-semibold text-[#0084D1]">
                 {t("awardsSection.grandPrizeBadge")}
               </span>
               <p
-                className="text-3xl md:text-[2.5vw] leading-[1.2] font-extrabold text-white"
+                className="text-[36px] leading-[48px] md:text-[2.5vw] md:leading-[1.2] font-extrabold text-white"
                 style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {t("awardsSection.grandPrizeAmount")}
               </p>
             </div>
-            <img src={iconTrophy} alt="" className="w-28 h-28 md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
+            <img src={iconTrophy} alt="" className="w-[140px] h-[140px] md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
           </div>
         </div>
 
