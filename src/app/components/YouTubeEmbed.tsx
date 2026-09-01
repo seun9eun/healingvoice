@@ -105,7 +105,11 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
           >
             {t("gallery.title")}
           </h2>
-          <p className="max-w-[172.3077vw] md:max-w-[35vw] text-[#D4EBFF] text-[4.1026vw] md:text-[1.1458vw] font-normal leading-[1.5] whitespace-pre-line">
+          <p
+            className={`max-w-[172.3077vw] md:max-w-[35vw] text-[#D4EBFF] text-[4.1026vw] md:text-[1.1458vw] leading-[1.5] ${
+              lang === "en" ? "whitespace-nowrap font-light" : "whitespace-pre-line font-normal"
+            }`}
+          >
             {t("gallery.desc")}
           </p>
         </div>
