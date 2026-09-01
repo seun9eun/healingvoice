@@ -94,13 +94,13 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
   return (
     <div className="relative w-full flex flex-col items-center py-[24.6154vw] md:py-[6.25vw] px-[4.1026vw]">
       <div className="flex flex-col items-center gap-[8.2051vw] md:gap-[1.6667vw] w-full max-w-[172.3077vw] md:max-w-[46.667vw]">
-        {/* 헤더 영역 — 국문 모바일 스펙 확인(2026-09-01): gap9.5, 제목 40px. 840px 미만은 390px 기준 vw로 유동 스케일(2026-09-01) */}
+        {/* 헤더 영역 — 국문 모바일 스펙 확인(2026-09-01): gap9.5, 제목 40px, 행간35px / 영문은 행간110%(44px, 2026-09-01 확인) */}
         <div className="flex flex-col items-center gap-[2.4359vw] md:gap-[0.8333vw] text-center">
           <span className="text-[#4D94FF] font-bold uppercase tracking-[0.359vw] text-[3.5897vw] md:text-[0.8333vw]">
             {t("gallery.subtitle")}
           </span>
           <h2
-            className="text-[10.2564vw] leading-[8.9744vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
+            className={`text-[10.2564vw] ${lang === "en" ? "leading-[11.2821vw]" : "leading-[8.9744vw]"} md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text`}
             style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
           >
             {t("gallery.title")}
