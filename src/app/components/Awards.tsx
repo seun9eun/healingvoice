@@ -87,6 +87,8 @@ function PrizeCardKoMobile({
   icon,
   iconStyle,
   dimDesc,
+  titleSize,
+  titleNowrap,
 }: {
   title: string;
   desc: string;
@@ -95,6 +97,8 @@ function PrizeCardKoMobile({
   // 텍스트와 겹치므로, 텍스트 길이가 긴 카드는 top으로 앵커(카드 상단 기준 절대 위치)해서 이 문제를 피함
   iconStyle: { w: string; h: string; right: string; bottom?: string; top?: string };
   dimDesc?: boolean; // 영문 스펙: 본문 opacity 0.8(2026-09-01 확인) — 국문은 명시 없어 미적용
+  titleSize?: string; // 제목이 길어 기본 크기로는 한 줄에 안 들어가는 카드 전용 축소값(사용자 확인, 2026-09-01)
+  titleNowrap?: boolean;
 }) {
   return (
     <div
@@ -102,7 +106,7 @@ function PrizeCardKoMobile({
       style={{ backgroundImage: "linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%)" }}
     >
       <p
-        className="text-[8.2051vw] leading-[1.2] font-extrabold text-[#101828]"
+        className={`${titleSize ?? "text-[8.2051vw]"} leading-[1.2] font-extrabold text-[#101828] ${titleNowrap ? "whitespace-nowrap" : ""}`}
         style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
       >
         {title}
@@ -247,6 +251,8 @@ export function Awards() {
                 icon={iconBroadcastEnMobile}
                 iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "18.3333vw", top: "48.7179vw" }}
                 dimDesc
+                titleSize="text-[6.9231vw]"
+                titleNowrap
               />
             </div>
             {/* 데스크탑: 기존 확정된 레이아웃 그대로 사용 */}
