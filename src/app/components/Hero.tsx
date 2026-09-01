@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
+import { Reveal } from "./Reveal";
 
 // 01_Hero 에셋 (Figma 답변, 2026-08-27)
 const heroBg = "/images/hero/hero_bg.jpg";
@@ -42,11 +43,13 @@ export function Hero() {
       </div>
 
       {/* 콘텐츠 */}
-      <div className="relative z-10 flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full max-w-[107.6923vw] md:max-w-[30.469vw] px-[4.1026vw] md:px-4 pb-[6.1538vw] md:pb-[1.25vw]">
+      {/* 영문 PC 슬랙 정밀 스펙 확인(2026-09-01, node 1374:3969): 텍스트/로고 그룹 - 방송정보 - 버튼 사이 gap 모두 32px(1.6667vw)로 동일 — 기존값이 이미 정확했음 */}
+      {/* 영문 PC 컨테이너 폭은 스펙상 827px(=43.0729vw) — 기존 30.469vw는 국문 전용 값이 잘못 공유되고 있었음(2026-09-01 확인, 로고가 스펙보다 오른쪽으로 치우쳐 보이던 원인) */}
+      <div className={`relative z-10 flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full max-w-[107.6923vw] ${lang === "en" ? "md:max-w-[43.0729vw]" : "md:max-w-[30.469vw]"} px-[4.1026vw] md:px-4 pb-[6.1538vw] md:pb-[1.25vw]`}>
         {/* 태그 + 로고 그룹 — 영문은 모바일/데스크탑 배치 순서가 달라(모바일: 뱃지→로고→태그라인) 분리 렌더링(2026-08-31 모바일 스펙) */}
         {/* 국문 모바일 실측 스펙 반영(2026-09-01 확인): 뱃지-로고그룹 gap16, 아이콘 24.89px, 로고 115.43px 등 */}
         {/* 영문 모바일 스펙 확인(2026-09-01, node 1374:4707): 뱃지row-로고그룹 gap18.82px(=4.8256vw) — 국문(4.1026vw)과 다름 */}
-        <div className={`md:hidden flex flex-col items-center ${lang === "en" ? "gap-[4.8256vw]" : "gap-[4.1026vw]"}`}>
+        <Reveal className={`md:hidden flex flex-col items-center ${lang === "en" ? "gap-[4.8256vw]" : "gap-[4.1026vw]"}`}>
           <div className="flex items-center gap-[1.5385vw]">
             {lang === "en" ? (
               <img src={fondantWordmarkEn} alt="fondant" className="h-[4vw] w-auto object-contain mt-[0.8vw]" />
@@ -77,10 +80,11 @@ export function Hero() {
               <img src={heroLogoEn} alt="Healing Voice" className="w-full h-auto object-contain mt-[1vw]" />
             </div>
           )}
-        </div>
+        </Reveal>
 
-        {/* Figma "Frame 1261159025" 기준: 뱃지row-로고그룹 사이 gap32(2026-08-31 전체 스펙 확인) */}
-        <div className="hidden md:flex flex-col items-center gap-[1.6667vw]">
+        {/* Figma "Frame 1261159025" 기준: 뱃지row-로고그룹 사이 gap32(2026-08-31 전체 스펙 확인, 2026-09-01 재확인) */}
+        {/* 국문은 사용자 확인(2026-09-01)으로 간격 축소 유지 */}
+        <Reveal className={`hidden md:flex flex-col items-center ${lang === "en" ? "gap-[1.6667vw]" : "gap-[0.9vw]"}`}>
           <div className="flex items-center gap-[0.3813vw]">
             {lang === "en" ? (
               <img src={fondantWordmarkEn} alt="fondant" className="h-[1.4583vw] w-auto object-contain" />
@@ -96,7 +100,7 @@ export function Hero() {
             )}
           </div>
 
-          {/* Figma "logo" 프레임: 태그라인(y612)과 로고 이미지(y646.55)가 겹쳐 배치된 절대배치라 실측 gap은 약 8.55px(2026-08-31 확인) */}
+          {/* Figma "logo" 프레임: 태그라인(y612)과 로고 이미지(y646.55)가 겹쳐 배치된 절대배치라 실측 gap은 약 8.55px(2026-08-31 확인, 2026-09-01 재확인) */}
           <div className="flex flex-col items-center gap-[0.4453vw]">
             {/* '세상을 치유하는 목소리' 태그라인은 국문 PC 최신 기획에서 삭제됨(2026-08-31 확인). 영문은 유지, 이미지로 대체(KoreanHDRIB 폰트 없음, 2026-08-31) */}
             {lang === "en" && (
@@ -110,15 +114,17 @@ export function Hero() {
                 className="w-auto h-[1.7885vw] object-contain"
               />
             )}
+            {/* 영문 로고: 슬랙 정밀 스펙 확인(2026-09-01, node 1374:3969) — 실제 높이 148.89px(=7.755vw)가 정확한 크기(오늘 확대 시도는 스펙보다 컸음) */}
             <img
               src={lang === "ko" ? logoSrc : heroLogoEn}
               alt="Healing Voice"
               className={lang === "ko" ? "w-auto h-[8.3167vw] object-contain" : "w-auto h-[7.755vw] object-contain"}
             />
           </div>
-        </div>
+        </Reveal>
 
-        {/* 방송 정보 */}
+        {/* 방송 정보 + CTA — 한 그룹으로 묶어 함께 등장(2026-09-01 확인) */}
+        <Reveal className="flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full" delay={0.15}>
         <div className="flex flex-col items-center gap-[3.0769vw] md:gap-[0.8333vw] w-full">
           {lang === "ko" ? (
             <img
@@ -204,6 +210,7 @@ export function Hero() {
           </span>
           <ArrowUpRight className="w-[5.1282vw] h-[5.1282vw] md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
         </a>
+        </Reveal>
       </div>
     </section>
   );

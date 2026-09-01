@@ -1,4 +1,5 @@
 import { useLanguage } from "../context/LanguageContext";
+import { Reveal } from "./Reveal";
 
 // 시상내역(Awards) 섹션 에셋 (Figma 답변, 2026-08-27)
 const iconTrophy = "/images/awards/icon_trophy.svg";
@@ -167,8 +168,8 @@ export function Awards() {
       </div>
 
       <div className="flex flex-col items-center gap-[6.1538vw] md:gap-[1.25vw] w-full max-w-[1024px] md:max-w-[53.333vw]">
-        {/* 대상(그랜드 프라이즈) — EN은 흰색 그라데이션 테두리(2026-08-31), 국문 모바일은 솔리드 #d3ebff 2px 테두리(2026-09-01 확인) */}
-        <div
+        {/* 대상(그랜드 프라이즈) — EN은 흰색 그라데이션 테두리(2026-08-31), 국문 모바일은 솔리드 #d3ebff 2px 테두리(2026-09-01 확인) — 카드 전체가 하나의 단위로 떠오름 */}
+        <Reveal
           className={`relative w-full overflow-hidden rounded-[8.2051vw] md:rounded-[2.5vw] px-[6.1538vw] py-[10.2564vw] md:px-[4.1667vw] md:py-[2.9167vw] shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] ${lang === "en" ? "border-[3px] border-transparent" : "border-2 border-[#D3EBFF]"}`}
           style={
             lang === "en"
@@ -194,91 +195,115 @@ export function Awards() {
             </div>
             <img src={iconTrophy} alt="" className="w-[35.8974vw] h-[35.8974vw] md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
           </div>
-        </div>
+        </Reveal>
 
         {/* 부상 3종 */}
         {lang === "ko" ? (
           <>
-            {/* 모바일: 실제 텍스트+아이콘 카드(2026-09-01 스펙) */}
+            {/* 모바일: 실제 텍스트+아이콘 카드(2026-09-01 스펙) — 카드 각각 개별적으로 떠오름 */}
             <div className="flex flex-col md:hidden w-full gap-[6.1538vw]">
-              <PrizeCardKoMobile
-                title={t("awardsSection.item1Title")}
-                desc={t("awardsSection.item1Desc")}
-                icon={iconRelease}
-                iconStyle={{ w: "16.9231vw", h: "12.8205vw", right: "12.3077vw", bottom: "16.4103vw" }}
-              />
-              <PrizeCardKoMobile
-                title={t("awardsSection.item2Title")}
-                desc={t("awardsSection.item2Desc")}
-                icon={iconConcert}
-                iconStyle={{ w: "15.1282vw", h: "20vw", right: "12.3077vw", bottom: "13.8462vw" }}
-              />
-              <PrizeCardKoMobile
-                title={t("awardsSection.item3Title")}
-                desc={t("awardsSection.item3Desc")}
-                icon={iconBroadcast}
-                iconStyle={{ w: "14.359vw", h: "13.3333vw", right: "13.3333vw", bottom: "15.3846vw" }}
-              />
+              <Reveal delay={0}>
+                <PrizeCardKoMobile
+                  title={t("awardsSection.item1Title")}
+                  desc={t("awardsSection.item1Desc")}
+                  icon={iconRelease}
+                  iconStyle={{ w: "16.9231vw", h: "12.8205vw", right: "12.3077vw", bottom: "16.4103vw" }}
+                />
+              </Reveal>
+              <Reveal delay={0.12}>
+                <PrizeCardKoMobile
+                  title={t("awardsSection.item2Title")}
+                  desc={t("awardsSection.item2Desc")}
+                  icon={iconConcert}
+                  iconStyle={{ w: "15.1282vw", h: "20vw", right: "12.3077vw", bottom: "13.8462vw" }}
+                />
+              </Reveal>
+              <Reveal delay={0.24}>
+                <PrizeCardKoMobile
+                  title={t("awardsSection.item3Title")}
+                  desc={t("awardsSection.item3Desc")}
+                  icon={iconBroadcast}
+                  iconStyle={{ w: "14.359vw", h: "13.3333vw", right: "13.3333vw", bottom: "15.3846vw" }}
+                />
+              </Reveal>
             </div>
             {/* 데스크탑: 기존 확정된 통합 SVG 그대로 사용 */}
             <div className="hidden md:flex w-full gap-[1.25vw]">
-              <img src={cardRelease} alt={t("awardsSection.item1Title")} className="flex-1 w-full h-auto rounded-[2.5vw]" />
-              <img src={cardConcert} alt={t("awardsSection.item2Title")} className="flex-1 w-full h-auto rounded-[2.5vw]" />
-              <img src={cardBroadcast} alt={t("awardsSection.item3Title")} className="flex-1 w-full h-auto rounded-[2.5vw]" />
+              <Reveal className="flex-1" delay={0}>
+                <img src={cardRelease} alt={t("awardsSection.item1Title")} className="w-full h-auto rounded-[2.5vw]" />
+              </Reveal>
+              <Reveal className="flex-1" delay={0.12}>
+                <img src={cardConcert} alt={t("awardsSection.item2Title")} className="w-full h-auto rounded-[2.5vw]" />
+              </Reveal>
+              <Reveal className="flex-1" delay={0.24}>
+                <img src={cardBroadcast} alt={t("awardsSection.item3Title")} className="w-full h-auto rounded-[2.5vw]" />
+              </Reveal>
             </div>
           </>
         ) : (
           <>
-            {/* 모바일: 국문과 동일한 HTML 카드 패턴 재사용, 영문 전용 아이콘·자연 줄바꿈 텍스트(2026-09-01 스펙) */}
+            {/* 모바일: 국문과 동일한 HTML 카드 패턴 재사용, 영문 전용 아이콘·자연 줄바꿈 텍스트(2026-09-01 스펙) — 카드 각각 개별적으로 떠오름 */}
             <div className="flex flex-col md:hidden w-full gap-[6.1538vw]">
-              <PrizeCardKoMobile
-                title={t("awardsSection.item1Title")}
-                desc={t("awardsSection.item1Desc").replace(/\n/g, " ")}
-                icon={iconReleaseEnMobile}
-                iconStyle={{ w: "18.4615vw", h: "14vw", right: "12.3077vw", bottom: "9.2487vw" }}
-                dimDesc
-              />
-              <PrizeCardKoMobile
-                title={t("awardsSection.item2Title")}
-                desc={t("awardsSection.item2Desc").replace(/\n/g, " ")}
-                icon={iconConcertEnMobile}
-                // 2026-09-01 재확인: 아이콘은 100x100 박스 중앙 정렬, 박스 자체가 카드 우측에서 32px 안쪽
-                iconStyle={{ w: "16.1872vw", h: "21.3667vw", right: "12.9321vw", top: "39.6372vw" }}
-                dimDesc
-                titleSize="text-[7.6923vw]"
-                titleNowrap
-              />
-              <PrizeCardKoMobile
-                title={t("awardsSection.item3Title").replace(/\n/g, " ")}
-                desc={t("awardsSection.item3Desc").replace(/\n/g, " ")}
-                icon={iconBroadcastEnMobile}
-                // 2026-09-01 재확인: 카드2와 동일한 박스 위치 기준(디자이너 권장)으로 정렬
-                iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "12.7564vw", top: "42.5282vw" }}
-                dimDesc
-                titleSize="text-[7.6923vw]"
-                titleNowrap
-              />
+              <Reveal delay={0}>
+                <PrizeCardKoMobile
+                  title={t("awardsSection.item1Title")}
+                  desc={t("awardsSection.item1Desc").replace(/\n/g, " ")}
+                  icon={iconReleaseEnMobile}
+                  iconStyle={{ w: "18.4615vw", h: "14vw", right: "12.3077vw", bottom: "9.2487vw" }}
+                  dimDesc
+                />
+              </Reveal>
+              <Reveal delay={0.12}>
+                <PrizeCardKoMobile
+                  title={t("awardsSection.item2Title")}
+                  desc={t("awardsSection.item2Desc").replace(/\n/g, " ")}
+                  icon={iconConcertEnMobile}
+                  // 2026-09-01 재확인: 아이콘은 100x100 박스 중앙 정렬, 박스 자체가 카드 우측에서 32px 안쪽
+                  iconStyle={{ w: "16.1872vw", h: "21.3667vw", right: "12.9321vw", top: "39.6372vw" }}
+                  dimDesc
+                  titleSize="text-[7.6923vw]"
+                  titleNowrap
+                />
+              </Reveal>
+              <Reveal delay={0.24}>
+                <PrizeCardKoMobile
+                  title={t("awardsSection.item3Title").replace(/\n/g, " ")}
+                  desc={t("awardsSection.item3Desc").replace(/\n/g, " ")}
+                  icon={iconBroadcastEnMobile}
+                  // 2026-09-01 재확인: 카드2와 동일한 박스 위치 기준(디자이너 권장)으로 정렬
+                  iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "12.7564vw", top: "42.5282vw" }}
+                  dimDesc
+                  titleSize="text-[7.6923vw]"
+                  titleNowrap
+                />
+              </Reveal>
             </div>
             {/* 데스크탑: 기존 확정된 레이아웃 그대로 사용 */}
             <div className="hidden md:flex w-full gap-[1.25vw]">
-              <PrizeCardEn
-                title={t("awardsSection.item1Title")}
-                desc={t("awardsSection.item1Desc")}
-                icon={iconRelease}
-                iconStyle={{ w: "4.945vw", h: "3.75vw", right: "2.475vw", bottom: "1.406vw" }}
-              />
-              <PrizeCardEn
-                title={t("awardsSection.item2Title")}
-                desc={t("awardsSection.item2Desc")}
-                icon={iconConcert}
-                iconStyle={{ w: "3.945vw", h: "5.208vw", right: "2.975vw", bottom: "0.677vw" }}
-              />
-              <PrizeCardEn
-                title={t("awardsSection.item3Title")}
-                desc={t("awardsSection.item3Desc")}
-                icon={iconBroadcast}
-                iconStyle={{ w: "4.031vw", h: "3.768vw", right: "2.932vw", bottom: "1.397vw" }}
-              />
+              <Reveal className="flex-1" delay={0}>
+                <PrizeCardEn
+                  title={t("awardsSection.item1Title")}
+                  desc={t("awardsSection.item1Desc")}
+                  icon={iconRelease}
+                  iconStyle={{ w: "4.945vw", h: "3.75vw", right: "2.475vw", bottom: "1.406vw" }}
+                />
+              </Reveal>
+              <Reveal className="flex-1" delay={0.12}>
+                <PrizeCardEn
+                  title={t("awardsSection.item2Title")}
+                  desc={t("awardsSection.item2Desc")}
+                  icon={iconConcert}
+                  iconStyle={{ w: "3.945vw", h: "5.208vw", right: "2.975vw", bottom: "0.677vw" }}
+                />
+              </Reveal>
+              <Reveal className="flex-1" delay={0.24}>
+                <PrizeCardEn
+                  title={t("awardsSection.item3Title")}
+                  desc={t("awardsSection.item3Desc")}
+                  icon={iconBroadcast}
+                  iconStyle={{ w: "4.031vw", h: "3.768vw", right: "2.932vw", bottom: "1.397vw" }}
+                />
+              </Reveal>
             </div>
           </>
         )}

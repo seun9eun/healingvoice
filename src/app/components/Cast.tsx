@@ -1,5 +1,6 @@
 import { useLanguage } from "../context/LanguageContext";
 import { MC_DATA, MENTOR_DATA, CastMember } from "../data/castData";
+import { Reveal } from "./Reveal";
 
 // 출연진(Cast) 섹션 에셋 (Figma 답변, 2026-08-27) — 원본 3배수 PNG는 용량이 커서(최대 18MB) 리사이즈+JPEG로 최적화해 저장함
 const mcSign = "/images/cast/mc_sign.png";
@@ -47,6 +48,7 @@ function BeamLight() {
 function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" }) {
   // Figma 디자인은 국문 설명 끝의 "OO 멘토" 부분만 별도 하이라이트 색으로 분리 표시함
   const bodyKo = member.descKo.replace(member.roleKo, "").trim();
+  const bodyKoMobile = (member.descKoMobile ?? member.descKo).replace(member.roleKo, "").trim();
 
   return (
     <div
@@ -60,7 +62,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
         className="relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center"
         style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
       >
-        <div className="relative z-10 flex flex-col items-center gap-[1.0256vw] md:gap-[0.4167vw] pt-[4.6154vw] md:pt-[2vw] px-[3.0769vw]">
+        <div className="relative z-10 flex flex-col items-center gap-[1.0256vw] md:gap-[0.4167vw] pt-[4.6154vw] md:pt-[2vw] px-[3.0769vw] md:px-[0.4167vw]">
           {lang === "ko" && member.nameImage ? (
             <img src={member.nameImage} alt={member.nameKo} className="h-[6.1538vw] md:h-[2.1vw] w-auto object-contain" />
           ) : lang === "en" && member.nameImageEn ? (
@@ -73,16 +75,26 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
           {/* 소개문-역할 사이는 실제 gap이 아니라 행간 여백으로 만들어짐(2026-09-01 확인) — gap 없앰 */}
           <div className="flex w-full flex-col items-center gap-0 md:gap-[0.2083vw]">
             {/* 스크린샷 대조 결과 소개문은 Medium이 아니라 Regular로 보임(2026-09-01) — 슬랙 답변과 실제 렌더가 달라 실측 우선 */}
-            {/* 영문판은 모바일/PC 줄바꿈 위치가 서로 달라(2026-09-01 재확인) 브레이크포인트별로 별도 렌더 */}
+            {/* 국문/영문 모두 모바일·PC 줄바꿈 위치가 서로 달라(2026-09-01 확인) 브레이크포인트별로 별도 렌더 */}
             {lang === "ko" ? (
-              <p className="text-[3.0769vw] md:text-[0.9375vw] font-normal leading-[1.3] md:leading-[1.4] text-center text-white">
-                {bodyKo.split("\n").map((line, i) => (
-                  <span key={i}>
-                    {i > 0 && <br />}
-                    {line}
-                  </span>
-                ))}
-              </p>
+              <>
+                <p className="md:hidden text-[3.0769vw] font-normal leading-[1.3] text-center text-white">
+                  {bodyKoMobile.split("\n").map((line, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </p>
+                <p className="hidden md:block md:text-[0.9375vw] font-normal leading-[1.4] text-center text-white">
+                  {bodyKo.split("\n").map((line, i) => (
+                    <span key={i}>
+                      {i > 0 && <br />}
+                      {line}
+                    </span>
+                  ))}
+                </p>
+              </>
             ) : (
               <>
                 <p className="md:hidden text-[3.0769vw] font-light leading-[1.3] text-center text-white">
@@ -110,27 +122,26 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
               </p>
             )}
           </div>
-          {/* 모바일: 사진을 실제 문서 흐름에 넣어 텍스트 블록과 8px gap(피그마 실측값, 국문/영문 공통, 2026-09-01 확인)을 둠.
-              폭은 부모의 좌우 padding에 영향받지 않도록 %가 아닌 vw 절대값(카드 폭 44.1026vw x 1.228)으로 지정.
-              사진이 카드보다 커지면(영문) shrink-0으로 줄어들지 않고 카드의 overflow-hidden에 자연히 클리핑됨 */}
+          {/* 사진을 실제 문서 흐름에 넣어 텍스트 블록과 8px gap(피그마 실측값, 국문/영문·모바일/PC 공통, 2026-09-01 확인)을 둠.
+              절대배치+bottom 고정 방식은 텍스트가 길어지면(예: 영문 PC 3줄) 사진 머리와 겹치는 문제가 있었음(2026-09-01 확인) — 문서 흐름으로 전환해 항상 텍스트 뒤에 오도록 함.
+              부모 flex 컨테이너에 이미 gap(모바일 4px/PC 8px)이 있으므로, 목표 gap(8px)에서 그만큼을 뺀 값만 margin-top으로 추가(PC는 컨테이너 gap과 목표가 같아 추가 불필요).
+              폭은 부모의 좌우 padding에 영향받지 않도록 %가 아닌 vw 절대값(카드 폭 x 1.228)으로 지정.
+              사진이 카드보다 커지면 shrink-0으로 줄어들지 않고 카드의 overflow-hidden에 자연히 클리핑됨 */}
           {member.photo && (
             <img
               src={member.photo}
               alt={member.nameKo}
-              className="md:hidden mt-[2.0513vw] w-[54.158vw] max-w-none shrink-0 aspect-[462/291] object-cover"
+              className="md:hidden mt-[1.0257vw] w-[54.158vw] max-w-none shrink-0 aspect-[462/291] object-cover"
             />
           )}
-        </div>
-        {/* 데스크탑: 사진을 카드 하단에 고정 배치(기존 구조 유지, 폭 122.8% 오버플로, 스펙 비율 462:291로 크롭) */}
-        {member.photo && (
-          <div className="hidden md:flex absolute inset-x-0 top-[34.6%] bottom-0 items-end justify-center overflow-visible">
+          {member.photo && (
             <img
               src={member.photo}
               alt={member.nameKo}
-              className="w-[122.8%] max-w-none aspect-[462/291] object-cover"
+              className="hidden md:block w-[23.5367vw] max-w-none shrink-0 aspect-[462/291] object-cover"
             />
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
@@ -230,8 +241,8 @@ export function Cast() {
       {/* MC */}
       <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
         {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
-        {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 */}
-        <div className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
+        {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 — 텍스트만 개별적으로 떠오름(사진 제외) */}
+        <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
           {lang === "ko" ? (
             // "MC 장성규"도 "힐링멘토 5인"과 동일한 흰색→연보라 그라데이션(2026-09-01 재확인)
             <p
@@ -273,7 +284,7 @@ export function Cast() {
                   </span>
                 ))}
           </p>
-        </div>
+        </Reveal>
         {mc.photo && (
           <div className="order-1 md:order-2 relative w-full max-w-[520px] md:max-w-none md:flex-1">
             {/* 모바일은 사각형 사진이 아니라 가장자리가 배경으로 은은하게 페이드되는 형태(2026-09-01 스크린샷 확인) — radial mask로 처리 */}
@@ -318,22 +329,28 @@ export function Cast() {
           <BeamLight />
         </div>
 
-        {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드 */}
+        {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드 — 카드는 각각 개별적으로 떠오르듯 등장(순차 딜레이) */}
         <div className="hidden md:flex items-center gap-[1.6667vw]">
-          {row1.map((m) => (
-            <MentorCard key={m.id} member={m} lang={lang} />
+          {row1.map((m, i) => (
+            <Reveal key={m.id} delay={i * 0.12}>
+              <MentorCard member={m} lang={lang} />
+            </Reveal>
           ))}
         </div>
         <div className="hidden md:flex items-center gap-[1.6667vw]">
-          {row2.map((m) => (
-            <MentorCard key={m.id} member={m} lang={lang} />
+          {row2.map((m, i) => (
+            <Reveal key={m.id} delay={i * 0.12}>
+              <MentorCard member={m} lang={lang} />
+            </Reveal>
           ))}
         </div>
         {/* 모바일: 2열 그리드, 마지막 1장만 중앙 정렬(2x2+1, 2026-08-31 모바일 스펙) */}
         <div className="grid grid-cols-2 gap-x-[3.0769vw] gap-y-[8.2051vw] w-full md:hidden justify-items-center">
           {MENTOR_DATA.map((m, i) => (
             <div key={m.id} className={i === MENTOR_DATA.length - 1 ? "col-span-2" : ""}>
-              <MentorCard member={m} lang={lang} />
+              <Reveal delay={(i % 2) * 0.12}>
+                <MentorCard member={m} lang={lang} />
+              </Reveal>
             </div>
           ))}
         </div>
