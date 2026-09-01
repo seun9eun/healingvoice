@@ -73,6 +73,43 @@ function PrizeCardEn({
   );
 }
 
+// 국문 모바일 부상 3종 카드 — 기존 데스크탑용 통합 SVG는 카드 종횡비(325.33:289)가
+// 모바일 스펙 비율(358:260)과 달라 그대로 늘리면 세로로 17%가량 더 길어지고, 그만큼
+// 텍스트/아이콘 위치·비율이 스펙과 어긋남(2026-09-01 확인). 모바일 전용으로 실제
+// 텍스트+아이콘을 따로 배치하는 HTML 카드를 구성(아이콘은 EN용으로 이미 추출된 것 재사용)
+function PrizeCardKoMobile({
+  title,
+  desc,
+  icon,
+  iconStyle,
+}: {
+  title: string;
+  desc: string;
+  icon: string;
+  iconStyle: { w: string; h: string; right: string; bottom: string };
+}) {
+  return (
+    <div
+      className="relative w-full overflow-hidden rounded-[48px] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] pt-10 pr-8 pb-8 pl-8 min-h-[260px] flex flex-col items-start gap-2"
+      style={{ backgroundImage: "linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%)" }}
+    >
+      <p
+        className="text-[32px] leading-[1.2] font-extrabold text-[#101828]"
+        style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+      >
+        {title}
+      </p>
+      <p className="text-lg leading-[29.25px] font-medium text-[#062259]">{desc}</p>
+      <img
+        src={icon}
+        alt=""
+        className="absolute object-contain"
+        style={{ width: iconStyle.w, height: iconStyle.h, right: iconStyle.right, bottom: iconStyle.bottom }}
+      />
+    </div>
+  );
+}
+
 export function Awards() {
   const { t, lang } = useLanguage();
 
@@ -130,11 +167,35 @@ export function Awards() {
 
         {/* 부상 3종 */}
         {lang === "ko" ? (
-          <div className="flex flex-col md:flex-row w-full gap-6 md:gap-[1.25vw]">
-            <img src={cardRelease} alt={t("awardsSection.item1Title")} className="flex-1 w-full h-auto rounded-[32px] md:rounded-[2.5vw]" />
-            <img src={cardConcert} alt={t("awardsSection.item2Title")} className="flex-1 w-full h-auto rounded-[32px] md:rounded-[2.5vw]" />
-            <img src={cardBroadcast} alt={t("awardsSection.item3Title")} className="flex-1 w-full h-auto rounded-[32px] md:rounded-[2.5vw]" />
-          </div>
+          <>
+            {/* 모바일: 실제 텍스트+아이콘 카드(2026-09-01 스펙) */}
+            <div className="flex flex-col md:hidden w-full gap-6">
+              <PrizeCardKoMobile
+                title={t("awardsSection.item1Title")}
+                desc={t("awardsSection.item1Desc")}
+                icon={iconRelease}
+                iconStyle={{ w: "82px", h: "62px", right: "45px", bottom: "58px" }}
+              />
+              <PrizeCardKoMobile
+                title={t("awardsSection.item2Title")}
+                desc={t("awardsSection.item2Desc")}
+                icon={iconConcert}
+                iconStyle={{ w: "74px", h: "98px", right: "45px", bottom: "47px" }}
+              />
+              <PrizeCardKoMobile
+                title={t("awardsSection.item3Title")}
+                desc={t("awardsSection.item3Desc")}
+                icon={iconBroadcast}
+                iconStyle={{ w: "70px", h: "65px", right: "48px", bottom: "53px" }}
+              />
+            </div>
+            {/* 데스크탑: 기존 확정된 통합 SVG 그대로 사용 */}
+            <div className="hidden md:flex w-full gap-[1.25vw]">
+              <img src={cardRelease} alt={t("awardsSection.item1Title")} className="flex-1 w-full h-auto rounded-[2.5vw]" />
+              <img src={cardConcert} alt={t("awardsSection.item2Title")} className="flex-1 w-full h-auto rounded-[2.5vw]" />
+              <img src={cardBroadcast} alt={t("awardsSection.item3Title")} className="flex-1 w-full h-auto rounded-[2.5vw]" />
+            </div>
+          </>
         ) : (
           <div className="flex flex-col md:flex-row w-full gap-6 md:gap-[1.25vw]">
             <PrizeCardEn
