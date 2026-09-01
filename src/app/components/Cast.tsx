@@ -229,10 +229,20 @@ export function Cast() {
         </div>
         {mc.photo && (
           <div className="order-1 md:order-2 relative w-full max-w-[520px] md:max-w-none md:flex-1">
+            {/* 모바일은 사각형 사진이 아니라 가장자리가 배경으로 은은하게 페이드되는 형태(2026-09-01 스크린샷 확인) — radial mask로 처리 */}
             <img
               src={mc.photo}
               alt={mc.nameKo}
-              className="w-full h-[313px] md:h-[30.104vw] object-cover object-top rounded-3xl md:rounded-[2.5vw]"
+              className="md:hidden w-full h-[313px] object-cover object-top"
+              style={{
+                maskImage: "radial-gradient(ellipse 62% 68% at 50% 42%, black 45%, transparent 92%)",
+                WebkitMaskImage: "radial-gradient(ellipse 62% 68% at 50% 42%, black 45%, transparent 92%)",
+              }}
+            />
+            <img
+              src={mc.photo}
+              alt={mc.nameKo}
+              className="hidden md:block w-full md:h-[30.104vw] object-cover object-top md:rounded-[2.5vw]"
             />
             {/* MC 사인("힐링보이스 장성규") — 사진 우상단 근처, Figma 좌표 환산(사진 대비 left 69%, top 20%, width 21.6%) */}
             <img
