@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useLanguage } from "../context/LanguageContext";
 
 // 02_Big Text (Figma 답변, 2026-08-27) — 배경/텍스트 전부 CSS로 구현, 이미지 에셋 없음
@@ -15,7 +16,7 @@ export function BigText() {
     // 가로 스크롤을 만들던 문제 — overflow-hidden으로 섹션 안에서만 잘리게 함(2026-09-01 확인)
     <section
       id="about"
-      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[16.4103vw] pb-[20.5128vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
+      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
     >
       {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
       {lang === "ko" && (
@@ -35,7 +36,31 @@ export function BigText() {
         </div>
       )}
 
-      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} items-center justify-center rounded-[4.1026vw] md:rounded-[0.8333vw] px-[4.1026vw] md:px-[0.8333vw] w-full`}>
+      {/* 영문 모바일: 제목 6줄 각각 분리 표시, gap4, "Healing Voice"만 크기·그라데이션 다름(2026-09-01 확인) */}
+      {lang === "en" && (
+        <div className="flex md:hidden flex-col items-center gap-[1.0256vw] px-[4.1026vw]">
+          <p className="text-[6.1538vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            {t("bigText.heading").replace("Special Project:", "").trim()}
+          </p>
+          <p className="text-[6.1538vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            Special Project:
+          </p>
+          <p className="text-[6.1538vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            {t("bigText.line2")}
+          </p>
+          <p className="text-[7.1795vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            Healing Voice
+          </p>
+          <p className="text-[6.1538vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            {t("bigText.subLine").replace("the world", "").trim()}
+          </p>
+          <p className="text-[6.1538vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
+            the world
+          </p>
+        </div>
+      )}
+
+      <div className="hidden md:flex items-center justify-center rounded-[4.1026vw] md:rounded-[0.8333vw] px-[4.1026vw] md:px-[0.8333vw] w-full">
         <p
           className="max-w-full md:max-w-[63.542vw] text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
@@ -44,7 +69,7 @@ export function BigText() {
         </p>
       </div>
 
-      <div className={`${lang === "ko" ? "hidden md:flex" : "flex"} flex-wrap items-center justify-center gap-[2.0513vw] md:gap-[0.5208vw] px-[4.1026vw]`}>
+      <div className="hidden md:flex flex-wrap items-center justify-center gap-[2.0513vw] md:gap-[0.5208vw] px-[4.1026vw]">
         <p
           className="text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
@@ -63,7 +88,7 @@ export function BigText() {
       {t("bigText.subLine") && (
         <p
           // 컨테이너 930px(텍스트 898px + 좌우 padding 16px씩) 기준 — 폭이 좁아질수록 폰트 렌더링 반올림 오차 영향이 커져 1024px 부근에서도 줄바꿈되는 것 확인, 여유를 더 둠(2026-08-31 확인)
-          className="max-w-full md:max-w-[52vw] text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-[4.1026vw]"
+          className="hidden md:block max-w-full md:max-w-[52vw] text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text px-[4.1026vw]"
           style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("bigText.subLine")}
@@ -78,8 +103,12 @@ export function BigText() {
           {lang === "ko" && <br className="md:hidden" />}
           <span className="text-[#7992FB]">{t("bigText.bodyHighlight")}</span>
           {bodyLines[0]}
-          <br />
-          {bodyLines[1]}
+          {bodyLines.slice(1).map((line, i) => (
+            <Fragment key={i}>
+              <br />
+              {line}
+            </Fragment>
+          ))}
         </p>
       </div>
 

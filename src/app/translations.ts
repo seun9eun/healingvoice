@@ -330,7 +330,8 @@ export const translations = {
       subLine: "The Voice that heals the world",
       bodyPart1: "Bringing the one and only ",
       bodyHighlight: "VOICE",
-      bodyPart2: "\nto offer warm comfort and hope to a hurting world.",
+      // 영문 모바일 실측 스펙 확인(2026-09-01): "to offer warm comfort " / "and hope to a hurting world." 2줄로 분리
+      bodyPart2: "\nto offer warm comfort \nand hope to a hurting world.",
     },
     gallery: {
       subtitle: "Official Video",
