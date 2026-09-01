@@ -55,7 +55,7 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
         className="relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center"
         style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
       >
-        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-[0.4167vw] pt-8 md:pt-[2vw] px-3">
+        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-[0.4167vw] pt-[18px] md:pt-[2vw] px-3">
           {lang === "ko" && member.nameImage ? (
             <img src={member.nameImage} alt={member.nameKo} className="h-8 md:h-[2.1vw] w-auto object-contain" />
           ) : lang === "en" && member.nameImageEn ? (
@@ -172,9 +172,10 @@ export function Cast() {
         {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 */}
         <div className={`order-2 md:order-1 flex flex-col items-center gap-2 md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
           {lang === "ko" ? (
+            // "MC 장성규"도 "힐링멘토 5인"과 동일한 흰색→연보라 그라데이션(2026-09-01 재확인)
             <p
-              className="text-[28px] md:text-[2.0833vw] leading-none font-extrabold text-white"
-              style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+              className="text-[28px] md:text-[2.0833vw] leading-none font-extrabold text-transparent bg-clip-text"
+              style={{ backgroundImage: mentorsTitleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
             >
               {t("cast.mcLabel")}
             </p>
@@ -221,7 +222,7 @@ export function Cast() {
 
       {/* 힐링멘토 */}
       <div className="flex flex-col items-center gap-8 md:gap-[1.6667vw] w-full max-w-[1200px]">
-        <div className="flex flex-col items-center gap-2 md:gap-[0.4167vw] w-full max-w-[800px] py-2 md:py-[0.8333vw]">
+        <div className="flex flex-col items-center gap-2 md:gap-[0.4167vw] w-full max-w-[800px] pt-8 pb-1 md:py-[0.8333vw]">
           {/* beam light — 텍스트 위/아래 가로 빛줄기 */}
           <BeamLight />
           <h3
@@ -248,7 +249,7 @@ export function Cast() {
           ))}
         </div>
         {/* 모바일: 2열 그리드, 마지막 1장만 중앙 정렬(2x2+1, 2026-08-31 모바일 스펙) */}
-        <div className="grid grid-cols-2 gap-4 w-full md:hidden justify-items-center">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-8 w-full md:hidden justify-items-center">
           {MENTOR_DATA.map((m, i) => (
             <div key={m.id} className={i === MENTOR_DATA.length - 1 ? "col-span-2" : ""}>
               <MentorCard member={m} lang={lang} />
