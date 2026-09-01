@@ -249,9 +249,9 @@ export function Awards() {
                 title={t("awardsSection.item3Title").replace(/\n/g, " ")}
                 desc={t("awardsSection.item3Desc").replace(/\n/g, " ")}
                 icon={iconBroadcastEnMobile}
-                iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "18.3333vw", top: "48.7179vw" }}
+                iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "18.3333vw", top: "42.5321vw" }}
                 dimDesc
-                titleSize="text-[6.9231vw]"
+                titleSize="text-[7.1795vw]"
                 titleNowrap
               />
             </div>
