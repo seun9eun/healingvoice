@@ -169,7 +169,7 @@ export function Cast() {
           {t("cast.eyebrow")}
         </span>
         <h2
-          className="text-[10.2564vw] leading-[8.9744vw] md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text"
+          className={`text-[10.2564vw] ${lang === "en" ? "leading-[11.2821vw]" : "leading-[8.9744vw]"} md:text-[2.9167vw] md:leading-tight font-black uppercase text-transparent bg-clip-text`}
           style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
           {t("cast.title")}
@@ -185,7 +185,13 @@ export function Cast() {
               <span className="hidden md:inline"> MC와 힐링멘토를 소개합니다</span>
             </>
           ) : (
-            t("cast.desc")
+            // 영문 모바일: "...Healing Mentors" / "joining...Voice" 2줄로 고정(2026-09-01 확인)
+            <>
+              {t("cast.desc").replace("joining the journey of Healing Voice", "").trim()}
+              <br className="md:hidden" />
+              <span className="md:hidden">joining the journey of Healing Voice</span>
+              <span className="hidden md:inline"> joining the journey of Healing Voice</span>
+            </>
           )}
         </p>
       </div>
@@ -204,12 +210,21 @@ export function Cast() {
               {t("cast.mcLabel")}
             </p>
           ) : (
-            // 영문판은 "Host"/"Jang Sungkyu" 두 줄로 분리(2026-08-31 확인). 둘 다 그라데이션 적용
-            <p className="text-[6.1538vw] md:text-[2.0833vw] leading-tight font-extrabold" style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}>
-              <span className="uppercase text-transparent bg-clip-text" style={{ backgroundImage: titleGradient }}>Host</span>
-              <br />
-              <span className="text-transparent bg-clip-text" style={{ backgroundImage: mentorsTitleGradient }}>{mc.nameEn}</span>
-            </p>
+            // 영문판 "Host"/"Jang Sungkyu" — 28px, gap2, Host만 그라데이션이고 이름은 흰색 단색(2026-09-01 확인)
+            <div className="flex flex-col items-center gap-[0.5128vw]">
+              <p
+                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold uppercase text-transparent bg-clip-text"
+                style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+              >
+                Host
+              </p>
+              <p
+                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-white"
+                style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+              >
+                {mc.nameEn}
+              </p>
+            </div>
           )}
           <p className={`text-[4.1026vw] md:text-[1.25vw] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-normal" : "font-medium"} text-white break-keep`}>
             {lang === "ko"
