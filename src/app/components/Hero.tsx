@@ -61,7 +61,7 @@ export function Hero() {
             // 음수 마진으로 겹치게 압축(로고 파일 자체의 위쪽 여백 때문으로 추정, 2026-09-01 확인)
             <div className="flex flex-col items-center">
               <img src={kccmBadge} alt="K-CCM 글로벌 오디션" className="w-auto h-[19.12px] object-contain" />
-              <img src={logoSrc} alt="Healing Voice" className="w-auto h-[115.43px] object-contain -mt-[17.55px]" />
+              <img src={logoSrc} alt="Healing Voice" className="w-[288.59px] h-[115.43px] object-contain -mt-1" />
             </div>
           ) : (
             <>
