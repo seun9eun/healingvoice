@@ -28,10 +28,11 @@ const cardClip = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%,
 function BeamLight() {
   return (
     <>
+      {/* 스크린샷 대조 결과 얇고 은은한 빛줄기인데 기존 18px 두께+선명한 그라디언트라 너무 두꺼워 보였음(2026-09-01 확인) — 얇게 줄이고 블러로 은은하게 처리 */}
       <span
         aria-hidden
-        className="md:hidden block w-full max-w-[800px] h-[18px]"
-        style={{ backgroundImage: beamLightMobile, clipPath: "ellipse(50% 50% at center)" }}
+        className="md:hidden block w-full max-w-[800px] h-[3px]"
+        style={{ backgroundImage: beamLightMobile, filter: "blur(1.5px)" }}
       />
       <span
         aria-hidden
