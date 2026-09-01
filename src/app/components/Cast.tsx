@@ -115,7 +115,8 @@ export function Cast() {
       id="cast"
       className="relative w-full flex flex-col items-center gap-12 md:gap-[3.3333vw] overflow-hidden px-4 md:px-[18.75vw] pt-24 pb-0 md:py-[6.25vw]"
     >
-      {/* 섹션 자체 배경(bg_출연진, Figma 1178:603) — 조명 그래픽 사진 + 상단 그라디언트. PC 전용(모바일은 공용 배경만) */}
+      {/* 섹션 자체 배경(bg_출연진, Figma 1178:603) — 조명 그래픽 사진 + 상단 그라디언트.
+          모바일도 동일한 배경 그룹이 존재함을 상세 스펙에서 재확인(2026-09-01) — "공용 배경만 있음"은 착오였음 */}
       <div
         className="hidden md:block absolute -z-10 pointer-events-none"
         style={{ left: "-4.115vw", top: "-1.979vw", width: "108.229vw", height: "131.615vw" }}
@@ -128,6 +129,23 @@ export function Cast() {
         style={{
           top: "-1.979vw",
           height: "40vw",
+          backgroundImage: "linear-gradient(to top, rgba(21,57,118,0) 0%, #00163b 100%)",
+        }}
+        aria-hidden
+      />
+      {/* 모바일 버전(390px 프레임 기준 실측 좌표, 2026-09-01 확인: bg 그룹 x-933 y-8.63 2115.42x2028) */}
+      <div
+        className="md:hidden absolute -z-10 pointer-events-none"
+        style={{ left: "-933px", top: "-8.63px", width: "2115.42px", height: "2028px" }}
+        aria-hidden
+      >
+        <img src={bgCastPhoto} alt="" className="w-full h-full object-cover" />
+      </div>
+      <div
+        className="md:hidden absolute -z-10 w-full pointer-events-none"
+        style={{
+          top: 0,
+          height: "607px",
           backgroundImage: "linear-gradient(to top, rgba(21,57,118,0) 0%, #00163b 100%)",
         }}
         aria-hidden
