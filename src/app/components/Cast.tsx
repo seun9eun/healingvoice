@@ -235,8 +235,8 @@ export function Cast() {
               alt={mc.nameKo}
               className="md:hidden w-full h-[313px] object-cover object-top"
               style={{
-                maskImage: "radial-gradient(ellipse 62% 68% at 50% 42%, black 45%, transparent 92%)",
-                WebkitMaskImage: "radial-gradient(ellipse 62% 68% at 50% 42%, black 45%, transparent 92%)",
+                maskImage: "radial-gradient(ellipse 92% 78% at 50% 40%, black 60%, transparent 98%)",
+                WebkitMaskImage: "radial-gradient(ellipse 92% 78% at 50% 40%, black 60%, transparent 98%)",
               }}
             />
             <img
