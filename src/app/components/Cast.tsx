@@ -110,12 +110,20 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
               </p>
             )}
           </div>
+          {/* 모바일: 사진을 실제 문서 흐름에 넣어 텍스트 블록과 8px gap(피그마 실측값, 국문/영문 공통, 2026-09-01 확인)을 둠.
+              폭은 부모의 좌우 padding에 영향받지 않도록 %가 아닌 vw 절대값(카드 폭 44.1026vw x 1.228)으로 지정.
+              사진이 카드보다 커지면(영문) shrink-0으로 줄어들지 않고 카드의 overflow-hidden에 자연히 클리핑됨 */}
+          {member.photo && (
+            <img
+              src={member.photo}
+              alt={member.nameKo}
+              className="md:hidden mt-[2.0513vw] w-[54.158vw] max-w-none shrink-0 aspect-[462/291] object-cover"
+            />
+          )}
         </div>
-        {/* 사진은 카드보다 넓게(122.8%) 오버플로되며 카드 y34.6% 지점부터 시작 — 스펙 비율(462:291)로 크롭해서 원본 파일 비율 차이에 영향받지 않도록 처리 */}
-        {/* items-end+overflow-visible 조합에서는 실제로 bottom 값만 사진 위치에 영향을 줌(top은 무시됨, 2026-09-01 실측 확인) */}
-        {/* 영문판은 소개문 하단과 사진 머리가 맞닿아 스펙(여백 있음)과 달랐음 — bottom을 음수로 내려 여백 확보(2026-09-01 확인) */}
+        {/* 데스크탑: 사진을 카드 하단에 고정 배치(기존 구조 유지, 폭 122.8% 오버플로, 스펙 비율 462:291로 크롭) */}
         {member.photo && (
-          <div className={`absolute inset-x-0 top-[34.6%] flex items-end justify-center overflow-visible ${lang === "en" ? "bottom-[-8%]" : "bottom-0"}`}>
+          <div className="hidden md:flex absolute inset-x-0 top-[34.6%] bottom-0 items-end justify-center overflow-visible">
             <img
               src={member.photo}
               alt={member.nameKo}
