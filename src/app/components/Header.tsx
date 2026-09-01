@@ -166,7 +166,7 @@ export function Header() {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="text-left text-[#062259] font-semibold text-[5.1282vw] leading-[1.2]"
+                className="text-left text-[#062259] font-semibold text-[5.1282vw] leading-[1.2] uppercase"
               >
                 {item.label}
               </button>
