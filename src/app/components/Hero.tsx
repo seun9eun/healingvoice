@@ -43,7 +43,7 @@ export function Hero() {
       <div className="relative z-10 flex flex-col items-center gap-6 md:gap-[1.6667vw] w-full max-w-[420px] md:max-w-[30.469vw] px-4 pb-6 md:pb-[1.25vw]">
         {/* 태그 + 로고 그룹 — 영문은 모바일/데스크탑 배치 순서가 달라(모바일: 뱃지→로고→태그라인) 분리 렌더링(2026-08-31 모바일 스펙) */}
         {/* 국문 모바일 실측 스펙 반영(2026-09-01 확인): 뱃지-로고그룹 gap16, 아이콘 24.89px, 로고 115.43px 등 */}
-        <div className="md:hidden flex flex-col items-center gap-4">
+        <div className="md:hidden flex flex-col items-center gap-0">
           <div className="flex items-center gap-1.5">
             {lang === "en" ? (
               <img src={fondantWordmarkEn} alt="fondant" className="h-4 w-auto object-contain" />
