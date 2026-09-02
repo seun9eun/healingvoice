@@ -267,7 +267,8 @@ export function Cast() {
             </p>
           ) : (
             // 영문판 "Host"/"Jang Sungkyu" — 28px, gap2, Host만 그라데이션이고 이름은 흰색 단색(2026-09-01 확인)
-            <div className="flex flex-col items-center gap-[0.5128vw]">
+            // gap2(=0.5128vw@390)에 md: 오버라이드가 빠져있어 PC에서 9.85px로 과도하게 벌어져 있던 것을 수정(2026-09-02 확인)
+            <div className="flex flex-col items-center gap-[0.5128vw] md:gap-[0.1042vw]">
               <p
                 className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold uppercase text-transparent bg-clip-text"
                 style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}

@@ -101,8 +101,10 @@ export function Header() {
       }`}
     >
       <div className="flex items-center justify-between h-[16.4103vw] px-[4.1026vw] md:h-[3.3333vw] md:max-w-[80vw] md:mx-auto md:px-[0.8333vw]">
-        {/* 로고 */}
-        <Link to="/" onClick={scrollToTop} className="flex items-center shrink-0">
+        {/* 로고 — to="/"로 하드코딩돼 있으면 언어 코드가 없는 경로가 되어 LanguageContext가
+            브라우저 언어 기준으로 다시 리다이렉트해버림(예: 영문 페이지에서 눌러도 국문으로 이동).
+            현재 lang을 경로에 그대로 유지해야 함(2026-09-02 확인) */}
+        <Link to={`/${lang}`} onClick={scrollToTop} className="flex items-center shrink-0">
           <img src={currentLogo} alt="Healing Voice" className="h-[8.2051vw] md:h-[2.1875vw] w-auto object-contain" />
         </Link>
 
