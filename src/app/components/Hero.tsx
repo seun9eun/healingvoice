@@ -48,11 +48,15 @@ export function Hero() {
       <div className="absolute inset-x-0 top-0 h-[216.4103vw] md:inset-0 md:h-full" aria-hidden>
         <img src={heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover md:hidden" />
         <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover hidden md:block" />
-        {/* QA 재확인(2026-09-02, 갤럭시탭 S5e 세로 800px 실측): 이전 35%→60% 수정도 여전히 부족했음 —
-            실측 결과 인물 얼굴/손 하트는 배경 박스(216.4103vw) 기준 상단 0~27% 구간, "5주년 특별 기획"
-            텍스트는 36.9~38.9% 구간에 위치. 얼굴은 그대로 밝게 보이되 텍스트가 시작되는 지점 전에는
-            반드시 완전히 어두워져야 해서, 페이드를 28%(얼굴 아래)~35%(텍스트 시작 전)로 앞당김 */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_28%,#061E49_35%)] md:hidden" />
+        {/* QA 재재확인(2026-09-02): 28%→35%로 확 앞당긴 수정은 텍스트 가독성은 해결했지만, 캔버스 픽셀
+            샘플링 실측 결과 실제 사진(hero_bg_mobile.jpg)은 원래 32~38% 부근이 흰 재킷 때문에 가장 밝고
+            (밝기 130대), 이후 자연스럽게 어두워져 54~56% 지점부터는 이미 사진 자체가 순수 배경색(#061E49,
+            밝기 37)과 동일해짐 — 그런데 28→35%처럼 7%p 안에 확 어둡게 만들면 사진이 자연스럽게 어두워지는
+            느낌이 아니라 그 지점에서 뚝 잘려 배경이 통째로 지워진 것처럼 보임(QA 피드백: "배경을 완전히 지운게
+            문제"). 페이드 구간을 22%(손 하트 아래)~54%(사진이 어차피 자연스럽게 배경색과 같아지는 지점)로
+            넓혀 실제 사진의 자연스러운 명암 흐름과 겹치는 그라데이션처럼 보이게 하고, 텍스트가 시작되는
+            36~39% 구간에서는 여전히 85%+ 불투명도라 가독성은 그대로 유지 */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_22%,rgba(6,30,73,0.85)_36%,#061E49_54%)] md:hidden" />
         <div className="hidden md:block absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 
