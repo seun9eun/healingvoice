@@ -48,13 +48,11 @@ export function Hero() {
       <div className="absolute inset-x-0 top-0 h-[216.4103vw] md:inset-0 md:h-full" aria-hidden>
         <img src={heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover md:hidden" />
         <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover hidden md:block" />
-        {/* QA 피드백(2026-09-02, 갤럭시탭 S5e 800px 모바일 레이아웃): "5주년 특별 기획" 텍스트가 인물 사진의
-            밝은 재킷 부분과 경계선에 걸쳐 거의 안 읽힘 — 텍스트/사진 위치 관계는 모든 폭에서 비율상 동일하지만
-            (vw 기반이라 항상 사진의 같은 지점에 옴), 원래 그라디언트가 42%~85% 구간에서만 어두워져 텍스트가
-            오는 지점(약 57% 지점)에서는 35%밖에 어두워지지 않아 밝은 옷 위에서는 텍스트가 묻힘.
-            텍스트를 옮기는 대신 그 지점이 항상 확실히 어둡도록 그라디언트 자체를 앞당김(35%→60%).
-            데스크탑은 기존 확정 스펙 그대로 유지(별도 오버레이로 분리) */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_35%,#061E49_60%)] md:hidden" />
+        {/* QA 재확인(2026-09-02, 갤럭시탭 S5e 세로 800px 실측): 이전 35%→60% 수정도 여전히 부족했음 —
+            실측 결과 인물 얼굴/손 하트는 배경 박스(216.4103vw) 기준 상단 0~27% 구간, "5주년 특별 기획"
+            텍스트는 36.9~38.9% 구간에 위치. 얼굴은 그대로 밝게 보이되 텍스트가 시작되는 지점 전에는
+            반드시 완전히 어두워져야 해서, 페이드를 28%(얼굴 아래)~35%(텍스트 시작 전)로 앞당김 */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_28%,#061E49_35%)] md:hidden" />
         <div className="hidden md:block absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 

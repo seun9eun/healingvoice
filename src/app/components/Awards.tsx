@@ -70,15 +70,20 @@ function PrizeCardEn({
   );
 }
 
-// 국문 모바일 부상 3종 카드 — 기존 데스크탑용 통합 SVG는 카드 종횡비(325.33:289)가
-// 모바일 스펙 비율(358:260)과 달라 그대로 늘리면 세로로 17%가량 더 길어지고, 그만큼
-// 텍스트/아이콘 위치·비율이 스펙과 어긋남(2026-09-01 확인). 모바일 전용으로 실제
-// 텍스트+아이콘을 따로 배치하는 HTML 카드를 구성(아이콘은 EN용으로 이미 추출된 것 재사용)
-function PrizeCardKoMobile({
+// 모바일 부상 3종 카드 — 국문/영문 공용(2026-09-02 컨테이너 쿼리 리팩토링). 기존 데스크탑용 통합 SVG는
+// 카드 종횡비(325.33:289)가 모바일 스펙 비율(358:260)과 달라 그대로 늘리면 세로로 17%가량 더 길어지고,
+// 텍스트/아이콘 위치·비율이 스펙과 어긋나서(2026-09-01 확인) 모바일 전용 HTML 카드로 별도 구성.
+// 예전에는 텍스트·아이콘 크기를 뷰포트 vw로, 아이콘 위치를 absolute+right/bottom(or top)로 하드코딩해서
+// 두 가지 문제가 있었음: (1) 태블릿처럼 넓은 폭에서 카드 내부가 한도 없이 커짐 (2) 국문(짧은 1줄)과
+// 영문(긴 2줄) 텍스트 길이가 서로 달라 고정 좌표로는 카드마다 top/bottom 앵커를 수동으로 갈라 써야 했음.
+// 컨테이너 쿼리(cqw = 이 카드 자신의 렌더 폭 기준 %)로 바꿔서 카드가 실제로 어떤 폭으로 그려지든
+// 내부 요소가 항상 같은 비율로 스케일되게 하고, 아이콘은 absolute 좌표 대신 flex(justify-between+self-end)로
+// 배치해 텍스트 줄 수와 무관하게 항상 카드 우측 하단에 자동으로 붙도록 함(QA 피드백, 2026-09-02)
+function PrizeCardMobile({
   title,
   desc,
   icon,
-  iconStyle,
+  iconSize,
   dimDesc,
   titleSize,
   titleNowrap,
@@ -86,39 +91,32 @@ function PrizeCardKoMobile({
   title: string;
   desc: string;
   icon: string;
-  // bottom 앵커는 카드 높이가 스펙(HUG로 늘어난 카드)과 실제 렌더(min-h로 고정) 사이에 차이가 있으면
-  // 텍스트와 겹치므로, 텍스트 길이가 긴 카드는 top으로 앵커(카드 상단 기준 절대 위치)해서 이 문제를 피함
-  iconStyle: { w: string; h: string; right: string; bottom?: string; top?: string };
+  iconSize: { w: string; h: string };
   dimDesc?: boolean; // 영문 스펙: 본문 opacity 0.8(2026-09-01 확인) — 국문은 명시 없어 미적용
   titleSize?: string; // 제목이 길어 기본 크기로는 한 줄에 안 들어가는 카드 전용 축소값(사용자 확인, 2026-09-01)
   titleNowrap?: boolean;
 }) {
   return (
     <div
-      // min-h가 순수 vw값이라 390px 기준으로는 딱 맞는 260px였지만, 뷰포트 폭이 커질수록(태블릿 폭 등)
-      // 한도 없이 계속 늘어나 텍스트와 아이콘 사이에 큰 빈 공간이 생기는 문제가 있었음(QA 피드백, 2026-09-02) —
-      // clamp으로 390px 기준값(260px) 이상은 더 커지지 않게 고정
-      className="relative w-full overflow-hidden rounded-[12.3077vw] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] pt-[10.2564vw] pr-[8.2051vw] pb-[8.2051vw] pl-[8.2051vw] min-h-[clamp(0px,66.6667vw,260px)] flex flex-col items-start gap-[2.0513vw]"
+      // [container-type:inline-size] — 아래 cqw 값들이 뷰포트가 아니라 이 카드 자신의 렌더 폭을 기준으로
+      // 계산되게 함. min-h는 기존 확정된 390px 기준 clamp 유지(카드 자체 크기는 이미 검증된 값, 2026-09-02)
+      className="relative w-full overflow-hidden rounded-[12.3077vw] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] [container-type:inline-size] flex flex-col justify-between gap-[2.0513vw] pt-[10.2564vw] pr-[8.2051vw] pb-[8.2051vw] pl-[8.2051vw] min-h-[clamp(0px,66.6667vw,260px)]"
       style={{ backgroundImage: "linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%)" }}
     >
-      <p
-        className={`${titleSize ?? "text-[8.2051vw]"} leading-[1.2] font-extrabold text-[#101828] ${titleNowrap ? "whitespace-nowrap" : ""}`}
-        style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
-      >
-        {title}
-      </p>
-      <p className={`text-[4.6154vw] leading-[7.5vw] font-medium text-[#062259] ${dimDesc ? "opacity-80" : ""}`}>{desc}</p>
+      <div className="flex flex-col items-start gap-[2.0513vw]">
+        <p
+          className={`${titleSize ?? "text-[8.9385cqw]"} leading-[1.2] font-extrabold text-[#101828] ${titleNowrap ? "whitespace-nowrap" : ""}`}
+          style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
+        >
+          {title}
+        </p>
+        <p className={`text-[5.0279cqw] leading-[8.1704cqw] font-medium text-[#062259] ${dimDesc ? "opacity-80" : ""}`}>{desc}</p>
+      </div>
       <img
         src={icon}
         alt=""
-        className="absolute object-contain"
-        style={{
-          width: iconStyle.w,
-          height: iconStyle.h,
-          right: iconStyle.right,
-          bottom: iconStyle.bottom,
-          top: iconStyle.top,
-        }}
+        className="self-end object-contain"
+        style={{ width: iconSize.w, height: iconSize.h }}
       />
     </div>
   );
@@ -199,39 +197,41 @@ export function Awards() {
             {/* 모바일: 실제 텍스트+아이콘 카드(2026-09-01 스펙) — 카드 각각 개별적으로 떠오름 */}
             <div className="flex flex-col md:hidden w-full gap-[6.1538vw]">
               <Reveal delay={0}>
-                <PrizeCardKoMobile
+                <PrizeCardMobile
                   title={t("awardsSection.item1Title")}
                   desc={t("awardsSection.item1Desc")}
                   icon={iconRelease}
-                  iconStyle={{ w: "16.9231vw", h: "12.8205vw", right: "12.3077vw", bottom: "16.4103vw" }}
+                  iconSize={{ w: "18.4358cqw", h: "13.9665cqw" }}
                 />
               </Reveal>
               <Reveal delay={0.12}>
-                <PrizeCardKoMobile
+                <PrizeCardMobile
                   title={t("awardsSection.item2Title")}
                   desc={t("awardsSection.item2Desc")}
                   icon={iconConcert}
-                  iconStyle={{ w: "15.1282vw", h: "20vw", right: "12.3077vw", bottom: "13.8462vw" }}
+                  iconSize={{ w: "16.4804cqw", h: "21.7877cqw" }}
                 />
               </Reveal>
               <Reveal delay={0.24}>
-                <PrizeCardKoMobile
+                <PrizeCardMobile
                   title={t("awardsSection.item3Title")}
                   desc={t("awardsSection.item3Desc")}
                   icon={iconBroadcast}
-                  iconStyle={{ w: "14.359vw", h: "13.3333vw", right: "13.3333vw", bottom: "15.3846vw" }}
+                  iconSize={{ w: "15.6425cqw", h: "14.5251cqw" }}
                 />
               </Reveal>
             </div>
-            {/* 데스크탑: 기존 확정된 통합 SVG 그대로 사용 */}
+            {/* 데스크탑: 기존 확정된 통합 SVG 그대로 사용 — SVG 파일 자체의 고정 intrinsic 크기(325.333px)가
+                flex item의 기본 min-width:auto로 작용해 태블릿 가로처럼 컨테이너가 좁아지는 폭에서는
+                줄어들지 못하고 그랜드프라이즈 카드 우측으로 넘쳐흘렀음 — min-w-0으로 정상적으로 축소되게 함(QA 피드백, 2026-09-02) */}
             <div className="hidden md:flex w-full gap-[1.25vw]">
-              <Reveal className="flex-1" delay={0}>
+              <Reveal className="flex-1 min-w-0" delay={0}>
                 <img src={cardRelease} alt={t("awardsSection.item1Title")} className="w-full h-auto rounded-[2.5vw]" />
               </Reveal>
-              <Reveal className="flex-1" delay={0.12}>
+              <Reveal className="flex-1 min-w-0" delay={0.12}>
                 <img src={cardConcert} alt={t("awardsSection.item2Title")} className="w-full h-auto rounded-[2.5vw]" />
               </Reveal>
-              <Reveal className="flex-1" delay={0.24}>
+              <Reveal className="flex-1 min-w-0" delay={0.24}>
                 <img src={cardBroadcast} alt={t("awardsSection.item3Title")} className="w-full h-auto rounded-[2.5vw]" />
               </Reveal>
             </div>
@@ -241,35 +241,33 @@ export function Awards() {
             {/* 모바일: 국문과 동일한 HTML 카드 패턴 재사용, 영문 전용 아이콘·자연 줄바꿈 텍스트(2026-09-01 스펙) — 카드 각각 개별적으로 떠오름 */}
             <div className="flex flex-col md:hidden w-full gap-[6.1538vw]">
               <Reveal delay={0}>
-                <PrizeCardKoMobile
+                <PrizeCardMobile
                   title={t("awardsSection.item1Title")}
                   desc={t("awardsSection.item1Desc").replace(/\n/g, " ")}
                   icon={iconReleaseEnMobile}
-                  iconStyle={{ w: "18.4615vw", h: "14vw", right: "12.3077vw", bottom: "9.2487vw" }}
+                  iconSize={{ w: "20.1117cqw", h: "15.2514cqw" }}
                   dimDesc
                 />
               </Reveal>
               <Reveal delay={0.12}>
-                <PrizeCardKoMobile
+                <PrizeCardMobile
                   title={t("awardsSection.item2Title")}
                   desc={t("awardsSection.item2Desc").replace(/\n/g, " ")}
                   icon={iconConcertEnMobile}
-                  // 2026-09-01 재확인: 아이콘은 100x100 박스 중앙 정렬, 박스 자체가 카드 우측에서 32px 안쪽
-                  iconStyle={{ w: "16.1872vw", h: "21.3667vw", right: "12.9321vw", top: "39.6372vw" }}
+                  iconSize={{ w: "17.6331cqw", h: "23.2775cqw" }}
                   dimDesc
-                  titleSize="text-[7.6923vw]"
+                  titleSize="text-[8.3799cqw]"
                   titleNowrap
                 />
               </Reveal>
               <Reveal delay={0.24}>
-                <PrizeCardKoMobile
+                <PrizeCardMobile
                   title={t("awardsSection.item3Title").replace(/\n/g, " ")}
                   desc={t("awardsSection.item3Desc").replace(/\n/g, " ")}
                   icon={iconBroadcastEnMobile}
-                  // 2026-09-01 재확인: 카드2와 동일한 박스 위치 기준(디자이너 권장)으로 정렬
-                  iconStyle={{ w: "16.5385vw", h: "15.4562vw", right: "12.7564vw", top: "42.5282vw" }}
+                  iconSize={{ w: "18.0168cqw", h: "16.8380cqw" }}
                   dimDesc
-                  titleSize="text-[7.6923vw]"
+                  titleSize="text-[8.3799cqw]"
                   titleNowrap
                 />
               </Reveal>
