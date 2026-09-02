@@ -1,6 +1,9 @@
 import { useLanguage } from "../context/LanguageContext";
 import { Reveal } from "./Reveal";
+import { titleGradient } from "../theme";
+import { renderLines } from "../lib/text";
 
+// 시상내역(Awards) 섹션. 반응형 단위/모바일-PC 분기 방식은 Cast.tsx 맨 위 주석 참고.
 // 시상내역(Awards) 섹션 에셋 (Figma 답변, 2026-08-27)
 const iconTrophy = "/images/awards/icon_trophy.svg";
 // 부상 3종 카드는 Figma가 내려준 완성 렌더(배경+텍스트+아이콘 통합 SVG)를 국문에서 그대로 사용 — 텍스트가 벡터라 영문 전환이 안 되므로 영문은 별도 레이아웃 사용
@@ -16,8 +19,7 @@ const iconReleaseEnMobile = "/images/awards/icon_release_en.svg";
 const iconConcertEnMobile = "/images/awards/icon_concert_en.svg";
 const iconBroadcastEnMobile = "/images/awards/icon_broadcast_en.svg";
 
-const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
-// 위→아래가 아니라 왼쪽→오른쪽 그라데이션(2026-08-31 확인)
+// 위→아래가 아니라 왼쪽→오른쪽 그라데이션(2026-08-31 확인). (titleGradient는 여러 섹션 공용 값이라 theme.ts로 이동)
 const bigBoxGradient = "linear-gradient(90deg, #4E80F1 0%, #83A1FA 100%)";
 
 // 부상 3종/대상 카드 공통 테두리: 흰색 반투명 4스톱 선형 그라데이션, 3px (2026-08-31 EN 스펙 확인 — 국문은 기존 확정 상태 유지 위해 EN 전용으로 분리)
@@ -50,21 +52,11 @@ function PrizeCardEn({
           className="text-[5.1282vw] md:text-[1.4583vw] leading-[1.2] font-extrabold uppercase text-[#062259]"
           style={{ fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
         >
-          {title.split("\n").map((line, i) => (
-            <span key={i}>
-              {i > 0 && <br />}
-              {line}
-            </span>
-          ))}
+          {renderLines(title)}
         </p>
         {/* 20px(1920 기준), 행간 120% — 이전 21.3px/150%는 스펙보다 큼(2026-08-31 확인). 줄바꿈은 지정된 위치에서만 일어나야 하므로 nowrap */}
         <p className="text-[3.5897vw] md:text-[1.0417vw] leading-[1.2] tracking-normal font-normal text-[#062259] md:whitespace-nowrap">
-          {desc.split("\n").map((line, i) => (
-            <span key={i}>
-              {i > 0 && <br />}
-              {line}
-            </span>
-          ))}
+          {renderLines(desc)}
         </p>
       </div>
       {/* 스펙의 120x120 슬롯값이 실제 아이콘 그래픽 크기와 안 맞아(국문 카드에서 확인) 국문 원본 SVG의 실제 아이콘 크기·여백을 그대로 역산해서 사용(2026-08-31) */}

@@ -1,10 +1,11 @@
-import { Fragment } from "react";
 import { useLanguage } from "../context/LanguageContext";
 import { Reveal } from "./Reveal";
+import { titleGradient, brandGradient } from "../theme";
+import { renderLines } from "../lib/text";
 
+// Hero 다음에 나오는 큰 타이틀 문구 섹션. 반응형 단위/모바일-PC 분기 방식은 Cast.tsx 맨 위 주석 참고.
 // 02_Big Text (Figma 답변, 2026-08-27) — 배경/텍스트 전부 CSS로 구현, 이미지 에셋 없음
-const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
-const brandGradient = "linear-gradient(180deg, #FFFFFF 0%, #A9A9FF 100%)";
+// (titleGradient/brandGradient는 여러 섹션이 공유하는 값이라 theme.ts로 옮겨졌다. 이 파일에만 있는 glow는 그대로 둠.)
 const glow = "radial-gradient(circle, #722FF6 0%, rgba(26,0,255,0) 83.27%)";
 
 export function BigText() {
@@ -106,33 +107,20 @@ export function BigText() {
           {/* 국문 모바일은 3줄(향해 / 전파할 / 전합니다.)로 나뉘어야 함(2026-09-01 확인) */}
           {lang === "ko" && <br />}
           <span className="text-[#7992FB]">{t("bigText.bodyHighlight")}</span>
-          {bodyLines[0]}
-          {bodyLines.slice(1).map((line, i) => (
-            <Fragment key={i}>
-              <br />
-              {line}
-            </Fragment>
-          ))}
+          {renderLines(t("bigText.bodyPart2"))}
         </p>
         {/* 데스크탑: 국문은 2줄 유지, 영문은 VOICE 다음 줄바꿈 한 번만 두고 나머지는 한 줄로 합쳐 2줄로 표시(2026-09-01 확인) */}
         <p className="hidden md:block w-full max-w-[39.583vw] text-[1.6667vw] leading-[1.4] text-center font-bold text-[#BDD8FF]">
           {t("bigText.bodyPart1")}
           <span className="text-[#7992FB]">{t("bigText.bodyHighlight")}</span>
           {lang === "en" ? (
+            // 모바일용 하드 개행(bodyLines)을 다시 한 줄로 합쳐서 PC에서는 자연스럽게 이어지도록 함(2026-09-01 확인)
             <>
               <br />
               {bodyLines.slice(1).join(" ").replace(/\s+/g, " ").trim()}
             </>
           ) : (
-            <>
-              {bodyLines[0]}
-              {bodyLines.slice(1).map((line, i) => (
-                <Fragment key={i}>
-                  <br />
-                  {line}
-                </Fragment>
-              ))}
-            </>
+            renderLines(t("bigText.bodyPart2"))
           )}
         </p>
       </Reveal>

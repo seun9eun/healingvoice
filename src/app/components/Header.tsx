@@ -3,6 +3,9 @@ import { Link } from "react-router";
 import { Globe, Menu, X, ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
+// 맨 위에 항상 떠있는(position: fixed) 상단 내비게이션. 반응형 단위/모바일-PC 분기 방식은
+// Cast.tsx 맨 위 주석 참고. 모바일에서는 햄버거 버튼을 누르면 전체화면 메뉴 패널이 뜬다
+// (menuOpen 상태로 제어, 아래 lockBodyScroll/unlockBodyScroll이 그때 배경 스크롤을 막는 역할).
 // 힐링보이스 통합 로고 (Figma Header 스펙, 2026-08-27 슬랙 답변 기준)
 const logoSrc = "/images/header/healingvoice_logo.png";
 const logoSrcEn = "/images/header/healingvoice_logo_en.png"; // 2026-08-31 Figma EN 페이지 답변 — 국문과 다른 파일(182x40)
@@ -31,30 +34,20 @@ export function Header() {
   const { t, lang } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // 모바일 메뉴가 열려있는 동안 배경 스크롤 완전 차단(Figma 답변, 2026-08-31 모달 동작 스펙)
-  // overflow:hidden만으로는 모바일에서 러버밴드 스크롤로 배경이 살짝 움직일 수 있어서
-  // body를 position:fixed로 고정하고 닫을 때 원래 스크롤 위치로 복원(2026-09-01 확인)
-  useEffect(() => {
-    if (menuOpen) {
-      const scrollY = window.scrollY;
-      document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.left = "0";
-      document.body.style.right = "0";
-    } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.top = "";
-      document.body.style.left = "";
-      document.body.style.right = "";
-      if (scrollY) {
-        window.scrollTo(0, -parseInt(scrollY, 10));
-      }
-    }
-  }, [menuOpen]);
+  // 모바일 메뉴를 열 때 body를 position:fixed로 고정해서 배경 스크롤을 막는다.
+  // (overflow:hidden만으로는 모바일 사파리 등에서 러버밴드 스크롤로 배경이 살짝 움직일 수 있음, 2026-09-01 확인)
+  // 잠그기 직전의 스크롤 위치(scrollY)를 top 값의 음수로 저장해두고, 풀 때(unlockBodyScroll) 그 값으로 되돌린다.
+  const lockBodyScroll = () => {
+    const scrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.left = "0";
+    document.body.style.right = "0";
+  };
 
-  // 위 useEffect 클린업은 다음 렌더 이후에야 실행되므로, 메뉴 닫기+스크롤 이동이 같은 동기 함수 안에서
-  // 일어날 때는 여기서 body 잠금을 먼저 동기적으로 풀어줘야 한다.
+  // lockBodyScroll의 반대 동작. 아래 useEffect(메뉴 상태가 바뀔 때 자동 실행)와
+  // scrollToSection/scrollToTop(메뉴를 닫으면서 곧바로 스크롤 이동하는 함수) 양쪽에서 공통으로 사용한다.
+  // 원래는 두 곳에 완전히 같은 코드가 복붙되어 있었는데, 이 함수 하나로 합쳤다(2026-09-02 리팩토링).
   const unlockBodyScroll = () => {
     const scrollY = document.body.style.top;
     document.body.style.position = "";
@@ -62,9 +55,20 @@ export function Header() {
     document.body.style.left = "";
     document.body.style.right = "";
     if (scrollY) {
+      // top이 "-123px" 형태로 저장되어 있으므로 숫자만 뽑아 부호를 반대로 뒤집어 원래 위치로 스크롤 복원
       window.scrollTo(0, -parseInt(scrollY, 10));
     }
   };
+
+  // menuOpen 상태가 true/false로 바뀔 때마다 자동으로 실행된다(React useEffect의 기본 동작).
+  // 메뉴를 열면 잠그고, 닫으면 푼다.
+  useEffect(() => {
+    if (menuOpen) {
+      lockBodyScroll();
+    } else {
+      unlockBodyScroll();
+    }
+  }, [menuOpen]);
 
   // 데스크탑 GNB 앵커 대상. "소개(about)" 앵커 대상 섹션은 기획 확인 중 — 우선 Big Text 섹션(id="about")로 가정.
   const navItems = [

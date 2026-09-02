@@ -1,7 +1,10 @@
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { Reveal } from "./Reveal";
+import { titleGradient } from "../theme";
 
+// 첫 화면(맨 위) Hero 섹션. vw 반응형 단위, 모바일/PC 분기, 국문/영문 분기 방식은
+// Cast.tsx 맨 위 주석에 공통 설명이 있으니 처음 보는 사람은 그쪽을 먼저 참고할 것.
 // 01_Hero 에셋 (Figma 답변, 2026-08-27)
 const heroBg = "/images/hero/hero_bg.jpg";
 // 모바일은 데스크탑 가로 사진을 그대로 세로로 잘라 쓰고 있어 인물이 과도하게 잘렸음 — 모바일 전용으로 별도 크롭된 사진으로 교체(2026-09-01 확인)
@@ -24,8 +27,9 @@ const heroTaglineEn = "/images/hero/hero_tagline_en.png";
 const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
 
-const broadcastGradient =
-  "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
+// 방송 정보("3 PM Pre-release..." 등) 텍스트 색 — theme.ts의 titleGradient와 값이 같아서(2026-09-02 확인)
+// 그쪽 값을 그대로 가져와 이 파일 안에서 쓰던 이름을 유지함
+const broadcastGradient = titleGradient;
 
 export function Hero() {
   const { t, lang } = useLanguage();
@@ -125,91 +129,91 @@ export function Hero() {
 
         {/* 방송 정보 + CTA — 한 그룹으로 묶어 함께 등장(2026-09-01 확인) */}
         <Reveal className="flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full" delay={0.15}>
-        <div className="flex flex-col items-center gap-[3.0769vw] md:gap-[0.8333vw] w-full">
-          {lang === "ko" ? (
-            <img
-              src={premiereBadgeKo}
-              alt={t("hero.premiereFallback")}
-              className="w-auto h-[9.2308vw] md:h-[3.6458vw] object-contain"
-            />
-          ) : (
-            // 배지 테두리: linear-gradient(#D2DFFF 1.16% → #89A3FF 100%, 135deg) 2px INSIDE — background-clip 이중 배경으로 구현(2026-08-31 확인)
-            // 텍스트 지정 폰트(SB Aggro Bold)는 프로젝트에 없어 이미지로 대체 — 모바일도 PC용 에셋 재사용(2026-09-01 확인, radius 16px→8px)
-            <div
-              className="flex items-center justify-center rounded-[2.0513vw] md:rounded-[0.8333vw] px-[4.1026vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
-              style={{
-                backgroundImage: "linear-gradient(#03133b, #03133b), linear-gradient(135deg, #D2DFFF 1.16%, #89A3FF 100%)",
-                backgroundOrigin: "border-box",
-                backgroundClip: "padding-box, border-box",
-              }}
-            >
-              <img src={heroPremiereTextEn} alt={t("hero.premiereFallback")} className="h-[4.1026vw] md:h-[1.493vw] w-auto object-contain" />
-            </div>
-          )}
-          {lang === "en" ? (
-            <>
-              {/* 영문 모바일: 구분선 없이 2줄 세로 배치(2026-08-31 모바일 스펙) */}
-              <div className="md:hidden flex flex-col items-center gap-[1.0256vw]">
+          <div className="flex flex-col items-center gap-[3.0769vw] md:gap-[0.8333vw] w-full">
+            {lang === "ko" ? (
+              <img
+                src={premiereBadgeKo}
+                alt={t("hero.premiereFallback")}
+                className="w-auto h-[9.2308vw] md:h-[3.6458vw] object-contain"
+              />
+            ) : (
+              // 배지 테두리: linear-gradient(#D2DFFF 1.16% → #89A3FF 100%, 135deg) 2px INSIDE — background-clip 이중 배경으로 구현(2026-08-31 확인)
+              // 텍스트 지정 폰트(SB Aggro Bold)는 프로젝트에 없어 이미지로 대체 — 모바일도 PC용 에셋 재사용(2026-09-01 확인, radius 16px→8px)
+              <div
+                className="flex items-center justify-center rounded-[2.0513vw] md:rounded-[0.8333vw] px-[4.1026vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
+                style={{
+                  backgroundImage: "linear-gradient(#03133b, #03133b), linear-gradient(135deg, #D2DFFF 1.16%, #89A3FF 100%)",
+                  backgroundOrigin: "border-box",
+                  backgroundClip: "padding-box, border-box",
+                }}
+              >
+                <img src={heroPremiereTextEn} alt={t("hero.premiereFallback")} className="h-[4.1026vw] md:h-[1.493vw] w-auto object-contain" />
+              </div>
+            )}
+            {lang === "en" ? (
+              <>
+                {/* 영문 모바일: 구분선 없이 2줄 세로 배치(2026-08-31 모바일 스펙) */}
+                <div className="md:hidden flex flex-col items-center gap-[1.0256vw]">
+                  <p
+                    className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
+                  >
+                    {t("hero.broadcastInfo1")}
+                  </p>
+                  <p
+                    className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
+                  >
+                    {t("hero.broadcastInfo2")}
+                  </p>
+                </div>
+                <div className="hidden md:flex items-center gap-[0.625vw]">
+                  <p
+                    className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
+                  >
+                    {t("hero.broadcastInfo1")}
+                  </p>
+                  <span className="h-[1.6667vw] w-[0.1042vw] bg-[#D4EBFF]" />
+                  <p
+                    className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
+                  >
+                    {t("hero.broadcastInfo2")}
+                  </p>
+                </div>
+              </>
+            ) : (
+              <div className="flex items-center gap-[2.0513vw] md:gap-[0.625vw]">
                 <p
-                  className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                   style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
                 >
                   {t("hero.broadcastInfo1")}
                 </p>
+                <span className="h-[4.1026vw] w-[0.2564vw] md:h-[1.6667vw] md:w-[0.1042vw] bg-[#D4EBFF]" />
                 <p
-                  className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
                   style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
                 >
                   {t("hero.broadcastInfo2")}
                 </p>
               </div>
-              <div className="hidden md:flex items-center gap-[0.625vw]">
-                <p
-                  className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                  style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                >
-                  {t("hero.broadcastInfo1")}
-                </p>
-                <span className="h-[1.6667vw] w-[0.1042vw] bg-[#D4EBFF]" />
-                <p
-                  className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                  style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                >
-                  {t("hero.broadcastInfo2")}
-                </p>
-              </div>
-            </>
-          ) : (
-            <div className="flex items-center gap-[2.0513vw] md:gap-[0.625vw]">
-              <p
-                className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-              >
-                {t("hero.broadcastInfo1")}
-              </p>
-              <span className="h-[4.1026vw] w-[0.2564vw] md:h-[1.6667vw] md:w-[0.1042vw] bg-[#D4EBFF]" />
-              <p
-                className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-              >
-                {t("hero.broadcastInfo2")}
-              </p>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        {/* CTA */}
-        <a
-          href={FONDANT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-[2.0513vw] md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-[8.2051vw] py-[4.1026vw] md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
-        >
-          <span className="text-[4.6154vw] md:text-[1.25vw] leading-none text-center font-bold text-white">
-            {t("header.cta")}
-          </span>
-          <ArrowUpRight className="w-[5.1282vw] h-[5.1282vw] md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
-        </a>
+          {/* CTA */}
+          <a
+            href={FONDANT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-[2.0513vw] md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-[8.2051vw] py-[4.1026vw] md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
+          >
+            <span className="text-[4.6154vw] md:text-[1.25vw] leading-none text-center font-bold text-white">
+              {t("header.cta")}
+            </span>
+            <ArrowUpRight className="w-[5.1282vw] h-[5.1282vw] md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
+          </a>
         </Reveal>
       </div>
     </section>

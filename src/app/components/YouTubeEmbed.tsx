@@ -3,11 +3,20 @@ import { useLanguage } from "../context/LanguageContext";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { VIDEO_DATA } from "../data/videoData";
+import { titleGradient } from "../theme";
 
-const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
-
-export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
-  const { t } = useLanguage();
+// "공식영상" 섹션 — 상단 제목 + 메인 비디오 플레이어 + 하단 썸네일 캐러셀로 구성.
+// 다른 섹션 컴포넌트(Hero, Cast 등)와 마찬가지로 lang을 prop으로 받지 않고 useLanguage()에서
+// 직접 가져온다(2026-09-02: 예전엔 이 컴포넌트만 lang을 prop으로 받아서 호출부와 내부 두 곳에서
+// 언어를 따로 다루고 있었는데, 일관성을 위해 통일함).
+//
+// 전체 데이터 흐름 요약(자세한 건 아래 1~9번 주석 참고):
+//   videoData.ts의 원본 목록 → openTime이 지난 것만 필터링(2) → 고정영상을 맨 앞으로(3)
+//   → 이게 최종 currentVideos 배열이고, activeIndex가 그 중 "지금 크게 보여줄 영상"을 가리킴.
+//   화살표 버튼/썸네일 클릭(8)이 activeIndex를 바꾸고, 그러면 메인 플레이어(currentVideo)와
+//   하단 스크롤 위치·인디케이터가 같이 따라 움직인다.
+export const YouTubeEmbed = () => {
+  const { t, lang } = useLanguage();
 
   // 1. 주기적인 현재 시간 갱신 (1초마다)
   const [currentTime, setCurrentTime] = useState(Date.now());
@@ -26,7 +35,8 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
 
   // 3. 고정(Pinned) 영상 처리 (최대 1개)
   // 기획: 코드상 여러 개라도 첫 번째 하나만 고정으로 두고 나머지는 일반 순서대로 유지
-  const pinnedVideo = filteredVideos.find(v => (v as any).isPinned);
+  // (videoData.ts의 Video 타입에 isPinned가 정의되어 있어 별도 캐스팅(as any) 없이 바로 접근 가능, 2026-09-02)
+  const pinnedVideo = filteredVideos.find(v => v.isPinned);
   const otherVideos = filteredVideos.filter(v => v.id !== pinnedVideo?.id);
   const currentVideos = pinnedVideo ? [pinnedVideo, ...otherVideos] : otherVideos;
 
@@ -155,7 +165,7 @@ export const YouTubeEmbed = ({ lang = "ko" }: { lang: "ko" | "en" }) => {
             style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
           >
             {currentVideos.map((video, index) => {
-              const isPinnedItem = (video as any).isPinned;
+              const isPinnedItem = video.isPinned;
               const isOriginalNewest = video.id === newestVideoId;
               const showSeparator = index === 0 && isPinnedItem && currentVideos.length > 1;
               const isActive = activeIndex === index;

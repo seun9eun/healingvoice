@@ -1,15 +1,49 @@
 import { useLanguage } from "../context/LanguageContext";
 import { MC_DATA, MENTOR_DATA, CastMember } from "../data/castData";
 import { Reveal } from "./Reveal";
+import { titleGradient, brandGradient } from "../theme";
+import { renderLines } from "../lib/text";
+
+// ─────────────────────────────────────────────────────────────────────────
+// 출연진(Cast) 섹션 — 이 파일은 이 프로젝트의 섹션 컴포넌트 중 가장 복잡해서,
+// 다른 섹션(Hero/BigText/Awards 등)에도 공통으로 적용되는 패턴을 여기서 한번에 설명한다.
+// (처음 이 코드베이스를 보는 사람은 이 주석부터 읽는 걸 권장)
+//
+// 1) 반응형 단위: 이 사이트는 픽셀(px) 대신 vw(뷰포트 폭의 %)를 거의 전부 사용한다.
+//    예를 들어 "text-[3.0769vw]"는 "화면 폭의 3.0769%"라는 뜻이다.
+//    모바일은 피그마 디자인 기준폭 390px을, 데스크탑(md: 이상)은 1920px을 기준으로
+//    "px값 / 기준폭 * 100"으로 변환해서 넣어뒀다. 이렇게 하면 화면 크기가 달라져도
+//    디자인 그대로의 비율로 요소들이 같이 커지고 작아진다(= 반응형).
+//    그래서 숫자만 보면 이상해 보여도(예: 44.1026vw) 실제로는 "모바일 기준 172px"처럼
+//    정확한 의도가 있는 값이니 임의로 반올림하거나 바꾸지 말 것 — 바꿔야 할 땐 원래 px값을
+//    구해서 같은 공식으로 다시 계산해야 한다.
+//
+// 2) 모바일/PC 분기 2가지 방식이 섞여 있다:
+//    - 하나의 요소에 반응형 클래스를 같이 쓰는 방식: "text-[3.0769vw] md:text-[0.9375vw]"
+//      (모바일 기본값 + md: 접두사로 840px 이상일 때 다른 값) — 크기/간격처럼 값만 다를 때 사용
+//    - 아예 다른 마크업 두 벌을 만들어 하나만 보이게 하는 방식: className에 "md:hidden"과
+//      "hidden md:block"(또는 md:flex)을 각각 붙인 두 요소를 나란히 두는 것 — 줄바꿈 위치나
+//      요소 배치 순서 자체가 모바일/PC에서 완전히 다를 때 사용(이 파일의 멘토 카드 소개문이 예시)
+//
+// 3) 국문/영문 분기: useLanguage()의 lang이 "ko"/"en"이고, {lang === "ko" ? <KO버전/> : <EN버전/>}
+//    형태로 곳곳에 갈려있다. 영문판은 프로젝트에 없는 폰트(예: HiKR, KoreanHDRIB)로 디자인된
+//    텍스트가 많아서, 그런 경우는 실제 폰트 대신 미리 만들어둔 이미지 파일로 대체한 부분이 많다
+//    (주석에 "폰트 없어 이미지로 대체"라고 적힌 곳들).
+//
+// 4) 숫자/좌표는 대부분 실제로 Figma 디자인 파일을 보고 있는 담당 기획자에게 슬랙으로 물어봐서
+//    받은 실측값이다(주석의 "2026-XX-XX 확인"이 그 날짜). 화면이 이상해 보인다고 숫자를 감으로
+//    바꾸기보다는, 먼저 실제 스크린샷과 비교하거나 다시 물어보고 정확한 값으로 고치는 걸 권장한다
+//    (이번 세션에서 실제로 슬랙 답변이 스크린샷과 다르게 온 적이 몇 번 있었음 — 화면 실측이 항상 우선).
+// ─────────────────────────────────────────────────────────────────────────
 
 // 출연진(Cast) 섹션 에셋 (Figma 답변, 2026-08-27) — 원본 3배수 PNG는 용량이 커서(최대 18MB) 리사이즈+JPEG로 최적화해 저장함
 const mcSign = "/images/cast/mc_sign.png";
 // 섹션 자체 배경 그룹(bg_출연진, 1178:604) — 조명 그래픽 포함, 알파 투명 원본(2026-08-28 답변)
 const bgCastPhoto = "/images/cast/bg_cast.webp";
 
-const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #69A6FF 100%)";
-// "힐링멘토 5인" 텍스트는 다른 타이틀과 다르게 흰색→연보라 그라디언트가 위에 한 겹 더 덮여 보임(Figma 답변, 2026-08-28)
-const mentorsTitleGradient = "linear-gradient(180deg, #FFFFFF 0%, #A9A9FF 100%)";
+// "힐링멘토 5인"/"MC 이름" 텍스트는 다른 타이틀과 다르게 흰색→연보라 그라디언트가 위에 한 겹 더 덮여 보임(Figma 답변, 2026-08-28)
+// theme.ts의 brandGradient와 값이 같아서(2026-09-02 확인) 그쪽 값을 그대로 가져와 이 파일 안에서 쓰던 이름을 유지함
+const mentorsTitleGradient = brandGradient;
 // beam light — SVG 벡터 원본 그대로: 흰색→검은색 radial + COLOR_DODGE. 남색 배경 위에서 합성해보면 청록색으로 나오는데,
 // 이는 그 배경색 때문이지 이펙트 자체 색이 아님 — 실제 배경(보라색 계열) 위에 dodge를 걸면 마젠타/보라로 보임(2026-08-28 확인)
 const beamLight = "radial-gradient(14.82vw 0.1853vw at center, #FFFFFF 0%, #000000 100%)";
@@ -79,39 +113,19 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             {lang === "ko" ? (
               <>
                 <p className="md:hidden text-[3.0769vw] font-normal leading-[1.3] text-center text-white">
-                  {bodyKoMobile.split("\n").map((line, i) => (
-                    <span key={i}>
-                      {i > 0 && <br />}
-                      {line}
-                    </span>
-                  ))}
+                  {renderLines(bodyKoMobile)}
                 </p>
                 <p className="hidden md:block md:text-[0.9375vw] font-normal leading-[1.4] text-center text-white">
-                  {bodyKo.split("\n").map((line, i) => (
-                    <span key={i}>
-                      {i > 0 && <br />}
-                      {line}
-                    </span>
-                  ))}
+                  {renderLines(bodyKo)}
                 </p>
               </>
             ) : (
               <>
                 <p className="md:hidden text-[3.0769vw] font-light leading-[1.3] text-center text-white">
-                  {(member.descEnMobile ?? member.descEn).split("\n").map((line, i) => (
-                    <span key={i}>
-                      {i > 0 && <br />}
-                      {line}
-                    </span>
-                  ))}
+                  {renderLines(member.descEnMobile ?? member.descEn)}
                 </p>
                 <p className="hidden md:block md:text-[1.0417vw] font-light leading-[1.4] text-center text-white">
-                  {member.descEn.split("\n").map((line, i) => (
-                    <span key={i}>
-                      {i > 0 && <br />}
-                      {line}
-                    </span>
-                  ))}
+                  {renderLines(member.descEn)}
                 </p>
               </>
             )}
@@ -270,19 +284,7 @@ export function Cast() {
             </div>
           )}
           <p className={`text-[4.1026vw] md:text-[1.25vw] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-light" : "font-medium"} text-white break-keep`}>
-            {lang === "ko"
-              ? mc.descKo.split("\n").map((line, i) => (
-                  <span key={i}>
-                    {i > 0 && <br />}
-                    {line}
-                  </span>
-                ))
-              : mc.descEn.split("\n").map((line, i) => (
-                  <span key={i}>
-                    {i > 0 && <br />}
-                    {line}
-                  </span>
-                ))}
+            {renderLines(lang === "ko" ? mc.descKo : mc.descEn)}
           </p>
         </Reveal>
         {mc.photo && (

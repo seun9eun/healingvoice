@@ -1,6 +1,8 @@
 import { Phone, ExternalLink, Mail } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 
+// 맨 아래 Footer 섹션. 반응형 단위/모바일-PC 분기 방식은 Cast.tsx 맨 위 주석 참고.
+// (이 파일은 다른 섹션과 달리 스크롤 등장 모션(Reveal)을 적용하지 않음 — 2026-09-01 사용자 확인)
 // Figma Footer 참고 스크린샷 확인 결과 로고는 Header와 동일한 그라디언트 로고였음(레이어명은 "HEALING VOICE"였지만 실제 이미지는 국문 로고)
 const logoImage_w = "/images/header/healingvoice_logo.png";
 const logoImageEn_w = "/images/footer/healingvoice_logo_en.png"; // 2026-08-31 Figma EN 페이지 답변으로 원본 에셋 확보

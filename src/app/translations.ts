@@ -1,3 +1,11 @@
+// 사이트에 나오는 거의 모든 문구를 여기 모아둔 파일. 컴포넌트에서는 이 객체를 직접 쓰지 않고
+// useLanguage()가 주는 t("경로") 함수로 접근한다 — 예: t("hero.broadcastInfo1")은
+// 지금 언어가 국문이면 translations.ko.hero.broadcastInfo1을, 영문이면 translations.en의
+// 같은 위치 값을 반환한다(실제 동작은 LanguageContext.tsx의 t 함수 참고).
+// 그래서 새 문구를 추가할 땐 반드시 ko/en 양쪽에 "같은 경로(키 이름)"로 넣어줘야 한다 —
+// 한쪽에만 있으면 다른 언어에서는 그 t() 호출이 문구를 못 찾고 경로 문자열을 그대로 화면에 보여준다.
+// 문자열 중간의 "\n"은 그 위치에서 강제 줄바꿈하라는 표시이며, 화면에 실제로 <br/>로 바뀌는 부분은
+// 각 컴포넌트에서 renderLines()(src/app/lib/text.tsx)를 쓰거나 직접 split("\n") 하는 곳을 확인할 것.
 export const translations = {
   ko: {
     intro: "소개",
