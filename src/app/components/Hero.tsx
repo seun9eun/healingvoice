@@ -37,13 +37,25 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative w-full h-[192.8205vw] md:h-auto md:aspect-[1920/1080] flex items-end justify-center overflow-hidden"
+      // QA 피드백(2026-09-02): 모바일 첫 화면에서 CTA("퐁당 바로가기") 버튼까지 스크롤 없이 다 보여야 하는데
+      // 기존 h-[192.8205vw](390px 기준 752px)에서는 CTA가 728px 지점에 있어 주소창이 보이는 초기 상태의
+      // 실제 가시영역(작은 기기 기준 650~700px대)보다 아래에 걸쳐 있었음. 콘텐츠 자체 간격은 그대로 두고
+      // 섹션 높이만 줄여서(바닥에 붙어있는 콘텐츠 전체를 위로 당김) 해결 — 사진 하단은 원래도 의도적으로
+      // 여유 있게 넘치는 구조라(주석 참고) 더 잘리는 것은 문제없음
+      className="relative w-full h-[172.3vw] md:h-auto md:aspect-[1920/1080] flex items-end justify-center overflow-hidden"
     >
       {/* 배경 사진 + 하단 그라디언트 — 모바일은 섹션(752px)보다 사진이 커서(844px) 아래로 92px 넘치는 구조(2026-08-31 모바일 스펙) */}
       <div className="absolute inset-x-0 top-0 h-[216.4103vw] md:inset-0 md:h-full" aria-hidden>
         <img src={heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover md:hidden" />
         <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover hidden md:block" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
+        {/* QA 피드백(2026-09-02, 갤럭시탭 S5e 800px 모바일 레이아웃): "5주년 특별 기획" 텍스트가 인물 사진의
+            밝은 재킷 부분과 경계선에 걸쳐 거의 안 읽힘 — 텍스트/사진 위치 관계는 모든 폭에서 비율상 동일하지만
+            (vw 기반이라 항상 사진의 같은 지점에 옴), 원래 그라디언트가 42%~85% 구간에서만 어두워져 텍스트가
+            오는 지점(약 57% 지점)에서는 35%밖에 어두워지지 않아 밝은 옷 위에서는 텍스트가 묻힘.
+            텍스트를 옮기는 대신 그 지점이 항상 확실히 어둡도록 그라디언트 자체를 앞당김(35%→60%).
+            데스크탑은 기존 확정 스펙 그대로 유지(별도 오버레이로 분리) */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_35%,#061E49_60%)] md:hidden" />
+        <div className="hidden md:block absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 
       {/* 콘텐츠 */}

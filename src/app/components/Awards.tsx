@@ -95,7 +95,10 @@ function PrizeCardKoMobile({
 }) {
   return (
     <div
-      className="relative w-full overflow-hidden rounded-[12.3077vw] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] pt-[10.2564vw] pr-[8.2051vw] pb-[8.2051vw] pl-[8.2051vw] min-h-[66.6667vw] flex flex-col items-start gap-[2.0513vw]"
+      // min-h가 순수 vw값이라 390px 기준으로는 딱 맞는 260px였지만, 뷰포트 폭이 커질수록(태블릿 폭 등)
+      // 한도 없이 계속 늘어나 텍스트와 아이콘 사이에 큰 빈 공간이 생기는 문제가 있었음(QA 피드백, 2026-09-02) —
+      // clamp으로 390px 기준값(260px) 이상은 더 커지지 않게 고정
+      className="relative w-full overflow-hidden rounded-[12.3077vw] border-2 border-white shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] pt-[10.2564vw] pr-[8.2051vw] pb-[8.2051vw] pl-[8.2051vw] min-h-[clamp(0px,66.6667vw,260px)] flex flex-col items-start gap-[2.0513vw]"
       style={{ backgroundImage: "linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%)" }}
     >
       <p
@@ -185,7 +188,8 @@ export function Awards() {
                 {t("awardsSection.grandPrizeAmount")}
               </p>
             </div>
-            <img src={iconTrophy} alt="" className="w-[35.8974vw] h-[35.8974vw] md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
+            {/* 아이콘 크기도 min-h와 같은 이유로 태블릿 폭에서 과도하게 커지던 문제 — 390px 기준값(140px)으로 상한 고정(2026-09-02) */}
+            <img src={iconTrophy} alt="" className="w-[clamp(0px,35.8974vw,140px)] h-[clamp(0px,35.8974vw,140px)] md:w-[10.4167vw] md:h-[10.4167vw] object-contain shrink-0" />
           </div>
         </Reveal>
 
