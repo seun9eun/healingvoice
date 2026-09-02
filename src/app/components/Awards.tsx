@@ -39,8 +39,11 @@ function PrizeCardEn({
 }) {
   return (
     <div
-      // 카드 비율 325.33:338(거의 정사각형, 2026-08-31 확인) — aspect-ratio로 실제 렌더 폭에 비례해서 높이 계산
-      className="relative flex-1 min-w-[260px] overflow-hidden rounded-[8.2051vw] md:rounded-[2.5vw] md:aspect-[325.33/338] p-[6.1538vw] md:p-[1.6667vw] flex flex-col items-start justify-between border-[3px] border-transparent"
+      // 카드 비율 325.33:338(거의 정사각형, 2026-08-31 확인) — aspect-ratio로 실제 렌더 폭에 비례해서 높이 계산.
+      // min-w-[260px] 플로어가 PC 레이아웃 좁은 폭(태블릿 가로 등)에서 flex 계산상 실제 배분 폭(예: 236px)보다
+      // 커서 3장 합이 우승자 카드 폭을 넘어 우측으로 넘쳤음(QA 피드백, 2026-09-02) — 우승자 카드 폭과 항상
+      // 정확히 일치해야 하므로 min-w-0으로 제거(overflow-hidden이 있어 텍스트는 넘치지 않고 클리핑됨)
+      className="relative flex-1 min-w-0 overflow-hidden rounded-[8.2051vw] md:rounded-[2.5vw] md:aspect-[325.33/338] p-[6.1538vw] md:p-[1.6667vw] flex flex-col items-start justify-between border-[3px] border-transparent"
       style={{
         backgroundImage: `linear-gradient(90deg, #A3CDFF 0%, #E8F3FF 100%), ${cardBorderGradient}`,
         backgroundOrigin: "border-box",
