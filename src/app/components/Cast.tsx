@@ -169,7 +169,9 @@ export function Cast() {
   return (
     <section
       id="cast"
-      className="relative w-full flex flex-col items-center gap-[12.3077vw] md:gap-[3.3333vw] overflow-hidden px-[4.1026vw] md:px-[18.75vw] pt-[24.6154vw] pb-0 md:py-[6.25vw]"
+      // md 간격은 vw라서 4K 이상 초광폭 화면에서는 1920 기준 설계값(64px)보다 계속 커져
+      // 섹션 사이가 과도하게 벌어져 보였음(2026-09-02 확인) — clamp으로 1920 기준값(64px) 이상은 더 커지지 않게 고정
+      className="relative w-full flex flex-col items-center gap-[12.3077vw] md:gap-[clamp(0px,3.3333vw,64px)] overflow-hidden px-[4.1026vw] md:px-[18.75vw] pt-[24.6154vw] pb-0 md:py-[6.25vw]"
     >
       {/* 섹션 자체 배경(bg_출연진, Figma 1178:603) — 조명 그래픽 사진 + 상단 그라디언트.
           모바일도 동일한 배경 그룹이 존재함을 상세 스펙에서 재확인(2026-09-01) — "공용 배경만 있음"은 착오였음 */}
@@ -206,15 +208,19 @@ export function Cast() {
         }}
         aria-hidden
       />
-      {/* MC 뒤 보라색 글로우(Figma 1178:610, glow) */}
+      {/* MC 뒤 보라색 글로우(Figma 1178:610, glow) — 실제 CSS export 기준으로 교체(2026-09-02 확인):
+          단순 radial-gradient 페이드로 근사했던 것을 실제 conic-gradient + blur(125px)로 교체.
+          위치/크기(711px, x775 y313)는 1920 기준 vw로 환산한 기존 값(40.365vw/16.302vw/37.031vw)이 이미 정확히 일치함.
+          blur 값은 이 프로젝트 컨벤션상 vw로 환산하지 않고 고정 px 유지(box-shadow/opacity 등과 동일 취급) */}
       <div
-        className="hidden md:block absolute -z-10 rounded-full opacity-70 mix-blend-screen pointer-events-none"
+        className="hidden md:block absolute -z-10 rounded-full pointer-events-none"
         style={{
           left: "40.365vw",
           top: "16.302vw",
           width: "37.031vw",
           height: "37.031vw",
-          backgroundImage: "radial-gradient(circle, #722FF6 0%, rgba(26,0,255,0) 75%)",
+          background: "conic-gradient(from 177.09deg at 50% 50%, #3C0CB1 0deg, #B600DA 124.2deg, #A571F3 242.1deg, #3C0CB1 360deg)",
+          filter: "blur(125px)",
         }}
         aria-hidden
       />
@@ -253,7 +259,9 @@ export function Cast() {
       </div>
 
       {/* MC */}
-      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
+      {/* 데스크탑은 사진이 텍스트와 나란한 flex 요소가 아니라 절대배치로 겹쳐 있는 구조라(슬랙 실측, 2026-09-02 확인,
+          node 1178:602) md:relative + md:h-[30.104vw](사진 프레임 높이와 동일)로 기준 박스를 만들어줌 */}
+      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] md:relative md:h-[30.104vw] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
         {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
         {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 — 텍스트만 개별적으로 떠오름(사진 제외) */}
         <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
@@ -289,23 +297,43 @@ export function Cast() {
           </p>
         </Reveal>
         {mc.photo && (
-          <div className="order-1 md:order-2 relative w-full max-w-[520px] md:max-w-none md:flex-1">
+          <div className="order-1 md:hidden relative w-full max-w-[520px]">
             {/* 모바일은 사각형 사진이 아니라 가장자리가 배경으로 은은하게 페이드되는 형태(2026-09-01 스크린샷 확인) — radial mask로 처리 */}
             <img
               src={mc.photo}
               alt={mc.nameKo}
-              className="md:hidden w-full h-[80.2564vw] object-cover object-top"
+              className="w-full h-[80.2564vw] object-cover object-top"
               style={{
                 maskImage: "radial-gradient(ellipse 92% 78% at 50% 40%, black 60%, transparent 98%)",
                 WebkitMaskImage: "radial-gradient(ellipse 92% 78% at 50% 40%, black 60%, transparent 98%)",
               }}
             />
+            {/* MC 사인("힐링보이스 장성규") — 사진 우상단 근처, Figma 좌표 환산(사진 대비 left 69%, top 20%, width 21.6%) */}
+            <img
+              src={mcSign}
+              alt=""
+              className="absolute w-[21.6%] left-[69%] top-[20%] h-auto object-contain"
+            />
+          </div>
+        )}
+        {mc.photo && (
+          /* 데스크탑: 슬랙 실측 스펙(2026-09-02, node 1178:602) 기준 재구현.
+             이전엔 텍스트 옆 flex-1로 "남는 폭"을 다 채우며 object-cover로 사진을 억지로 확대해서
+             인물이 실제보다 훨씬 확대되어 보였음. 실제 디자인은 사진 프레임(751x578, MC 박스 기준
+             left 29.833%/top 0/width 62.583%/height 100%)이 텍스트와 겹치도록 절대배치되어 있고,
+             그 안의 이미지도 프레임을 꽉 채우는 게 아니라 정해진 축소 비율(약 32.3%)로 작게 배치된 뒤
+             프레임 밖으로 나가는 부분만 잘리는 구조 — object-fit이 아니라 정확한 %로 재현함 */
+          <div
+            className="hidden md:block md:absolute overflow-hidden"
+            style={{ left: "29.833%", top: "0%", width: "62.583%", height: "100%" }}
+          >
             <img
               src={mc.photo}
               alt={mc.nameKo}
-              className="hidden md:block w-full md:h-[30.104vw] object-cover object-top md:rounded-[2.5vw]"
+              className="absolute max-w-none"
+              style={{ left: "18.032%", top: "1.843%", width: "68.734%", height: "134.096%" }}
             />
-            {/* MC 사인("힐링보이스 장성규") — 사진 우상단 근처, Figma 좌표 환산(사진 대비 left 69%, top 20%, width 21.6%) */}
+            {/* MC 사인 — 사진 프레임 기준 동일 비율(위 모바일과 같은 left 69%/top 20%/width 21.6%) */}
             <img
               src={mcSign}
               alt=""
