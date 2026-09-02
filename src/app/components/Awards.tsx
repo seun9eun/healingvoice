@@ -7,9 +7,12 @@ import { renderLines } from "../lib/text";
 // 시상내역(Awards) 섹션 에셋 (Figma 답변, 2026-08-27)
 const iconTrophy = "/images/awards/icon_trophy.svg";
 // 부상 3종 카드는 Figma가 내려준 완성 렌더(배경+텍스트+아이콘 통합 SVG)를 국문에서 그대로 사용 — 텍스트가 벡터라 영문 전환이 안 되므로 영문은 별도 레이아웃 사용
-const cardRelease = "/images/awards/card_release.svg";
-const cardConcert = "/images/awards/card_concert.svg";
-const cardBroadcast = "/images/awards/card_broadcast.svg";
+// QA 피드백(2026-09-02): 기존 SVG(배경+텍스트+아이콘 통합)는 iOS(Safari/iOS Chrome 공용 WebKit
+// 엔진)가 img 태그로 불러온 SVG를 원본 고유 크기(325px) 기준으로 래스터화한 뒤 확대 표시해서
+// 텍스트까지 뭉개져 보이는 문제가 있었음 — Figma에 노이즈 배경 포함 3배수 PNG(976x840)로 재요청해 교체
+const cardRelease = "/images/awards/card_release.png";
+const cardConcert = "/images/awards/card_concert.png";
+const cardBroadcast = "/images/awards/card_broadcast.png";
 // EN 카드용 아이콘만 별도 추출(국문 통합 SVG에서 아이콘 그룹만 크롭, 2026-08-31) — EN 레이아웃에 누락되어 있던 것을 채움
 const iconRelease = "/images/awards/icon_release.svg";
 const iconConcert = "/images/awards/icon_concert.svg";
