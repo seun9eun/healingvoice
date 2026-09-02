@@ -260,8 +260,10 @@ export function Cast() {
 
       {/* MC */}
       {/* 데스크탑은 사진이 텍스트와 나란한 flex 요소가 아니라 절대배치로 겹쳐 있는 구조라(슬랙 실측, 2026-09-02 확인,
-          node 1178:602) md:relative + md:h-[30.104vw](사진 프레임 높이와 동일)로 기준 박스를 만들어줌 */}
-      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] md:relative md:h-[30.104vw] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
+          node 1178:602) md:relative + md:h-[30.104vw](사진 프레임 높이와 동일)로 기준 박스를 만들어줌.
+          이 높이가 순수 vw라 4K 이상에서 한도 없이 커지면서 사진·이름이 세로로 길쭉해 보이던 문제가 있어
+          clamp으로 1920 기준값(578px) 이상은 더 커지지 않게 고정(2026-09-02 QA 피드백) */}
+      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] md:relative md:h-[clamp(0px,30.104vw,578px)] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
         {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
         {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 — 텍스트만 개별적으로 떠오름(사진 제외) */}
         <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
