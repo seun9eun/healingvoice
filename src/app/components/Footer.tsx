@@ -30,7 +30,8 @@ export function Footer() {
               <Phone className="w-[4.1026vw] h-[4.1026vw] md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
               <span className="text-[3.5897vw] md:text-[0.7292vw] leading-[6.1538vw] md:leading-6 text-[#E2E2E2]">{t("footer.phone")}</span>
             </span>
-            {/* 모바일/데스크탑 운영시간 시작 시각이 달라서(모바일 10:00, 데스크탑 09:00) 반응형으로 분리 표시 */}
+            {/* 운영시간 문구는 모바일/데스크탑이 같지만 글자 크기·투명도가 달라 반응형으로 분리 표시
+                (2026-09-03 이전에는 시작 시각도 달랐음 — 데스크탑 09:00 → 10:00으로 정정되어 지금은 동일) */}
             <span className="md:hidden text-[3.0769vw] leading-[5.1282vw] text-[#E2E2E2]">{t("footer.phoneHoursMobile")}</span>
             <span className="hidden md:inline md:text-[0.6771vw] leading-5 text-[#E2E2E2] opacity-80">
               {t("footer.phoneHours")}

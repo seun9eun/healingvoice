@@ -262,15 +262,22 @@ export function Cast() {
       {/* 데스크탑은 사진이 텍스트와 나란한 flex 요소가 아니라 절대배치로 겹쳐 있는 구조라(슬랙 실측, 2026-09-02 확인,
           node 1178:602) md:relative + md:h-[30.104vw](사진 프레임 높이와 동일)로 기준 박스를 만들어줌.
           이 높이가 순수 vw라 4K 이상에서 한도 없이 커지면서 사진·이름이 세로로 길쭉해 보이던 문제가 있어
-          clamp으로 1920 기준값(578px) 이상은 더 커지지 않게 고정(2026-09-02 QA 피드백) */}
-      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] md:relative md:h-[clamp(0px,30.104vw,578px)] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
+          clamp으로 1920 기준값(578px) 이상은 더 커지지 않게 고정(2026-09-02 QA 피드백)
+
+          4K QA 재이슈(2026-09-03, capture/4K 출연진 이미지 깨짐 현상.png): 그때 높이만 고정하고 가로 방향
+          vw 값들은 그대로 둔 게 문제였음. 이 박스는 max-w-[1200px]와 높이 clamp 때문에 1920에서 크기가
+          멈추는데, 안쪽 좌우 패딩·텍스트 폭·글자 크기는 순수 vw라 계속 커짐. 3840에서 실측하면 패딩
+          120→240px, 텍스트 폭 363→726px으로 2배가 되면서 절대배치된 사진 프레임과 608px 겹쳐
+          HOST 이름·소개 문구가 사진 뒤로 깔려 잘림. 아래 vw 값들도 모두 1920 기준값(1vw=19.2px)으로
+          clamp해서 1920 이하 동작은 그대로 두고 그 위에서만 박스와 함께 멈추도록 맞춤 */}
+      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] md:relative md:h-[clamp(0px,30.104vw,578px)] gap-[6.1538vw] md:gap-[clamp(0px,1.25vw,24px)] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[clamp(0px,6.25vw,120px)]">
         {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
         {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 — 텍스트만 개별적으로 떠오름(사진 제외) */}
-        <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
+        <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[clamp(0px,0.4167vw,8px)] ${lang === "en" ? "md:w-[clamp(0px,18.906vw,363px)]" : "md:w-[clamp(0px,14.479vw,278px)]"} shrink-0 text-center`}>
           {lang === "ko" ? (
             // "MC 장성규"도 "힐링멘토 5인"과 동일한 흰색→연보라 그라데이션(2026-09-01 재확인)
             <p
-              className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-transparent bg-clip-text"
+              className="text-[7.1795vw] md:text-[clamp(0px,2.0833vw,40px)] leading-none font-extrabold text-transparent bg-clip-text"
               style={{ backgroundImage: mentorsTitleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
             >
               {t("cast.mcLabel")}
@@ -278,23 +285,23 @@ export function Cast() {
           ) : (
             // 영문판 "Host"/"Jang Sungkyu" — 28px, gap2, Host만 그라데이션이고 이름은 흰색 단색(2026-09-01 확인)
             // gap2(=0.5128vw@390)에 md: 오버라이드가 빠져있어 PC에서 9.85px로 과도하게 벌어져 있던 것을 수정(2026-09-02 확인)
-            <div className="flex flex-col items-center gap-[0.5128vw] md:gap-[0.1042vw]">
+            <div className="flex flex-col items-center gap-[0.5128vw] md:gap-[clamp(0px,0.1042vw,2px)]">
               <p
-                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold uppercase text-transparent bg-clip-text"
+                className="text-[7.1795vw] md:text-[clamp(0px,2.0833vw,40px)] leading-none font-extrabold uppercase text-transparent bg-clip-text"
                 style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 Host
               </p>
               {/* 스크린샷 확인(2026-09-01): "Jang Sungkyu"도 흰색 단색이 아니라 흰색→연보라 그라데이션 */}
               <p
-                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-transparent bg-clip-text"
+                className="text-[7.1795vw] md:text-[clamp(0px,2.0833vw,40px)] leading-none font-extrabold text-transparent bg-clip-text"
                 style={{ backgroundImage: mentorsTitleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {mc.nameEn}
               </p>
             </div>
           )}
-          <p className={`text-[4.1026vw] md:text-[1.25vw] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-light" : "font-medium"} text-white break-keep`}>
+          <p className={`text-[4.1026vw] md:text-[clamp(0px,1.25vw,24px)] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-light" : "font-medium"} text-white break-keep`}>
             {renderLines(lang === "ko" ? mc.descKo : mc.descEn)}
           </p>
         </Reveal>
