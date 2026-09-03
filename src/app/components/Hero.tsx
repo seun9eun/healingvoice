@@ -45,7 +45,10 @@ export function Hero() {
       className="relative w-full h-[172.3vw] md:h-auto md:aspect-[1920/1080] flex items-end justify-center overflow-hidden"
     >
       {/* 배경 사진 + 하단 그라디언트 — 모바일은 섹션(752px)보다 사진이 커서(844px) 아래로 92px 넘치는 구조(2026-08-31 모바일 스펙) */}
-      <div className="absolute inset-x-0 top-0 h-[216.4103vw] md:inset-0 md:h-full" aria-hidden>
+      {/* QA 피드백(2026-09-03): 인물이 GNB(상단 헤더)와 너무 떨어져 보임 — 사진 원본(780x1688) 상단 약 16.9%(285px)가
+          빈 배경(조명)뿐이라 그만큼을 위로 밀어올려(top을 음수로) 시야에서 잘라내고, 인물이 곧바로 GNB 아래에
+          붙어 보이도록 함. 컨테이너 높이/이미지 비율은 원본 그대로 유지 — 위치만 이동 */}
+      <div className="absolute inset-x-0 top-[-15vw] h-[216.4103vw] md:inset-0 md:top-0 md:h-full" aria-hidden>
         <img src={heroBgMobile} alt="" className="absolute inset-0 w-full h-full object-cover md:hidden" />
         <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover hidden md:block" />
         {/* QA 재재확인(2026-09-02): 28%→35%로 확 앞당긴 수정은 텍스트 가독성은 해결했지만, 캔버스 픽셀
@@ -56,7 +59,11 @@ export function Hero() {
             문제"). 페이드 구간을 22%(손 하트 아래)~54%(사진이 어차피 자연스럽게 배경색과 같아지는 지점)로
             넓혀 실제 사진의 자연스러운 명암 흐름과 겹치는 그라데이션처럼 보이게 하고, 텍스트가 시작되는
             36~39% 구간에서는 여전히 85%+ 불투명도라 가독성은 그대로 유지 */}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_22%,rgba(6,30,73,0.85)_36%,#061E49_54%)] md:hidden" />
+        {/* QA 피드백(2026-09-03): 흰 재킷이 가장 밝은 32~38% 구간이 기존 36%에서 이미 85% 어둡게 덮여 상반신이
+            잘 안 보인다는 지적 — 페이드 시작/정점 지점을 각각 4~6%p 뒤로 밀어(22→26%, 36→42%, 54→56%) 밝은
+            상반신 구간이 더 오래 드러나게 하되, 로고/뱃지 텍스트가 걸리는 44~63% 구간은 여전히 87%+ 불투명도라
+            가독성은 유지(30→48→58%까지 과감히 밀었던 1차 시도는 뱃지 텍스트 가독성이 떨어져 되돌림) */}
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_26%,rgba(6,30,73,0.85)_42%,#061E49_56%)] md:hidden" />
         <div className="hidden md:block absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
       </div>
 

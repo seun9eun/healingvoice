@@ -51,7 +51,7 @@ export function BigText() {
             {t("bigText.line2")}
           </p>
           <p className="text-[7.1795vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
-            Healing Voice
+            &lt;Healing Voice&gt;
           </p>
           <p className="text-[6.1538vw] leading-[1.4] text-center font-black text-transparent bg-clip-text" style={{ backgroundImage: titleGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}>
             {t("bigText.subLine").replace("the world", "").trim()}
@@ -84,7 +84,7 @@ export function BigText() {
             className="text-[6.1538vw] md:text-[2.9167vw] leading-[1.4] text-center font-black text-transparent bg-clip-text"
             style={{ backgroundImage: brandGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
           >
-            {lang === "ko" ? "<힐링보이스>" : "Healing Voice"}
+            {lang === "ko" ? "<힐링보이스>" : "<Healing Voice>"}
           </p>
         </div>
 
