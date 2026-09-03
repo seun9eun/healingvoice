@@ -6,7 +6,10 @@ import { renderLines } from "../lib/text";
 // Hero 다음에 나오는 큰 타이틀 문구 섹션. 반응형 단위/모바일-PC 분기 방식은 Cast.tsx 맨 위 주석 참고.
 // 02_Big Text (Figma 답변, 2026-08-27) — 배경/텍스트 전부 CSS로 구현, 이미지 에셋 없음
 // (titleGradient/brandGradient는 여러 섹션이 공유하는 값이라 theme.ts로 옮겨졌다. 이 파일에만 있는 glow는 그대로 둠.)
-const glow = "radial-gradient(circle, #722FF6 0%, rgba(26,0,255,0) 83.27%)";
+// QA 피드백(2026-09-03 2차): 이 섹션의 장식 글로우에도 원형 테두리 선이 보인다는 지적 —
+// PageBackground.tsx와 같은 원인/같은 공식으로 수정(closest-side + 경계에서 알파 0으로 떨어지는 완만한 falloff)
+const glow =
+  "radial-gradient(circle closest-side, rgba(114,47,246,1) 0%, rgba(114,47,246,0.6) 40%, rgba(114,47,246,0.25) 65%, rgba(114,47,246,0.07) 85%, rgba(114,47,246,0) 100%)";
 
 export function BigText() {
   const { t, lang } = useLanguage();
