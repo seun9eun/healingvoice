@@ -19,9 +19,16 @@ export function BigText() {
   return (
     // 장식용 글로우가 모바일 폭(390px)에서 77.5vw+36.6vw=114vw로 화면 밖까지 튀어나가 페이지 전체에
     // 가로 스크롤을 만들던 문제 — overflow-hidden으로 섹션 안에서만 잘리게 함(2026-09-01 확인)
+    //
+    // 배경 그라데이션(#061E49 → 투명)은 이 섹션에서만 공용 배경(별+글로우)을 덮는 역할.
+    // QA 피드백(2026-09-03): 이 섹션과 공식 영상 섹션 사이에 배경 구분선이 보인다는 지적 —
+    // 기존엔 불투명도가 섹션 끝(100%)까지 일정한 기울기로 떨어지다 경계에서 뚝 멈춰서, 알파는 0에
+    // 도달해도 "기울기"가 갑자기 끊기는 지점이 가로 1920px 전체를 가로지르는 선처럼 보였음
+    // (특히 바로 뒤 글로우가 밝은 구간이라 더 도드라짐). 정지점을 여러 개 둬 끝으로 갈수록 완만하게
+    // 눕히고(0.26 → 0.1 → 0.03 → 0) 마지막 구간에서는 사실상 투명한 상태로 경계를 만나게 해 선이 사라짐
     <section
       id="about"
-      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0)_100%)]"
+      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0.75)_25%,rgba(6,30,73,0.5)_50%,rgba(6,30,73,0.26)_70%,rgba(6,30,73,0.1)_84%,rgba(6,30,73,0.03)_93%,rgba(6,30,73,0)_100%)]"
     >
       {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
       {lang === "ko" && (
