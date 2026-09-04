@@ -1,11 +1,19 @@
 @import url('https://fonts.cdnfonts.com/css/nanumsquare-neo');
+@import './styles/fonts.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Add any custom global styles here */
+/* position:fixed 요소는 body가 아니라 html(뷰포트) 기준으로 계산되어, body에만 overflow-x:hidden이 있으면
+   세로 스크롤바 폭만큼 fixed 요소가 실제 보이는 영역보다 넓게 잡혀 오른쪽 끝 콘텐츠가 화면 밖으로 밀리는 문제가 있었음(2026-09-01 확인) */
+html {
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
+  overflow-x: hidden;
   font-family: "Pretendard Variable", Pretendard, sans-serif;
   background: linear-gradient(356deg, var(--Color-Blue-200, rgba(229, 250, 255, 0.30)) 14.03%, rgba(167, 253, 203, 0.30) 32.53%, rgba(191, 252, 190, 0.30) 46.4%, rgba(210, 253, 165, 0.30) 61.18%, rgba(229, 255, 140, 0.30) 73.87%), var(--color-white-solid, #FFF);
   color: #101828;

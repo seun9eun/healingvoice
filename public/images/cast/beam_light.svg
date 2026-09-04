@@ -1,0 +1,9 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="360" height="18" viewBox="0 0 360 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="beam light" d="M180 18C279.411 18 360 13.9706 360 9C360 4.02944 279.411 0 180 0C80.5888 0 0 4.02944 0 9C0 13.9706 80.5888 18 180 18Z" fill="url(#paint0_radial_0_4)" style="mix-blend-mode:color-dodge"/>
+<defs>
+<radialGradient id="paint0_radial_0_4" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(180 8.88942) scale(128.052 3.55769)">
+<stop stop-color="white"/>
+<stop offset="1"/>
+</radialGradient>
+</defs>
+</svg>
