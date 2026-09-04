@@ -96,7 +96,11 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
         className="relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center"
         style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
       >
-        <div className="relative z-10 flex flex-col items-center gap-[1.0256vw] md:gap-[0.4167vw] pt-[4.6154vw] md:pt-[2vw] px-[3.0769vw] md:px-[0.4167vw]">
+        {/* min-h-full: 아래 모바일 사진의 mt-auto가 "남는 세로 공간"을 계산하려면 이 컨테이너가 카드 안쪽
+            높이를 채워야 함(높이가 콘텐츠에 맞춰지면 남는 공간이 늘 0이라 mt-auto가 무의미).
+            h-full이 아니라 min-h-full인 이유: 높이를 고정하면 콘텐츠가 넘칠 때 flex가 이름·소개문을
+            압축해 카드마다 레이아웃이 달라짐. min-h-full은 넘칠 때 컨테이너가 늘어나 압축이 생기지 않음 */}
+        <div className="relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.4167vw] pt-[4.6154vw] md:pt-[2vw] px-[3.0769vw] md:px-[0.4167vw]">
           {lang === "ko" && member.nameImage ? (
             <img src={member.nameImage} alt={member.nameKo} className="h-[6.1538vw] md:h-[2.1vw] w-auto object-contain" />
           ) : lang === "en" && member.nameImageEn ? (
@@ -141,11 +145,19 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
               부모 flex 컨테이너에 이미 gap(모바일 4px/PC 8px)이 있으므로, 목표 gap(8px)에서 그만큼을 뺀 값만 margin-top으로 추가(PC는 컨테이너 gap과 목표가 같아 추가 불필요).
               폭은 부모의 좌우 padding에 영향받지 않도록 %가 아닌 vw 절대값(카드 폭 x 1.228)으로 지정.
               사진이 카드보다 커지면 shrink-0으로 줄어들지 않고 카드의 overflow-hidden에 자연히 클리핑됨 */}
+          {/* QA 피드백(2026-09-04, capture/버그 리포트1_아이폰 12pro.jpg, 2_아이폰 13.jpg): 모바일에서 사진이
+              카드 바닥에 안 붙고 떠 보이는 문제. 사진이 텍스트 뒤 문서 흐름에 놓여 있어 바닥 위치가 소개문
+              줄 수에 좌우되는데, 여유가 6px밖에 없어서(영문 4줄 카드는 21px, 국문·영문 3줄 카드는 6px)
+              iOS의 폰트 렌더링 차이로 텍스트가 조금만 짧아지면 바로 틈이 벌어졌음. 아이폰 13에서 3줄짜리
+              Kim Youngwoo 카드만 뜬 것이 이 때문.
+              고정 여백으로 밀어내면 여유가 없는 기기에서는 오히려 사진이 카드 밖으로 밀려나므로,
+              "남는 공간이 있을 때만 그만큼 흡수"하는 mt-auto로 바닥에 고정 — 공간이 없으면 0이 되어
+              기존처럼 텍스트 바로 뒤에 붙고 밀어내지 않음. PC는 여유가 18~46px로 충분해 그대로 둠 */}
           {member.photo && (
             <img
               src={member.photo}
               alt={member.nameKo}
-              className="md:hidden mt-[1.0257vw] w-[54.158vw] max-w-none shrink-0 aspect-[462/291] object-cover"
+              className="md:hidden mt-auto w-[54.158vw] max-w-none shrink-0 aspect-[462/291] object-cover"
             />
           )}
           {member.photo && (
