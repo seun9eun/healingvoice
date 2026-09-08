@@ -15,7 +15,8 @@ export interface Video {
 
 export const VIDEO_DATA: { ko: Video[]; en: Video[] } = { // 최신순 정렬 (0번이 최신)
   ko: [
-    { id: "1vKpHLgop9M", title: "티저 영상", label: "티저", openTime: "2026-08-14T17:00:00+09:00" , isPinned: true },
+    { id: "aSINnO_7Yls", title: "공식 예고", label: "예고", openTime: "2026-09-07T00:00:00+09:00" , isPinned: true },
+    { id: "1vKpHLgop9M", title: "티저 영상", label: "티저", openTime: "2026-08-14T17:00:00+09:00"},
     { id: "eOS2pRxfWe4", title: "오페라 가수 유영광", label: "홍보", openTime: "2026-05-06T18:00:00+09:00" },
     { id: "w-6Bb2JT1nA", title: "배우 정재광", label: "홍보", openTime: "2026-04-30T18:00:00+09:00" },
     { id: "JbSIKGOeUQ8", title: "가수 김영우", label: "홍보", openTime: "2026-04-30T09:00:00+09:00" },
@@ -30,7 +31,8 @@ export const VIDEO_DATA: { ko: Video[]; en: Video[] } = { // 최신순 정렬 (0
     { id: "5YqA0qryPPs", title: "티저 영상", label: "티저", openTime: DEFAULT_OPEN_TIME },
   ],
   en: [
-    { id: "1vKpHLgop9M", title: "Teaser", label: "TEASER", openTime: "2026-08-14T17:00:00+09:00" , isPinned: true },
+    { id: "aSINnO_7Yls", title: "Official Trailer", label: "TRAILER", openTime: "2026-09-07T00:00:00+09:00" , isPinned: true },
+    { id: "1vKpHLgop9M", title: "Teaser", label: "TEASER", openTime: "2026-08-14T17:00:00+09:00"},
     { id: "NJnzBUqRMKo", title: "Yoo Young Kwang", label: "PR", openTime: "2026-05-06T18:00:00+09:00" },
     { id: "U-ICjRTYEr8", title: "Jung Jaekwang", label: "PR", openTime: "2026-04-30T18:00:00+09:00" },
     { id: "tFcFqztRr_I", title: "Kim Youngwoo", label: "PR", openTime: "2026-04-30T09:00:00+09:00" },
