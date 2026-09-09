@@ -30,3 +30,32 @@
 }
 
 /* Sandoll Nemony2 — Sandoll Cloud 상업 웹폰트 라이선스 필요(무료 아님). 라이선스 확인 전까지 미적용, Pretendard로 대체 */
+
+/* GFC RedSpirit(고성 붉은투혼체) — public/fonts/에 직접 넣은 로컬 웹폰트.
+   보이스/출연진 이름 표기에 사용 예정(2026-09-09). 적용 대상은 Figma 스펙 확인 후 지정. */
+@font-face {
+  font-family: "GFC Red Spirit";
+  src: url("/fonts/GFCRedSpirit-Medium.woff2") format("woff2"),
+    url("/fonts/GFCRedSpirit-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GFC Red Spirit";
+  src: url("/fonts/GFCRedSpirit-Bold.woff2") format("woff2"),
+    url("/fonts/GFCRedSpirit-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GFC Red Spirit";
+  src: url("/fonts/GFCRedSpirit-Black.woff2") format("woff2"),
+    url("/fonts/GFCRedSpirit-Black.woff") format("woff");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
