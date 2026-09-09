@@ -20,8 +20,8 @@ export interface CastMember {
   roleKo: string; // 카드 하이라이트 태그 (Figma "role" 텍스트) — descKo 끝부분과 동일
   roleEn: string; // descEn 안의 역할 표현에서 발췌 (확정 문구 아님, 저위험 직역)
   photo?: string;
-  nameImage?: string; // Figma상 이름이 스타일링된 이미지로 되어있음(국문)
-  nameImageEn?: string; // 영문판 전용 이름 이미지(2026-08-31 답변, 이름마다 개별 이미지 폭이 다름)
+  // nameImage / nameImageEn 필드는 삭제됨(2026-09-09): v6.1에서 이름이 TEXT 노드로 확정되어
+  // Cast.tsx가 GFC Red Spirit 폰트로 직접 렌더링한다. name_*.png 10장도 함께 제거.
 }
 
 export const MC_DATA: CastMember[] = [
@@ -50,8 +50,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
     photo: "/images/cast/mentor_songjungmee.png",
-    nameImage: "/images/cast/name_songjungmee.png",
-    nameImageEn: "/images/cast/name_en_songjungmee.png",
   },
   {
     id: 2,
@@ -65,8 +63,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
     photo: "/images/cast/mentor_chohyelyun.png",
-    nameImage: "/images/cast/name_chohyelyun.png",
-    nameImageEn: "/images/cast/name_en_chohyelyun.png",
   },
   {
     id: 3,
@@ -80,8 +76,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
     photo: "/images/cast/mentor_kimjohan.png",
-    nameImage: "/images/cast/name_kimjohan.png",
-    nameImageEn: "/images/cast/name_en_kimjohan.png",
   },
   {
     id: 4,
@@ -95,8 +89,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
     photo: "/images/cast/mentor_sohyang.png",
-    nameImage: "/images/cast/name_sohyang.png",
-    nameImageEn: "/images/cast/name_en_sohyang.png",
   },
   {
     id: 5,
@@ -110,7 +102,5 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
     photo: "/images/cast/mentor_kimyoungwoo.png",
-    nameImage: "/images/cast/name_kimyoungwoo.png",
-    nameImageEn: "/images/cast/name_en_kimyoungwoo.png",
   },
 ];

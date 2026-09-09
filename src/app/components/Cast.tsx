@@ -100,16 +100,22 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             높이를 채워야 함(높이가 콘텐츠에 맞춰지면 남는 공간이 늘 0이라 mt-auto가 무의미).
             h-full이 아니라 min-h-full인 이유: 높이를 고정하면 콘텐츠가 넘칠 때 flex가 이름·소개문을
             압축해 카드마다 레이아웃이 달라짐. min-h-full은 넘칠 때 컨테이너가 늘어나 압축이 생기지 않음 */}
-        <div className="relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.4167vw] pt-[4.6154vw] md:pt-[2vw] px-[3.0769vw] md:px-[0.4167vw]">
-          {lang === "ko" && member.nameImage ? (
-            <img src={member.nameImage} alt={member.nameKo} className="h-[6.1538vw] md:h-[2.1vw] w-auto object-contain" />
-          ) : lang === "en" && member.nameImageEn ? (
-            <img src={member.nameImageEn} alt={member.nameEn} className="h-[6.1538vw] md:h-[2.1vw] w-auto object-contain" />
-          ) : (
-            <p className="text-[5.1282vw] md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-white">
-              {member.nameEn}
-            </p>
-          )}
+        {/* PC 상단 여백 32px(1.6667vw), 이름-설명 사이 6px(0.3125vw) — 좌표로 재지 말고 이 두 값과
+            이름 행간 150%로 잡으라는 안내를 따랐다(2026-09-09 Figma 답변) */}
+        <div className="relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.3125vw] pt-[4.6154vw] md:pt-[1.6667vw] px-[3.0769vw] md:px-[0.4167vw]">
+          {/* 멘토 이름 — v6.1에서 이미지 레이어가 아니라 TEXT 노드로 바뀌었다(2026-09-09 Figma 답변).
+              GFC Red Spirit Black 32px / 자간 0% / 행간 150%, 색은 titleGradient와 같은 값.
+              예전엔 name_*.png 10장(국문/영문)을 깔았는데 폰트를 확보해서 전부 걷어냈다. */}
+          <p
+            className="text-[6.1538vw] md:text-[1.6667vw] leading-[1.5] text-center text-transparent bg-clip-text"
+            style={{
+              backgroundImage: titleGradient,
+              fontFamily: "GFC Red Spirit, Pretendard Variable, sans-serif",
+              fontWeight: 900,
+            }}
+          >
+            {lang === "ko" ? member.nameKo : member.nameEn}
+          </p>
           {/* 소개문-역할 사이는 실제 gap이 아니라 행간 여백으로 만들어짐(2026-09-01 확인) — gap 없앰 */}
           <div className="flex w-full flex-col items-center gap-0 md:gap-[0.2083vw]">
             {/* 스크린샷 대조 결과 소개문은 Medium이 아니라 Regular로 보임(2026-09-01) — 슬랙 답변과 실제 렌더가 달라 실측 우선 */}
