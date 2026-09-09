@@ -31,30 +31,16 @@
 
 /* Sandoll Nemony2 — Sandoll Cloud 상업 웹폰트 라이선스 필요(무료 아님). 라이선스 확인 전까지 미적용, Pretendard로 대체 */
 
-/* GFC RedSpirit(고성 붉은투혼체) — public/fonts/에 직접 넣은 로컬 웹폰트.
-   보이스/출연진 이름 표기에 사용 예정(2026-09-09). 적용 대상은 Figma 스펙 확인 후 지정. */
+/* GFC Red Spirit(고성 붉은투혼체) — public/fonts/에 직접 넣은 로컬 웹폰트.
+   출연진 멘토 이름과 보이스 카드/모달 이름에 사용(Figma 실측: Black 32px).
+   원래 Medium/Bold/Black 3종 x woff/woff2 6개를 받았지만 실제로 쓰는 건 Black 하나뿐이라
+   나머지는 지웠다(필요해지면 git 히스토리에서 꺼낼 수 있다).
+   woff 폴백도 뺐다 — 이 사이트는 mask-image, backdrop-filter, conic-gradient를 쓰기 때문에
+   woff2를 지원하지 않는 브라우저에서는 어차피 화면이 성립하지 않는다.
+   Tailwind 토큰 font-redSpirit로 쓰고, 굵기는 font-black(900)을 함께 지정해야 한다. */
 @font-face {
   font-family: "GFC Red Spirit";
-  src: url("/fonts/GFCRedSpirit-Medium.woff2") format("woff2"),
-    url("/fonts/GFCRedSpirit-Medium.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "GFC Red Spirit";
-  src: url("/fonts/GFCRedSpirit-Bold.woff2") format("woff2"),
-    url("/fonts/GFCRedSpirit-Bold.woff") format("woff");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "GFC Red Spirit";
-  src: url("/fonts/GFCRedSpirit-Black.woff2") format("woff2"),
-    url("/fonts/GFCRedSpirit-Black.woff") format("woff");
+  src: url("/fonts/GFCRedSpirit-Black.woff2") format("woff2");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
