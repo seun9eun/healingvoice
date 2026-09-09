@@ -107,12 +107,8 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
               GFC Red Spirit Black 32px / 자간 0% / 행간 150%, 색은 titleGradient와 같은 값.
               예전엔 name_*.png 10장(국문/영문)을 깔았는데 폰트를 확보해서 전부 걷어냈다. */}
           <p
-            className="text-[6.1538vw] md:text-[1.6667vw] leading-[1.5] text-center text-transparent bg-clip-text"
-            style={{
-              backgroundImage: titleGradient,
-              fontFamily: "GFC Red Spirit, Pretendard Variable, sans-serif",
-              fontWeight: 900,
-            }}
+            className="text-[6.1538vw] md:text-[1.6667vw] leading-[1.5] text-center text-transparent bg-clip-text font-redSpirit font-black"
+            style={{ backgroundImage: titleGradient }}
           >
             {lang === "ko" ? member.nameKo : member.nameEn}
           </p>
@@ -244,7 +240,7 @@ export function Cast() {
       />
 
       {/* 타이틀 — 국문 모바일 스펙 확인(2026-09-01): eyebrow 16px #44a9ff, 제목 40px, 부제 #7d7d7d */}
-      <div className="flex flex-col items-center gap-[4.1026vw] md:gap-[0.8333vw] w-full max-w-[1200px] text-center">
+      <div className="flex flex-col items-center gap-[4.1026vw] md:gap-[0.8333vw] w-full text-center">
         <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[0.4103vw] md:tracking-[1.6px] text-[4.1026vw] md:text-[0.8333vw]">
           {t("cast.eyebrow")}
         </span>
@@ -291,8 +287,12 @@ export function Cast() {
           같이 커지는 다른 요소(출연진 타이틀 56→112px, 멘토 카드 368→736px)에 비해 눈에 띄게 작아 보였다.
           멈추게 하는 대신 "박스까지 같이 커지게" 하는 쪽으로 바꿨다 — 1920 이상에서 박스 폭이
           62.5vw(=1920에서 1200px)로 이어지므로, 안쪽 vw 값들과 비율이 유지돼 겹침도 생기지 않는다.
-          1920 이하에서는 max-w-[1200px]와 clamp 없는 vw가 기존 값과 완전히 같아 동작 변화가 없다. */}
-      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] min-[1920px]:max-w-[62.5vw] md:relative md:h-[30.104vw] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
+          정리(리팩토링): 이 섹션은 md:px-[18.75vw]가 걸려 있어 자식의 w-full이 곧 62.5vw다.
+          그래서 max-w-[1200px]는 1920 초과에서만 걸리고 min-[1920px]:max-w-[62.5vw]가 바로 그걸 풀어,
+          둘을 합치면 결국 w-full과 같았다. 무효한 한 쌍이라 지우고 w-full만 남겼다.
+          같은 이유로 이 섹션의 다른 블록(타이틀·힐링멘토)에 있던 max-w-[1200px]도 함께 걷어냈다.
+          1920 이하에서는 어느 쪽이든 값이 같아 동작 변화가 없다. */}
+      <div className="flex flex-col md:flex-row items-center w-full md:relative md:h-[30.104vw] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
         {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
         {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 — 텍스트만 개별적으로 떠오름(사진 제외) */}
         <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
@@ -375,7 +375,7 @@ export function Cast() {
       </div>
 
       {/* 힐링멘토 */}
-      <div className="flex flex-col items-center gap-[8.2051vw] md:gap-[1.6667vw] w-full max-w-[1200px]">
+      <div className="flex flex-col items-center gap-[8.2051vw] md:gap-[1.6667vw] w-full">
         <div className="flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] w-full max-w-[800px] pt-[8.2051vw] pb-[1.0256vw] md:py-[0.8333vw]">
           {/* beam light — 텍스트 위/아래 가로 빛줄기 */}
           <BeamLight />

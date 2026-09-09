@@ -15,17 +15,16 @@
 // clipsContent=true라 이 컨테이너의 overflow:hidden이 반드시 있어야 한다. 넘치는 폭을 잘라
 // 1920에 맞추면 별 위치가 달라진다.
 // 상단 0~852 구간에는 bg 요소가 없다. 그 구간은 01_Hero가 자기 프레임 배경으로 덮는다.
+import { glowGradient } from "../theme";
+
 const bgStar = "/images/bg/bg_star.webp"; // 2880x2777 원본(JPEG)을 2048폭 webp로 변환
 
 // glow는 ELLIPSE의 래디얼 그라디언트 채움이고 blur 효과는 없다. 부드럽게 보이는 건 SCREEN 블렌드 때문.
 // Figma는 도형 반경의 83% 지점에서 알파 0이 되는데, 그 반경이 closest-side의 약 1.055배라
 // closest-side 기준으로는 87.6% 지점이 알파 0이다. 도형 경계(100%)에 닿기 전에 완전히 투명해지므로
 // 예전에 QA에서 지적됐던 "원형 테두리 선"은 생기지 않는다.
-const glow = (from: string, to: string) =>
-  `radial-gradient(circle closest-side at 49% 52%, ${from} 0%, ${to} 87.6%)`;
-
-const purpleGlow = glow("rgba(114,47,246,1)", "rgba(26,0,255,0)"); // #722ff6 → #1a00ff alpha0
-const blueGlow = glow("rgba(56,111,183,1)", "rgba(0,111,255,0)"); // #386fb7 → #006fff alpha0
+const purpleGlow = glowGradient("rgba(114,47,246,1)", "rgba(26,0,255,0)", 87.6, "49% 52%"); // #722ff6 → #1a00ff
+const blueGlow = glowGradient("rgba(56,111,183,1)", "rgba(0,111,255,0)", 87.6, "49% 52%"); // #386fb7 → #006fff
 
 // 별 배경 3장. z는 star1 → star3 → star2 순(레이어 이름 순서와 z-order가 다르다 — 2026-09-09 확인).
 // star2·star3은 rotation 180이며, 아래 x/y/W/H는 회전이 반영된 바운딩 박스라 위치는 그대로 쓰고

@@ -1,6 +1,6 @@
 import { useLanguage } from "../context/LanguageContext";
 import { Reveal } from "./Reveal";
-import { titleGradient, brandGradient } from "../theme";
+import { titleGradient, brandGradient, glowGradient } from "../theme";
 import { renderLines } from "../lib/text";
 
 // Hero 다음에 나오는 큰 타이틀 문구 섹션. 반응형 단위/모바일-PC 분기 방식은 Cast.tsx 맨 위 주석 참고.
@@ -10,8 +10,7 @@ import { renderLines } from "../lib/text";
 // PageBackground.tsx와 같은 원인/같은 공식으로 수정(closest-side + 경계에서 알파 0으로 떨어지는 완만한 falloff)
 // Figma 실측(2026-09-09): GRADIENT_RADIAL, #722ff6 alpha1 @0 → #1a00ff alpha0 @0.8327, blur 없음.
 // 도형 경계(100%)에 닿기 전인 83.27%에서 알파 0이 되므로, 예전에 QA에서 지적된 원형 테두리 선은 생기지 않는다.
-const glow =
-  "radial-gradient(circle closest-side, rgba(114,47,246,1) 0%, rgba(26,0,255,0) 83.27%)";
+const glow = glowGradient("rgba(114,47,246,1)", "rgba(26,0,255,0)", 83.27);
 
 export function BigText() {
   const { t, lang } = useLanguage();

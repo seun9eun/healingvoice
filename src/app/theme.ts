@@ -14,3 +14,10 @@ export const titleGradient = "linear-gradient(180deg, #EDF4FF 0%, #B4D3FF 50%, #
 // 흰색에서 연보라색으로 이어지는 그라데이션. "Healing Voice" 브랜드명이나 강조 이름에 사용.
 // 예전 이름: BigText의 brandGradient, Cast의 mentorsTitleGradient — 전부 같은 값이었음.
 export const brandGradient = "linear-gradient(180deg, #FFFFFF 0%, #A9A9FF 100%)";
+
+// 배경 장식 글로우 (PageBackground / BigText 공용).
+// Figma는 도형 반경의 일정 비율 지점에서 알파 0이 되는 래디얼 그라디언트를 쓴다.
+// closest-side로 그라디언트 크기를 도형 반지름에 맞추고, 경계(100%)에 닿기 전에 알파 0이 되게 해야
+// 원형 테두리에 선이 보이지 않는다(2026-09-03 QA 지적). 정지점 비율만 섹션별로 다르다.
+export const glowGradient = (from: string, to: string, stop: number, at = "50% 50%") =>
+  `radial-gradient(circle closest-side at ${at}, ${from} 0%, ${to} ${stop}%)`;
