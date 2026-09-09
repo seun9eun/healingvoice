@@ -8,8 +8,10 @@ import { renderLines } from "../lib/text";
 // (titleGradient/brandGradient는 여러 섹션이 공유하는 값이라 theme.ts로 옮겨졌다. 이 파일에만 있는 glow는 그대로 둠.)
 // QA 피드백(2026-09-03 2차): 이 섹션의 장식 글로우에도 원형 테두리 선이 보인다는 지적 —
 // PageBackground.tsx와 같은 원인/같은 공식으로 수정(closest-side + 경계에서 알파 0으로 떨어지는 완만한 falloff)
+// Figma 실측(2026-09-09): GRADIENT_RADIAL, #722ff6 alpha1 @0 → #1a00ff alpha0 @0.8327, blur 없음.
+// 도형 경계(100%)에 닿기 전인 83.27%에서 알파 0이 되므로, 예전에 QA에서 지적된 원형 테두리 선은 생기지 않는다.
 const glow =
-  "radial-gradient(circle closest-side, rgba(114,47,246,1) 0%, rgba(114,47,246,0.6) 40%, rgba(114,47,246,0.25) 65%, rgba(114,47,246,0.07) 85%, rgba(114,47,246,0) 100%)";
+  "radial-gradient(circle closest-side, rgba(114,47,246,1) 0%, rgba(26,0,255,0) 83.27%)";
 
 export function BigText() {
   const { t, lang } = useLanguage();
@@ -28,7 +30,7 @@ export function BigText() {
     // 눕히고(0.26 → 0.1 → 0.03 → 0) 마지막 구간에서는 사실상 투명한 상태로 경계를 만나게 해 선이 사라짐
     <section
       id="about"
-      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#061E49_0%,rgba(6,30,73,0.75)_25%,rgba(6,30,73,0.5)_50%,rgba(6,30,73,0.26)_70%,rgba(6,30,73,0.1)_84%,rgba(6,30,73,0.03)_93%,rgba(6,30,73,0)_100%)]"
+      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#141F45_0%,rgba(20,31,69,0)_100%)]"
     >
       {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
       {lang === "ko" && (

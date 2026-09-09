@@ -65,7 +65,9 @@ export function Hero() {
             — 40%까지는 완전 투명 유지하고 44%까지 짧고 가파르게 어두워지도록 압축해 텍스트 구간(44~63%)은
             90%+ 불투명도로 가독성 확보, 그 위 상반신은 그대로 선명하게 드러남 */}
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_40%,rgba(6,30,73,0.9)_44%,#061E49_50%)] md:hidden" />
-        <div className="hidden md:block absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_0%,rgba(6,30,73,0)_42%,#061E49_85%)]" />
+        {/* PC 오버레이 — Figma fill[1] 실측값(2026-09-09). gradientTransform t=1.6388y-0.6388을 풀면 아래 정지점이 된다.
+            모바일은 v6.1에 전용 프레임이 없어 기존 값을 유지한다. */}
+        <div className="hidden md:block absolute inset-0 bg-[linear-gradient(180deg,rgba(6,30,73,0)_38.98%,rgba(6,30,73,0.119)_45.08%,#061E49_100%)]" />
       </div>
 
       {/* 콘텐츠 */}

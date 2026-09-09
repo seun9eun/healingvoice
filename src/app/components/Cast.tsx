@@ -222,7 +222,7 @@ export function Cast() {
         style={{
           top: 0,
           height: "155.5744vw",
-          backgroundImage: "linear-gradient(180deg, #00163B 0%, #00163B 7.41%, rgba(21,57,118,0) 100%)",
+          backgroundImage: "linear-gradient(180deg, #00163B 0%, #00163B 7.71%, rgba(21,57,118,0) 100%)",
         }}
         aria-hidden
       />
