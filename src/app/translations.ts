@@ -17,7 +17,7 @@ export const translations = {
       nav: {
         about: "소개",
         cast: "출연진",
-        awards: "시상 내역",
+        voices: "보이스",
       },
       cta: "퐁당 바로가기",
     },
@@ -57,6 +57,13 @@ export const translations = {
       desc: "<힐링보이스>의 여정을 함께할 MC와 힐링멘토를 소개합니다",
       mcLabel: "MC 장성규",
       mentorsTitle: "힐링멘토 5인",
+    },
+    // 보이스(Voices) 섹션 (2026-09-09 Figma 답변 기준)
+    voicesSection: {
+      eyebrow: "Voices",
+      title: "보이스",
+      desc: "세상을 치유할 32인의 보이스를 소개합니다",
+      cta: "콘텐츠 보기",
     },
     // 시상내역(Awards) 섹션 (2026-08-31 Figma 답변 기준 확정)
     awardsSection: {
@@ -314,7 +321,7 @@ export const translations = {
       nav: {
         about: "About",
         cast: "Cast",
-        awards: "Awards",
+        voices: "Voices",
       },
       cta: "Go to Fondant",
     },
@@ -354,6 +361,13 @@ export const translations = {
       desc: "Meet the Host and Healing Mentors joining the journey of Healing Voice",
       mcLabel: "Host | Jang Sungkyu",
       mentorsTitle: "Healing Mentors",
+    },
+    // 보이스(Voices) 섹션 — cta는 영문 확정 문구를 아직 못 받아 임시값
+    voicesSection: {
+      eyebrow: "Voices",
+      title: "Voices",
+      desc: "Meet the 32 Voices set to heal the world",
+      cta: "View Contents", // 미확정 — 디자인/기획 확정 문구 받으면 교체
     },
     // 시상내역(Awards) 섹션 — 영문 확정 문구 전달 전까지 국문 임시 사용
     awardsSection: {

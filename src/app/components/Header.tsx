@@ -74,7 +74,7 @@ export function Header() {
   const navItems = [
     { label: t("header.nav.about"), id: "#about" },
     { label: t("header.nav.cast"), id: "#cast" },
-    { label: t("header.nav.awards"), id: "#awards" },
+    { label: t("header.nav.voices"), id: "#voices" },
   ];
 
   // setMenuOpen(false)의 useEffect 클린업은 다음 렌더 이후에야 실행되므로, body가 잠긴 상태로
