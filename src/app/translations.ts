@@ -6,6 +6,16 @@
 // 한쪽에만 있으면 다른 언어에서는 그 t() 호출이 문구를 못 찾고 경로 문자열을 그대로 화면에 보여준다.
 // 문자열 중간의 "\n"은 그 위치에서 강제 줄바꿈하라는 표시이며, 화면에 실제로 <br/>로 바뀌는 부분은
 // 각 컴포넌트에서 renderLines()(src/app/lib/text.tsx)를 쓰거나 직접 split("\n") 하는 곳을 확인할 것.
+//
+// [미사용 구역 표시 — 2026-09-10 점검]
+// 아래 그룹들은 개편 이전 "지원서 접수 페이지"에서 쓰던 문구다. 지금 화면에서는 t()로 아무도
+// 부르지 않으므로 노출되지 않는다. 지우지 않고 남겨둔 것이니(용량 10KB, 번들의 2%) 여기 있는
+// 영문을 "확정 문구"로 오해하지 말 것 — 확정 여부가 확인되지 않은 값이 섞여 있다.
+//   intro / eligibility / awards / howtoapply / apply  (옛 GNB 항목)
+//   modal                                              (DeadlineModal이 t()를 쓰지 않는다)
+//   steps / checklist / songs / info                   (지원 절차·지정곡·지원요건 상세)
+//   hero.tagline / hero.period / hero.downloadBtn / hero.infoBtn
+// 현재 쓰이는 것: header, hero(그 외 5개), bigText, gallery, cast, voicesSection, awardsSection, footer
 export const translations = {
   ko: {
     intro: "소개",
@@ -24,7 +34,6 @@ export const translations = {
     //hero
     hero: {
       tagline: "세상을 치유하고,\n 영혼을 울리는 목소리",
-      descPart1: "글로벌 CCM 인재들과 함께 여러분 곁을 찾아갑니다.",
       period: "모집 기간 : 2026.3.15 ~ 5.10",
       downloadBtn: "지원서 다운로드",
       infoBtn: "영상 더 보기",
@@ -327,7 +336,6 @@ export const translations = {
     },
     hero: {
       tagline: "A Voice That Heals, A Song That Restores", // 0305 수정 0306 이미지 대체
-      descPart1: "Coming to your side together with global CCM talent.", // 임시 번역 - 확인 필요
       period: "Application: March 15 - May 10, 2026",
       downloadBtn: "Download Form",
       infoBtn: "Watch More",
@@ -362,12 +370,12 @@ export const translations = {
       mcLabel: "Host | Jang Sungkyu",
       mentorsTitle: "Healing Mentors",
     },
-    // 보이스(Voices) 섹션 — cta는 영문 확정 문구를 아직 못 받아 임시값
+    // 보이스(Voices) 섹션 — 2026-09-10 사용자가 확정 영문 문구를 직접 전달함(AI 번역 아님)
     voicesSection: {
       eyebrow: "Voices",
-      title: "Voices",
+      title: "VOICES", // 국문에서 "보이스"가 들어가는 H2 자리
       desc: "Meet the 32 Voices set to heal the world",
-      cta: "View Contents", // 미확정 — 디자인/기획 확정 문구 받으면 교체
+      cta: "Watch Now", // 국문 "콘텐츠 보기"
     },
     // 시상내역(Awards) 섹션 — 영문 확정 문구 전달 전까지 국문 임시 사용
     awardsSection: {

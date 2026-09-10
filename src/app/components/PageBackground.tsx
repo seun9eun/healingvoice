@@ -38,13 +38,53 @@ const STARS = [
   { left: "-28.5938vw", top: "78.5411%", w: "160.2083vw", h: "154.5313vw", flip: true },
 ];
 
+// ── 모바일 (힐링보이스_M_KO_v2.1 = 1821:257, 390x5901.63, 2026-09-10 답변) ──────────────
+//
+// PC와 구조가 다르다. PC는 별 3장을 크게 확대하고 두 장을 180도 돌려 쓰는데, 모바일은
+// 세 장 모두 같은 846x815 크기로 회전 없이 단순 배치한다. 이미지 소스는 PC와 같다.
+// z는 star2(맨 아래) → star3 → star1(맨 위) 순으로, 이것도 PC와 다르다.
+// 가로는 390 기준 vw, 세로는 페이지 높이 5901.63 기준 %로 환산한다(PC와 같은 관례).
+const MOBILE_STARS = [
+  { left: "-58.4615vw", top: "65.8462%" }, // bg_star 2 — x-228 y3886
+  { left: "-51.0256vw", top: "86.1963%" }, // bg_star 3 — x-199 y5087
+  { left: "-58.4615vw", top: "11.3020%" }, // bg_star 1 — x-228 y667
+];
+const MOBILE_STAR_W = "216.9231vw"; // 846
+const MOBILE_STAR_H = "208.9744vw"; // 815
+
+// 모바일에는 페이지 레벨 glow가 없다. 대신 02_Big Text 섹션 안에 보라 glow 3개가 있는데,
+// 셋 다 페이지 위쪽 같은 구역에 모여 있어 여기서 페이지 좌표로 함께 그린다
+// (섹션 컴포넌트에 넣으면 섹션 밖으로 삐져나가는 음수 좌표를 다시 풀어야 한다).
+const MOBILE_GLOWS = [
+  { left: "50vw", top: "12.1537%", size: "72.0513vw" }, // 1821:292 — x195 y717.27 281
+  { left: "79.7436vw", top: "14.1024%", size: "12.8205vw" }, // 1821:293 — x311 y832.27 50
+  { left: "-85.6410vw", top: "12.4203%", size: "159.7436vw" }, // 1821:294 — x-334 y733 623
+];
+
 export function PageBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden>
+      {/* ── 모바일 ── */}
+      {MOBILE_STARS.map((s, i) => (
+        <div
+          key={`m${i}`}
+          className="md:hidden absolute bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${bgStar})`, left: s.left, top: s.top, width: MOBILE_STAR_W, height: MOBILE_STAR_H }}
+        />
+      ))}
+      {MOBILE_GLOWS.map((g, i) => (
+        <div
+          key={`mg${i}`}
+          className="md:hidden absolute rounded-full opacity-40 mix-blend-screen"
+          style={{ backgroundImage: purpleGlow, left: g.left, top: g.top, width: g.size, height: g.size }}
+        />
+      ))}
+
+      {/* ── PC ── */}
       {STARS.map((s, i) => (
         <div
           key={i}
-          className="absolute bg-cover bg-center bg-no-repeat"
+          className="hidden md:block absolute bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${bgStar})`,
             left: s.left,
@@ -58,12 +98,12 @@ export function PageBackground() {
 
       {/* glow 보라 (1746:244) — page(-908, 1058), 1715x1715, paint opacity 0.4 / SCREEN */}
       <div
-        className="absolute left-[-47.2917vw] top-[12.1344%] w-[89.3229vw] h-[89.3229vw] rounded-full opacity-40 mix-blend-screen"
+        className="hidden md:block absolute left-[-47.2917vw] top-[12.1344%] w-[89.3229vw] h-[89.3229vw] rounded-full opacity-40 mix-blend-screen"
         style={{ backgroundImage: purpleGlow }}
       />
-      {/* glow 파랑 (1746:243) — page(157, 3184), 1607x1607, paint opacity 0.5 / SCREEN */}
+      {/* glow 파랑 (1746:243) — page(157, 3184), 1607x1607, paint opacity 0.5 / SCREEN. 모바일에는 없다. */}
       <div
-        className="absolute left-[8.1771vw] top-[36.5179%] w-[83.6979vw] h-[83.6979vw] rounded-full opacity-50 mix-blend-screen"
+        className="hidden md:block absolute left-[8.1771vw] top-[36.5179%] w-[83.6979vw] h-[83.6979vw] rounded-full opacity-50 mix-blend-screen"
         style={{ backgroundImage: blueGlow }}
       />
     </div>

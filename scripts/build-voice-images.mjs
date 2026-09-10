@@ -85,7 +85,49 @@ const PLACEMENT = {
   "호림": { dx: -9, dy: -31, w: 296 },
 };
 
-async function build() {
+// 모바일 카드 (Figma 1821:571, 2026-09-10 답변) — 카드 110x118, 3열.
+// 같은 원본을 쓰지만 PC보다 크게 확대해 얼굴 위주로 잡힌다(김성결 기준 PC 362 → 모바일 151).
+// 답변 표에는 h도 있었지만 전부 w*1.5라 생략했다(build가 같은 식으로 계산한다).
+const MOBILE_OUT_DIR = "public/images/voices/mobile";
+const MOBILE_CARD_W = 110;
+const MOBILE_CARD_H = 118;
+const MOBILE_PLACEMENT = {
+  "김성결": { dx: -21.07, dy: -10.88, w: 151.39 },
+  "김성신": { dx: -9.07, dy: -7.13, w: 122.22 },
+  "김신의": { dx: 1.0, dy: 5.37, w: 108.33 },
+  "김예은": { dx: 2.07, dy: -3.8, w: 105.28 },
+  "김하준": { dx: -2.0, dy: 14.07, w: 114.17 },
+  "김호준": { dx: -2.93, dy: 12.49, w: 116.11 },
+  "나시온": { dx: -4.0, dy: 4.91, w: 117.5 },
+  "라이야": { dx: -9.93, dy: 1.32, w: 126.11 },
+  "림팍": { dx: 3.5, dy: 3.44, w: 105.83 },
+  "멜로디": { dx: -16.0, dy: 13.19, w: 141.67 },
+  "문은수": { dx: 18.14, dy: 14.02, w: 88.89 },
+  "박연홍": { dx: -0.5, dy: -3.06, w: 109.72 },
+  "박예음": { dx: 4.0, dy: 13.32, w: 98.33 },
+  "석상은": { dx: -4.07, dy: 8.32, w: 118.06 },
+  "아삽": { dx: -42.86, dy: -22.36, w: 196.39 },
+  "예잔": { dx: -0.07, dy: 12.73, w: 108.89 },
+  "유난이": { dx: 4.07, dy: 13.85, w: 106.94 },
+  "이철규": { dx: -7.0, dy: -2.48, w: 113.33 },
+  "임보민": { dx: -7.07, dy: -14.65, w: 124.72 },
+  "임성규": { dx: 1.86, dy: 3.93, w: 110.28 },
+  "장근희": { dx: -16.0, dy: -0.95, w: 140.0 },
+  "전기수": { dx: -9.93, dy: 0.8, w: 119.44 },
+  "전덕호": { dx: -4.93, dy: -1.95, w: 119.44 },
+  "정지훈": { dx: -7.0, dy: -3.7, w: 123.33 },
+  "조수아": { dx: -5.0, dy: 3.34, w: 120.0 },
+  "지은혜": { dx: 3.93, dy: 5.0, w: 103.06 },
+  "초롬": { dx: -6.14, dy: -0.41, w: 122.78 },
+  "최서희": { dx: -1.07, dy: -0.41, w: 112.22 },
+  "케지아": { dx: 3.34, dy: 3.45, w: 104.72 },
+  "키디비": { dx: -0.09, dy: 12.62, w: 116.67 },
+  "피터": { dx: -9.07, dy: 3.04, w: 128.06 },
+  "호림": { dx: -6.07, dy: -4.05, w: 123.06 },
+};
+
+async function build(cfg = { outDir: OUT_DIR, cardW: CARD_W, cardH: CARD_H, placement: PLACEMENT }) {
+  const { outDir: OUT_DIR, cardW: CARD_W, cardH: CARD_H, placement: PLACEMENT } = cfg;
   fs.mkdirSync(OUT_DIR, { recursive: true });
   const outW = CARD_W * SCALE;
   const outH = CARD_H * SCALE;
@@ -165,6 +207,70 @@ async function sheet(outPath) {
   console.log(`대조 시트: ${outPath} (${W}x${H})`);
 }
 
-const rows = await build();
-const sheetPath = process.argv[2];
-if (sheetPath) await sheet(sheetPath);
+// ── 모달용 ───────────────────────────────────────────────────────────────
+//
+// 원본: D:/cgn-mini-project/_assets/voices_modal_original/<한글이름>.png
+//   - 1168x1752, 배경 제거된 누끼 PNG. 카드용과는 다른 컷이다(카드=손 모은 포즈, 모달=턱 괴는 포즈).
+//   - 같은 폴더의 _modal_bg.png는 인물 뒤에 깔리는 파란 배경. Figma에서도 별도 레이어라 합성하지 않는다.
+// 출력: public/images/voices/modal/voice_NN.webp (586x880 = 모달 인물 293x440의 2배수) + bg.webp
+//
+// 카드용과 달리 배치 보정(PLACEMENT)이 없다. 원본이 이미 모달 구도로 와서 크기만 줄이면 된다.
+const MODAL_SRC = "D:/cgn-mini-project/_assets/voices_modal_original";
+const MODAL_OUT = "public/images/voices/modal";
+const MODAL_W = 293 * SCALE; // 586 — 모달 인물 표시 폭 293의 2배수
+
+async function buildModal() {
+  fs.mkdirSync(MODAL_OUT, { recursive: true });
+  const rows = [];
+
+  for (let i = 0; i < ORDER.length; i++) {
+    const name = ORDER[i];
+    const file = path.join(MODAL_SRC, name + ".png");
+    if (!fs.existsSync(file)) { console.log(`  누락: ${name}`); continue; }
+
+    const num = String(i + 1).padStart(2, "0");
+    const outFile = path.join(MODAL_OUT, `voice_${num}.webp`);
+    // 폭만 지정해 원본 비율을 유지한다(1168x1752 -> 586x879). 293x440 박스와 0.1% 차이라
+    // 늘려 맞추지 않는다 — 억지로 fill하면 인물이 미세하게 일그러진다.
+    const info = await sharp(file)
+      .resize({ width: MODAL_W })
+      .webp({ quality: 85, alphaQuality: 90 })
+      .toFile(outFile);
+
+    rows.push({ num, name, w: info.width, h: info.height, kb: (fs.statSync(outFile).size / 1024).toFixed(0) });
+  }
+
+  // 배경은 PC와 모바일이 서로 다른 파일이다(디자인에서 3배수로 따로 내려받음, 2026-09-10).
+  // 표시 크기가 크게 다르므로(PC 1192x1106 / 모바일 608x564) 한 장을 공유하지 않는다.
+  // 원본은 크기를 줄이지 않고 포맷만 바꾼다 — 3배수로 받은 것을 줄이면 다시 모자라진다.
+  // 확장자는 받는 대로 달라질 수 있어 이름 앞부분만 맞으면 집는다.
+  const files = fs.readdirSync(MODAL_SRC);
+  for (const [stem, out] of [["modal_bg_MO", "bg_mo.webp"], ["modal_bg_PC", "bg_pc.webp"]]) {
+    const found = files.find((f) => new RegExp(`^${stem}\\.(png|jpe?g|webp)$`, "i").test(f));
+    if (!found) { console.log(`  배경 누락: ${stem}.* (${MODAL_SRC})`); continue; }
+    const bgOut = path.join(MODAL_OUT, out);
+    const bg = await sharp(path.join(MODAL_SRC, found)).webp({ quality: 85 }).toFile(bgOut);
+    console.log(`배경  ${out}  ${bg.width}x${bg.height}  ${(fs.statSync(bgOut).size / 1024).toFixed(0)}KB`);
+  }
+
+  console.log("\n번호 이름      크기        용량");
+  rows.forEach((r) => console.log(`${r.num}  ${r.name.padEnd(6)} ${`${r.w}x${r.h}`.padStart(9)}  ${r.kb}KB`));
+  const total = rows.reduce((a, r) => a + Number(r.kb), 0);
+  console.log(`\n${rows.length}장, 합계 ${(total / 1024).toFixed(1)}MB`);
+  return rows;
+}
+
+if (process.argv.includes("--modal")) {
+  await buildModal();
+} else if (process.argv.includes("--mobile")) {
+  await build({
+    outDir: MOBILE_OUT_DIR,
+    cardW: MOBILE_CARD_W,
+    cardH: MOBILE_CARD_H,
+    placement: MOBILE_PLACEMENT,
+  });
+} else {
+  const rows = await build();
+  const sheetPath = process.argv[2];
+  if (sheetPath) await sheet(sheetPath);
+}

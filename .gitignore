@@ -185,7 +185,7 @@ node_modules
 
 *.sublime*
 
-psd
+*.psd
 thumb
 sketch
 

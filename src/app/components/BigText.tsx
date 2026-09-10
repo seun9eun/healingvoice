@@ -29,7 +29,7 @@ export function BigText() {
     // 눕히고(0.26 → 0.1 → 0.03 → 0) 마지막 구간에서는 사실상 투명한 상태로 경계를 만나게 해 선이 사라짐
     <section
       id="about"
-      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#141F45_0%,rgba(20,31,69,0)_100%)]"
+      className="relative w-full overflow-hidden flex flex-col items-center gap-[2.0513vw] md:gap-[0.5208vw] pt-[24.6154vw] pb-[24.6154vw] md:pt-[8.3333vw] md:pb-[10.4167vw] bg-[linear-gradient(180deg,#051C41_0%,rgba(5,28,65,0)_100%)] md:bg-[linear-gradient(180deg,#141F45_0%,rgba(20,31,69,0)_100%)]"
     >
       {/* 국문 모바일: 4줄 각각 분리 표시, gap4, 마지막 줄만 다른 그라데이션(2026-09-01 확인) */}
       {lang === "ko" && (

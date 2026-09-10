@@ -3,26 +3,27 @@ import { motion, useReducedMotion } from "motion/react";
 import { VOICES_DATA } from "../data/voicesData";
 import { titleGradient } from "../theme";
 
-// [임시] 보이스 인물 모달 — 디자인이 아직 안 나와서 동작 확인용 껍데기다(2026-09-09).
-// 박스 안쪽은 자리표시자다. 다만 확정된 구조는 반영해 뒀다 — 배경 이미지 위에 텍스트가 왼쪽,
-// 큰 인물 이미지가 오른쪽. 인물 이미지는 카드용과 별도 에셋을 쓸 예정이라 voicesData의
-// photoModal을 먼저 보고 없으면 카드용(photo)으로 대체한다.
+// 보이스 인물 모달 — Figma 확정 스펙(2026-09-10 슬랙 답변).
+//   모바일 1822:1386 (358x606, 390 프레임 기준) / PC 1822:1838 (800x596, 1920 기준)
+// 색상·테두리·딤은 두 화면이 같고, 달라지는 건 텍스트 크기와 배치뿐이다.
+//   모바일 — 이름/소개글이 사진 "위쪽"에 겹치고, 좌우 버튼은 사진 아래 한 줄에 모인다.
+//   PC     — 이름/소개글이 사진 "왼쪽"에 겹치고, 좌우 버튼은 사진 양옆에 선다.
+// 이 배치 차이 때문에 두 레이아웃을 따로 그린다. 겹쳐 쓰는 부분(사진 영역)만 함수로 묶었다.
 //
-// 확정해 둔 "동작":
-//   열기   — 클릭한 카드 위치에서 모달 크기로 한 번에 확대된다.
-//            처음엔 카드 뒤집기(rotateY 180ms) 다음에 확대(220ms)를 이어붙였는데 이음매가 뚝 끊겨
-//            보였다. 끊기지 않게 하려면 전체를 600ms 이상으로 늘려야 해서, 뒤집기를 빼고 한 동작으로
-//            합쳤다. 260ms는 너무 빨라 안 보인다는 피드백을 받아 380ms로 늘렸다.
-//   넘기기 — 단순 좌우 슬라이드. 32명을 반복해서 넘기는 기능이라 화려한 전환은 금방 방해가 된다.
-//            넘길 때 열림 애니메이션을 다시 재생하지 않는다.
-//   닫기   — 배경 클릭, Esc, 닫기 버튼.
+// [모서리] radius 값이 없다. Figma 추출값도 0이고 스크린샷도 각져 있어 의도된 각진 모서리로 본다.
+// [사진]   배경(bg.webp)과 인물(voice_NN.webp)이 Figma에서도 별도 레이어라 합성하지 않고 겹쳐 그린다.
+//          인물은 293x440으로 표시된다 — 높이를 꽉 채우면 원본 비율(0.667)에서 폭이 293이 나온다.
+//
+// 확정해 둔 "동작"(2026-09-09 사용자와 결정, 디자인이 바뀌어도 유지):
+//   열기   — 클릭한 카드 위치에서 모달 크기로 한 번에 확대(380ms). 뒤집기는 이음매가 끊겨 보여 뺐다.
+//   넘기기 — 단순 좌우 슬라이드. 넘길 때 열림 애니메이션을 다시 재생하지 않는다.
+//   닫기   — 배경 클릭, Esc, 닫기 버튼. 닫으면 현재 인물의 카드로 돌아간다.
 //
 // [함정 1] 배경 스크롤 잠금은 html에 걸어야 한다. 이 페이지는 body가 아니라 html이 스크롤 컨테이너라
-//          body에만 걸면 잠기지 않는다. (같은 저장소의 DeadlineModal은 body에 걸고 있어 서로 어긋난다 —
+//          body에만 걸면 잠기지 않는다. (DeadlineModal은 body에 걸고 있어 서로 어긋난다 —
 //          공용 훅으로 합치는 게 맞지만 그건 이 파일 밖 작업이라 남겨 둠)
 // [함정 2] AnimatePresence로 만들었을 때 퇴장 애니메이션이 끝나도 노드가 남아, 투명한 전체화면
 //          오버레이가 페이지 클릭을 전부 막는 문제가 있었다. 마운트를 직접 관리해서 피했다.
-//          실제 모달을 만들 때 AnimatePresence로 되돌린다면 이 증상을 반드시 다시 확인할 것.
 // [함정 3] 좌우 이동을 AnimatePresence mode="wait"로 만들면 퇴장에서 멈춰 다음 내용이 들어오지 않는다.
 //          들어오는 쪽만 애니메이션하면 문제도 없고 연속으로 빠르게 눌러도 밀리지 않는다.
 
@@ -31,9 +32,17 @@ const CLOSE_SEC = 0.28; // 닫기 — 되돌아가는 동작은 짧아야 답답
 const SLIDE_SEC = 0.18; // 좌우 이동 — 반복되는 동작이라 짧게
 const UNMOUNT_MS = CLOSE_SEC * 1000 + 40; // 퇴장이 끝난 뒤 노드를 내린다(닫기 속도를 바꿔도 따라감)
 
-const PANEL_MAX = 700; // 박스 최대 폭
-const NAV_W = 56; // 좌우 버튼 지름
-const NAV_GAP = 16; // 박스와 버튼 사이 간격
+// 열기 애니메이션의 축소 비율을 잡을 때 쓰는 기준 폭(px). 모바일 358, PC는 좌우 버튼까지 포함해 800.
+const MOBILE_BREAKPOINT = 768;
+
+const BORDER = "#91a5ca";
+const MODAL_BG = "#01102b";
+const DIM = "rgba(6,30,73,0.8)"; // #061e49 @0.8
+const TEXT = "#e5faff";
+
+// 배경은 PC와 모바일이 다른 파일이다(표시 크기가 두 배 이상 차이나 한 장을 공유하지 않는다).
+const bgImageMobile = "/images/voices/modal/bg_mo.webp";
+const bgImagePc = "/images/voices/modal/bg_pc.webp";
 
 export function VoiceModal({
   index,
@@ -111,21 +120,73 @@ export function VoiceModal({
 
   // 클릭한 카드 중심에서 화면 중앙까지의 차이만큼 밀어두고 시작하면 "그 카드에서 자라난" 것처럼 보인다.
   // layoutId 같은 장치 없이 숫자 계산만으로 되므로 비용이 거의 없다.
-  // 애니메이션 대상이 [버튼 + 박스 + 버튼] 묶음이라 축소 비율도 묶음 폭 기준으로 잡는다.
+  const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
+  const panelPx = isMobile ? window.innerWidth * 0.9179 : window.innerWidth * 0.4167;
   const origin = getOrigin(shown!);
   const collapsed = origin
     ? {
         opacity: 0,
         x: origin.left + origin.width / 2 - window.innerWidth / 2,
         y: origin.top + origin.height / 2 - window.innerHeight / 2,
-        scale: origin.width / Math.min(PANEL_MAX + (NAV_W + NAV_GAP) * 2, window.innerWidth * 0.92),
+        scale: origin.width / panelPx,
       }
     : { opacity: 0, x: 0, y: 0, scale: 0.4 };
 
   const name = lang === "ko" ? v.nameKo : v.nameEn;
+  const desc = lang === "ko" ? v.descKo : v.descEn;
+  const counter = `${shown! + 1} / ${VOICES_DATA.length}`;
 
-  // 폭이 좁으면 박스와 겹치므로 md 미만에서는 숨긴다(모바일은 스와이프로 대체 예정).
-  const NavButton = ({ d, label }: { d: 1 | -1; label: string }) => (
+  // 소개글 줄바꿈은 Figma에서 수동 개행이다(2026-09-10 확인). voicesData 문구의 "/" 자리에서 나눈다.
+  //
+  // 각 줄에 whitespace-nowrap을 걸어 자동 줄바꿈을 완전히 막는다 — 화면 폭이 바뀌어도 줄이 접히거나
+  // 붙지 않고, 글자 크기만 vw를 따라 함께 줄고 늘어야 한다는 요구다. 따라서 줄이 길어 넘치는지는
+  // 브라우저가 아니라 "/"를 찍는 사람이 책임진다.
+  const descLines = desc.split("/").map((s) => s.trim()).filter(Boolean);
+  const Desc = ({ className }: { className: string }) => (
+    <p className={className} style={{ color: TEXT }}>
+      {descLines.map((line, i) => (
+        <span key={i} className="block whitespace-nowrap">
+          {line}
+        </span>
+      ))}
+    </p>
+  );
+
+  // 배경 + 인물.
+  //
+  // [배경] 디자인에서 사진 영역 크기의 3배수로 잘라 받은 파일이라 그대로 꽉 채우면 된다
+  // (bg_mo 978x1320 = 326x440x3, bg_pc 1806x1320 = 602x440x3). Figma가 배경 위에 얹던
+  // 검정 20% 톤다운도 이미 이미지에 반영돼 있어 따로 덮지 않는다 — 렌더와 픽셀 비교해 확인했다.
+  // 이전에는 Figma가 준 크롭 좌표가 렌더와 맞지 않아 배치를 역산해 썼는데, 잘린 파일을 받으면서
+  // 그 과정이 전부 필요 없어졌다.
+  //
+  // [인물] Figma가 준 절대 좌표를 사진 영역 크기로 나눈 비율이다(2026-09-10 답변). 인물 293x440은
+  // 사진 영역보다 아래로 밀려 있어 아래쪽이 잘린다 — 그 덕에 위쪽이 비어 이름·소개글과 겹치지 않는다.
+  // 잘림은 바깥 컨테이너의 overflow-hidden이 처리한다.
+  const PERSON_LAYOUT = {
+    mobile: { left: "5.21%", top: "22.27%", width: "89.88%" }, // 사진 영역 326x440 기준 x17 y98 293x440
+    pc: { left: "48.34%", top: "2.5%", width: "48.67%" }, //      사진 영역 602x440 기준 x291 y11 293x440
+  } as const;
+
+  const Photo = ({ variant }: { variant: "mobile" | "pc" }) => (
+    <>
+      <img
+        src={variant === "mobile" ? bgImageMobile : bgImagePc}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full"
+      />
+      <img
+        src={v.photoModal ?? v.photo}
+        alt={name}
+        decoding="async"
+        className="absolute max-w-none"
+        style={{ ...PERSON_LAYOUT[variant], aspectRatio: "293 / 440" }}
+      />
+    </>
+  );
+
+  const NavButton = ({ d, label, sizeClass }: { d: 1 | -1; label: string; sizeClass: string }) => (
     <button
       type="button"
       onClick={(e) => {
@@ -133,16 +194,38 @@ export function VoiceModal({
         step(d);
       }}
       aria-label={label}
-      className="hidden md:flex shrink-0 items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white text-[24px] leading-none transition-colors"
-      style={{ width: NAV_W, height: NAV_W }}
+      className={`shrink-0 flex items-center justify-center rounded-full border transition-colors hover:bg-white/10 ${sizeClass}`}
+      style={{ borderColor: BORDER }}
     >
-      {d === 1 ? "›" : "‹"}
+      <svg viewBox="0 0 24 24" fill="none" className="w-1/2 h-1/2" aria-hidden>
+        <path
+          d={d === 1 ? "M9 5l7 7-7 7" : "M15 5l-7 7 7 7"}
+          stroke={TEXT}
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+
+  const CloseButton = ({ sizeClass }: { sizeClass: string }) => (
+    <button
+      type="button"
+      onClick={onClose}
+      aria-label="닫기"
+      className={`absolute flex items-center justify-center ${sizeClass}`}
+    >
+      <svg viewBox="0 0 24 24" fill="none" className="w-[54.5%] h-[54.5%]" aria-hidden>
+        <path d="M5 5l14 14M19 5L5 19" stroke={BORDER} strokeWidth={2} strokeLinecap="round" />
+      </svg>
     </button>
   );
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#020A1F]/70 backdrop-blur-[6px] px-[4vw]"
+      className="fixed inset-0 z-[100] flex items-center justify-center"
+      style={{ backgroundColor: DIM }}
       initial={{ opacity: 0 }}
       animate={{ opacity: open ? 1 : 0 }}
       transition={{ duration: open ? 0.22 : 0.18 }}
@@ -151,18 +234,10 @@ export function VoiceModal({
       aria-modal="true"
       aria-label={`${name} 프로필`}
     >
-      {/* 좌우 버튼을 박스 바깥에 바로 붙인다. 셋을 한 묶음으로 두고 같이 확대되게 해야
-          열릴 때 버튼만 제자리에 떠 있지 않는다. */}
       <motion.div
-        className="flex w-full items-center justify-center"
-        style={{ maxWidth: PANEL_MAX + (NAV_W + NAV_GAP) * 2, gap: NAV_GAP }}
         initial={reduced ? { opacity: 0 } : collapsed}
         animate={
-          reduced
-            ? { opacity: open ? 1 : 0 }
-            : open
-              ? { x: 0, y: 0, scale: 1, opacity: 1 }
-              : collapsed
+          reduced ? { opacity: open ? 1 : 0 } : open ? { x: 0, y: 0, scale: 1, opacity: 1 } : collapsed
         }
         transition={
           reduced
@@ -174,52 +249,91 @@ export function VoiceModal({
                 opacity: { duration: open ? 0.18 : 0.16 },
               }
         }
+        onClick={(e) => e.stopPropagation()}
       >
-        <NavButton d={-1} label="이전 인물" />
-
+        {/* ── 모바일 358x606 ─────────────────────────────────────────── */}
         <div
-          className="relative min-w-0 flex-1 rounded-[24px] border-2 border-[#8890FC]/60 bg-[#0B1740] shadow-[0_24px_80px_rgba(0,0,0,0.55)] overflow-hidden"
-          onClick={(e) => e.stopPropagation()}
+          className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw]"
+          style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
         >
+          <CloseButton sizeClass="right-[2.3077vw] top-[2.3077vw] w-[11.2821vw] h-[11.2821vw]" />
+
           <motion.div
             key={v.id}
             initial={reduced ? false : { x: dir * 40, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: reduced ? 0 : SLIDE_SEC, ease: "easeOut" }}
-            className="flex items-center gap-6 p-8"
+            className="h-full flex flex-col"
           >
-            <div className="flex min-w-0 flex-1 flex-col gap-3">
-              <p
-                className="text-[36px] leading-[1.4] text-transparent bg-clip-text font-redSpirit font-black"
-                style={{ backgroundImage: titleGradient }}
-              >
-                {name}
-              </p>
-              <p className="text-[#D4EBFF] text-[16px] leading-[1.6]">{lang === "ko" ? v.descKo : v.descEn}</p>
-              <p className="text-[#8890FC] text-[12px]">
-                임시 박스 · {shown! + 1} / {VOICES_DATA.length}
-              </p>
+            {/* 사진 326x440 — 이름/소개글이 위쪽(사진 상단에서 23px)에 겹친다 */}
+            <div className="relative w-full h-[112.8205vw] overflow-hidden">
+              <Photo variant="mobile" />
+              {/* info 280x84 — 사진(326) 안에서 가운데, 상단에서 23px */}
+              <div className="absolute left-[7.06%] w-[85.89%] top-[5.8974vw] flex flex-col items-center gap-[1.0256vw] text-center">
+                <p
+                  className="text-[7.1795vw] leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black"
+                  style={{ backgroundImage: titleGradient }}
+                >
+                  {name}
+                </p>
+                <Desc className="text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+              </div>
             </div>
-            <img
-              src={v.photoModal ?? v.photo}
-              alt=""
-              aria-hidden
-              decoding="async"
-              className="w-[240px] h-[259px] shrink-0 object-cover"
-            />
-          </motion.div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="닫기"
-            className="absolute right-3 top-3 w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white text-[16px] leading-none transition-colors"
-          >
-            ✕
-          </button>
+            {/* nav — 사진 아래 10px, 행 자체에 상단 padding 16(Figma 324x66, padding 16/0/0/0).
+                남은 공간에 중앙 정렬하면 버튼이 7px 가까이 위로 떠서 스펙과 어긋난다. */}
+            <div className="mt-[2.5641vw] pt-[4.1026vw] flex items-start justify-between">
+              <NavButton d={-1} label="이전 인물" sizeClass="w-[12.8205vw] h-[12.8205vw]" />
+              <span className="text-[4.1026vw] font-medium" style={{ color: BORDER }}>
+                {counter}
+              </span>
+              <NavButton d={1} label="다음 인물" sizeClass="w-[12.8205vw] h-[12.8205vw]" />
+            </div>
+          </motion.div>
         </div>
 
-        <NavButton d={1} label="다음 인물" />
+        {/* ── PC 800x596 ─────────────────────────────────────────────── */}
+        <div
+          className="hidden md:block relative w-[41.6667vw] h-[31.0417vw] border pt-[4.1667vw] px-[1.25vw] pb-[1.25vw]"
+          style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
+        >
+          <CloseButton sizeClass="right-[0.8854vw] top-[0.8854vw] w-[2.2917vw] h-[2.2917vw]" />
+
+          <motion.div
+            key={v.id}
+            initial={reduced ? false : { x: dir * 40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: reduced ? 0 : SLIDE_SEC, ease: "easeOut" }}
+          >
+            {/* [이전] 사진 602x440 [다음] */}
+            <div className="flex items-center gap-[1.25vw]">
+              <NavButton d={-1} label="이전 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
+
+              <div className="relative flex-1 h-[22.9167vw] overflow-hidden">
+                <Photo variant="pc" />
+                {/* info 280x120 — 사진 영역 좌측에서 16px(2.66%), 세로는 사진 영역 중앙.
+                    Figma는 horizontal:MIN(좌측 고정)이고 세로만 CENTER다. 이름 줄이 늘면 이 박스가
+                    중심을 유지한 채 위아래로 커진다(국문 h120 / 영문 h136). */}
+                <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col items-center justify-center gap-[0.625vw] text-center">
+                  <p
+                    className="text-[2.0833vw] leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black"
+                    style={{ backgroundImage: titleGradient }}
+                  >
+                    {name}
+                  </p>
+                  <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+                </div>
+              </div>
+
+              <NavButton d={1} label="다음 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
+            </div>
+
+            {/* 페이지 표시 — 사진 아래 24px */}
+            <p className="pt-[1.25vw] text-center text-[0.8333vw] font-medium" style={{ color: BORDER }}>
+              {counter}
+            </p>
+          </motion.div>
+        </div>
       </motion.div>
     </motion.div>
   );
