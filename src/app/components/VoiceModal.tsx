@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, useReducedMotion } from "motion/react";
 import { VOICES_DATA } from "../data/voicesData";
 import { titleGradient } from "../theme";
@@ -26,6 +27,10 @@ import { titleGradient } from "../theme";
 //          오버레이가 페이지 클릭을 전부 막는 문제가 있었다. 마운트를 직접 관리해서 피했다.
 // [함정 3] 좌우 이동을 AnimatePresence mode="wait"로 만들면 퇴장에서 멈춰 다음 내용이 들어오지 않는다.
 //          들어오는 쪽만 애니메이션하면 문제도 없고 연속으로 빠르게 눌러도 밀리지 않는다.
+// [함정 4] 반드시 body로 포탈해야 한다. Layout이 콘텐츠를 `relative z-10` 컨테이너로 감싸고 있어서,
+//          그 안에서 z-[100]을 줘도 바깥에서는 모달 전체가 z-10으로 취급된다. 그러면 z-50인 헤더가
+//          모달 위에 남아 딤이 헤더를 덮지 못하고 GNB가 계속 클릭된다(2026-09-10 확인).
+//          z 값을 더 올려도 해결되지 않는다 — stacking context를 벗어나는 것이 유일한 방법이다.
 
 const OPEN_SEC = 0.38; // 열기 — 카드당 한 번뿐이라 동작이 보일 만큼 길게
 const CLOSE_SEC = 0.28; // 닫기 — 되돌아가는 동작은 짧아야 답답하지 않다
@@ -222,7 +227,7 @@ export function VoiceModal({
     </button>
   );
 
-  return (
+  return createPortal(
     <motion.div
       className="fixed inset-0 z-[100] flex items-center justify-center"
       style={{ backgroundColor: DIM }}
@@ -335,6 +340,7 @@ export function VoiceModal({
           </motion.div>
         </div>
       </motion.div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 }

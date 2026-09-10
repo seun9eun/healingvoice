@@ -128,14 +128,26 @@ function VoiceCard({
           받아둔 참고값: PC 28px·행간120%, 모바일 12px·자간-5%·행간110%, 화살표 gap 2, 하단 padding 14.
           영문 이름은 자동 줄바꿈이 아니라 인물마다 수동 개행이며(모바일 2줄 13장/1줄 19장) 그 목록도
           아직 없다. 지금 값은 국문 대비 같은 비율로 줄여 넘침만 피해 둔 것이다. */}
-      <div className="absolute inset-x-0 px-[4%] flex items-center justify-center gap-[0.7692vw] md:gap-0 bottom-[10.17%] md:bottom-[5.26%]">
+      {/* 영문 모바일은 이름을 카드 왼쪽에, 화살표를 카드 오른쪽 끝에 고정한다(2026-09-10 사용자 결정).
+          이름 길이와 상관없이 화살표가 같은 자리에 서서 32장이 균일해 보인다. Figma는 이름+화살표
+          묶음을 카드 가운데에 두는 구조라 이름이 짧으면 화살표가 안쪽으로 들어오는데, 그 부분은
+          디자인 확정 전이라 사용자 판단을 따랐다. 국문과 PC는 지금까지대로 가운데 정렬이다. */}
+      <div
+        className={`absolute inset-x-0 px-[4%] flex items-center gap-[0.7692vw] md:gap-0 bottom-[10.17%] md:bottom-[5.26%] md:justify-center ${
+          isEn ? "justify-between" : "justify-center"
+        }`}
+      >
         <p
           // GFC Red Spirit은 소문자 자리에 "작은 대문자" 글리프가 들어 있는 폰트다. 그래서 데이터가
           // Title Case("Kim Sung Gyeul")면 첫 글자만 크고 나머지가 작게 렌더된다. Figma는 텍스트 노드에
           // textCase=UPPER가 걸려 있어 전부 같은 크기의 대문자로 보이므로, 여기서도 uppercase가 필요하다
           // (2026-09-10 Figma 스크린샷 픽셀 대조로 확인). 한글에는 영향이 없다.
-          className={`text-center leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black ${
-            isEn ? "text-[2.8846vw] md:text-[1.25vw]" : "text-[3.8462vw] md:text-[1.6667vw]"
+          //
+          // 정렬이 언어별로 다르다: 국문은 가운데, 영문은 왼쪽이다(Figma textAlign LEFT). 이름이 두 줄이
+          // 되면 두 줄 모두 왼쪽에 맞고, 화살표는 그 두 줄 묶음의 세로 가운데에 선다(바깥 flex의
+          // items-center가 처리). 영문 이름 디자인은 아직 확정 전이라 크기 값은 임시다.
+          className={`leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black ${
+            isEn ? "text-left text-[2.8846vw] md:text-[1.25vw]" : "text-center text-[3.8462vw] md:text-[1.6667vw]"
           }`}
           style={{ backgroundImage: titleGradient }} // 타이틀 "보이스"와 동일한 그라디언트
         >
