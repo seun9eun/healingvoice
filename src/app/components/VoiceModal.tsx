@@ -157,6 +157,25 @@ export function VoiceModal({
     </p>
   );
 
+  // 이름은 카드와 달리 줄바꿈 위치가 정해져 있지 않고 상자 폭에 따라 접힌다(영문 장문 이름).
+  // 그래서 그라디언트를 <p>에 걸면 배경 상자가 두 줄 전체가 되어 윗줄은 흰색, 아랫줄은
+  // 파란색으로 갈린다(2026-09-11 QA 지적). 인라인 <span>에 box-decoration-break: clone을 주면
+  // 줄 조각마다 배경 상자가 따로 생겨, 몇 줄로 접히든 각 줄이 온전한 그라디언트를 갖는다.
+  const Name = ({ className }: { className: string }) => (
+    <p className={`${className} uppercase font-redSpirit font-black`}>
+      <span
+        className="text-transparent bg-clip-text"
+        style={{
+          backgroundImage: titleGradient,
+          WebkitBoxDecorationBreak: "clone",
+          boxDecorationBreak: "clone",
+        }}
+      >
+        {name}
+      </span>
+    </p>
+  );
+
   // 배경 + 인물.
   //
   // [배경] 디자인에서 사진 영역 크기의 3배수로 잘라 받은 파일이라 그대로 꽉 채우면 된다
@@ -275,12 +294,7 @@ export function VoiceModal({
               <Photo variant="mobile" />
               {/* info 280x84 — 사진(326) 안에서 가운데, 상단에서 23px */}
               <div className="absolute left-[7.06%] w-[85.89%] top-[5.8974vw] flex flex-col items-center gap-[1.0256vw] text-center">
-                <p
-                  className="text-[7.1795vw] leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black"
-                  style={{ backgroundImage: titleGradient }}
-                >
-                  {name}
-                </p>
+                <Name className="text-[7.1795vw] leading-[1.5]" />
                 <Desc className="text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
               </div>
             </div>
@@ -320,12 +334,7 @@ export function VoiceModal({
                     Figma는 horizontal:MIN(좌측 고정)이고 세로만 CENTER다. 이름 줄이 늘면 이 박스가
                     중심을 유지한 채 위아래로 커진다(국문 h120 / 영문 h136). */}
                 <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col items-center justify-center gap-[0.625vw] text-center">
-                  <p
-                    className="text-[2.0833vw] leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black"
-                    style={{ backgroundImage: titleGradient }}
-                  >
-                    {name}
-                  </p>
+                  <Name className="text-[2.0833vw] leading-[1.5]" />
                   <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
                 </div>
               </div>
