@@ -200,10 +200,19 @@ export function VoiceModal({
   // [인물] Figma가 준 절대 좌표를 사진 영역 크기로 나눈 비율이다(2026-09-10 답변). 인물 293x440은
   // 사진 영역보다 아래로 밀려 있어 아래쪽이 잘린다 — 그 덕에 위쪽이 비어 이름·소개글과 겹치지 않는다.
   // 잘림은 바깥 컨테이너의 overflow-hidden이 처리한다.
+  //
+  // [모바일 영문] Figma 값(y98)은 3줄짜리 소개글과 겹친다 — 소개글 하단이 125px인데 사진이 98px에서
+  // 시작한다. 그래서 영문만 사진을 텍스트 아래로 내렸다(2026-09-11 QA). 기준은 가장 긴 3줄이다.
+  //   23(상단) + 40.5(이름 27x1.5) + 4(간격) + 57.6(소개글 16x1.2x3줄) = 125.1 → 125.1/440 = 28.43%
+  // 소개글 칸도 3줄 높이로 고정해서(MOBILE_DESC_H) 2줄인 사람도 텍스트 하단이 같은 자리에 오게 했다.
+  // 그래야 32명 전원 텍스트와 사진 사이 간격이 같다.
   const PERSON_LAYOUT = {
-    mobile: { left: "5.21%", top: "22.27%", width: "89.88%" }, // 사진 영역 326x440 기준 x17 y98 293x440
+    mobile: { left: "5.21%", top: lang === "en" ? "28.43%" : "22.27%", width: "89.88%" }, // 사진 영역 326x440 기준 x17 293x440
     pc: { left: "48.34%", top: "2.5%", width: "48.67%" }, //      사진 영역 602x440 기준 x291 y11 293x440
   } as const;
+
+  // 모바일 소개글 칸 높이 = 16px x 행간 1.2 x 3줄 = 57.6px (390 기준 14.7692vw). 최대 3줄이다.
+  const MOBILE_DESC_H = lang === "en" ? "h-[14.7692vw]" : "";
 
   const Photo = ({ variant }: { variant: "mobile" | "pc" }) => (
     <>
@@ -310,7 +319,7 @@ export function VoiceModal({
                 {/* 영문만 27px로 줄인다(2026-09-11 QA). 국문 28px 그대로 쓰면 박연홍 한 명이
                     상자(273px)를 2px 넘겨 두 줄이 되는데, 27px면 32명 전원 한 줄에 들어간다. */}
                 <Name className={`leading-[1.5] ${lang === "en" ? "text-[6.9231vw]" : "text-[7.1795vw]"}`} />
-                <Desc className="text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+                <Desc className={`text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep ${MOBILE_DESC_H}`} />
               </div>
             </div>
 
