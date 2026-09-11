@@ -102,45 +102,36 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
             압축해 카드마다 레이아웃이 달라짐. min-h-full은 넘칠 때 컨테이너가 늘어나 압축이 생기지 않음 */}
         {/* PC 상단 여백 32px(1.6667vw), 이름-설명 사이 6px(0.3125vw) — 좌표로 재지 말고 이 두 값과
             이름 행간 150%로 잡으라는 안내를 따랐다(2026-09-09 Figma 답변) */}
-        <div className="relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.3125vw] pt-[4.6154vw] md:pt-[1.6667vw] px-[3.0769vw] md:px-[0.4167vw]">
-          {/* 멘토 이름 — 언어별로 렌더 방식이 다르다(2026-09-10 Figma MCP로 직접 확인).
-              국문은 TEXT(GFC Red Spirit Black, 색은 titleGradient와 같은 값)이고,
-              영문은 글자 수에 맞춰 개별 제작된 IMAGE다. 2026-09-09에 "TEXT로 확정" 답변을 받고
-              이미지를 전부 걷어냈는데, 그 답변은 MC 이름 기준이었고 멘토 카드는 그때도 이미지였다.
-              [모바일만 이미지] 영문 PC 프레임은 아직 확인하지 못했다. PC는 국문과 같은 TEXT 경로로
-              두는데, uppercase를 걸어둔 덕에 폰트 렌더로도 균일한 대문자로 보여 크게 어긋나지 않는다. */}
-          {lang === "en" && member.nameImageEn ? (
-            <>
-              <img
-                src={member.nameImageEn.src}
-                alt={member.nameEn}
-                // max-w-none이 없으면 카드 내부 padding(좌우 12px) 때문에 부모 콘텐츠 폭이 148px로
-                // 좁아져 159px 이미지가 축소된다. Figma는 카드 172 안에서 이름 프레임이 160(좌우 6px)이라
-                // padding을 넘어서는 게 맞다 — 카드 폭보다는 작으니 밖으로 삐져나가지 않는다.
-                className="md:hidden max-w-none"
-                style={{
-                  width: `${(member.nameImageEn.w / 390) * 100}vw`,
-                  height: `${(member.nameImageEn.h / 390) * 100}vw`,
-                }}
-              />
-              <p
-                className="hidden md:block md:text-[1.6667vw] leading-[1.5] text-center uppercase text-transparent bg-clip-text font-redSpirit font-black"
-                style={{ backgroundImage: titleGradient }}
-              >
-                {member.nameEn}
-              </p>
-            </>
-          ) : (
-            // GFC Red Spirit은 소문자 자리에 "작은 대문자" 글리프가 들어 있어, Title Case 데이터를
-            // 그대로 쓰면 첫 글자만 크게 렌더된다. Figma는 textCase=UPPER라 균일한 대문자로 보이므로
-            // uppercase가 필요하다(2026-09-10 픽셀 대조로 확인). 한글에는 영향이 없다.
-            <p
-              className="text-[6.1538vw] md:text-[1.6667vw] leading-[1.5] text-center uppercase text-transparent bg-clip-text font-redSpirit font-black"
-              style={{ backgroundImage: titleGradient }}
-            >
-              {member.nameKo}
-            </p>
-          )}
+        <div
+          // 상단 여백이 언어별로 다르다. Figma 영문(1885:5263)은 이름 상자 y가 카드 172x236
+          // 좌상단 기준 17.67(=18)인데, 카드 바깥 테두리 padding 4px가 이미 들어가 있어
+          // 여기서는 14px만 준다. 국문은 확정된 값이라 지금까지대로 18px를 유지한다.
+          className={`relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.3125vw] md:pt-[1.6667vw] px-[3.0769vw] md:px-[0.4167vw] ${
+            lang === "en" ? "pt-[3.5897vw]" : "pt-[4.6154vw]"
+          }`}
+        >
+          {/* 멘토 이름 — 국문·영문 모두 TEXT다(영문 모바일 1885:5263, 2026-09-11 확인).
+              한동안 영문 모바일만 이미지로 붙여뒀는데, 디자인이 수정되면서 이름용 IMAGE 레이어가
+              사라지고 전원 TEXT 노드가 됐다. 그래서 에셋 5장도 함께 걷어냈다.
+
+              GFC Red Spirit은 소문자 자리에 "작은 대문자" 글리프가 들어 있어, Title Case 데이터를
+              그대로 쓰면 첫 글자만 크게 렌더된다. Figma는 글자 자체가 대문자로 입력돼 있으므로
+              (SONG JUNGMEE) 여기서는 uppercase로 같은 결과를 만든다. 한글에는 영향이 없다.
+
+              모바일 크기가 언어별로 다르다 — 국문 24px / 영문 16px. 영문 이름이 길어 작게 잡혔다.
+              PC(32px)는 아직 확정값이 아니다. 영문 PC 노드 ID가 없어 확인하지 못했다. */}
+          <p
+            // whitespace-nowrap: 5인 전원 한 줄이다(Figma 확인). 송정미·김영우는 이름 상자가
+            // 144px라 카드 안쪽 콘텐츠 폭 140px를 2px씩 넘는데, 접지 말고 넘치게 두는 게 맞다
+            // — 카드 폭 172보다는 작아 밖으로 삐져나가지 않는다. 이미지로 붙였을 때도 같은 이유로
+            // max-w-none을 줬었다.
+            className={`whitespace-nowrap leading-[1.5] md:text-[1.6667vw] text-center uppercase text-transparent bg-clip-text font-redSpirit font-black ${
+              lang === "en" ? "text-[4.1026vw]" : "text-[6.1538vw]"
+            }`}
+            style={{ backgroundImage: titleGradient }}
+          >
+            {lang === "en" ? member.nameEn : member.nameKo}
+          </p>
           {/* 소개문-역할 사이는 실제 gap이 아니라 행간 여백으로 만들어짐(2026-09-01 확인) — gap 없앰 */}
           <div className="flex w-full flex-col items-center gap-0 md:gap-[0.2083vw]">
             {/* 스크린샷 대조 결과 소개문은 Medium이 아니라 Regular로 보임(2026-09-01) — 슬랙 답변과 실제 렌더가 달라 실측 우선 */}

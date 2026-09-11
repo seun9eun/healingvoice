@@ -20,14 +20,6 @@ export interface CastMember {
   roleKo: string; // 카드 하이라이트 태그 (Figma "role" 텍스트) — descKo 끝부분과 동일
   roleEn: string; // descEn 안의 역할 표현에서 발췌 (확정 문구 아님, 저위험 직역)
   photo?: string;
-  // [영문 이름은 이미지다 — 2026-09-10 Figma MCP로 직접 확인]
-  // 2026-09-09에 "v6.1에서 이름이 TEXT로 확정됐다"는 답변을 받고 nameImage/nameImageEn을 지웠는데,
-  // 그 답변은 MC 이름 기준이었다. 멘토 카드 쪽은 그때도 지금도 사각형(fill=IMAGE)이다.
-  //   국문 멘토 이름 → TEXT (GFC Red Spirit Black) 이므로 폰트로 렌더한다. 이미지 없음.
-  //   영문 멘토 이름 → IMAGE. 아래 필드로 렌더한다.
-  // 글자 수에 맞춰 개별 제작된 에셋이라 폭이 이름마다 다르다. 공통 크기를 줄 수 없어 w/h를 같이 들고 있다.
-  // w/h는 Figma 표시 크기(1x, 모바일 390 프레임 기준)이며 파일은 3배수로 받아 두었다.
-  nameImageEn?: { src: string; w: number; h: number };
 }
 
 export const MC_DATA: CastMember[] = [
@@ -56,7 +48,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "동행 멘토",
     roleEn: "Guiding Mentor",
     photo: "/images/cast/mentor_songjungmee.png",
-    nameImageEn: { src: "/images/cast/name_en_song_jungmee.webp", w: 152, h: 20.08 }, // Figma 159x21 — 45도 컷에 닿아 보여 살짝 줄임(2026-09-10 사용자 요청)
   },
   {
     id: 2,
@@ -70,7 +61,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "에너지 멘토",
     roleEn: "Energetic Mentor",
     photo: "/images/cast/mentor_chohyelyun.png",
-    nameImageEn: { src: "/images/cast/name_en_cho_hyelyun.webp", w: 145, h: 21 },
   },
   {
     id: 3,
@@ -84,7 +74,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "성장 멘토",
     roleEn: "Growth Mentor",
     photo: "/images/cast/mentor_kimjohan.png",
-    nameImageEn: { src: "/images/cast/name_en_kim_johan.webp", w: 116.33, h: 21 },
   },
   {
     id: 4,
@@ -98,7 +87,6 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "공감형 멘토",
     roleEn: "Empathetic Mentor",
     photo: "/images/cast/mentor_sohyang.png",
-    nameImageEn: { src: "/images/cast/name_en_sohyang.webp", w: 101.67, h: 21 },
   },
   {
     id: 5,
@@ -112,6 +100,5 @@ export const MENTOR_DATA: CastMember[] = [
     roleKo: "분석형 멘토",
     roleEn: "Analytical Mentor",
     photo: "/images/cast/mentor_kimyoungwoo.png",
-    nameImageEn: { src: "/images/cast/name_en_kim_youngwoo.webp", w: 152, h: 19.24 }, // Figma 158x20 — 같은 이유로 줄임
   },
 ];
