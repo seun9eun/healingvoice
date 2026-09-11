@@ -355,23 +355,32 @@ export function VoiceModal({
               <div className="relative flex-1 h-[22.9167vw] overflow-hidden">
                 <Photo variant="pc" />
                 {/* 텍스트 열 — 사진 영역 좌측에서 16px(2.66%), 폭 280(46.51%). 오른쪽은 인물이 선다.
-                    이 열을 다시 "이름 / 설명" 두 칸으로 나누고 각 칸 높이를 최대 줄 수로 고정한다
-                    (2026-09-11 사용자 지정). 예전처럼 이름+설명을 한 덩어리로 가운데 정렬하면,
-                    사람마다 줄 수가 달라 좌우로 넘길 때 글자가 위아래로 출렁인다.
-                      이름  40px x 행간 1.5 — 영문 2줄 = 120px = 6.25vw / 국문 1줄 = 60px = 3.125vw
-                      간격  12px = 0.625vw
-                      설명  20px x 행간 1.2 x 3줄 = 72px = 3.75vw (최대 3줄 — 영문 16명, 국문 1명)
-                    두 칸 모두 안에서 세로 가운데 정렬이라, 이름이 한 줄이면 두 줄 높이의 가운데에 선다.
-                    이름 칸만 언어를 타는 이유는 국문 이름이 두 줄이 되는 경우가 없기 때문이다 —
-                    영문과 같이 두 줄을 잡아두면 빈 공간만 늘어난다. */}
-                <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
-                  <div className={`flex items-center justify-center ${lang === "en" ? "h-[6.25vw]" : "h-[3.125vw]"}`}>
-                    <Name className="text-[2.0833vw] leading-[1.5]" />
+                    영문과 국문이 구조가 다르다. 국문은 확정된 상태라 손대지 않는다(2026-09-11 사용자). */}
+                {lang === "en" ? (
+                  /* [영문] Figma 스크린샷(en_pc_modal.png) 실측을 그대로 따른다. 사진 영역 440 기준:
+                       이름 줄 간격은 카드와 같은 행간 1.2로 맞췄다(2026-09-11 QA — Figma 실측
+                       0.95는 두 줄이 너무 붙어 보인다는 지적). 40px 글자에 48px 줄 간격이다.
+                       이름 잉크 하단 ~ 설명 잉크 상단 20px.
+                       텍스트 잉크 전체 158.5~286.9, 중심 222.7 (사진 영역 중심 220과 거의 같다)
+                     이름 칸을 2줄로 고정하지 않고 내용만큼만 잡는다 — 고정하면 이름이 한 줄일 때
+                     아래에 빈 공간이 남아 설명까지의 간격이 사람마다 20~51px로 달라진다.
+                     대신 묶음 전체를 세로 가운데에 두므로, 줄 수에 따라 묶음이 위아래로 조금 움직인다. */
+                  <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
+                    <Name className="text-[2.0833vw] leading-[1.2]" />
+                    <Desc className="mt-[0.5729vw] text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
                   </div>
-                  <div className="mt-[0.625vw] h-[3.75vw] flex items-center justify-center">
-                    <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+                ) : (
+                  /* [국문] 이름 칸 1줄(60px) / 설명 칸 3줄(72px)로 고정하고 각 칸 안에서 가운데 정렬.
+                     국문 이름은 두 줄이 되는 경우가 없어 칸을 1줄로 잡는다. */
+                  <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
+                    <div className="h-[3.125vw] flex items-center justify-center">
+                      <Name className="text-[2.0833vw] leading-[1.5]" />
+                    </div>
+                    <div className="mt-[0.625vw] h-[3.75vw] flex items-center justify-center">
+                      <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
 
               <NavButton d={1} label="다음 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
