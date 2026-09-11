@@ -154,18 +154,24 @@ function VoiceCard({
           // (2026-09-10 Figma 스크린샷 픽셀 대조로 확인). 한글에는 영향이 없다.
           //
           // 정렬이 언어별로 다르다: 국문은 가운데, 영문은 모바일 왼쪽 / PC 가운데다(Figma textAlign).
-          className={`uppercase text-transparent bg-clip-text font-redSpirit font-black ${
+          className={`uppercase font-redSpirit font-black ${
             isEn
               ? "whitespace-nowrap text-left md:text-center text-[2.8205vw] md:text-[1.4583vw] tracking-[-0.05em] md:tracking-normal leading-[1.1] md:leading-[1.2]"
               : "text-center text-[3.8462vw] md:text-[1.6667vw] leading-[1.5]"
           }`}
-          style={{ backgroundImage: titleGradient }} // 타이틀 "보이스"와 동일한 그라디언트
         >
-          {isEn && EN_NAME_TWO_LINE.has(name)
-            ? name.split(/ (.+)/).slice(0, 2).map((part) => (
-                <span key={part} className="block">{part}</span>
-              ))
-            : name}
+          {/* 그라디언트는 줄마다 따로 걸어야 한다. bg-clip-text를 바깥 <p>에 걸면 배경 상자가
+              두 줄 전체라 윗줄은 흰색, 아랫줄은 파란색으로 갈린다(2026-09-11 QA 지적).
+              줄 단위 <span>에 걸면 각 줄이 밝은색에서 어두운색까지 온전한 그라디언트를 갖는다. */}
+          {(isEn && EN_NAME_TWO_LINE.has(name) ? name.split(/ (.+)/).slice(0, 2) : [name]).map((line) => (
+            <span
+              key={line}
+              className="block text-transparent bg-clip-text"
+              style={{ backgroundImage: titleGradient }} // 타이틀 "보이스"와 동일한 그라디언트
+            >
+              {line}
+            </span>
+          ))}
         </p>
         {/* 모바일 전용 UI — PC 카드에는 이 화살표가 없다(2026-09-10 기획자 확인) */}
         <img
