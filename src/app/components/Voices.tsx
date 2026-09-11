@@ -4,6 +4,7 @@ import { VOICES_DATA } from "../data/voicesData";
 import { Reveal } from "./Reveal";
 import { titleGradient } from "../theme";
 import { VoiceModal } from "./VoiceModal";
+import { FONDANT_CONTENT_URL } from "../constants/links";
 
 // 보이스(Voices) 섹션 — 참가자 32인을 8행 x 4열 카드 그리드로 보여준다.
 // 반응형 단위(vw) 규칙과 모바일/PC 분기 방식은 Cast.tsx 맨 위 주석 참고.
@@ -24,9 +25,6 @@ const cardBg = "/images/voices/card_bg.webp";
 const iconArrow = "/images/voices/icon_arrow.svg";
 const iconChevron = "/images/voices/icon_chevron.svg"; // 모바일 카드 이름 옆 ">"
 
-// "콘텐츠 보기" 이동 대상 — 퐁당 앱 내 힐링보이스 이벤트 페이지
-const FONDANT_CONTENT_URL = "https://www.fondant.kr/event/000a0b29-9542-7312-d5fa-4c442f000249";
-
 // 카드 원본 치수(Figma). 아래 비율은 전부 여기서 파생되므로 카드 크기가 바뀌면 같이 따라간다.
 // PC 1746:438은 4열·카드 282x304, 모바일 1821:571은 3열·카드 110x118로 서로 다르다(2026-09-10 답변).
 const CARD_W = 282;
@@ -40,6 +38,15 @@ const M_GRADIENT_H = 64; // 모바일: 카드 118 중 하단 64
 // 중심 기준으로 두면 2줄일 때 위아래로 벌어져 인물 사진을 덮는다. 아래 bottom-[...] 값의 출처:
 //   PC     이름 상자 하단 여백 16 / 304 = 5.26%
 //   모바일  이름 상자 padding-bottom 12 / 118 = 10.17%
+
+// 영문 이름 중 두 줄로 끊기는 12명(2026-09-11 확정, PC·모바일 동일).
+// 규칙이 아니라 목록이다 — 같은 3어절이어도 "Kim Ye Eun"은 한 줄, "Kim Sung Shin"은 두 줄이다.
+// 끊는 자리는 전원 성과 이름 사이(첫 공백)라 목록만 있으면 된다.
+const EN_NAME_TWO_LINE = new Set([
+  "Kim Sung Gyeul", "Kim Sung Shin", "Moon Eun Soo", "Park Yeon Hong",
+  "Park Ye Eum", "Suk Sang Eun", "Lee Cheol Kyu", "Lim Sung Kyu",
+  "Jang Geun Hee", "Jeon Deok Ho", "Jeong Ji Hoon", "Choi Seo Hee",
+]);
 
 // 카드 하단 그라디언트. 이 스크림이 이름 가독성을 잡아주는 장치라 빼면 안 된다(기획자 확인).
 // PC와 모바일이 끝 색과 정지점까지 다르다 — 모바일은 82% 지점에서 이미 불투명해진다.
@@ -123,22 +130,21 @@ function VoiceCard({
           내측 3px·외측 2px인데 이 방식으로는 각각 약 2.0px·1.6px이 된다 — 1px 안쪽 차이라 그대로 둔다. */}
       <div className="absolute inset-0 pointer-events-none" style={STROKE_STYLE} />
 
-      {/* [임시 — 영문 이름 크기] 영문 프레임(1847:6239/7247)은 나왔지만 그 안의 이름 스펙은 디자인
-          작업 전에 뽑힌 값이라 확정이 아니다(2026-09-10 사용자 확인). 확정되면 아래 값을 교체할 것.
-          받아둔 참고값: PC 28px·행간120%, 모바일 12px·자간-5%·행간110%, 화살표 gap 2, 하단 padding 14.
-          영문 이름은 자동 줄바꿈이 아니라 인물마다 수동 개행이며(모바일 2줄 13장/1줄 19장) 그 목록도
-          아직 없다. 지금 값은 국문 대비 같은 비율로 줄여 넘침만 피해 둔 것이다. */}
-      {/* 영문 모바일은 이름을 카드 왼쪽에, 화살표를 카드 오른쪽 끝에 고정한다(2026-09-10 사용자 결정).
-          이름 길이와 상관없이 화살표가 같은 자리에 서서 32장이 균일해 보인다. Figma는 이름+화살표
-          묶음을 카드 가운데에 두는 구조라 이름이 짧으면 화살표가 안쪽으로 들어오는데, 그 부분은
-          디자인 확정 전이라 사용자 판단을 따랐다. 국문과 PC는 지금까지대로 가운데 정렬이다. */}
+      {/* 영문 이름 스펙 확정본(2026-09-11):
+            모바일  11px / 자간 -5% / 행간 110% / 왼쪽 정렬 / 대문자, 상자 시작 x=13, 최대 2줄
+            PC     28px / 자간 0 / 행간 120% / 가운데 정렬 / 대문자
+          화살표는 이름 길이와 무관하게 카드 x=90에 고정된다. 오른쪽 여백 10 / 110 = 9.0909%이고
+          화살표 폭도 10이라, 오른쪽에 붙이면 정확히 x=90~100에 선다. */}
       <div
         // 영문은 이름 영역 높이를 "2줄 기준"으로 고정하고 그 안에서 세로 가운데에 둔다. 그래야 이름이
         // 한 줄인 카드와 두 줄인 카드의 이름 중심이 같은 높이에 선다(2026-09-10 사용자 결정).
         // 고정하지 않으면 하단 기준으로 쌓여서, 한 줄 이름이 두 줄 이름의 아랫줄과 같은 자리에 놓인다.
-        // 높이 = 글자 2.8846vw x 행간 1.5 x 2줄 = 8.6538vw. 글자 크기가 확정되면 이 값도 같이 고쳐야 한다.
-        className={`absolute inset-x-0 px-[4%] flex items-center gap-[0.7692vw] md:gap-0 bottom-[10.17%] md:bottom-[5.26%] md:h-auto md:justify-center ${
-          isEn ? "justify-between h-[8.6538vw]" : "justify-center"
+        // 모바일 세로 위치는 Figma의 2줄 상자 y=78.37을 그대로 쓴다(78.37 / 118 = 66.4153%).
+        // 높이 = 11px x 행간 1.1 x 2줄 = 24.2px = 6.2051vw.
+        className={`absolute flex items-center bottom-[10.17%] md:left-0 md:right-0 md:top-auto md:bottom-[5.26%] md:h-auto md:justify-center ${
+          isEn
+            ? "left-[11.8182%] right-[9.0909%] top-[66.4153%] h-[6.2051vw] justify-between"
+            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center"
         }`}
       >
         <p
@@ -147,15 +153,19 @@ function VoiceCard({
           // textCase=UPPER가 걸려 있어 전부 같은 크기의 대문자로 보이므로, 여기서도 uppercase가 필요하다
           // (2026-09-10 Figma 스크린샷 픽셀 대조로 확인). 한글에는 영향이 없다.
           //
-          // 정렬이 언어별로 다르다: 국문은 가운데, 영문은 왼쪽이다(Figma textAlign LEFT). 이름이 두 줄이
-          // 되면 두 줄 모두 왼쪽에 맞고, 화살표는 그 두 줄 묶음의 세로 가운데에 선다(바깥 flex의
-          // items-center가 처리). 영문 이름 디자인은 아직 확정 전이라 크기 값은 임시다.
-          className={`leading-[1.5] uppercase text-transparent bg-clip-text font-redSpirit font-black ${
-            isEn ? "text-left text-[2.8846vw] md:text-[1.25vw]" : "text-center text-[3.8462vw] md:text-[1.6667vw]"
+          // 정렬이 언어별로 다르다: 국문은 가운데, 영문은 모바일 왼쪽 / PC 가운데다(Figma textAlign).
+          className={`uppercase text-transparent bg-clip-text font-redSpirit font-black ${
+            isEn
+              ? "whitespace-nowrap text-left md:text-center text-[2.8205vw] md:text-[1.4583vw] tracking-[-0.05em] md:tracking-normal leading-[1.1] md:leading-[1.2]"
+              : "text-center text-[3.8462vw] md:text-[1.6667vw] leading-[1.5]"
           }`}
           style={{ backgroundImage: titleGradient }} // 타이틀 "보이스"와 동일한 그라디언트
         >
-          {name}
+          {isEn && EN_NAME_TWO_LINE.has(name)
+            ? name.split(/ (.+)/).slice(0, 2).map((part) => (
+                <span key={part} className="block">{part}</span>
+              ))
+            : name}
         </p>
         {/* 모바일 전용 UI — PC 카드에는 이 화살표가 없다(2026-09-10 기획자 확인) */}
         <img
