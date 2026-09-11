@@ -106,6 +106,14 @@ export function VoiceModal({
   }, [open, reduced]);
 
   // 배경 스크롤 잠금. 스크롤바가 사라지며 생기는 가로 밀림은 같은 폭의 패딩으로 상쇄한다.
+  //
+  // 이것만으로는 iOS에서 안 막힌다 — 사파리는 html의 overflow:hidden을 터치 스크롤에 적용하지 않아
+  // 모달이 열려 있어도 뒷 화면이 위아래로 움직인다(2026-09-11 아이패드 가로 QA).
+  // 그래서 딤과 두 패널에 touch-none(touch-action: none)을 걸어 브라우저가 이 위에서
+  // 아예 패닝하지 않게 한다. 모달 안에는 스크롤할 내용이 없으니 잃는 것도 없다.
+  // 처음에는 가로 스와이프만 받으려고 touch-pan-y를 걸었는데, 그게 오히려 "세로는 브라우저가
+  // 가져가라"는 뜻이라 뒷 화면 스크롤을 부추기고 있었다. 스와이프는 포인터 이벤트로 직접
+  // 재고 있어서 touch-action의 도움이 필요하지 않다.
   useEffect(() => {
     if (!open) return;
     const html = document.documentElement;
@@ -333,7 +341,7 @@ export function VoiceModal({
 
   return createPortal(
     <motion.div
-      className="fixed inset-0 z-[100] flex items-center justify-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center touch-none"
       style={{ backgroundColor: DIM }}
       initial={{ opacity: 0 }}
       animate={{ opacity: open ? 1 : 0 }}
@@ -362,9 +370,7 @@ export function VoiceModal({
       >
         {/* ── 모바일 358x606 ─────────────────────────────────────────── */}
         <div
-          // touch-pan-y: 세로 스크롤은 브라우저에 넘기고 가로 제스처만 우리가 받는다.
-          //              없으면 가로로 밀 때 브라우저 뒤로가기 제스처가 먼저 먹는다.
-          className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw] touch-pan-y"
+          className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw] touch-none"
           style={{ backgroundColor: MODAL_BG, borderColor: BORDER, transform: `scale(${panelScale})` }}
           {...swipeHandlers}
         >
@@ -403,7 +409,7 @@ export function VoiceModal({
 
         {/* ── PC 800x596 ─────────────────────────────────────────────── */}
         <div
-          className="hidden md:block relative w-[41.6667vw] h-[31.0417vw] border pt-[4.1667vw] px-[1.25vw] pb-[1.25vw] touch-pan-y"
+          className="hidden md:block relative w-[41.6667vw] h-[31.0417vw] border pt-[4.1667vw] px-[1.25vw] pb-[1.25vw] touch-none"
           style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
           {...swipeHandlers}
         >
