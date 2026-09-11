@@ -1,18 +1,21 @@
 // 보이스(Voices) 섹션 인물사진 빌드 스크립트
 //
-// 원본: D:/cgn-mini-project/_assets/voices_original/<한글이름>.png
-//   - 2336x3504(3:2 세로), 배경 제거된 누끼 PNG, 장당 5~15MB (전체 265MB)
-//   - 이 원본은 저장소에 넣지 않는다. public/ 밖에 보관.
-// 출력: public/images/voices/voice_NN.webp (564x608 = 카드 282x304의 2배수, 알파 유지)
+// 원본: D:/cgn-mini-project/_assets/voices_figma_original/<한글이름>.png
+//   - Figma가 실제로 쓰는 파일이다. 인물마다 크기·비율이 다르다(864x1561 ~ 2336x3504).
+//   - 배경 제거된 누끼 PNG, 전체 55MB. 저장소에 넣지 않는다. public/ 밖에 보관.
+//   - 예전에 쓰던 voices_original(32장 전부 2336x3504)은 다른 소스였다. 쓰지 않는다.
+// 출력: public/images/voices/voice_NN.webp        (564x608 = PC 카드 282x304의 2배수)
+//       public/images/voices/mobile/voice_NN.webp (220x236 = 모바일 카드 110x118의 2배수)
 //
-// 배치값은 PLACEMENT 표에 32명 전원이 들어 있다. 값의 출처와 검증 방법은 그 표 위 주석 참고.
-// 원본 사진이 교체되면 배치값도 다시 뽑아야 한다.
+// PC와 모바일이 같은 원본에 서로 다른 배치표를 쓴다(PLACEMENT / MOBILE_PLACEMENT).
+// 두 표 모두 기획자가 준 공식값이고, 표의 w/h는 사진 크기가 아니라 표시 박스 크기다.
+// 사진이 교체되면 배치표도 함께 다시 받아야 한다.
 
 import sharp from "sharp";
 import fs from "fs";
 import path from "path";
 
-const SRC_DIR = "D:/cgn-mini-project/_assets/voices_original";
+const SRC_DIR = "D:/cgn-mini-project/_assets/voices_figma_original";
 const OUT_DIR = "public/images/voices";
 
 const CARD_W = 282; // 1x 카드 크기 (Figma)
@@ -31,58 +34,47 @@ const ORDER = [
   "케지아", "키디비", "피터", "호림",
 ];
 
-// 인물사진 배치값 (1x). dx/dy는 카드 좌상단 기준 사진 좌상단 오프셋, w는 사진 표시 폭.
+// 인물사진 배치값 (1x). 카드 좌상단 기준 "표시 박스"다 — dx/dy는 박스 좌상단, w/h는 박스 크기.
+// 사진은 이 박스에 scaleMode대로 앉는다(FILL=cover / FIT=contain / CROP=imageTransform).
 //
-// [값의 출처] 처음엔 Figma 좌표를 그대로 받아 썼는데, 2~8행 값이 실제 렌더와 맞지 않았다.
-// 그 값대로 그리면 인물이 카드보다 작고 아래로 내려가, Figma에서 카드에 꽉 차 보이는 것과 달랐다.
-// 그래서 좌표 대신 "섹션 렌더 PNG 자체"를 정답으로 두고 배치값을 역산했다(scripts/_fit_tmp.mjs,
-// 반영 후 삭제). 카드 배경 + 사진 + 하단 그라디언트를 후보 배치로 합성해 렌더와 픽셀 차이가
-// 가장 작은 조합을 찾는 방식이다.
-//
-// 이 방법의 검증: 1행 4명은 Figma 실측값을 이미 알고 있었는데(김성결 -41/-27/363 등),
-// 역산 결과가 -42/-28/362처럼 1~3px 안으로 일치했다. 같은 방법으로 얻은 2~8행도 신뢰할 만하다.
-// 원본 사진이 교체되면 값이 달라지므로 그때는 역산을 다시 돌려야 한다.
+// [값의 출처] 기획자가 준 공식 표다(2026-09-11 답변, 국문·영문 동일). 그전에는 h가 없어서
+// 렌더 스크린샷에서 역산한 값을 썼는데, h를 받으면서 걷어냈다. 원본도 Figma가 실제로 쓰는
+// voices_figma_original을 쓴다 — 예전에 갖고 있던 voices_original(32장 전부 2336x3504)은
+// 다른 소스였고, 그게 표가 안 맞던 원인이었다.
+// 박스는 전원 h = w * 1.5.
 const PLACEMENT = {
-  // 1행
-  "김성결": { dx: -42, dy: -28, w: 362 },
-  "김성신": { dx: -17, dy: -21, w: 294 },
-  "김신의": { dx: 12, dy: 11, w: 258 },
-  "김예은": { dx: 9, dy: -11, w: 252 },
-  // 2행
-  "김하준": { dx: -19, dy: -17, w: 310 },
-  "김호준": { dx: -24, dy: -10, w: 312 },
-  "나시온": { dx: -18, dy: -18, w: 326 },
-  "라이야": { dx: -36, dy: 0, w: 326 },
-  // 3행
-  "림팍": { dx: 16, dy: 10, w: 254 },
-  "멜로디": { dx: -47, dy: -30, w: 380 },
-  "문은수": { dx: 34, dy: 8, w: 232 },
-  "박연홍": { dx: -2, dy: -9, w: 264 },
-  // 4행
-  "박예음": { dx: 0, dy: -1, w: 256 },
-  "석상은": { dx: -20, dy: -11, w: 296 },
-  "아삽": { dx: -126, dy: -69, w: 536 },
-  "예잔": { dx: -4, dy: -1, w: 282 },
-  // 5행
-  "유난이": { dx: -13, dy: -15, w: 290 },
-  "이철규": { dx: -4, dy: -3, w: 276 },
-  "임보민": { dx: -16, dy: -29, w: 308 },
-  "임성규": { dx: 10, dy: 13, w: 262 },
-  // 6행
-  "장근희": { dx: -37, dy: -2, w: 336 },
-  "전기수": { dx: -16, dy: 7, w: 290 },
-  "전덕호": { dx: -11, dy: -5, w: 296 },
-  "정지훈": { dx: -15, dy: -11, w: 296 },
-  // 7행
-  "조수아": { dx: -12, dy: 8, w: 286 },
-  "지은혜": { dx: 16, dy: 1, w: 246 },
-  "초롬": { dx: -7, dy: -1, w: 292 },
-  "최서희": { dx: 2, dy: -2, w: 268 },
-  // 8행
-  "케지아": { dx: 6, dy: 6, w: 252 },
-  "키디비": { dx: -15, dy: -5, w: 302 },
-  "피터": { dx: -11, dy: 3, w: 310 },
-  "호림": { dx: -9, dy: -31, w: 296 },
+  "김성결": { dx: -41, dy: -27, w: 363, h: 545 },
+  "김성신": { dx: -15, dy: -18, w: 293, h: 440 },
+  "김신의": { dx: 12, dy: 12, w: 260, h: 390 },
+  "김예은": { dx: 10, dy: -10, w: 253, h: 379 },
+  "김하준": { dx: -1, dy: 34, w: 274, h: 411 },
+  "김호준": { dx: 1, dy: 35, w: 279, h: 418 },
+  "나시온": { dx: 0, dy: 12, w: 282, h: 423 },
+  "라이야": { dx: -21, dy: 13, w: 303, h: 454 },
+  "림팍": { dx: 18, dy: 12, w: 254, h: 381 },
+  "멜로디": { dx: -30, dy: 33, w: 340, h: 510 },
+  "문은수": { dx: 50, dy: 35, w: 214, h: 320 },
+  "박연홍": { dx: 0, dy: -6, w: 263, h: 395 },
+  "박예음": { dx: 15, dy: 32, w: 236, h: 354 },
+  "석상은": { dx: -6, dy: 20, w: 283, h: 425 },
+  "아삽": { dx: -89, dy: -44, w: 472, h: 707 },
+  "예잔": { dx: 7, dy: 33, w: 261, h: 392 },
+  "유난이": { dx: 13, dy: 32, w: 257, h: 385 },
+  "이철규": { dx: 0, dy: 0, w: 272, h: 408 },
+  "임보민": { dx: -9, dy: -22, w: 299, h: 449 },
+  "임성규": { dx: 10, dy: 13, w: 264, h: 397 },
+  "장근희": { dx: -35, dy: 0, w: 336, h: 504 },
+  "전기수": { dx: -13, dy: 9, w: 287, h: 430 },
+  "전덕호": { dx: -5, dy: 0, w: 287, h: 430 },
+  "정지훈": { dx: -14, dy: -9, w: 296, h: 444 },
+  "조수아": { dx: -12, dy: 9, w: 288, h: 432 },
+  "지은혜": { dx: 17, dy: 13, w: 247, h: 371 },
+  "초롬": { dx: -6, dy: 0, w: 294, h: 442 },
+  "최서희": { dx: 3, dy: 0, w: 269, h: 404 },
+  "케지아": { dx: 8, dy: 8, w: 251, h: 377 },
+  "키디비": { dx: 1, dy: 30, w: 280, h: 420 },
+  "피터": { dx: -8, dy: 7, w: 307, h: 461 },
+  "호림": { dx: -7, dy: -10, w: 295, h: 443 },
 };
 
 // 모바일 카드 (Figma 1847:5250) — 카드 110x118, 3열. PC보다 크게 확대해 얼굴 위주로 잡힌다.
@@ -94,7 +86,6 @@ const PLACEMENT = {
 //
 // dx/dy/w/h는 카드 좌상단 기준 "표시 박스"다. 사진은 이 박스에 scaleMode대로 앉는다
 // (FILL=cover, FIT=contain, CROP=imageTransform). 박스는 전원 h = w * 1.5.
-const MOBILE_SRC_DIR = "D:/cgn-mini-project/_assets/voices_figma_original";
 const MOBILE_OUT_DIR = "public/images/voices/mobile";
 const MOBILE_CARD_W = 110;
 const MOBILE_CARD_H = 118;
@@ -308,7 +299,6 @@ if (process.argv.includes("--modal")) {
   await buildModal();
 } else if (process.argv.includes("--mobile")) {
   await build({
-    srcDir: MOBILE_SRC_DIR,
     outDir: MOBILE_OUT_DIR,
     cardW: MOBILE_CARD_W,
     cardH: MOBILE_CARD_H,
