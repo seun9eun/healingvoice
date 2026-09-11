@@ -343,12 +343,23 @@ export function VoiceModal({
 
               <div className="relative flex-1 h-[22.9167vw] overflow-hidden">
                 <Photo variant="pc" />
-                {/* info 280x120 — 사진 영역 좌측에서 16px(2.66%), 세로는 사진 영역 중앙.
-                    Figma는 horizontal:MIN(좌측 고정)이고 세로만 CENTER다. 이름 줄이 늘면 이 박스가
-                    중심을 유지한 채 위아래로 커진다(국문 h120 / 영문 h136). */}
-                <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col items-center justify-center gap-[0.625vw] text-center">
-                  <Name className="text-[2.0833vw] leading-[1.5]" />
-                  <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+                {/* 텍스트 열 — 사진 영역 좌측에서 16px(2.66%), 폭 280(46.51%). 오른쪽은 인물이 선다.
+                    이 열을 다시 "이름 / 설명" 두 칸으로 나누고 각 칸 높이를 최대 줄 수로 고정한다
+                    (2026-09-11 사용자 지정). 예전처럼 이름+설명을 한 덩어리로 가운데 정렬하면,
+                    사람마다 줄 수가 달라 좌우로 넘길 때 글자가 위아래로 출렁인다.
+                      이름  40px x 행간 1.5 — 영문 2줄 = 120px = 6.25vw / 국문 1줄 = 60px = 3.125vw
+                      간격  12px = 0.625vw
+                      설명  20px x 행간 1.2 x 3줄 = 72px = 3.75vw (최대 3줄 — 영문 16명, 국문 1명)
+                    두 칸 모두 안에서 세로 가운데 정렬이라, 이름이 한 줄이면 두 줄 높이의 가운데에 선다.
+                    이름 칸만 언어를 타는 이유는 국문 이름이 두 줄이 되는 경우가 없기 때문이다 —
+                    영문과 같이 두 줄을 잡아두면 빈 공간만 늘어난다. */}
+                <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
+                  <div className={`flex items-center justify-center ${lang === "en" ? "h-[6.25vw]" : "h-[3.125vw]"}`}>
+                    <Name className="text-[2.0833vw] leading-[1.5]" />
+                  </div>
+                  <div className="mt-[0.625vw] h-[3.75vw] flex items-center justify-center">
+                    <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
+                  </div>
                 </div>
               </div>
 
