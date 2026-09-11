@@ -37,8 +37,15 @@ const CLOSE_SEC = 0.28; // 닫기 — 되돌아가는 동작은 짧아야 답답
 const SLIDE_SEC = 0.18; // 좌우 이동 — 반복되는 동작이라 짧게
 const UNMOUNT_MS = CLOSE_SEC * 1000 + 40; // 퇴장이 끝난 뒤 노드를 내린다(닫기 속도를 바꿔도 따라감)
 
-// 열기 애니메이션의 축소 비율을 잡을 때 쓰는 기준 폭(px). 모바일 358, PC는 좌우 버튼까지 포함해 800.
-const MOBILE_BREAKPOINT = 768;
+// 모바일/PC 판단 기준. tailwind.config의 md와 반드시 같아야 한다 — 다르면 CSS는 모바일을 그리는데
+// JS는 PC로 계산해 열기 애니메이션 배율이 어긋난다(768로 잘못 두어 768~840 구간에서 그랬다).
+const MOBILE_BREAKPOINT = 840;
+
+// 모바일 레이아웃은 390 기준 vw로 짜여 있어 화면이 넓어지는 만큼 그대로 커진다. 태블릿 세로
+// (갤탭 S5e 800px)에서는 모달이 화면 높이의 97%를 차지하고 이름이 57px로 그려졌다(설계값 28px).
+// 그래서 기준 폭에 상한을 두고, 그보다 넓으면 모달 전체를 그 비율만큼 줄여 그린다.
+// 배율만 낮추는 것이라 내부 값(패딩·글자·사진 위치)을 하나하나 손댈 필요가 없다.
+const MOBILE_MAX_BASIS = 520;
 
 // 모바일에서 좌우로 밀어 넘길 때, 이 거리(px)보다 적게 움직이면 탭으로 본다.
 // 390 화면에서 약 10%다 — 더 짧게 잡으면 닫기 버튼을 누르다가도 넘어간다.
@@ -79,6 +86,14 @@ export function VoiceModal({
 
   // 슬라이드 방향은 이 컴포넌트 안에서만 만들고 쓰는 값이라 부모로 올리지 않는다.
   const [dir, setDir] = useState<1 | -1>(1);
+
+  // 화면 폭은 아래 배율 계산에 쓰인다. 태블릿을 돌리면 폭이 바뀌므로 상태로 들고 따라간다.
+  const [viewportW, setViewportW] = useState(() => window.innerWidth);
+  useEffect(() => {
+    const onResize = () => setViewportW(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -144,8 +159,13 @@ export function VoiceModal({
 
   // 클릭한 카드 중심에서 화면 중앙까지의 차이만큼 밀어두고 시작하면 "그 카드에서 자라난" 것처럼 보인다.
   // layoutId 같은 장치 없이 숫자 계산만으로 되므로 비용이 거의 없다.
-  const isMobile = window.innerWidth < MOBILE_BREAKPOINT;
-  const panelPx = isMobile ? window.innerWidth * 0.9179 : window.innerWidth * 0.4167;
+  const isMobile = viewportW < MOBILE_BREAKPOINT;
+  // 넓은 화면에서 모바일 모달이 그대로 커지지 않도록 하는 상한. PC는 1배 그대로다.
+  // 이 배율은 열기 애니메이션이 아니라 패널 자체에 건다 — 애니메이션에 얹으면
+  // prefers-reduced-motion일 때 scale을 아예 안 쓰는 경로로 빠져 상한이 사라진다.
+  const panelScale = isMobile ? Math.min(1, MOBILE_MAX_BASIS / viewportW) : 1;
+  // 화면에 실제로 그려지는 모달 폭. 클릭한 카드 크기에서 자라나게 하려면 배율까지 반영해야 한다.
+  const panelPx = isMobile ? viewportW * 0.9179 * panelScale : viewportW * 0.4167;
   const origin = getOrigin(shown!);
   const collapsed = origin
     ? {
@@ -324,7 +344,7 @@ export function VoiceModal({
           // touch-pan-y: 세로 스크롤은 브라우저에 넘기고 가로 제스처만 우리가 받는다.
           //              이게 없으면 가로로 밀 때 브라우저 뒤로가기 제스처가 먼저 먹는다.
           className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw] touch-pan-y"
-          style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
+          style={{ backgroundColor: MODAL_BG, borderColor: BORDER, transform: `scale(${panelScale})` }}
           onPointerDown={(e) => {
             swipeFrom.current = { x: e.clientX, y: e.clientY };
           }}
