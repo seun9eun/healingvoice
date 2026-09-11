@@ -120,12 +120,13 @@ export function VoiceModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose, step]);
 
-  // 좌우로 넘기면 그제서야 다음 사진을 받기 시작해 잠깐 빈 자리가 보인다. 앞뒤 1명씩 미리 받아둔다.
+  // 좌우로 넘기면 그제서야 다음 사진을 받기 시작해 잠깐 빈 자리가 보인다. 앞뒤 2명씩 미리 받아둔다.
   // new Image()는 브라우저 캐시에만 올리는 것이라 DOM에는 아무것도 안 생긴다. 열려 있을 때만 돌고,
-  // 넘길 때마다 그 다음 1명씩 이어받으므로 32장을 한꺼번에 받는 일은 없다.
+  // 넘길 때마다 새로 필요한 1명씩만 더 받으므로 32장을 한꺼번에 받는 일은 없다.
+  // 2칸까지 두는 이유는 빠르게 연타할 때다 — 1칸만 두면 두 번째 클릭에서 다시 기다린다.
   useEffect(() => {
     if (!open || shown === null) return;
-    for (const d of [1, -1]) {
+    for (const d of [1, -1, 2, -2]) {
       const next = VOICES_DATA[(shown + d + VOICES_DATA.length) % VOICES_DATA.length];
       new Image().src = next.photoModal ?? next.photo;
     }
