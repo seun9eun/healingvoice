@@ -204,6 +204,15 @@ export function VoiceModal({
     </p>
   );
 
+  // 넘길 때 미끄러지는 건 사진 틀 "안"뿐이다 — 배경·인물·텍스트만 움직이고
+  // 좌우 버튼과 페이지 숫자는 제자리에 있다(2026-09-11 QA). 예전에는 이 묶음이
+  // 버튼까지 감싸고 있어서 버튼도 같이 밀렸다. key가 바뀌면 새로 마운트되며 들어온다.
+  const slideIn = {
+    initial: reduced ? false : { x: dir * 40, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    transition: { duration: reduced ? 0 : SLIDE_SEC, ease: "easeOut" as const },
+  };
+
   // 좌우로 밀어서 넘기기. 모바일·PC 패널이 같이 쓴다 — 태블릿 가로 보기는 PC 레이아웃이지만
   // 손가락으로 쓸어 넘기려 한다(2026-09-11 QA). 포인터 이벤트 하나로 터치와 마우스를 같이 받는다.
   //
@@ -376,15 +385,11 @@ export function VoiceModal({
         >
           <CloseButton sizeClass="right-[2.3077vw] top-[2.3077vw] w-[11.2821vw] h-[11.2821vw]" />
 
-          <motion.div
-            key={v.id}
-            initial={reduced ? false : { x: dir * 40, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: reduced ? 0 : SLIDE_SEC, ease: "easeOut" }}
-            className="h-full flex flex-col"
-          >
-            {/* 사진 326x440 — 이름/소개글이 위쪽(사진 상단에서 23px)에 겹친다 */}
+          <div className="h-full flex flex-col">
+            {/* 사진 326x440 — 이름/소개글이 위쪽(사진 상단에서 23px)에 겹친다.
+                넘길 때 움직이는 건 이 틀 "안"이다. 틀과 버튼은 제자리에 있고 내용만 미끄러진다. */}
             <div className="relative w-full h-[112.8205vw] overflow-hidden">
+              <motion.div key={v.id} {...slideIn} className="absolute inset-0">
               <Photo variant="mobile" />
               {/* info 280x84 — 사진(326) 안에서 가운데, 상단에서 23px */}
               <div className="absolute left-[7.06%] w-[85.89%] top-[5.8974vw] flex flex-col items-center gap-[1.0256vw] text-center">
@@ -393,10 +398,12 @@ export function VoiceModal({
                 <Name className={`leading-[1.5] ${lang === "en" ? "text-[6.9231vw]" : "text-[7.1795vw]"}`} />
                 <Desc className={`text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep ${MOBILE_DESC_H}`} />
               </div>
+              </motion.div>
             </div>
 
             {/* nav — 사진 아래 10px, 행 자체에 상단 padding 16(Figma 324x66, padding 16/0/0/0).
-                남은 공간에 중앙 정렬하면 버튼이 7px 가까이 위로 떠서 스펙과 어긋난다. */}
+                남은 공간에 중앙 정렬하면 버튼이 7px 가까이 위로 떠서 스펙과 어긋난다.
+                이 줄은 슬라이드 밖이라 버튼은 가만히 있고 숫자만 바뀐다. */}
             <div className="mt-[2.5641vw] pt-[4.1026vw] flex items-start justify-between">
               <NavButton d={-1} label="이전 인물" sizeClass="w-[12.8205vw] h-[12.8205vw]" />
               <span className="text-[4.1026vw] font-medium" style={{ color: BORDER }}>
@@ -404,7 +411,7 @@ export function VoiceModal({
               </span>
               <NavButton d={1} label="다음 인물" sizeClass="w-[12.8205vw] h-[12.8205vw]" />
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* ── PC 800x596 ─────────────────────────────────────────────── */}
@@ -415,17 +422,13 @@ export function VoiceModal({
         >
           <CloseButton sizeClass="right-[0.8854vw] top-[0.8854vw] w-[2.2917vw] h-[2.2917vw]" />
 
-          <motion.div
-            key={v.id}
-            initial={reduced ? false : { x: dir * 40, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: reduced ? 0 : SLIDE_SEC, ease: "easeOut" }}
-          >
-            {/* [이전] 사진 602x440 [다음] */}
+          <div>
+            {/* [이전] 사진 602x440 [다음] — 버튼은 슬라이드 밖이라 제자리에 있다 */}
             <div className="flex items-center gap-[1.25vw]">
               <NavButton d={-1} label="이전 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
 
               <div className="relative flex-1 h-[22.9167vw] overflow-hidden">
+                <motion.div key={v.id} {...slideIn} className="absolute inset-0">
                 <Photo variant="pc" />
                 {/* 텍스트 열 — 사진 영역 좌측에서 16px(2.66%), 폭 280(46.51%). 오른쪽은 인물이 선다.
                     이름 칸도 설명 칸도 내용만큼만 잡고, 묶음 전체를 세로 가운데에 둔다.
@@ -448,16 +451,17 @@ export function VoiceModal({
                     }`}
                   />
                 </div>
+                </motion.div>
               </div>
 
               <NavButton d={1} label="다음 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
             </div>
 
-            {/* 페이지 표시 — 사진 아래 24px */}
+            {/* 페이지 표시 — 사진 아래 24px. 슬라이드 밖이라 숫자만 바뀐다. */}
             <p className="pt-[1.25vw] text-center text-[0.8333vw] font-medium" style={{ color: BORDER }}>
               {counter}
             </p>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
     </motion.div>,
