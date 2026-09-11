@@ -137,14 +137,17 @@ function VoiceCard({
           화살표 폭도 10이라, 오른쪽에 붙이면 정확히 x=90~100에 선다. */}
       <div
         // 영문은 이름 영역 높이를 "2줄 기준"으로 고정하고 그 안에서 세로 가운데에 둔다. 그래야 이름이
-        // 한 줄인 카드와 두 줄인 카드의 이름 중심이 같은 높이에 선다(2026-09-10 사용자 결정).
-        // 고정하지 않으면 하단 기준으로 쌓여서, 한 줄 이름이 두 줄 이름의 아랫줄과 같은 자리에 놓인다.
-        // 모바일 세로 위치는 Figma의 2줄 상자 y=78.37을 그대로 쓴다(78.37 / 118 = 66.4153%).
-        // 높이 = 11px x 행간 1.1 x 2줄 = 24.2px = 6.2051vw.
-        className={`absolute flex items-center bottom-[10.17%] md:left-0 md:right-0 md:top-auto md:bottom-[5.26%] md:h-auto md:justify-center ${
+        // 한 줄인 카드와 두 줄인 카드의 이름 중심이 같은 높이에 선다(모바일 2026-09-10,
+        // PC 2026-09-11 사용자 결정). 고정하지 않으면 하단 기준으로 쌓여서, 한 줄 이름이
+        // 두 줄 이름의 아랫줄과 같은 자리에 놓인다.
+        // 상자는 Figma의 2줄 이름 상자를 그대로 쓴다.
+        //   모바일  y78.37 / 118 = 66.4153%, 높이 11px x 1.1 x 2줄 = 24.2px = 6.2051vw
+        //   PC     y204 / 304 = 67.1053%, 높이 100px = 5.2083vw
+        // 국문은 줄이 늘어나는 일이 없어 지금까지대로 하단 기준이다.
+        className={`absolute flex items-center md:left-0 md:right-0 md:justify-center ${
           isEn
-            ? "left-[11.8182%] right-[9.0909%] top-[66.4153%] h-[6.2051vw] justify-between"
-            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center"
+            ? "left-[11.8182%] right-[9.0909%] top-[66.4153%] h-[6.2051vw] justify-between md:top-[67.1053%] md:h-[5.2083vw]"
+            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center bottom-[10.17%] md:top-auto md:bottom-[5.26%] md:h-auto"
         }`}
       >
         <p

@@ -157,10 +157,17 @@ export function VoiceModal({
     </p>
   );
 
-  // 이름은 카드와 달리 줄바꿈 위치가 정해져 있지 않고 상자 폭에 따라 접힌다(영문 장문 이름).
-  // 그래서 그라디언트를 <p>에 걸면 배경 상자가 두 줄 전체가 되어 윗줄은 흰색, 아랫줄은
-  // 파란색으로 갈린다(2026-09-11 QA 지적). 인라인 <span>에 box-decoration-break: clone을 주면
-  // 줄 조각마다 배경 상자가 따로 생겨, 몇 줄로 접히든 각 줄이 온전한 그라디언트를 갖는다.
+  // 이름 줄바꿈은 카드와 같은 자리다 — 성과 이름 사이(2026-09-11 사용자 Figma 확인).
+  // 카드는 12명이 항상 두 줄인 고정 목록이지만, 모달은 상자에 안 들어갈 때만 접힌다.
+  // 그래서 목록 대신 "끊길 수 있는 자리"를 성/이름 사이 한 곳으로 제한한다 — 양쪽 조각에
+  // whitespace-nowrap을 걸어두면 브라우저가 그 한 자리에서만, 그것도 필요할 때만 접는다.
+  // 국문 이름은 공백이 없어 조각이 하나뿐이라 그대로 한 줄이다.
+  const space = name.indexOf(" ");
+  const [surname, given] = space < 0 ? [name, ""] : [name.slice(0, space), name.slice(space + 1)];
+
+  // 그라디언트는 줄마다 따로 걸려야 한다. bg-clip-text를 <p>에 걸면 배경 상자가 두 줄 전체가 되어
+  // 윗줄은 흰색, 아랫줄은 파란색으로 갈린다(2026-09-11 QA 지적). 인라인 <span>에
+  // box-decoration-break: clone을 주면 줄 조각마다 배경 상자가 따로 생긴다.
   const Name = ({ className }: { className: string }) => (
     <p className={`${className} uppercase font-redSpirit font-black`}>
       <span
@@ -171,7 +178,13 @@ export function VoiceModal({
           boxDecorationBreak: "clone",
         }}
       >
-        {name}
+        <span className="whitespace-nowrap">{surname}</span>
+        {given && (
+          <>
+            {" "}
+            <span className="whitespace-nowrap">{given}</span>
+          </>
+        )}
       </span>
     </p>
   );
