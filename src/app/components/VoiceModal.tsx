@@ -355,32 +355,26 @@ export function VoiceModal({
               <div className="relative flex-1 h-[22.9167vw] overflow-hidden">
                 <Photo variant="pc" />
                 {/* 텍스트 열 — 사진 영역 좌측에서 16px(2.66%), 폭 280(46.51%). 오른쪽은 인물이 선다.
-                    영문과 국문이 구조가 다르다. 국문은 확정된 상태라 손대지 않는다(2026-09-11 사용자). */}
-                {lang === "en" ? (
-                  /* [영문] Figma 스크린샷(en_pc_modal.png) 실측을 그대로 따른다. 사진 영역 440 기준:
-                       이름 줄 간격은 카드와 같은 행간 1.2로 맞췄다(2026-09-11 QA — Figma 실측
-                       0.95는 두 줄이 너무 붙어 보인다는 지적). 40px 글자에 48px 줄 간격이다.
-                       이름 잉크 하단 ~ 설명 잉크 상단 20px.
-                       텍스트 잉크 전체 158.5~286.9, 중심 222.7 (사진 영역 중심 220과 거의 같다)
-                     이름 칸을 2줄로 고정하지 않고 내용만큼만 잡는다 — 고정하면 이름이 한 줄일 때
-                     아래에 빈 공간이 남아 설명까지의 간격이 사람마다 20~51px로 달라진다.
-                     대신 묶음 전체를 세로 가운데에 두므로, 줄 수에 따라 묶음이 위아래로 조금 움직인다. */
-                  <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
-                    <Name className="text-[2.0833vw] leading-[1.2]" />
-                    <Desc className="mt-[0.5729vw] text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
-                  </div>
-                ) : (
-                  /* [국문] 이름 칸 1줄(60px) / 설명 칸 3줄(72px)로 고정하고 각 칸 안에서 가운데 정렬.
-                     국문 이름은 두 줄이 되는 경우가 없어 칸을 1줄로 잡는다. */
-                  <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
-                    <div className="h-[3.125vw] flex items-center justify-center">
-                      <Name className="text-[2.0833vw] leading-[1.5]" />
-                    </div>
-                    <div className="mt-[0.625vw] h-[3.75vw] flex items-center justify-center">
-                      <Desc className="text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
-                    </div>
-                  </div>
-                )}
+                    이름 칸도 설명 칸도 내용만큼만 잡고, 묶음 전체를 세로 가운데에 둔다.
+                    칸을 고정하면 줄 수가 적은 사람은 칸 안에 빈 공간이 남아 이름~설명 간격이
+                    사람마다 달라진다(고정했을 때 영문 20~51px, 국문 26~37px).
+                    대신 줄 수에 따라 묶음이 위아래로 조금 움직인다 — 간격 고정과 위치 고정을
+                    동시에 만족시킬 수는 없어서, 간격 쪽을 택했다(2026-09-11 사용자·디자이너 합의).
+
+                    잉크 기준 이름~설명 간격은 두 언어 모두 20px이다. 영문은 Figma 스크린샷
+                    (en_pc_modal.png) 실측값이고, 국문도 같은 값으로 맞췄다(2026-09-11 QA).
+                    아래 mt 값이 다른 것은 이름 행간이 달라 글자 아래 여백이 다르기 때문이다.
+                    영문 행간 1.2(48px) / 국문 1.5(60px) — 국문은 Figma 확정값이라 그대로 둔다. */}
+                <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
+                  {/* 영문 이름 행간은 카드와 같은 1.2다. 두 줄이 한 이름으로 붙어 보여야 한다
+                      (Figma 실측 0.95는 너무 붙어 보인다는 지적, 2026-09-11 QA) */}
+                  <Name className={`text-[2.0833vw] ${lang === "en" ? "leading-[1.2]" : "leading-[1.5]"}`} />
+                  <Desc
+                    className={`text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep ${
+                      lang === "en" ? "mt-[0.5729vw]" : "mt-[0.3125vw]"
+                    }`}
+                  />
+                </div>
               </div>
 
               <NavButton d={1} label="다음 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
