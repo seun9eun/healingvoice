@@ -133,8 +133,12 @@ function VoiceCard({
           묶음을 카드 가운데에 두는 구조라 이름이 짧으면 화살표가 안쪽으로 들어오는데, 그 부분은
           디자인 확정 전이라 사용자 판단을 따랐다. 국문과 PC는 지금까지대로 가운데 정렬이다. */}
       <div
-        className={`absolute inset-x-0 px-[4%] flex items-center gap-[0.7692vw] md:gap-0 bottom-[10.17%] md:bottom-[5.26%] md:justify-center ${
-          isEn ? "justify-between" : "justify-center"
+        // 영문은 이름 영역 높이를 "2줄 기준"으로 고정하고 그 안에서 세로 가운데에 둔다. 그래야 이름이
+        // 한 줄인 카드와 두 줄인 카드의 이름 중심이 같은 높이에 선다(2026-09-10 사용자 결정).
+        // 고정하지 않으면 하단 기준으로 쌓여서, 한 줄 이름이 두 줄 이름의 아랫줄과 같은 자리에 놓인다.
+        // 높이 = 글자 2.8846vw x 행간 1.5 x 2줄 = 8.6538vw. 글자 크기가 확정되면 이 값도 같이 고쳐야 한다.
+        className={`absolute inset-x-0 px-[4%] flex items-center gap-[0.7692vw] md:gap-0 bottom-[10.17%] md:bottom-[5.26%] md:h-auto md:justify-center ${
+          isEn ? "justify-between h-[8.6538vw]" : "justify-center"
         }`}
       >
         <p
