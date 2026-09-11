@@ -57,7 +57,18 @@ const cardBorder =
 // 카드 배경 합성 완료본(#7055D3 단색 + 텍스처 HARD_LIGHT 70% 블렌드, Figma에서 직접 합성해 받음, 2026-08-28)
 const cardBg = "/images/cast/mentor_card_bg.jpg";
 // Figma 답변으로 받은 정확한 카드 외곽선(368x425 기준 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)을 %로 환산
-const cardClip = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
+// 카드 모서리 45도 컷. 카드 크기가 달라서 모바일과 PC가 서로 다른 퍼센트를 쓴다.
+// 컷 자체는 두 화면 모두 정사각(45도)인데, 퍼센트는 카드 가로/세로에 각각 걸리므로
+// 카드 비율이 다르면(PC 368x425 = 0.866 / 모바일 172x236 = 0.729) 같은 퍼센트를 쓸 수 없다.
+// 예전에 PC 값을 모바일에도 그대로 써서 컷이 세로로 5.7px 길어졌고, 그 탓에 좌상단 대각선이
+// 이름 첫 글자에 닿아 보였다(2026-09-11 QA. 송정미 여유 2.9px / 김영우 1.2px).
+//   PC     컷 56.65 x 56.5  (Figma 답변 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)
+//   모바일  컷 26.5 x 26.5   (Figma 카드 스크린샷 실측 26.3 x 25.7 / 우하단 26.3 x 26.0)
+const cardClipPc = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
+const cardClipMobile = "polygon(15.394% 0, 100% 0, 100% 88.771%, 84.593% 100%, 0 100%, 0 11.229%)";
+// 두 값을 CSS 변수로 넘기고 어느 쪽을 쓸지는 Tailwind 반응형 클래스가 고른다.
+const clipVars = { "--clip-m": cardClipMobile, "--clip-d": cardClipPc } as React.CSSProperties;
+const clipClass = "[clip-path:var(--clip-m)] md:[clip-path:var(--clip-d)]";
 
 // 모바일(실제 SVG+color-dodge) / 데스크탑(CSS 근사+color-dodge) 두 버전을 각각 그리고 반응형으로 하나만 보이게 함
 // 모바일 쪽은 390px 기준 고정 px였던 값을 vw로 환산해 840px(md) 직전까지 유동적으로 스케일되게 함(2026-09-01)
@@ -89,12 +100,12 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
       // 모바일 폭을 w-full(%)로 두면 그리드가 justify-items-center(비-stretch)라서 퍼센트 폭이 불확정값이 되어
       // aspect-ratio가 카드 폭이 아니라 내부 텍스트 줄 수(콘텐츠 높이)에 맞춰 카드 크기 자체를 줄여버리는 문제가 있었음
       // (실제로 소개문이 2줄로 짧아진 첫 카드만 눈에 띄게 작아짐, 2026-09-01 확인) — 고정폭을 유지하되 vw로 환산해 반응형 처리
-      className="relative w-[44.1026vw] md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-[1.0256vw] md:p-[0.2083vw] shrink-0"
-      style={{ backgroundImage: cardBorder, clipPath: cardClip }}
+      className={`relative w-[44.1026vw] md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-[1.0256vw] md:p-[0.2083vw] shrink-0 ${clipClass}`}
+      style={{ backgroundImage: cardBorder, ...clipVars }}
     >
       <div
-        className="relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center"
-        style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
+        className={`relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center ${clipClass}`}
+        style={{ backgroundImage: `url(${cardBg})`, ...clipVars }}
       >
         {/* min-h-full: 아래 모바일 사진의 mt-auto가 "남는 세로 공간"을 계산하려면 이 컨테이너가 카드 안쪽
             높이를 채워야 함(높이가 콘텐츠에 맞춰지면 남는 공간이 늘 0이라 mt-auto가 무의미).
