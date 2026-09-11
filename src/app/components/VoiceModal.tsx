@@ -196,6 +196,30 @@ export function VoiceModal({
     </p>
   );
 
+  // 좌우로 밀어서 넘기기. 모바일·PC 패널이 같이 쓴다 — 태블릿 가로 보기는 PC 레이아웃이지만
+  // 손가락으로 쓸어 넘기려 한다(2026-09-11 QA). 포인터 이벤트 하나로 터치와 마우스를 같이 받는다.
+  //
+  // motion의 drag를 쓰면 패널이 손가락을 따라오지만, 들어올 때 재생 중인 슬라이드 애니메이션과
+  // transform이 겹쳐 어긋난다. 여기서는 손을 뗄 때 이동 거리만 재서 넘긴다.
+  const swipeHandlers = {
+    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
+      swipeFrom.current = { x: e.clientX, y: e.clientY };
+    },
+    onPointerUp: (e: React.PointerEvent<HTMLDivElement>) => {
+      const from = swipeFrom.current;
+      swipeFrom.current = null;
+      if (!from) return;
+      const dx = e.clientX - from.x;
+      const dy = e.clientY - from.y;
+      // 세로로 더 많이 움직였으면 넘기지 않는다 — 스크롤하려던 손짓일 수 있다.
+      if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) <= Math.abs(dy)) return;
+      step(dx < 0 ? 1 : -1); // 왼쪽으로 밀면 다음 인물
+    },
+    onPointerCancel: () => {
+      swipeFrom.current = null;
+    },
+  };
+
   // 이름 줄바꿈은 카드와 같은 자리다 — 성과 이름 사이(2026-09-11 사용자 Figma 확인).
   // 카드는 12명이 항상 두 줄인 고정 목록이지만, 모달은 상자에 안 들어갈 때만 접힌다.
   // 그래서 목록 대신 "끊길 수 있는 자리"를 성/이름 사이 한 곳으로 제한한다 — 양쪽 조각에
@@ -338,29 +362,11 @@ export function VoiceModal({
       >
         {/* ── 모바일 358x606 ─────────────────────────────────────────── */}
         <div
-          // 좌우로 밀어서 넘긴다(모바일 전용). 포인터 이벤트 하나로 터치와 마우스를 같이 받는다.
-          // motion의 drag를 쓰면 카드가 손가락을 따라오지만, 들어올 때 재생 중인 슬라이드
-          // 애니메이션과 transform이 겹쳐 어긋난다. 여기서는 이동 거리만 재서 넘긴다.
           // touch-pan-y: 세로 스크롤은 브라우저에 넘기고 가로 제스처만 우리가 받는다.
-          //              이게 없으면 가로로 밀 때 브라우저 뒤로가기 제스처가 먼저 먹는다.
+          //              없으면 가로로 밀 때 브라우저 뒤로가기 제스처가 먼저 먹는다.
           className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw] touch-pan-y"
           style={{ backgroundColor: MODAL_BG, borderColor: BORDER, transform: `scale(${panelScale})` }}
-          onPointerDown={(e) => {
-            swipeFrom.current = { x: e.clientX, y: e.clientY };
-          }}
-          onPointerUp={(e) => {
-            const from = swipeFrom.current;
-            swipeFrom.current = null;
-            if (!from) return;
-            const dx = e.clientX - from.x;
-            const dy = e.clientY - from.y;
-            // 세로로 더 많이 움직였으면 넘기지 않는다 — 스크롤하려던 손짓일 수 있다.
-            if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) <= Math.abs(dy)) return;
-            step(dx < 0 ? 1 : -1); // 왼쪽으로 밀면 다음 인물
-          }}
-          onPointerCancel={() => {
-            swipeFrom.current = null;
-          }}
+          {...swipeHandlers}
         >
           <CloseButton sizeClass="right-[2.3077vw] top-[2.3077vw] w-[11.2821vw] h-[11.2821vw]" />
 
@@ -397,8 +403,9 @@ export function VoiceModal({
 
         {/* ── PC 800x596 ─────────────────────────────────────────────── */}
         <div
-          className="hidden md:block relative w-[41.6667vw] h-[31.0417vw] border pt-[4.1667vw] px-[1.25vw] pb-[1.25vw]"
+          className="hidden md:block relative w-[41.6667vw] h-[31.0417vw] border pt-[4.1667vw] px-[1.25vw] pb-[1.25vw] touch-pan-y"
           style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
+          {...swipeHandlers}
         >
           <CloseButton sizeClass="right-[0.8854vw] top-[0.8854vw] w-[2.2917vw] h-[2.2917vw]" />
 
