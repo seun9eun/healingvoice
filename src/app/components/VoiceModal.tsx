@@ -40,6 +40,10 @@ const UNMOUNT_MS = CLOSE_SEC * 1000 + 40; // 퇴장이 끝난 뒤 노드를 내�
 // 열기 애니메이션의 축소 비율을 잡을 때 쓰는 기준 폭(px). 모바일 358, PC는 좌우 버튼까지 포함해 800.
 const MOBILE_BREAKPOINT = 768;
 
+// 모바일에서 좌우로 밀어 넘길 때, 이 거리(px)보다 적게 움직이면 탭으로 본다.
+// 390 화면에서 약 10%다 — 더 짧게 잡으면 닫기 버튼을 누르다가도 넘어간다.
+const SWIPE_MIN = 40;
+
 const BORDER = "#91a5ca";
 const MODAL_BG = "#01102b";
 const DIM = "rgba(6,30,73,0.8)"; // #061e49 @0.8
@@ -69,6 +73,9 @@ export function VoiceModal({
   const [mounted, setMounted] = useState(false);
   const lastIndex = useRef<number | null>(null);
   if (index !== null) lastIndex.current = index;
+
+  // 스와이프 시작 지점. 넘길지 말지는 손을 뗄 때 한 번만 판단하므로 상태가 아니라 ref로 둔다.
+  const swipeFrom = useRef<{ x: number; y: number } | null>(null);
 
   // 슬라이드 방향은 이 컴포넌트 안에서만 만들고 쓰는 값이라 부모로 올리지 않는다.
   const [dir, setDir] = useState<1 | -1>(1);
@@ -311,8 +318,29 @@ export function VoiceModal({
       >
         {/* ── 모바일 358x606 ─────────────────────────────────────────── */}
         <div
-          className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw]"
+          // 좌우로 밀어서 넘긴다(모바일 전용). 포인터 이벤트 하나로 터치와 마우스를 같이 받는다.
+          // motion의 drag를 쓰면 카드가 손가락을 따라오지만, 들어올 때 재생 중인 슬라이드
+          // 애니메이션과 transform이 겹쳐 어긋난다. 여기서는 이동 거리만 재서 넘긴다.
+          // touch-pan-y: 세로 스크롤은 브라우저에 넘기고 가로 제스처만 우리가 받는다.
+          //              이게 없으면 가로로 밀 때 브라우저 뒤로가기 제스처가 먼저 먹는다.
+          className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw] touch-pan-y"
           style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
+          onPointerDown={(e) => {
+            swipeFrom.current = { x: e.clientX, y: e.clientY };
+          }}
+          onPointerUp={(e) => {
+            const from = swipeFrom.current;
+            swipeFrom.current = null;
+            if (!from) return;
+            const dx = e.clientX - from.x;
+            const dy = e.clientY - from.y;
+            // 세로로 더 많이 움직였으면 넘기지 않는다 — 스크롤하려던 손짓일 수 있다.
+            if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) <= Math.abs(dy)) return;
+            step(dx < 0 ? 1 : -1); // 왼쪽으로 밀면 다음 인물
+          }}
+          onPointerCancel={() => {
+            swipeFrom.current = null;
+          }}
         >
           <CloseButton sizeClass="right-[2.3077vw] top-[2.3077vw] w-[11.2821vw] h-[11.2821vw]" />
 
