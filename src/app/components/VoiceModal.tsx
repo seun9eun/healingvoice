@@ -307,7 +307,9 @@ export function VoiceModal({
               <Photo variant="mobile" />
               {/* info 280x84 — 사진(326) 안에서 가운데, 상단에서 23px */}
               <div className="absolute left-[7.06%] w-[85.89%] top-[5.8974vw] flex flex-col items-center gap-[1.0256vw] text-center">
-                <Name className="text-[7.1795vw] leading-[1.5]" />
+                {/* 영문만 27px로 줄인다(2026-09-11 QA). 국문 28px 그대로 쓰면 박연홍 한 명이
+                    상자(273px)를 2px 넘겨 두 줄이 되는데, 27px면 32명 전원 한 줄에 들어간다. */}
+                <Name className={`leading-[1.5] ${lang === "en" ? "text-[6.9231vw]" : "text-[7.1795vw]"}`} />
                 <Desc className="text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep" />
               </div>
             </div>
