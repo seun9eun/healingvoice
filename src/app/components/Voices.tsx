@@ -39,25 +39,19 @@ const M_GRADIENT_H = 64; // 모바일: 카드 118 중 하단 64
 //   PC     이름 상자 하단 여백 16 / 304 = 5.26%
 //   모바일  이름 상자 padding-bottom 12 / 118 = 10.17%
 
-// 영문 이름 중 두 줄로 끊기는 12명(2026-09-11 확정, PC·모바일 동일).
-// 규칙이 아니라 목록이다 — 같은 3어절이어도 "Kim Ye Eun"은 한 줄, "Kim Sung Shin"은 두 줄이다.
-// 끊는 자리는 전원 성과 이름 사이(첫 공백)라 목록만 있으면 된다.
-const EN_NAME_TWO_LINE = new Set([
-  "Kim Sung Gyeul", "Kim Sung Shin", "Moon Eun Soo", "Park Yeon Hong",
-  "Park Ye Eum", "Suk Sang Eun", "Lee Cheol Kyu", "Lim Sung Kyu",
-  "Jang Geun Hee", "Jeon Deok Ho", "Jeong Ji Hoon", "Choi Seo Hee",
+// 영문 이름은 성을 윗줄, 이름을 아랫줄로 내린다(2026-09-14 사용자 확정).
+// 예외는 아래 10명 — 성/이름 구조가 아닌 활동명이라 한 줄 그대로 쓴다.
+// ("Rim Park"처럼 공백이 있어도 성이 아니므로 나누지 않는다)
+// Figma는 12명만 두 줄로 잡혀 있었는데, 라인업이 확정된 32명 기준으로 사용자가 이 규칙으로 정했다.
+const EN_NAME_ONE_LINE = new Set([
+  "Riah", "Rim Park", "Melody", "Asaph", "Yejan",
+  "Chorom", "Kezia", "KittiB", "PEtER", "Horim",
 ]);
 
-// 국문 이름은 성과 이름을 나눠 두 줄로 쓴다(2026-09-14). 아래 10명은 활동명이라 한 줄 그대로다.
-// 국문 이름 22명은 전원 세 글자이고 성이 한 글자다(복성 없음) — 두 글자 성이 생기면 규칙을 바꿔야 한다.
-const KO_NAME_ONE_LINE = new Set([
-  "라이야", "림팍", "멜로디", "아삽", "예잔", "초롬", "케지아", "키디비", "피터", "호림",
-]);
-
-// 카드에 그릴 이름 줄. 국문은 성/이름, 영문은 성/이름 사이 — 둘 다 목록으로 정한다.
+// 카드에 그릴 이름 줄. 국문은 언제나 한 줄이고, 영문만 성/이름으로 나뉜다.
 function nameLines(name: string, isEn: boolean) {
-  if (isEn) return EN_NAME_TWO_LINE.has(name) ? name.split(/ (.+)/).slice(0, 2) : [name];
-  return KO_NAME_ONE_LINE.has(name) ? [name] : [name.slice(0, 1), name.slice(1)];
+  if (!isEn) return [name];
+  return EN_NAME_ONE_LINE.has(name) ? [name] : name.split(/ (.+)/).slice(0, 2);
 }
 
 // 카드 하단 그라디언트. 이 스크림이 이름 가독성을 잡아주는 장치라 빼면 안 된다(기획자 확인).
@@ -155,15 +149,11 @@ function VoiceCard({
         // 상자는 Figma의 2줄 이름 상자를 그대로 쓴다.
         //   모바일  y78.37 / 118 = 66.4153%, 높이 11px x 1.1 x 2줄 = 24.2px = 6.2051vw
         //   PC     y204 / 304 = 67.1053%, 높이 100px = 5.2083vw
-        // 국문도 2026-09-14부터 성/이름 두 줄이라 같은 규칙을 쓴다. 상자 아래끝은 지금까지의
-        // 기준(모바일 10.17% / PC 5.26%)에 그대로 두고, 높이만 2줄로 잡아 그 안에서 가운데 정렬한다.
-        //   모바일  15px x 1.5 x 2줄 = 45px = 11.5385vw
-        //   PC     32px x 1.5 x 2줄 = 96px = 5vw
-        // 활동명 10명은 한 줄이라 이 상자 가운데에 선다 — 두 줄 이름과 중심이 맞는다.
+        // 국문은 언제나 한 줄이라 지금까지대로 하단 기준이다.
         className={`absolute flex items-center md:left-0 md:right-0 md:justify-center ${
           isEn
             ? "left-[11.8182%] right-[9.0909%] top-[66.4153%] h-[6.2051vw] justify-between md:top-[67.1053%] md:h-[5.2083vw]"
-            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center bottom-[10.17%] h-[11.5385vw] md:bottom-[5.26%] md:h-[5vw]"
+            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center bottom-[10.17%] md:top-auto md:bottom-[5.26%] md:h-auto"
         }`}
       >
         <p
