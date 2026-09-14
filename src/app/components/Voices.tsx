@@ -210,7 +210,12 @@ const VoiceGrid = memo(function VoiceGrid({
     <div className="grid grid-cols-3 md:grid-cols-4 gap-x-[3.5897vw] gap-y-[5.1282vw] md:gap-[1.25vw] pt-[6.1538vw] md:pt-0 w-full max-w-[1200px] md:max-w-[62.5vw]">
       {VOICES_DATA.map((v, i) => (
         <div key={v.id} className={i >= lastRowStart ? "translate-x-[56.36%] md:translate-x-0" : undefined}>
-          <Reveal delay={(i % 4) * 0.05}>
+          {/* 딜레이를 주지 않는다. 같은 행 카드는 화면에 들어오는 시점이 같아 한 덩어리로 떠오르고,
+              행 사이 간격은 스크롤이 만들어준다. 예전에는 카드마다 (i % 4) * 0.05를 줬는데,
+              모바일은 3열이라 행 안에서 0/0.05/0.10 다음 행이 0.15/0/0.05로 어긋나 어수선했다.
+              행 번호로 딜레이를 주는 방법은 못 쓴다 — whileInView는 각 카드가 화면에 들어온
+              시점부터 세므로, 11번째 행에 1.2초를 주면 그 행이 보이고도 한참 안 뜬다. */}
+          <Reveal>
             <VoiceCard
               index={i}
               name={lang === "ko" ? v.nameKo : v.nameEn}

@@ -422,26 +422,27 @@ export function Cast() {
           <BeamLight />
         </div>
 
-        {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드 — 카드는 각각 개별적으로 떠오르듯 등장(순차 딜레이) */}
-        <div className="hidden md:flex items-center gap-[1.6667vw]">
-          {row1.map((m, i) => (
-            <Reveal key={m.id} delay={i * 0.12}>
-              <MentorCard member={m} lang={lang} />
-            </Reveal>
+        {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드.
+            모션은 카드가 아니라 "행" 단위다(2026-09-14 QA) — 한 줄이 통째로 떠오른다.
+            예전에는 카드마다 딜레이를 줘서 줄 안에서 하나씩 올라왔다.
+            두 줄이 대개 같이 보이므로 아래 줄에만 약간 늦춰 순서가 보이게 한다. */}
+        <Reveal className="hidden md:flex items-center gap-[1.6667vw]">
+          {row1.map((m) => (
+            <MentorCard key={m.id} member={m} lang={lang} />
           ))}
-        </div>
-        <div className="hidden md:flex items-center gap-[1.6667vw]">
-          {row2.map((m, i) => (
-            <Reveal key={m.id} delay={i * 0.12}>
-              <MentorCard member={m} lang={lang} />
-            </Reveal>
+        </Reveal>
+        <Reveal className="hidden md:flex items-center gap-[1.6667vw]" delay={0.12}>
+          {row2.map((m) => (
+            <MentorCard key={m.id} member={m} lang={lang} />
           ))}
-        </div>
+        </Reveal>
         {/* 모바일: 2열 그리드, 마지막 1장만 중앙 정렬(2x2+1, 2026-08-31 모바일 스펙) */}
         <div className="grid grid-cols-2 gap-x-[3.0769vw] gap-y-[8.2051vw] w-full md:hidden justify-items-center">
           {MENTOR_DATA.map((m, i) => (
             <div key={m.id} className={i === MENTOR_DATA.length - 1 ? "col-span-2" : ""}>
-              <Reveal delay={(i % 2) * 0.12}>
+              {/* 같은 행(2장)은 같은 딜레이라 함께 떠오른다. 행이 3개뿐이라 마지막 행도
+                  최대 0.24초라서, 늦게 보이더라도 기다리는 느낌이 없다. */}
+              <Reveal delay={Math.floor(i / 2) * 0.12}>
                 <MentorCard member={m} lang={lang} />
               </Reveal>
             </div>
