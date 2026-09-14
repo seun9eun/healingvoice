@@ -48,6 +48,18 @@ const EN_NAME_TWO_LINE = new Set([
   "Jang Geun Hee", "Jeon Deok Ho", "Jeong Ji Hoon", "Choi Seo Hee",
 ]);
 
+// 국문 이름은 성과 이름을 나눠 두 줄로 쓴다(2026-09-14). 아래 10명은 활동명이라 한 줄 그대로다.
+// 국문 이름 22명은 전원 세 글자이고 성이 한 글자다(복성 없음) — 두 글자 성이 생기면 규칙을 바꿔야 한다.
+const KO_NAME_ONE_LINE = new Set([
+  "라이야", "림팍", "멜로디", "아삽", "예잔", "초롬", "케지아", "키디비", "피터", "호림",
+]);
+
+// 카드에 그릴 이름 줄. 국문은 성/이름, 영문은 성/이름 사이 — 둘 다 목록으로 정한다.
+function nameLines(name: string, isEn: boolean) {
+  if (isEn) return EN_NAME_TWO_LINE.has(name) ? name.split(/ (.+)/).slice(0, 2) : [name];
+  return KO_NAME_ONE_LINE.has(name) ? [name] : [name.slice(0, 1), name.slice(1)];
+}
+
 // 카드 하단 그라디언트. 이 스크림이 이름 가독성을 잡아주는 장치라 빼면 안 된다(기획자 확인).
 // PC와 모바일이 끝 색과 정지점까지 다르다 — 모바일은 82% 지점에서 이미 불투명해진다.
 const cardBottomGradient = "linear-gradient(180deg, rgba(13,24,171,0) 0%, #00097E 100%)";
@@ -143,11 +155,15 @@ function VoiceCard({
         // 상자는 Figma의 2줄 이름 상자를 그대로 쓴다.
         //   모바일  y78.37 / 118 = 66.4153%, 높이 11px x 1.1 x 2줄 = 24.2px = 6.2051vw
         //   PC     y204 / 304 = 67.1053%, 높이 100px = 5.2083vw
-        // 국문은 줄이 늘어나는 일이 없어 지금까지대로 하단 기준이다.
+        // 국문도 2026-09-14부터 성/이름 두 줄이라 같은 규칙을 쓴다. 상자 아래끝은 지금까지의
+        // 기준(모바일 10.17% / PC 5.26%)에 그대로 두고, 높이만 2줄로 잡아 그 안에서 가운데 정렬한다.
+        //   모바일  15px x 1.5 x 2줄 = 45px = 11.5385vw
+        //   PC     32px x 1.5 x 2줄 = 96px = 5vw
+        // 활동명 10명은 한 줄이라 이 상자 가운데에 선다 — 두 줄 이름과 중심이 맞는다.
         className={`absolute flex items-center md:left-0 md:right-0 md:justify-center ${
           isEn
             ? "left-[11.8182%] right-[9.0909%] top-[66.4153%] h-[6.2051vw] justify-between md:top-[67.1053%] md:h-[5.2083vw]"
-            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center bottom-[10.17%] md:top-auto md:bottom-[5.26%] md:h-auto"
+            : "inset-x-0 px-[4%] gap-[0.7692vw] md:gap-0 justify-center bottom-[10.17%] h-[11.5385vw] md:bottom-[5.26%] md:h-[5vw]"
         }`}
       >
         <p
@@ -166,7 +182,7 @@ function VoiceCard({
           {/* 그라디언트는 줄마다 따로 걸어야 한다. bg-clip-text를 바깥 <p>에 걸면 배경 상자가
               두 줄 전체라 윗줄은 흰색, 아랫줄은 파란색으로 갈린다(2026-09-11 QA 지적).
               줄 단위 <span>에 걸면 각 줄이 밝은색에서 어두운색까지 온전한 그라디언트를 갖는다. */}
-          {(isEn && EN_NAME_TWO_LINE.has(name) ? name.split(/ (.+)/).slice(0, 2) : [name]).map((line) => (
+          {nameLines(name, isEn).map((line) => (
             <span
               key={line}
               className="block text-transparent bg-clip-text"
