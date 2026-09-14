@@ -57,7 +57,18 @@ const cardBorder =
 // 카드 배경 합성 완료본(#7055D3 단색 + 텍스처 HARD_LIGHT 70% 블렌드, Figma에서 직접 합성해 받음, 2026-08-28)
 const cardBg = "/images/cast/mentor_card_bg.jpg";
 // Figma 답변으로 받은 정확한 카드 외곽선(368x425 기준 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)을 %로 환산
-const cardClip = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
+// 카드 모서리 45도 컷. 카드 크기가 달라서 모바일과 PC가 서로 다른 퍼센트를 쓴다.
+// 컷 자체는 두 화면 모두 정사각(45도)인데, 퍼센트는 카드 가로/세로에 각각 걸리므로
+// 카드 비율이 다르면(PC 368x425 = 0.866 / 모바일 172x236 = 0.729) 같은 퍼센트를 쓸 수 없다.
+// 예전에 PC 값을 모바일에도 그대로 써서 컷이 세로로 5.7px 길어졌고, 그 탓에 좌상단 대각선이
+// 이름 첫 글자에 닿아 보였다(2026-09-11 QA. 송정미 여유 2.9px / 김영우 1.2px).
+//   PC     컷 56.65 x 56.5  (Figma 답변 M 56.65 0 L 368 0 L 368 368 L 310.84 425 L 0 425 L 0 56.5 Z)
+//   모바일  컷 26.5 x 26.5   (Figma 카드 스크린샷 실측 26.3 x 25.7 / 우하단 26.3 x 26.0)
+const cardClipPc = "polygon(15.394% 0, 100% 0, 100% 86.588%, 84.467% 100%, 0 100%, 0 13.294%)";
+const cardClipMobile = "polygon(15.394% 0, 100% 0, 100% 88.771%, 84.593% 100%, 0 100%, 0 11.229%)";
+// 두 값을 CSS 변수로 넘기고 어느 쪽을 쓸지는 Tailwind 반응형 클래스가 고른다.
+const clipVars = { "--clip-m": cardClipMobile, "--clip-d": cardClipPc } as React.CSSProperties;
+const clipClass = "[clip-path:var(--clip-m)] md:[clip-path:var(--clip-d)]";
 
 // 모바일(실제 SVG+color-dodge) / 데스크탑(CSS 근사+color-dodge) 두 버전을 각각 그리고 반응형으로 하나만 보이게 함
 // 모바일 쪽은 390px 기준 고정 px였던 값을 vw로 환산해 840px(md) 직전까지 유동적으로 스케일되게 함(2026-09-01)
@@ -89,27 +100,49 @@ function MentorCard({ member, lang }: { member: CastMember; lang: "ko" | "en" })
       // 모바일 폭을 w-full(%)로 두면 그리드가 justify-items-center(비-stretch)라서 퍼센트 폭이 불확정값이 되어
       // aspect-ratio가 카드 폭이 아니라 내부 텍스트 줄 수(콘텐츠 높이)에 맞춰 카드 크기 자체를 줄여버리는 문제가 있었음
       // (실제로 소개문이 2줄로 짧아진 첫 카드만 눈에 띄게 작아짐, 2026-09-01 확인) — 고정폭을 유지하되 vw로 환산해 반응형 처리
-      className="relative w-[44.1026vw] md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-[1.0256vw] md:p-[0.2083vw] shrink-0"
-      style={{ backgroundImage: cardBorder, clipPath: cardClip }}
+      className={`relative w-[44.1026vw] md:w-[19.1667vw] aspect-[172/236] md:aspect-[368/425] p-[1.0256vw] md:p-[0.2083vw] shrink-0 ${clipClass}`}
+      style={{ backgroundImage: cardBorder, ...clipVars }}
     >
       <div
-        className="relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center"
-        style={{ backgroundImage: `url(${cardBg})`, clipPath: cardClip }}
+        className={`relative size-full overflow-hidden bg-[#061E49] bg-cover bg-center ${clipClass}`}
+        style={{ backgroundImage: `url(${cardBg})`, ...clipVars }}
       >
         {/* min-h-full: 아래 모바일 사진의 mt-auto가 "남는 세로 공간"을 계산하려면 이 컨테이너가 카드 안쪽
             높이를 채워야 함(높이가 콘텐츠에 맞춰지면 남는 공간이 늘 0이라 mt-auto가 무의미).
             h-full이 아니라 min-h-full인 이유: 높이를 고정하면 콘텐츠가 넘칠 때 flex가 이름·소개문을
             압축해 카드마다 레이아웃이 달라짐. min-h-full은 넘칠 때 컨테이너가 늘어나 압축이 생기지 않음 */}
-        <div className="relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.4167vw] pt-[4.6154vw] md:pt-[2vw] px-[3.0769vw] md:px-[0.4167vw]">
-          {lang === "ko" && member.nameImage ? (
-            <img src={member.nameImage} alt={member.nameKo} className="h-[6.1538vw] md:h-[2.1vw] w-auto object-contain" />
-          ) : lang === "en" && member.nameImageEn ? (
-            <img src={member.nameImageEn} alt={member.nameEn} className="h-[6.1538vw] md:h-[2.1vw] w-auto object-contain" />
-          ) : (
-            <p className="text-[5.1282vw] md:text-[1.5vw] leading-[1.2] text-center font-extrabold text-white">
-              {member.nameEn}
-            </p>
-          )}
+        {/* PC 상단 여백 32px(1.6667vw), 이름-설명 사이 6px(0.3125vw) — 좌표로 재지 말고 이 두 값과
+            이름 행간 150%로 잡으라는 안내를 따랐다(2026-09-09 Figma 답변) */}
+        <div
+          // 상단 여백이 언어별로 다르다. Figma 영문(1885:5263)은 이름 상자 y가 카드 172x236
+          // 좌상단 기준 17.67(=18)인데, 카드 바깥 테두리 padding 4px가 이미 들어가 있어
+          // 여기서는 14px만 준다. 국문은 확정된 값이라 지금까지대로 18px를 유지한다.
+          className={`relative z-10 flex min-h-full flex-col items-center gap-[1.0256vw] md:gap-[0.3125vw] md:pt-[1.6667vw] px-[3.0769vw] md:px-[0.4167vw] ${
+            lang === "en" ? "pt-[3.5897vw]" : "pt-[4.6154vw]"
+          }`}
+        >
+          {/* 멘토 이름 — 국문·영문 모두 TEXT다(영문 모바일 1885:5263, 2026-09-11 확인).
+              한동안 영문 모바일만 이미지로 붙여뒀는데, 디자인이 수정되면서 이름용 IMAGE 레이어가
+              사라지고 전원 TEXT 노드가 됐다. 그래서 에셋 5장도 함께 걷어냈다.
+
+              GFC Red Spirit은 소문자 자리에 "작은 대문자" 글리프가 들어 있어, Title Case 데이터를
+              그대로 쓰면 첫 글자만 크게 렌더된다. Figma는 글자 자체가 대문자로 입력돼 있으므로
+              (SONG JUNGMEE) 여기서는 uppercase로 같은 결과를 만든다. 한글에는 영향이 없다.
+
+              모바일 크기가 언어별로 다르다 — 국문 24px / 영문 16px. 영문 이름이 길어 작게 잡혔다.
+              PC(32px)는 아직 확정값이 아니다. 영문 PC 노드 ID가 없어 확인하지 못했다. */}
+          <p
+            // whitespace-nowrap: 5인 전원 한 줄이다(Figma 확인). 송정미·김영우는 이름 상자가
+            // 144px라 카드 안쪽 콘텐츠 폭 140px를 2px씩 넘는데, 접지 말고 넘치게 두는 게 맞다
+            // — 카드 폭 172보다는 작아 밖으로 삐져나가지 않는다. 이미지로 붙였을 때도 같은 이유로
+            // max-w-none을 줬었다.
+            className={`whitespace-nowrap leading-[1.5] md:text-[1.6667vw] text-center uppercase text-transparent bg-clip-text font-redSpirit font-black ${
+              lang === "en" ? "text-[4.1026vw]" : "text-[6.1538vw]"
+            }`}
+            style={{ backgroundImage: titleGradient }}
+          >
+            {lang === "en" ? member.nameEn : member.nameKo}
+          </p>
           {/* 소개문-역할 사이는 실제 gap이 아니라 행간 여백으로 만들어짐(2026-09-01 확인) — gap 없앰 */}
           <div className="flex w-full flex-col items-center gap-0 md:gap-[0.2083vw]">
             {/* 스크린샷 대조 결과 소개문은 Medium이 아니라 Regular로 보임(2026-09-01) — 슬랙 답변과 실제 렌더가 달라 실측 우선 */}
@@ -216,7 +249,7 @@ export function Cast() {
         style={{
           top: 0,
           height: "155.5744vw",
-          backgroundImage: "linear-gradient(180deg, #00163B 0%, #00163B 7.41%, rgba(21,57,118,0) 100%)",
+          backgroundImage: "linear-gradient(180deg, #00163B 0%, #00163B 7.71%, rgba(21,57,118,0) 100%)",
         }}
         aria-hidden
       />
@@ -238,7 +271,7 @@ export function Cast() {
       />
 
       {/* 타이틀 — 국문 모바일 스펙 확인(2026-09-01): eyebrow 16px #44a9ff, 제목 40px, 부제 #7d7d7d */}
-      <div className="flex flex-col items-center gap-[4.1026vw] md:gap-[0.8333vw] w-full max-w-[1200px] text-center">
+      <div className="flex flex-col items-center gap-[4.1026vw] md:gap-[0.8333vw] w-full text-center">
         <span className="text-[#44A9FF] md:text-[#4D94FF] font-bold uppercase tracking-[0.4103vw] md:tracking-[1.6px] text-[4.1026vw] md:text-[0.8333vw]">
           {t("cast.eyebrow")}
         </span>
@@ -276,20 +309,28 @@ export function Cast() {
           이 높이가 순수 vw라 4K 이상에서 한도 없이 커지면서 사진·이름이 세로로 길쭉해 보이던 문제가 있어
           clamp으로 1920 기준값(578px) 이상은 더 커지지 않게 고정(2026-09-02 QA 피드백)
 
-          4K QA 재이슈(2026-09-03, capture/4K 출연진 이미지 깨짐 현상.png): 그때 높이만 고정하고 가로 방향
-          vw 값들은 그대로 둔 게 문제였음. 이 박스는 max-w-[1200px]와 높이 clamp 때문에 1920에서 크기가
-          멈추는데, 안쪽 좌우 패딩·텍스트 폭·글자 크기는 순수 vw라 계속 커짐. 3840에서 실측하면 패딩
-          120→240px, 텍스트 폭 363→726px으로 2배가 되면서 절대배치된 사진 프레임과 608px 겹쳐
-          HOST 이름·소개 문구가 사진 뒤로 깔려 잘림. 아래 vw 값들도 모두 1920 기준값(1vw=19.2px)으로
-          clamp해서 1920 이하 동작은 그대로 두고 그 위에서만 박스와 함께 멈추도록 맞춤 */}
-      <div className="flex flex-col md:flex-row items-center w-full max-w-[1200px] md:relative md:h-[clamp(0px,30.104vw,578px)] gap-[6.1538vw] md:gap-[clamp(0px,1.25vw,24px)] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[clamp(0px,6.25vw,120px)]">
+          4K QA 재이슈(2026-09-03): 그때 높이만 고정하고 가로 방향 vw 값들은 그대로 둔 게 문제였음.
+          박스는 max-w-[1200px]와 높이 clamp로 1920에서 멈추는데 안쪽 패딩·텍스트는 순수 vw라 계속
+          커져서, 절대배치된 사진 프레임과 겹쳐 이름·소개가 사진 뒤로 깔려 잘렸음.
+          그래서 안쪽 vw 값들을 전부 1920 기준으로 clamp해 "박스와 함께 멈추게" 막아뒀었다.
+
+          재수정(2026-09-09): 겹침은 사라졌지만 이번엔 4K에서 이 블록만 1920 크기에 멈춰,
+          같이 커지는 다른 요소(출연진 타이틀 56→112px, 멘토 카드 368→736px)에 비해 눈에 띄게 작아 보였다.
+          멈추게 하는 대신 "박스까지 같이 커지게" 하는 쪽으로 바꿨다 — 1920 이상에서 박스 폭이
+          62.5vw(=1920에서 1200px)로 이어지므로, 안쪽 vw 값들과 비율이 유지돼 겹침도 생기지 않는다.
+          정리(리팩토링): 이 섹션은 md:px-[18.75vw]가 걸려 있어 자식의 w-full이 곧 62.5vw다.
+          그래서 max-w-[1200px]는 1920 초과에서만 걸리고 min-[1920px]:max-w-[62.5vw]가 바로 그걸 풀어,
+          둘을 합치면 결국 w-full과 같았다. 무효한 한 쌍이라 지우고 w-full만 남겼다.
+          같은 이유로 이 섹션의 다른 블록(타이틀·힐링멘토)에 있던 max-w-[1200px]도 함께 걷어냈다.
+          1920 이하에서는 어느 쪽이든 값이 같아 동작 변화가 없다. */}
+      <div className="flex flex-col md:flex-row items-center w-full md:relative md:h-[30.104vw] gap-[6.1538vw] md:gap-[1.25vw] rounded-[8.2051vw] md:rounded-[2.5vw] md:px-[6.25vw]">
         {/* 모바일은 이미지 위/텍스트 아래, 데스크탑은 텍스트 좌/이미지 우(2026-08-31 모바일 스펙) */}
         {/* 영문판 설명 텍스트가 국문보다 넓어(363px, 2026-08-31 확인) 폭을 언어별로 분리 — 텍스트만 개별적으로 떠오름(사진 제외) */}
-        <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[clamp(0px,0.4167vw,8px)] ${lang === "en" ? "md:w-[clamp(0px,18.906vw,363px)]" : "md:w-[clamp(0px,14.479vw,278px)]"} shrink-0 text-center`}>
+        <Reveal className={`order-2 md:order-1 flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] ${lang === "en" ? "md:w-[18.906vw]" : "md:w-[14.479vw]"} shrink-0 text-center`}>
           {lang === "ko" ? (
             // "MC 장성규"도 "힐링멘토 5인"과 동일한 흰색→연보라 그라데이션(2026-09-01 재확인)
             <p
-              className="text-[7.1795vw] md:text-[clamp(0px,2.0833vw,40px)] leading-none font-extrabold text-transparent bg-clip-text"
+              className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-transparent bg-clip-text"
               style={{ backgroundImage: mentorsTitleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
             >
               {t("cast.mcLabel")}
@@ -297,23 +338,23 @@ export function Cast() {
           ) : (
             // 영문판 "Host"/"Jang Sungkyu" — 28px, gap2, Host만 그라데이션이고 이름은 흰색 단색(2026-09-01 확인)
             // gap2(=0.5128vw@390)에 md: 오버라이드가 빠져있어 PC에서 9.85px로 과도하게 벌어져 있던 것을 수정(2026-09-02 확인)
-            <div className="flex flex-col items-center gap-[0.5128vw] md:gap-[clamp(0px,0.1042vw,2px)]">
+            <div className="flex flex-col items-center gap-[0.5128vw] md:gap-[0.1042vw]">
               <p
-                className="text-[7.1795vw] md:text-[clamp(0px,2.0833vw,40px)] leading-none font-extrabold uppercase text-transparent bg-clip-text"
+                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold uppercase text-transparent bg-clip-text"
                 style={{ backgroundImage: titleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 Host
               </p>
               {/* 스크린샷 확인(2026-09-01): "Jang Sungkyu"도 흰색 단색이 아니라 흰색→연보라 그라데이션 */}
               <p
-                className="text-[7.1795vw] md:text-[clamp(0px,2.0833vw,40px)] leading-none font-extrabold text-transparent bg-clip-text"
+                className="text-[7.1795vw] md:text-[2.0833vw] leading-none font-extrabold text-transparent bg-clip-text"
                 style={{ backgroundImage: mentorsTitleGradient, fontFamily: "HiKR, Paperlogy, Pretendard Variable, sans-serif" }}
               >
                 {mc.nameEn}
               </p>
             </div>
           )}
-          <p className={`text-[4.1026vw] md:text-[clamp(0px,1.25vw,24px)] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-light" : "font-medium"} text-white break-keep`}>
+          <p className={`text-[4.1026vw] md:text-[1.25vw] leading-[1.4] tracking-[-0.1692vw] md:tracking-[-0.03em] ${lang === "en" ? "font-light" : "font-medium"} text-white break-keep`}>
             {renderLines(lang === "ko" ? mc.descKo : mc.descEn)}
           </p>
         </Reveal>
@@ -365,7 +406,7 @@ export function Cast() {
       </div>
 
       {/* 힐링멘토 */}
-      <div className="flex flex-col items-center gap-[8.2051vw] md:gap-[1.6667vw] w-full max-w-[1200px]">
+      <div className="flex flex-col items-center gap-[8.2051vw] md:gap-[1.6667vw] w-full">
         <div className="flex flex-col items-center gap-[2.0513vw] md:gap-[0.4167vw] w-full max-w-[800px] pt-[8.2051vw] pb-[1.0256vw] md:py-[0.8333vw]">
           {/* beam light — 텍스트 위/아래 가로 빛줄기 */}
           <BeamLight />
@@ -381,26 +422,27 @@ export function Cast() {
           <BeamLight />
         </div>
 
-        {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드 — 카드는 각각 개별적으로 떠오르듯 등장(순차 딜레이) */}
-        <div className="hidden md:flex items-center gap-[1.6667vw]">
-          {row1.map((m, i) => (
-            <Reveal key={m.id} delay={i * 0.12}>
-              <MentorCard member={m} lang={lang} />
-            </Reveal>
+        {/* 데스크탑: 2장 + 3장 두 줄 / 모바일: 2열 그리드.
+            모션은 카드가 아니라 "행" 단위다(2026-09-14 QA) — 한 줄이 통째로 떠오른다.
+            예전에는 카드마다 딜레이를 줘서 줄 안에서 하나씩 올라왔다.
+            두 줄이 대개 같이 보이므로 아래 줄에만 약간 늦춰 순서가 보이게 한다. */}
+        <Reveal className="hidden md:flex items-center gap-[1.6667vw]">
+          {row1.map((m) => (
+            <MentorCard key={m.id} member={m} lang={lang} />
           ))}
-        </div>
-        <div className="hidden md:flex items-center gap-[1.6667vw]">
-          {row2.map((m, i) => (
-            <Reveal key={m.id} delay={i * 0.12}>
-              <MentorCard member={m} lang={lang} />
-            </Reveal>
+        </Reveal>
+        <Reveal className="hidden md:flex items-center gap-[1.6667vw]" delay={0.12}>
+          {row2.map((m) => (
+            <MentorCard key={m.id} member={m} lang={lang} />
           ))}
-        </div>
+        </Reveal>
         {/* 모바일: 2열 그리드, 마지막 1장만 중앙 정렬(2x2+1, 2026-08-31 모바일 스펙) */}
         <div className="grid grid-cols-2 gap-x-[3.0769vw] gap-y-[8.2051vw] w-full md:hidden justify-items-center">
           {MENTOR_DATA.map((m, i) => (
             <div key={m.id} className={i === MENTOR_DATA.length - 1 ? "col-span-2" : ""}>
-              <Reveal delay={(i % 2) * 0.12}>
+              {/* 같은 행(2장)은 같은 딜레이라 함께 떠오른다. 행이 3개뿐이라 마지막 행도
+                  최대 0.24초라서, 늦게 보이더라도 기다리는 느낌이 없다. */}
+              <Reveal delay={Math.floor(i / 2) * 0.12}>
                 <MentorCard member={m} lang={lang} />
               </Reveal>
             </div>

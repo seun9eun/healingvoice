@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Hero } from "../components/Hero";
-import { Awards } from "../components/Awards";
+import { Voices } from "../components/Voices";
 import { YouTubeEmbed } from "../components/YouTubeEmbed";
 import { BigText } from "../components/BigText";
 import { Cast } from "../components/Cast";
@@ -33,7 +33,7 @@ export function LandingPage() {
       <BigText />
       <YouTubeEmbed />
       <Cast />
-      <Awards />
+      <Voices />
     </>
   );
 }

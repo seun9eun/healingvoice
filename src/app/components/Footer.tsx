@@ -49,14 +49,12 @@ export function Footer() {
               <span className="text-[4.1026vw] md:text-[0.8333vw] leading-[6.1538vw] md:leading-6">{t("footer.kakao")}</span>
             </a>
           ) : (
-            // 영문판은 카카오톡 채널 대신 이메일 링크로 채널 자체가 바뀜(2026-08-31 확인)
-            <a
-              href={`mailto:${t("footer.email")}`}
-              className="flex items-center gap-[2.0513vw] md:gap-[0.4167vw] text-[#E2E2E2] hover:text-sky-400 transition-colors"
-            >
+            // 영문판은 카카오톡 채널 대신 이메일이 들어감(2026-08-31 확인).
+            // 링크가 아니라 표시용 텍스트다 — mailto로 메일 앱이 열리면 안 된다(2026-09-10 사용자 확인).
+            <div className="flex items-center gap-[2.0513vw] md:gap-[0.4167vw] text-[#E2E2E2]">
               <Mail className="w-[5.1282vw] h-[5.1282vw] md:w-[1.0417vw] md:h-[1.0417vw] text-sky-400" strokeWidth={1.667} />
               <span className="text-[4.1026vw] md:text-[0.8333vw] leading-[6.1538vw] md:leading-6">{t("footer.email")}</span>
-            </a>
+            </div>
           )}
         </div>
 

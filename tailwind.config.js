@@ -25,6 +25,7 @@ export default {
         sans: ["Pretendard Variable", "Pretendard", "system-ui", "sans-serif"],
         mono: ["Pretendard Variable", "Pretendard", "monospace"],
         nanumSquareNeo: ["NanumSquare Neo", "sans-serif"],
+        redSpirit: ["GFC Red Spirit", "Pretendard Variable", "sans-serif"],
       },
     },
   },

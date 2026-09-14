@@ -1,0 +1,470 @@
+import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { motion, useReducedMotion } from "motion/react";
+import { VOICES_DATA } from "../data/voicesData";
+import { titleGradient } from "../theme";
+
+// 보이스 인물 모달 — Figma 확정 스펙(2026-09-10 슬랙 답변).
+//   모바일 1822:1386 (358x606, 390 프레임 기준) / PC 1822:1838 (800x596, 1920 기준)
+// 색상·테두리·딤은 두 화면이 같고, 달라지는 건 텍스트 크기와 배치뿐이다.
+//   모바일 — 이름/소개글이 사진 "위쪽"에 겹치고, 좌우 버튼은 사진 아래 한 줄에 모인다.
+//   PC     — 이름/소개글이 사진 "왼쪽"에 겹치고, 좌우 버튼은 사진 양옆에 선다.
+// 이 배치 차이 때문에 두 레이아웃을 따로 그린다. 겹쳐 쓰는 부분(사진 영역)만 함수로 묶었다.
+//
+// [모서리] radius 값이 없다. Figma 추출값도 0이고 스크린샷도 각져 있어 의도된 각진 모서리로 본다.
+// [사진]   배경(bg.webp)과 인물(voice_NN.webp)이 Figma에서도 별도 레이어라 합성하지 않고 겹쳐 그린다.
+//          인물은 293x440으로 표시된다 — 높이를 꽉 채우면 원본 비율(0.667)에서 폭이 293이 나온다.
+//
+// 확정해 둔 "동작"(2026-09-09 사용자와 결정, 디자인이 바뀌어도 유지):
+//   열기   — 클릭한 카드 위치에서 모달 크기로 한 번에 확대(380ms). 뒤집기는 이음매가 끊겨 보여 뺐다.
+//   넘기기 — 단순 좌우 슬라이드. 넘길 때 열림 애니메이션을 다시 재생하지 않는다.
+//   닫기   — 배경 클릭, Esc, 닫기 버튼. 닫으면 현재 인물의 카드로 돌아간다.
+//
+// [함정 1] 배경 스크롤 잠금은 html에 걸어야 한다. 이 페이지는 body가 아니라 html이 스크롤 컨테이너라
+//          body에만 걸면 잠기지 않는다. (DeadlineModal은 body에 걸고 있어 서로 어긋난다 —
+//          공용 훅으로 합치는 게 맞지만 그건 이 파일 밖 작업이라 남겨 둠)
+// [함정 2] AnimatePresence로 만들었을 때 퇴장 애니메이션이 끝나도 노드가 남아, 투명한 전체화면
+//          오버레이가 페이지 클릭을 전부 막는 문제가 있었다. 마운트를 직접 관리해서 피했다.
+// [함정 3] 좌우 이동을 AnimatePresence mode="wait"로 만들면 퇴장에서 멈춰 다음 내용이 들어오지 않는다.
+//          들어오는 쪽만 애니메이션하면 문제도 없고 연속으로 빠르게 눌러도 밀리지 않는다.
+// [함정 4] 반드시 body로 포탈해야 한다. Layout이 콘텐츠를 `relative z-10` 컨테이너로 감싸고 있어서,
+//          그 안에서 z-[100]을 줘도 바깥에서는 모달 전체가 z-10으로 취급된다. 그러면 z-50인 헤더가
+//          모달 위에 남아 딤이 헤더를 덮지 못하고 GNB가 계속 클릭된다(2026-09-10 확인).
+//          z 값을 더 올려도 해결되지 않는다 — stacking context를 벗어나는 것이 유일한 방법이다.
+
+const OPEN_SEC = 0.38; // 열기 — 카드당 한 번뿐이라 동작이 보일 만큼 길게
+const CLOSE_SEC = 0.28; // 닫기 — 되돌아가는 동작은 짧아야 답답하지 않다
+const SLIDE_SEC = 0.18; // 좌우 이동 — 반복되는 동작이라 짧게
+const UNMOUNT_MS = CLOSE_SEC * 1000 + 40; // 퇴장이 끝난 뒤 노드를 내린다(닫기 속도를 바꿔도 따라감)
+
+// 모바일/PC 판단 기준. tailwind.config의 md와 반드시 같아야 한다 — 다르면 CSS는 모바일을 그리는데
+// JS는 PC로 계산해 열기 애니메이션 배율이 어긋난다(768로 잘못 두어 768~840 구간에서 그랬다).
+const MOBILE_BREAKPOINT = 840;
+
+// 모바일 레이아웃은 390 기준 vw로 짜여 있어 화면이 넓어지는 만큼 그대로 커진다. 태블릿 세로
+// (갤탭 S5e 800px)에서는 모달이 화면 높이의 97%를 차지하고 이름이 57px로 그려졌다(설계값 28px).
+// 그래서 기준 폭에 상한을 두고, 그보다 넓으면 모달 전체를 그 비율만큼 줄여 그린다.
+// 배율만 낮추는 것이라 내부 값(패딩·글자·사진 위치)을 하나하나 손댈 필요가 없다.
+const MOBILE_MAX_BASIS = 520;
+
+// 모바일에서 좌우로 밀어 넘길 때, 이 거리(px)보다 적게 움직이면 탭으로 본다.
+// 390 화면에서 약 10%다 — 더 짧게 잡으면 닫기 버튼을 누르다가도 넘어간다.
+const SWIPE_MIN = 40;
+
+const BORDER = "#91a5ca";
+const MODAL_BG = "#01102b";
+const DIM = "rgba(6,30,73,0.8)"; // #061e49 @0.8
+const TEXT = "#e5faff";
+
+// 배경은 PC와 모바일이 다른 파일이다(표시 크기가 두 배 이상 차이나 한 장을 공유하지 않는다).
+const bgImageMobile = "/images/voices/modal/bg_mo.webp";
+const bgImagePc = "/images/voices/modal/bg_pc.webp";
+
+export function VoiceModal({
+  index,
+  lang,
+  onClose,
+  onSelect,
+  getOrigin,
+}: {
+  index: number | null;
+  lang: "ko" | "en";
+  onClose: () => void;
+  onSelect: (next: number) => void;
+  getOrigin: (index: number) => DOMRect | null; // 그 인덱스 카드의 화면상 위치 — 여기서 모달이 자라난다
+}) {
+  const reduced = useReducedMotion();
+  const open = index !== null;
+
+  // 닫히는 동안에도 내용을 그려야 하므로 마지막으로 열려 있던 인물을 붙잡아 둔다.
+  const [mounted, setMounted] = useState(false);
+  const lastIndex = useRef<number | null>(null);
+  if (index !== null) lastIndex.current = index;
+
+  // 스와이프 시작 지점. 넘길지 말지는 손을 뗄 때 한 번만 판단하므로 상태가 아니라 ref로 둔다.
+  const swipeFrom = useRef<{ x: number; y: number } | null>(null);
+
+  // 슬라이드 방향은 이 컴포넌트 안에서만 만들고 쓰는 값이라 부모로 올리지 않는다.
+  const [dir, setDir] = useState<1 | -1>(1);
+
+  // 화면 폭은 아래 배율 계산에 쓰인다. 태블릿을 돌리면 폭이 바뀌므로 상태로 들고 따라간다.
+  const [viewportW, setViewportW] = useState(() => window.innerWidth);
+  useEffect(() => {
+    const onResize = () => setViewportW(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    if (open) {
+      setMounted(true);
+      setDir(1); // 새로 열 때는 항상 오른쪽에서 들어오게
+      return;
+    }
+    const t = setTimeout(() => setMounted(false), reduced ? 0 : UNMOUNT_MS);
+    return () => clearTimeout(t);
+  }, [open, reduced]);
+
+  // 배경 스크롤 잠금. 스크롤바가 사라지며 생기는 가로 밀림은 같은 폭의 패딩으로 상쇄한다.
+  //
+  // 이것만으로는 iOS에서 안 막힌다 — 사파리는 html의 overflow:hidden을 터치 스크롤에 적용하지 않아
+  // 모달이 열려 있어도 뒷 화면이 위아래로 움직인다(2026-09-11 아이패드 가로 QA).
+  // 그래서 딤과 두 패널에 touch-none(touch-action: none)을 걸어 브라우저가 이 위에서
+  // 아예 패닝하지 않게 한다. 모달 안에는 스크롤할 내용이 없으니 잃는 것도 없다.
+  // 처음에는 가로 스와이프만 받으려고 touch-pan-y를 걸었는데, 그게 오히려 "세로는 브라우저가
+  // 가져가라"는 뜻이라 뒷 화면 스크롤을 부추기고 있었다. 스와이프는 포인터 이벤트로 직접
+  // 재고 있어서 touch-action의 도움이 필요하지 않다.
+  useEffect(() => {
+    if (!open) return;
+    const html = document.documentElement;
+    const gap = window.innerWidth - html.clientWidth;
+    const prevOverflow = html.style.overflow;
+    const prevPad = document.body.style.paddingRight;
+    html.style.overflow = "hidden";
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`;
+    return () => {
+      html.style.overflow = prevOverflow;
+      document.body.style.paddingRight = prevPad;
+    };
+  }, [open]);
+
+  const shown = index ?? lastIndex.current;
+
+  const step = useCallback(
+    (d: 1 | -1) => {
+      if (shown === null) return;
+      setDir(d);
+      onSelect((shown + d + VOICES_DATA.length) % VOICES_DATA.length);
+    },
+    [shown, onSelect]
+  );
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") step(1);
+      if (e.key === "ArrowLeft") step(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose, step]);
+
+  // 좌우로 넘기면 그제서야 다음 사진을 받기 시작해 잠깐 빈 자리가 보인다. 앞뒤 2명씩 미리 받아둔다.
+  // new Image()는 브라우저 캐시에만 올리는 것이라 DOM에는 아무것도 안 생긴다. 열려 있을 때만 돌고,
+  // 넘길 때마다 새로 필요한 1명씩만 더 받으므로 32장을 한꺼번에 받는 일은 없다.
+  // 2칸까지 두는 이유는 빠르게 연타할 때다 — 1칸만 두면 두 번째 클릭에서 다시 기다린다.
+  useEffect(() => {
+    if (!open || shown === null) return;
+    for (const d of [1, -1, 2, -2]) {
+      const next = VOICES_DATA[(shown + d + VOICES_DATA.length) % VOICES_DATA.length];
+      new Image().src = next.photoModal ?? next.photo;
+    }
+  }, [open, shown]);
+
+  const v = shown === null ? null : VOICES_DATA[shown];
+  if (!mounted || !v) return null;
+
+  // 클릭한 카드 중심에서 화면 중앙까지의 차이만큼 밀어두고 시작하면 "그 카드에서 자라난" 것처럼 보인다.
+  // layoutId 같은 장치 없이 숫자 계산만으로 되므로 비용이 거의 없다.
+  const isMobile = viewportW < MOBILE_BREAKPOINT;
+  // 넓은 화면에서 모바일 모달이 그대로 커지지 않도록 하는 상한. PC는 1배 그대로다.
+  // 이 배율은 열기 애니메이션이 아니라 패널 자체에 건다 — 애니메이션에 얹으면
+  // prefers-reduced-motion일 때 scale을 아예 안 쓰는 경로로 빠져 상한이 사라진다.
+  const panelScale = isMobile ? Math.min(1, MOBILE_MAX_BASIS / viewportW) : 1;
+  // 화면에 실제로 그려지는 모달 폭. 클릭한 카드 크기에서 자라나게 하려면 배율까지 반영해야 한다.
+  const panelPx = isMobile ? viewportW * 0.9179 * panelScale : viewportW * 0.4167;
+  const origin = getOrigin(shown!);
+  const collapsed = origin
+    ? {
+        opacity: 0,
+        x: origin.left + origin.width / 2 - window.innerWidth / 2,
+        y: origin.top + origin.height / 2 - window.innerHeight / 2,
+        scale: origin.width / panelPx,
+      }
+    : { opacity: 0, x: 0, y: 0, scale: 0.4 };
+
+  const name = lang === "ko" ? v.nameKo : v.nameEn;
+  const desc = lang === "ko" ? v.descKo : v.descEn;
+  const counter = `${shown! + 1} / ${VOICES_DATA.length}`;
+
+  // 소개글 줄바꿈은 Figma에서 수동 개행이다(2026-09-10 확인). voicesData 문구의 "/" 자리에서 나눈다.
+  //
+  // 각 줄에 whitespace-nowrap을 걸어 자동 줄바꿈을 완전히 막는다 — 화면 폭이 바뀌어도 줄이 접히거나
+  // 붙지 않고, 글자 크기만 vw를 따라 함께 줄고 늘어야 한다는 요구다. 따라서 줄이 길어 넘치는지는
+  // 브라우저가 아니라 "/"를 찍는 사람이 책임진다.
+  const descLines = desc.split("/").map((s) => s.trim()).filter(Boolean);
+  const Desc = ({ className }: { className: string }) => (
+    <p className={className} style={{ color: TEXT }}>
+      {descLines.map((line, i) => (
+        <span key={i} className="block whitespace-nowrap">
+          {line}
+        </span>
+      ))}
+    </p>
+  );
+
+  // 넘길 때 미끄러지는 건 사진 틀 "안"뿐이다 — 배경·인물·텍스트만 움직이고
+  // 좌우 버튼과 페이지 숫자는 제자리에 있다(2026-09-11 QA). 예전에는 이 묶음이
+  // 버튼까지 감싸고 있어서 버튼도 같이 밀렸다. key가 바뀌면 새로 마운트되며 들어온다.
+  const slideIn = {
+    initial: reduced ? false : { x: dir * 40, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    transition: { duration: reduced ? 0 : SLIDE_SEC, ease: "easeOut" as const },
+  };
+
+  // 좌우로 밀어서 넘기기. 모바일·PC 패널이 같이 쓴다 — 태블릿 가로 보기는 PC 레이아웃이지만
+  // 손가락으로 쓸어 넘기려 한다(2026-09-11 QA). 포인터 이벤트 하나로 터치와 마우스를 같이 받는다.
+  //
+  // motion의 drag를 쓰면 패널이 손가락을 따라오지만, 들어올 때 재생 중인 슬라이드 애니메이션과
+  // transform이 겹쳐 어긋난다. 여기서는 손을 뗄 때 이동 거리만 재서 넘긴다.
+  const swipeHandlers = {
+    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
+      swipeFrom.current = { x: e.clientX, y: e.clientY };
+    },
+    onPointerUp: (e: React.PointerEvent<HTMLDivElement>) => {
+      const from = swipeFrom.current;
+      swipeFrom.current = null;
+      if (!from) return;
+      const dx = e.clientX - from.x;
+      const dy = e.clientY - from.y;
+      // 세로로 더 많이 움직였으면 넘기지 않는다 — 스크롤하려던 손짓일 수 있다.
+      if (Math.abs(dx) < SWIPE_MIN || Math.abs(dx) <= Math.abs(dy)) return;
+      step(dx < 0 ? 1 : -1); // 왼쪽으로 밀면 다음 인물
+    },
+    onPointerCancel: () => {
+      swipeFrom.current = null;
+    },
+  };
+
+  // 이름 줄바꿈은 카드와 같은 자리다 — 성과 이름 사이(2026-09-11 사용자 Figma 확인).
+  // 카드는 12명이 항상 두 줄인 고정 목록이지만, 모달은 상자에 안 들어갈 때만 접힌다.
+  // 그래서 목록 대신 "끊길 수 있는 자리"를 성/이름 사이 한 곳으로 제한한다 — 양쪽 조각에
+  // whitespace-nowrap을 걸어두면 브라우저가 그 한 자리에서만, 그것도 필요할 때만 접는다.
+  // 국문 이름은 공백이 없어 조각이 하나뿐이라 그대로 한 줄이다.
+  const space = name.indexOf(" ");
+  const [surname, given] = space < 0 ? [name, ""] : [name.slice(0, space), name.slice(space + 1)];
+
+  // 그라디언트는 줄마다 따로 걸려야 한다. bg-clip-text를 <p>에 걸면 배경 상자가 두 줄 전체가 되어
+  // 윗줄은 흰색, 아랫줄은 파란색으로 갈린다(2026-09-11 QA 지적). 인라인 <span>에
+  // box-decoration-break: clone을 주면 줄 조각마다 배경 상자가 따로 생긴다.
+  const Name = ({ className }: { className: string }) => (
+    <p className={`${className} uppercase font-redSpirit font-black`}>
+      <span
+        className="text-transparent bg-clip-text"
+        style={{
+          backgroundImage: titleGradient,
+          WebkitBoxDecorationBreak: "clone",
+          boxDecorationBreak: "clone",
+        }}
+      >
+        <span className="whitespace-nowrap">{surname}</span>
+        {given && (
+          <>
+            {" "}
+            <span className="whitespace-nowrap">{given}</span>
+          </>
+        )}
+      </span>
+    </p>
+  );
+
+  // 배경 + 인물.
+  //
+  // [배경] 디자인에서 사진 영역 크기의 3배수로 잘라 받은 파일이라 그대로 꽉 채우면 된다
+  // (bg_mo 978x1320 = 326x440x3, bg_pc 1806x1320 = 602x440x3). Figma가 배경 위에 얹던
+  // 검정 20% 톤다운도 이미 이미지에 반영돼 있어 따로 덮지 않는다 — 렌더와 픽셀 비교해 확인했다.
+  // 이전에는 Figma가 준 크롭 좌표가 렌더와 맞지 않아 배치를 역산해 썼는데, 잘린 파일을 받으면서
+  // 그 과정이 전부 필요 없어졌다.
+  //
+  // [인물] Figma가 준 절대 좌표를 사진 영역 크기로 나눈 비율이다(2026-09-10 답변). 인물 293x440은
+  // 사진 영역보다 아래로 밀려 있어 아래쪽이 잘린다 — 그 덕에 위쪽이 비어 이름·소개글과 겹치지 않는다.
+  // 잘림은 바깥 컨테이너의 overflow-hidden이 처리한다.
+  //
+  // [모바일 영문] Figma 값(y98)은 3줄짜리 소개글과 겹친다 — 소개글 하단이 125px인데 사진이 98px에서
+  // 시작한다. 그래서 영문만 사진을 텍스트 아래로 내렸다(2026-09-11 QA). 기준은 가장 긴 3줄이다.
+  //   23(상단) + 40.5(이름 27x1.5) + 4(간격) + 57.6(소개글 16x1.2x3줄) = 125.1 → 125.1/440 = 28.43%
+  // 소개글 칸도 3줄 높이로 고정해서(MOBILE_DESC_H) 2줄인 사람도 텍스트 하단이 같은 자리에 오게 했다.
+  // 그래야 32명 전원 텍스트와 사진 사이 간격이 같다.
+  const PERSON_LAYOUT = {
+    mobile: { left: "5.21%", top: lang === "en" ? "28.43%" : "22.27%", width: "89.88%" }, // 사진 영역 326x440 기준 x17 293x440
+    pc: { left: "48.34%", top: "2.5%", width: "48.67%" }, //      사진 영역 602x440 기준 x291 y11 293x440
+  } as const;
+
+  // 모바일 소개글 칸 높이 = 16px x 행간 1.2 x 3줄 = 57.6px (390 기준 14.7692vw). 최대 3줄이다.
+  const MOBILE_DESC_H = lang === "en" ? "h-[14.7692vw]" : "";
+
+  const Photo = ({ variant }: { variant: "mobile" | "pc" }) => (
+    <>
+      <img
+        src={variant === "mobile" ? bgImageMobile : bgImagePc}
+        alt=""
+        aria-hidden
+        className="absolute inset-0 w-full h-full"
+      />
+      <img
+        src={v.photoModal ?? v.photo}
+        alt={name}
+        decoding="async"
+        className="absolute max-w-none"
+        style={{ ...PERSON_LAYOUT[variant], aspectRatio: "293 / 440" }}
+      />
+    </>
+  );
+
+  const NavButton = ({ d, label, sizeClass }: { d: 1 | -1; label: string; sizeClass: string }) => (
+    <button
+      type="button"
+      onClick={(e) => {
+        e.stopPropagation();
+        step(d);
+      }}
+      aria-label={label}
+      className={`shrink-0 flex items-center justify-center rounded-full border transition-colors hover:bg-white/10 ${sizeClass}`}
+      style={{ borderColor: BORDER }}
+    >
+      <svg viewBox="0 0 24 24" fill="none" className="w-1/2 h-1/2" aria-hidden>
+        <path
+          d={d === 1 ? "M9 5l7 7-7 7" : "M15 5l-7 7 7 7"}
+          stroke={TEXT}
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </button>
+  );
+
+  const CloseButton = ({ sizeClass }: { sizeClass: string }) => (
+    <button
+      type="button"
+      onClick={onClose}
+      aria-label="닫기"
+      className={`absolute flex items-center justify-center ${sizeClass}`}
+    >
+      <svg viewBox="0 0 24 24" fill="none" className="w-[54.5%] h-[54.5%]" aria-hidden>
+        <path d="M5 5l14 14M19 5L5 19" stroke={BORDER} strokeWidth={2} strokeLinecap="round" />
+      </svg>
+    </button>
+  );
+
+  return createPortal(
+    <motion.div
+      className="fixed inset-0 z-[100] flex items-center justify-center touch-none"
+      style={{ backgroundColor: DIM }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: open ? 1 : 0 }}
+      transition={{ duration: open ? 0.22 : 0.18 }}
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${name} 프로필`}
+    >
+      <motion.div
+        initial={reduced ? { opacity: 0 } : collapsed}
+        animate={
+          reduced ? { opacity: open ? 1 : 0 } : open ? { x: 0, y: 0, scale: 1, opacity: 1 } : collapsed
+        }
+        transition={
+          reduced
+            ? { duration: 0 }
+            : {
+                // x/y/scale을 한 곡선으로 같이 움직여야 끊겨 보이지 않는다
+                duration: open ? OPEN_SEC : CLOSE_SEC,
+                ease: [0.22, 0.7, 0.25, 1],
+                opacity: { duration: open ? 0.18 : 0.16 },
+              }
+        }
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* ── 모바일 358x606 ─────────────────────────────────────────── */}
+        <div
+          className="md:hidden relative w-[91.7949vw] h-[155.3846vw] border pt-[16.4103vw] px-[4.1026vw] pb-[6.1538vw] touch-none"
+          style={{ backgroundColor: MODAL_BG, borderColor: BORDER, transform: `scale(${panelScale})` }}
+          {...swipeHandlers}
+        >
+          <CloseButton sizeClass="right-[2.3077vw] top-[2.3077vw] w-[11.2821vw] h-[11.2821vw]" />
+
+          <div className="h-full flex flex-col">
+            {/* 사진 326x440 — 이름/소개글이 위쪽(사진 상단에서 23px)에 겹친다.
+                넘길 때 움직이는 건 이 틀 "안"이다. 틀과 버튼은 제자리에 있고 내용만 미끄러진다. */}
+            <div className="relative w-full h-[112.8205vw] overflow-hidden">
+              <motion.div key={v.id} {...slideIn} className="absolute inset-0">
+              <Photo variant="mobile" />
+              {/* info 280x84 — 사진(326) 안에서 가운데, 상단에서 23px */}
+              <div className="absolute left-[7.06%] w-[85.89%] top-[5.8974vw] flex flex-col items-center gap-[1.0256vw] text-center">
+                {/* 영문만 27px로 줄인다(2026-09-11 QA). 국문 28px 그대로 쓰면 박연홍 한 명이
+                    상자(273px)를 2px 넘겨 두 줄이 되는데, 27px면 32명 전원 한 줄에 들어간다. */}
+                <Name className={`leading-[1.5] ${lang === "en" ? "text-[6.9231vw]" : "text-[7.1795vw]"}`} />
+                <Desc className={`text-[4.1026vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep ${MOBILE_DESC_H}`} />
+              </div>
+              </motion.div>
+            </div>
+
+            {/* nav — 사진 아래 10px, 행 자체에 상단 padding 16(Figma 324x66, padding 16/0/0/0).
+                남은 공간에 중앙 정렬하면 버튼이 7px 가까이 위로 떠서 스펙과 어긋난다.
+                이 줄은 슬라이드 밖이라 버튼은 가만히 있고 숫자만 바뀐다. */}
+            <div className="mt-[2.5641vw] pt-[4.1026vw] flex items-start justify-between">
+              <NavButton d={-1} label="이전 인물" sizeClass="w-[12.8205vw] h-[12.8205vw]" />
+              <span className="text-[4.1026vw] font-medium" style={{ color: BORDER }}>
+                {counter}
+              </span>
+              <NavButton d={1} label="다음 인물" sizeClass="w-[12.8205vw] h-[12.8205vw]" />
+            </div>
+          </div>
+        </div>
+
+        {/* ── PC 800x596 ─────────────────────────────────────────────── */}
+        <div
+          className="hidden md:block relative w-[41.6667vw] h-[31.0417vw] border pt-[4.1667vw] px-[1.25vw] pb-[1.25vw] touch-none"
+          style={{ backgroundColor: MODAL_BG, borderColor: BORDER }}
+          {...swipeHandlers}
+        >
+          <CloseButton sizeClass="right-[0.8854vw] top-[0.8854vw] w-[2.2917vw] h-[2.2917vw]" />
+
+          <div>
+            {/* [이전] 사진 602x440 [다음] — 버튼은 슬라이드 밖이라 제자리에 있다 */}
+            <div className="flex items-center gap-[1.25vw]">
+              <NavButton d={-1} label="이전 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
+
+              <div className="relative flex-1 h-[22.9167vw] overflow-hidden">
+                <motion.div key={v.id} {...slideIn} className="absolute inset-0">
+                <Photo variant="pc" />
+                {/* 텍스트 열 — 사진 영역 좌측에서 16px(2.66%), 폭 280(46.51%). 오른쪽은 인물이 선다.
+                    이름 칸도 설명 칸도 내용만큼만 잡고, 묶음 전체를 세로 가운데에 둔다.
+                    칸을 고정하면 줄 수가 적은 사람은 칸 안에 빈 공간이 남아 이름~설명 간격이
+                    사람마다 달라진다(고정했을 때 영문 20~51px, 국문 26~37px).
+                    대신 줄 수에 따라 묶음이 위아래로 조금 움직인다 — 간격 고정과 위치 고정을
+                    동시에 만족시킬 수는 없어서, 간격 쪽을 택했다(2026-09-11 사용자·디자이너 합의).
+
+                    잉크 기준 이름~설명 간격은 두 언어 모두 20px이다. 영문은 Figma 스크린샷
+                    (en_pc_modal.png) 실측값이고, 국문도 같은 값으로 맞췄다(2026-09-11 QA).
+                    아래 mt 값이 다른 것은 이름 행간이 달라 글자 아래 여백이 다르기 때문이다.
+                    영문 행간 1.2(48px) / 국문 1.5(60px) — 국문은 Figma 확정값이라 그대로 둔다. */}
+                <div className="absolute inset-y-0 left-[2.66%] w-[46.51%] flex flex-col justify-center text-center">
+                  {/* 영문 이름 행간은 카드와 같은 1.2다. 두 줄이 한 이름으로 붙어 보여야 한다
+                      (Figma 실측 0.95는 너무 붙어 보인다는 지적, 2026-09-11 QA) */}
+                  <Name className={`text-[2.0833vw] ${lang === "en" ? "leading-[1.2]" : "leading-[1.5]"}`} />
+                  <Desc
+                    className={`text-[1.0417vw] leading-[1.2] tracking-[-0.66px] font-medium break-keep ${
+                      lang === "en" ? "mt-[0.5729vw]" : "mt-[0.3125vw]"
+                    }`}
+                  />
+                </div>
+                </motion.div>
+              </div>
+
+              <NavButton d={1} label="다음 인물" sizeClass="w-[2.6042vw] h-[2.6042vw]" />
+            </div>
+
+            {/* 페이지 표시 — 사진 아래 24px. 슬라이드 밖이라 숫자만 바뀐다. */}
+            <p className="pt-[1.25vw] text-center text-[0.8333vw] font-medium" style={{ color: BORDER }}>
+              {counter}
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>,
+    document.body
+  );
+}
