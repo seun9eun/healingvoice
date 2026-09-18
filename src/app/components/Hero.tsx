@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { Reveal } from "./Reveal";
@@ -26,6 +27,20 @@ const heroAnniversaryTagKo = "/images/hero/hero_anniversary_tag_ko.png";
 const heroTaglineEn = "/images/hero/hero_tagline_en.png";
 const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
+// 방청 신청 구글폼(2026-09-18 수급)
+const AUDIENCE_URL = "https://forms.gle/9WqAaBtEkzAyiTpF6";
+// 방청 신청 버튼이 나타나는 시각 — 그 전까지는 버튼 자체를 그리지 않는다.
+// videoData.ts의 openTime과 같은 형식으로 +09:00을 명시해 두었기 때문에, 보는 사람 기기의
+// 시간대가 무엇이든(해외 시청자 포함) 전 세계에서 동시에 열린다.
+const AUDIENCE_OPEN_TIME = "2026-09-20T17:00:00+09:00";
+
+// CTA 버튼 2개가 크기·폰트·그림자를 공유해서 한 곳에 모아둔다(슬랙 스펙 2026-09-18).
+// PC: 259x72, padding 세로 24, gap 8, 폰트 24px, 아이콘 24px / 모바일: 143x39, padding 세로 12, gap 6, 폰트 13.5px, 아이콘 15px
+// 폭을 고정값으로 주기 때문에 좌우 padding(스펙 PC 48 / 모바일 24)은 따로 두지 않는다.
+const CTA_BUTTON_CLASS =
+  "flex items-center justify-center gap-[1.5385vw] md:gap-[0.4167vw] rounded-full w-[36.6667vw] md:w-[13.4896vw] py-[3.0769vw] md:py-[1.25vw] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap";
+const CTA_LABEL_CLASS = "text-[3.4615vw] md:text-[1.25vw] leading-none text-center font-bold";
+const CTA_ICON_CLASS = "w-[3.8462vw] h-[3.8462vw] md:w-[1.25vw] md:h-[1.25vw]";
 
 // 방송 정보("3 PM Pre-release..." 등) 텍스트 색 — theme.ts의 titleGradient와 값이 같아서(2026-09-02 확인)
 // 그쪽 값을 그대로 가져와 이 파일 안에서 쓰던 이름을 유지함
@@ -33,6 +48,25 @@ const broadcastGradient = titleGradient;
 
 export function Hero() {
   const { t, lang } = useLanguage();
+
+  // 방청 신청 버튼 노출 여부. 공개 시각 전에 페이지를 열어둔 사람도 새로고침 없이 버튼이 나타나도록
+  // 공개 시각에 딱 한 번 깨운다(YouTubeEmbed처럼 1초마다 갱신할 필요는 없는 단발성 전환이라).
+  // 주의: setTimeout의 지연 상한이 약 24.8일이라, 공개 시각을 그보다 먼 미래로 옮기게 되면
+  // 타이머가 즉시 발동해버린다 — 그때는 주기적 갱신 방식으로 바꿔야 한다.
+  // ?rqbtn=on 을 붙이면 공개 시각과 무관하게 바로 보인다(deadline.ts의 ?testDeadline=true와 같은 용도).
+  const [audienceOpen, setAudienceOpen] = useState(
+    () =>
+      new URLSearchParams(window.location.search).get("rqbtn") === "on" ||
+      Date.now() >= new Date(AUDIENCE_OPEN_TIME).getTime()
+  );
+  useEffect(() => {
+    if (audienceOpen) return;
+    const timer = setTimeout(
+      () => setAudienceOpen(true),
+      new Date(AUDIENCE_OPEN_TIME).getTime() - Date.now()
+    );
+    return () => clearTimeout(timer);
+  }, [audienceOpen]);
 
   return (
     <section
@@ -226,18 +260,34 @@ export function Hero() {
             )}
           </div>
 
-          {/* CTA */}
-          <a
-            href={FONDANT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-[2.0513vw] md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-[8.2051vw] py-[4.1026vw] md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
-          >
-            <span className="text-[4.6154vw] md:text-[1.25vw] leading-none text-center font-bold text-white">
-              {t("header.cta")}
-            </span>
-            <ArrowUpRight className="w-[5.1282vw] h-[5.1282vw] md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
-          </a>
+          {/* CTA — 국문은 버튼 2개(퐁당 바로가기 / 방청 신청), 영문은 방청 신청을 넣지 않기로 확정(2026-09-18) */}
+          {/* 슬랙 스펙 확인(2026-09-18, node 1885:845 PC / 1885:1732 모바일):
+              두 버튼 크기가 동일(PC 259x72, 모바일 143x39)하게 지정돼 있어 폭을 고정값으로 준다
+              — 퐁당 쪽은 HUG인데 결과가 259라 사실상 같은 값이고, 방청 쪽은 FIXED 259다.
+              버튼 사이 gap은 PC 32 / 모바일 24 */}
+          <div className="flex items-center gap-[6.1538vw] md:gap-[1.6667vw]">
+            <a
+              href={FONDANT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${CTA_BUTTON_CLASS} bg-[#6276FB] hover:bg-[#4f5fe0]`}
+            >
+              <span className={`${CTA_LABEL_CLASS} text-white`}>{t("header.cta")}</span>
+              <ArrowUpRight className={`${CTA_ICON_CLASS} text-white`} strokeWidth={3} />
+            </a>
+
+            {lang === "ko" && audienceOpen && (
+              <a
+                href={AUDIENCE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${CTA_BUTTON_CLASS} bg-white hover:bg-[#e5e7eb]`}
+              >
+                <span className={`${CTA_LABEL_CLASS} text-[#374151]`}>{t("hero.audienceCta")}</span>
+                <ArrowUpRight className={`${CTA_ICON_CLASS} text-black`} strokeWidth={3} />
+              </a>
+            )}
+          </div>
         </Reveal>
       </div>
     </section>
