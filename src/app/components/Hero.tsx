@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { useLanguage } from "../context/LanguageContext";
 import { Reveal } from "./Reveal";
@@ -28,6 +29,10 @@ const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
 // 방청 신청 구글폼(2026-09-18 수급)
 const AUDIENCE_URL = "https://forms.gle/9WqAaBtEkzAyiTpF6";
+// 방청 신청 버튼이 나타나는 시각 — 그 전까지는 버튼 자체를 그리지 않는다.
+// videoData.ts의 openTime과 같은 형식으로 +09:00을 명시해 두었기 때문에, 보는 사람 기기의
+// 시간대가 무엇이든(해외 시청자 포함) 전 세계에서 동시에 열린다.
+const AUDIENCE_OPEN_TIME = "2026-09-20T17:00:00+09:00";
 
 // CTA 버튼 2개가 크기·폰트·그림자를 공유해서 한 곳에 모아둔다(슬랙 스펙 2026-09-18).
 // PC: 259x72, padding 세로 24, gap 8, 폰트 24px, 아이콘 24px / 모바일: 143x39, padding 세로 12, gap 6, 폰트 13.5px, 아이콘 15px
@@ -43,6 +48,25 @@ const broadcastGradient = titleGradient;
 
 export function Hero() {
   const { t, lang } = useLanguage();
+
+  // 방청 신청 버튼 노출 여부. 공개 시각 전에 페이지를 열어둔 사람도 새로고침 없이 버튼이 나타나도록
+  // 공개 시각에 딱 한 번 깨운다(YouTubeEmbed처럼 1초마다 갱신할 필요는 없는 단발성 전환이라).
+  // 주의: setTimeout의 지연 상한이 약 24.8일이라, 공개 시각을 그보다 먼 미래로 옮기게 되면
+  // 타이머가 즉시 발동해버린다 — 그때는 주기적 갱신 방식으로 바꿔야 한다.
+  // ?rqbtn=on 을 붙이면 공개 시각과 무관하게 바로 보인다(deadline.ts의 ?testDeadline=true와 같은 용도).
+  const [audienceOpen, setAudienceOpen] = useState(
+    () =>
+      new URLSearchParams(window.location.search).get("rqbtn") === "on" ||
+      Date.now() >= new Date(AUDIENCE_OPEN_TIME).getTime()
+  );
+  useEffect(() => {
+    if (audienceOpen) return;
+    const timer = setTimeout(
+      () => setAudienceOpen(true),
+      new Date(AUDIENCE_OPEN_TIME).getTime() - Date.now()
+    );
+    return () => clearTimeout(timer);
+  }, [audienceOpen]);
 
   return (
     <section
@@ -252,7 +276,7 @@ export function Hero() {
               <ArrowUpRight className={`${CTA_ICON_CLASS} text-white`} strokeWidth={3} />
             </a>
 
-            {lang === "ko" && (
+            {lang === "ko" && audienceOpen && (
               <a
                 href={AUDIENCE_URL}
                 target="_blank"
