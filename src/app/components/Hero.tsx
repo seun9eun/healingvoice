@@ -26,8 +26,8 @@ const heroAnniversaryTagKo = "/images/hero/hero_anniversary_tag_ko.png";
 const heroTaglineEn = "/images/hero/hero_tagline_en.png";
 const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
-// TODO: 방청 신청 링크 미수급(2026-09-18) — 주소 받는 대로 이 값만 교체하면 된다
-const AUDIENCE_URL = "#";
+// 방청 신청 구글폼(2026-09-18 수급)
+const AUDIENCE_URL = "https://forms.gle/9WqAaBtEkzAyiTpF6";
 
 // CTA 버튼 2개가 크기·폰트·그림자를 공유해서 한 곳에 모아둔다(슬랙 스펙 2026-09-18).
 // PC: 259x72, padding 세로 24, gap 8, 폰트 24px, 아이콘 24px / 모바일: 143x39, padding 세로 12, gap 6, 폰트 13.5px, 아이콘 15px
