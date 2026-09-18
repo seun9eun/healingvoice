@@ -26,6 +26,16 @@ const heroAnniversaryTagKo = "/images/hero/hero_anniversary_tag_ko.png";
 const heroTaglineEn = "/images/hero/hero_tagline_en.png";
 const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
+// TODO: 방청 신청 링크 미수급(2026-09-18) — 주소 받는 대로 이 값만 교체하면 된다
+const AUDIENCE_URL = "#";
+
+// CTA 버튼 2개가 크기·폰트·그림자를 공유해서 한 곳에 모아둔다(슬랙 스펙 2026-09-18).
+// PC: 259x72, padding 세로 24, gap 8, 폰트 24px, 아이콘 24px / 모바일: 143x39, padding 세로 12, gap 6, 폰트 13.5px, 아이콘 15px
+// 폭을 고정값으로 주기 때문에 좌우 padding(스펙 PC 48 / 모바일 24)은 따로 두지 않는다.
+const CTA_BUTTON_CLASS =
+  "flex items-center justify-center gap-[1.5385vw] md:gap-[0.4167vw] rounded-full w-[36.6667vw] md:w-[13.4896vw] py-[3.0769vw] md:py-[1.25vw] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap";
+const CTA_LABEL_CLASS = "text-[3.4615vw] md:text-[1.25vw] leading-none text-center font-bold";
+const CTA_ICON_CLASS = "w-[3.8462vw] h-[3.8462vw] md:w-[1.25vw] md:h-[1.25vw]";
 
 // 방송 정보("3 PM Pre-release..." 등) 텍스트 색 — theme.ts의 titleGradient와 값이 같아서(2026-09-02 확인)
 // 그쪽 값을 그대로 가져와 이 파일 안에서 쓰던 이름을 유지함
@@ -226,18 +236,34 @@ export function Hero() {
             )}
           </div>
 
-          {/* CTA */}
-          <a
-            href={FONDANT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-[2.0513vw] md:gap-[0.4167vw] rounded-full bg-[#6276FB] hover:bg-[#4f5fe0] px-[8.2051vw] py-[4.1026vw] md:px-[2.5vw] md:py-[1.25vw] shadow-[0px_1px_1px_rgba(0,0,0,0.05)] transition-colors whitespace-nowrap"
-          >
-            <span className="text-[4.6154vw] md:text-[1.25vw] leading-none text-center font-bold text-white">
-              {t("header.cta")}
-            </span>
-            <ArrowUpRight className="w-[5.1282vw] h-[5.1282vw] md:w-[1.25vw] md:h-[1.25vw] text-white" strokeWidth={3} />
-          </a>
+          {/* CTA — 국문은 버튼 2개(퐁당 바로가기 / 방청 신청), 영문은 방청 신청을 넣지 않기로 확정(2026-09-18) */}
+          {/* 슬랙 스펙 확인(2026-09-18, node 1885:845 PC / 1885:1732 모바일):
+              두 버튼 크기가 동일(PC 259x72, 모바일 143x39)하게 지정돼 있어 폭을 고정값으로 준다
+              — 퐁당 쪽은 HUG인데 결과가 259라 사실상 같은 값이고, 방청 쪽은 FIXED 259다.
+              버튼 사이 gap은 PC 32 / 모바일 24 */}
+          <div className="flex items-center gap-[6.1538vw] md:gap-[1.6667vw]">
+            <a
+              href={FONDANT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${CTA_BUTTON_CLASS} bg-[#6276FB] hover:bg-[#4f5fe0]`}
+            >
+              <span className={`${CTA_LABEL_CLASS} text-white`}>{t("header.cta")}</span>
+              <ArrowUpRight className={`${CTA_ICON_CLASS} text-white`} strokeWidth={3} />
+            </a>
+
+            {lang === "ko" && (
+              <a
+                href={AUDIENCE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${CTA_BUTTON_CLASS} bg-white hover:bg-[#e5e7eb]`}
+              >
+                <span className={`${CTA_LABEL_CLASS} text-[#374151]`}>{t("hero.audienceCta")}</span>
+                <ArrowUpRight className={`${CTA_ICON_CLASS} text-black`} strokeWidth={3} />
+              </a>
+            )}
+          </div>
         </Reveal>
       </div>
     </section>

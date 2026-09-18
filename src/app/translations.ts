@@ -43,6 +43,7 @@ export const translations = {
       broadcastInfo2: "오후 5시 유튜브, TV",
       premiereFallback: "9월 20일 첫 방송", // 이미지 배지 대체 텍스트(alt)
       taglineLine1: "세상을 치유하는 목소리", // Hero 태그라인(국문은 이미지, 영문은 텍스트) — 2026-08-31 Figma 답변
+      audienceCta: "방청 신청", // Hero CTA 두번째 버튼 — 국문 전용(영문판에는 추가하지 않기로 확정, 2026-09-18)
     },
     // 02_Big Text (2026-08-31 Figma 답변 기준 확정)
     bigText: {
