@@ -39,8 +39,9 @@ export const translations = {
       infoBtn: "영상 더 보기",
       // 01_Hero 리뉴얼(2026-08-27 Figma 답변) — 영문 확정 문구 전달 전까지 국문 유지
       anniversaryTag: "5주년 특별 기획",
-      broadcastInfo1: "오후 3시 퐁당 선공개",
-      broadcastInfo2: "오후 5시 유튜브, TV",
+      // 모바일은 두 줄로 나뉘고 PC는 구분선을 사이에 두고 한 줄로 붙는다(2026-09-21 교체)
+      broadcastInfo1: "매주(일) 오후 3시 퐁당 선공개",
+      broadcastInfo2: "오후 5시 TV, 유튜브",
       premiereFallback: "9월 20일 첫 방송", // 이미지 배지 대체 텍스트(alt)
       taglineLine1: "세상을 치유하는 목소리", // Hero 태그라인(국문은 이미지, 영문은 텍스트) — 2026-08-31 Figma 답변
       audienceCta: "방청 신청", // Hero CTA 두번째 버튼 — 국문 전용(영문판에는 추가하지 않기로 확정, 2026-09-18)
@@ -342,8 +343,11 @@ export const translations = {
       infoBtn: "Watch More",
       // 01_Hero — 2026-08-31 Figma EN 페이지 답변으로 확정
       anniversaryTag: "5th Anniversary Special Project",
-      broadcastInfo1: "3 PM Pre-release on fondant", // 2026-09-01 확인: fondant 소문자
-      broadcastInfo2: "5 PM YouTube & TV",
+      // 문자열 안의 개행은 모바일에서만 줄바꿈으로 살아난다(PC는 whitespace-nowrap이라 공백으로 합쳐짐).
+      // 그래서 모바일은 "Every Sunday," / "3 PM Pre-release on fondant" / "5 PM TV & YouTube" 3줄,
+      // PC는 구분선을 사이에 두고 한 줄이 된다(2026-09-21 교체). fondant는 소문자(2026-09-01 확인)
+      broadcastInfo1: "Every Sunday,\n3 PM Pre-release on fondant",
+      broadcastInfo2: "5 PM TV & YouTube",
       premiereFallback: "Premieres Sept 20", // 2026-08-31 확인: 실제 텍스트 콘텐츠는 레이어명("First episode")이 아니라 이 문구
       taglineLine1: "a voice that heals the world",
     },

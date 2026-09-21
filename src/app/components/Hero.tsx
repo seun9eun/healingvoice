@@ -12,7 +12,6 @@ const heroBg = "/images/hero/hero_bg.jpg";
 const heroBgMobile = "/images/hero/hero_bg_mobile.jpg";
 const logoSrc = "/images/header/healingvoice_logo.png";
 const kccmBadge = "/images/hero/hero_badge_kccm_ko.png"; // "K-CCM 글로벌 오디션" — 국문 전용 이미지. 영문판은 이 배지 자체가 없음(Big Text에 텍스트로만 존재, 2026-08-31 확인)
-const premiereBadgeKo = "/images/hero/hero_badge_premiere_ko.png"; // "9월 20일 첫 방송" — 국문 전용 이미지. 영문판은 이미지가 아니라 단색 배경(#03133b)+텍스트(2026-08-31 확인)
 const heroLogoEn = "/images/hero/hero_logo_en.png"; // 영문판 전용 Hero 워드마크(국문은 기존 헤더 로고 재사용)
 // 퐁당 아이콘: Figma에서 받은 벡터 export가 깨진 상태였어서(빈 클리핑 박스), 기존 프로젝트에 있던
 // 확정 브랜드 아이콘(퐁당 5주년 특별 기획.png)에서 아이콘 부분만 잘라 재사용
@@ -25,7 +24,6 @@ const heroAnniversaryTagEn = "/images/hero/hero_anniversary_tag_en.png";
 // 국문 모바일 "5주년 특별 기획" — 지정 폰트(Sandoll Nemony2) 없어서 이미지로 대체(2026-09-01 확인)
 const heroAnniversaryTagKo = "/images/hero/hero_anniversary_tag_ko.png";
 const heroTaglineEn = "/images/hero/hero_tagline_en.png";
-const heroPremiereTextEn = "/images/hero/hero_premiere_text_en.png";
 const FONDANT_URL = "https://www.fondant.kr";
 // 방청 신청 구글폼(2026-09-18 수급)
 const AUDIENCE_URL = "https://forms.gle/9WqAaBtEkzAyiTpF6";
@@ -187,77 +185,47 @@ export function Hero() {
 
         {/* 방송 정보 + CTA — 한 그룹으로 묶어 함께 등장(2026-09-01 확인) */}
         <Reveal className="flex flex-col items-center gap-[6.1538vw] md:gap-[1.6667vw] w-full" delay={0.15}>
-          <div className="flex flex-col items-center gap-[3.0769vw] md:gap-[0.8333vw] w-full">
-            {lang === "ko" ? (
-              <img
-                src={premiereBadgeKo}
-                alt={t("hero.premiereFallback")}
-                className="w-auto h-[9.2308vw] md:h-[3.6458vw] object-contain"
-              />
-            ) : (
-              // 배지 테두리: linear-gradient(#D2DFFF 1.16% → #89A3FF 100%, 135deg) 2px INSIDE — background-clip 이중 배경으로 구현(2026-08-31 확인)
-              // 텍스트 지정 폰트(SB Aggro Bold)는 프로젝트에 없어 이미지로 대체 — 모바일도 PC용 에셋 재사용(2026-09-01 확인, radius 16px→8px)
-              <div
-                className="flex items-center justify-center rounded-[2.0513vw] md:rounded-[0.8333vw] px-[4.1026vw] py-[3.0769vw] md:px-[1.25vw] md:py-[0.8333vw] border-2 border-transparent"
-                style={{
-                  backgroundImage: "linear-gradient(#03133b, #03133b), linear-gradient(135deg, #D2DFFF 1.16%, #89A3FF 100%)",
-                  backgroundOrigin: "border-box",
-                  backgroundClip: "padding-box, border-box",
-                }}
+          {/* 방송 정보 — "9월 20일 첫 방송" 배지는 첫 방송이 끝나 제거함(2026-09-21 사용자 요청).
+              배지가 차지하던 자리는 요소를 지우면 그대로 닫히므로 별도 간격 조정은 하지 않았다.
+              국문/영문이 같은 구조가 되어(모바일 세로 나열 + 구분선 없음, PC 가로 한 줄 + 구분선)
+              언어별로 갈라져 있던 분기를 하나로 합쳤다.
+              broadcastInfo1 안의 개행은 모바일(whitespace-pre-line)에서만 줄바꿈으로 살아나고,
+              PC(whitespace-nowrap)에서는 공백으로 합쳐진다 — 영문이 모바일에서만 2줄로 쪼개지는 처리다.
+              PC의 세로 구분선은 텍스트 "|"가 아니라 Figma의 Rectangle 34(2x32, #d4ebff)를 옮긴 것이다. */}
+          <div className="flex flex-col items-center w-full">
+            {/* 모바일 — 구분선 없이 세로로 나열.
+                한 줄 = 한 <p>여야 한다. 개행이 든 문구를 <p> 하나에 넣고 whitespace-pre-line이나
+                <br/>(lib/text.tsx의 renderLines)로 끊으면, 그라데이션 박스가 여러 줄에 걸쳐 한 번만
+                칠해져서 첫 줄은 흰색 두번째 줄은 파란색으로 나뉘어 버린다(2026-09-21 지적).
+                그래서 개행을 미리 쪼개 줄마다 독립된 <p>로 만들어 각자 그라데이션을 받게 한다. */}
+            <div className="md:hidden flex flex-col items-center gap-[1.0256vw]">
+              {[...t("hero.broadcastInfo1").split("\n"), t("hero.broadcastInfo2")].map((line, i) => (
+                <p
+                  key={i}
+                  className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                  style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
+                >
+                  {line}
+                </p>
+              ))}
+            </div>
+
+            {/* PC — 구분선을 사이에 두고 가로 한 줄 */}
+            <div className="hidden md:flex items-center gap-[0.625vw]">
+              <p
+                className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
               >
-                <img src={heroPremiereTextEn} alt={t("hero.premiereFallback")} className="h-[4.1026vw] md:h-[1.493vw] w-auto object-contain" />
-              </div>
-            )}
-            {lang === "en" ? (
-              <>
-                {/* 영문 모바일: 구분선 없이 2줄 세로 배치(2026-08-31 모바일 스펙) */}
-                <div className="md:hidden flex flex-col items-center gap-[1.0256vw]">
-                  <p
-                    className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                  >
-                    {t("hero.broadcastInfo1")}
-                  </p>
-                  <p
-                    className="text-[5.1282vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                  >
-                    {t("hero.broadcastInfo2")}
-                  </p>
-                </div>
-                <div className="hidden md:flex items-center gap-[0.625vw]">
-                  <p
-                    className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                  >
-                    {t("hero.broadcastInfo1")}
-                  </p>
-                  <span className="h-[1.6667vw] w-[0.1042vw] bg-[#D4EBFF]" />
-                  <p
-                    className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                    style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                  >
-                    {t("hero.broadcastInfo2")}
-                  </p>
-                </div>
-              </>
-            ) : (
-              <div className="flex items-center gap-[2.0513vw] md:gap-[0.625vw]">
-                <p
-                  className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                  style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                >
-                  {t("hero.broadcastInfo1")}
-                </p>
-                <span className="h-[4.1026vw] w-[0.2564vw] md:h-[1.6667vw] md:w-[0.1042vw] bg-[#D4EBFF]" />
-                <p
-                  className="text-[5.1282vw] md:text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
-                  style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
-                >
-                  {t("hero.broadcastInfo2")}
-                </p>
-              </div>
-            )}
+                {t("hero.broadcastInfo1")}
+              </p>
+              <span className="h-[1.6667vw] w-[0.1042vw] bg-[#D4EBFF]" />
+              <p
+                className="text-[1.6667vw] leading-[1.4] text-center font-extrabold text-transparent bg-clip-text whitespace-nowrap"
+                style={{ backgroundImage: broadcastGradient, fontFamily: "Paperlogy, Pretendard Variable, sans-serif" }}
+              >
+                {t("hero.broadcastInfo2")}
+              </p>
+            </div>
           </div>
 
           {/* CTA — 국문은 버튼 2개(퐁당 바로가기 / 방청 신청), 영문은 방청 신청을 넣지 않기로 확정(2026-09-18) */}
